@@ -30,4 +30,4 @@ def get_data_from_scrapy():
     if not run_spider(command):
         return
 
-get_data_from_scrapy()
+#get_data_from_scrapy()
