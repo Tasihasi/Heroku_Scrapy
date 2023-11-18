@@ -9,7 +9,6 @@ from scrapy.selector import Selector
 import json
 from scrapy.http import FormRequest
 import csv
-import chardet
 import time
 import os
 from scrapy import signals
