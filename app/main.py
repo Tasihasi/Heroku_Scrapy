@@ -2,7 +2,7 @@
 from flask import Flask
 #from business_logic import product_pricing
 #from http_Scrapy.api_manager import api_route
-from api_manager.api_route import api, proxy_blueprint
+from .api_manager.api_route import api, proxy_blueprint
 
 # Create a Flask application instance
 app = Flask(__name__)
