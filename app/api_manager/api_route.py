@@ -3,7 +3,7 @@ import xml.etree.ElementTree as ET
 from .auth import valid_api_key, mach_apiKey_to_customer, getting_raw_data
 from .scrapy_manager import newest_raw_data
 from .api_proxy import gather_proxy_data
-from .data_retrieve import get_data_from_scrapy
+from .data_retrieve import get_data_from_scrapy, get_proxies
 #from auth import Test
 
 api_key = 12345
@@ -78,4 +78,13 @@ def get_data():
     return "Spider run failed."
 
 
+@proxy_blueprint.route('/get_proxy', methods=['GET'])
+def get_data():
+    # Assuming get_data_from_scrapy() returns the path to the XML file
+    xml_file_path = get_proxies()
 
+    if xml_file_path:
+        # Specify the mimetype as 'application/xml'
+        return send_file(xml_file_path, mimetype='application/xml', as_attachment=True)
+    
+    return "Spider run failed."
