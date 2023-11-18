@@ -25,6 +25,8 @@ from scrapy.utils.log import configure_logging
 import logging
 #from ..proxy_manager.proxy_verification import Get_valid_Proxy_list
 
+
+logging.info("Spider started")
 """
 def check_proxies(q, valid_proxy_list):
         while not q.empty():
