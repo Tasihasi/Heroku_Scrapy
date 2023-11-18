@@ -26,6 +26,7 @@ import logging
 
 
 logging.info("Spider started")
+
 """
 def check_proxies(q, valid_proxy_list):
         while not q.empty():
