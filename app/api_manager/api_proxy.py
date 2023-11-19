@@ -1,4 +1,4 @@
-import subprocess
+import subprocess, logging
 import os
 import time
 import json
@@ -27,6 +27,8 @@ def run_spider(command):
         # Capture the spider's log output
         spider_log = result.stdout
         print("Spider Log:")
+        logging.info("--------  Spider log : ")
+        logging.info(spider_log)
         print(spider_log)
 
         print("Spider Run in the api_proxy.py")
