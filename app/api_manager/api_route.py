@@ -54,8 +54,8 @@ def get_raw_data():
 
 proxy_blueprint = Blueprint('proxy', __name__)
 
-@proxy_blueprint.route('/get_proxy', methods=['GET'])
-def get_proxy():
+@proxy_blueprint.route('/get_sth', methods=['GET'])
+def get_sth():
     # Call a function or script to gather the JSON file with proxies
     # Replace 'gather_proxy_data()' with the actual function or script
     proxy_data = gather_proxy_data()
