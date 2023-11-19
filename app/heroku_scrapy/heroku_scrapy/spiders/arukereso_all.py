@@ -178,6 +178,7 @@ class ArukeresoSpider(scrapy.Spider):
         super(ArukeresoSpider, self).__init__(*args, **kwargs)
         self.blue_product = 0
         self.valid_proxies = Get_valid_Proxy_list() #["195.123.8.186:8080"] #
+        self.proxies_retries = 0
         print("----------- Got valid Proxies. ------------------")
 
 
@@ -221,6 +222,10 @@ class ArukeresoSpider(scrapy.Spider):
         # Get a proxy for this request
         proxy = self.select_proxy()
     
+        while not proxy and self.proxies_retries <10:
+            self.valid_proxies = Get_valid_Proxy_list()
+            self.proxies_retries+=1
+        
         if not proxy:
             logging.info("------------------  There was no proxies ---------   logging")
             print("--------------- There was no proxies in the Parse Function ------------")
