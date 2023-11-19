@@ -107,7 +107,7 @@ def get_proxies():
 
 @proxy_blueprint.route('/get_final_data', methods=['GET'])
 def Get_final_data():
-    path = "../heroku_scrapy/result.xml"
+    path = "./result.xml"
 
     # Check if the file exists at the specified path
     if os.path.exists(path):
