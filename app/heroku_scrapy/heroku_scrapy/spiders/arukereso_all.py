@@ -65,9 +65,10 @@ def check_proxies(q, valid_proxy_list, num_threads=10):
                                timeout=2.5 )
             
         except:
+            print("execption")
             return
 
-        logging.info("Response Code: ", res.status_code)
+        logging.info("Response Code for %s: %s", proxy, res.status_code)
         print("logging in print: ", res.status_code)
         if res.status_code == 200:
             valid_proxy_list.append(proxy)
