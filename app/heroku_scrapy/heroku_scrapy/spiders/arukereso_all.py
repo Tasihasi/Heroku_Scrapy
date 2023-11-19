@@ -57,13 +57,16 @@ def run_scrapy_in_thread():
 
 def check_proxies(q, valid_proxy_list, num_threads=10):
     def check_proxy(proxy):
+        logging.INFO("Currently checking this proxy: ")
         try:
             res = requests.get("https://tablet-pc.arukereso.hu/", 
                                proxies={"http": proxy, "https": proxy},
                                timeout=2.5 )
+            
         except:
             return
 
+        logging.INFO("Response Code: ", res.status_code)
         if res.status_code == 200:
             valid_proxy_list.append(proxy)
 
