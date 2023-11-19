@@ -28,6 +28,7 @@ def get_data_from_scrapy():
 
     # Step 2: Run the spider
     if not run_spider(command):
+        logging.info("not running spider")
         return
 
 
