@@ -122,7 +122,7 @@ def run_spider(command):
         print("Spider Log:")
         print(spider_log)
 
-        print("Spider Run")
+        print("Spider Run in the api_proxy.py")
         return True, spider_log
     except subprocess.CalledProcessError as e:
         print("Failed to run the spider:", e)

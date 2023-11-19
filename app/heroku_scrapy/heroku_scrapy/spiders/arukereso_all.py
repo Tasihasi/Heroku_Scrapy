@@ -225,6 +225,8 @@ class ArukeresoSpider(scrapy.Spider):
         while not proxy and self.proxies_retries <10:
             self.valid_proxies = Get_valid_Proxy_list()
             self.proxies_retries+=1
+
+            logging.info("trying to get new  proxy list: " , self.proxies_retries)
         
         if not proxy:
             logging.info("------------------  There was no proxies ---------   logging")
