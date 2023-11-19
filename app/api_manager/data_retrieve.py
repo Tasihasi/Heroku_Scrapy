@@ -22,9 +22,9 @@ def get_data_from_scrapy():
     script_directory = os.path.dirname(os.path.abspath(__file__))
 
     # Define the Scrapy command
-    command = ['scrapy', 'crawl', 'arukereso_all'] #, '-O', 'Result.xml']
+    command = ['scrapy', 'crawl', 'arukereso_all', '-O', 'Result.xml']
 
-    logging.info("Running spider")
+    logging.info("Running spider  the data_retrive.py")
 
     # Step 2: Run the spider
     if not run_spider(command):
@@ -50,7 +50,7 @@ def get_proxies():
     # Define the Scrapy command
     command = ['scrapy', 'crawl', 'free_proxy_list'] #, '-O', 'Result.xml']
 
-    logging.info("Running spider")
+    logging.info("Running spiderin the data_retrive.py")
 
     # Step 2: Run the spider
     if not run_spider(command):
