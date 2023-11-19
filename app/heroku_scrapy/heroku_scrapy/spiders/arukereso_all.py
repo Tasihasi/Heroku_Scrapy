@@ -64,8 +64,8 @@ def check_proxies(q, valid_proxy_list, num_threads=10):
                                proxies={"http": proxy, "https": proxy},
                                timeout=2.5 )
             
-        except:
-            print("execption")
+        except Exception as e:
+            print("Exception occurred:", e)
             return
 
         logging.info("Response Code for %s: %s", proxy, res.status_code)
