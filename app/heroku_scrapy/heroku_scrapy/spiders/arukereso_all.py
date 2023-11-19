@@ -289,6 +289,8 @@ class ArukeresoSpider(scrapy.Spider):
             #pass
             #self.valid_proxies = Get_valid_Proxy_list()
 
+        logging.info("-------------------------- Reached the bottom of parse function in arukereso_all.py ----------------------")
+
 
     def parse_link(self, response):
         prices = response.css('span[itemprop="price"]::text').getall()
