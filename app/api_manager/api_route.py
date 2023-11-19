@@ -1,6 +1,7 @@
 from flask import Blueprint, jsonify, request, Response, send_file
 import xml.etree.ElementTree as ET
 import os
+import logging
 from .auth import valid_api_key, mach_apiKey_to_customer, getting_raw_data
 from .scrapy_manager import newest_raw_data
 from .api_proxy import gather_proxy_data
@@ -108,6 +109,9 @@ def get_proxies():
 @proxy_blueprint.route('/get_final_data', methods=['GET'])
 def Get_final_data():
     path = "./result.xml"
+
+    current_directory = os.getcwd()
+    logging.info(f"Current working directory: {current_directory}")
 
     # Check if the file exists at the specified path
     if os.path.exists(path):

@@ -56,4 +56,3 @@ def get_proxies():
     if not run_spider(command):
         return
 
-#get_data_from_scrapy()
