@@ -222,6 +222,7 @@ class ArukeresoSpider(scrapy.Spider):
         proxy = self.select_proxy()
     
         if not proxy:
+            logging.info("------------------  There was no proxies ---------   logging")
             print("--------------- There was no proxies in the Parse Function ------------")
             return
 
@@ -275,8 +276,9 @@ class ArukeresoSpider(scrapy.Spider):
             
         
         # Check if you need to get new proxies (e.g., fewer than 10 valid proxies)
-        if len(self.valid_proxies) < 5:
-            pass
+        # Temporarly removing this codition !!!!! --------N
+        #if len(self.valid_proxies) < 5:
+            #pass
             #self.valid_proxies = Get_valid_Proxy_list()
 
 
