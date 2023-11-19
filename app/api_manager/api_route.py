@@ -79,7 +79,7 @@ def get_data():
 
 
 @proxy_blueprint.route('/get_proxy', methods=['GET'])
-def get_data():
+def get_proxies():
     # Assuming get_data_from_scrapy() returns the path to the XML file
     xml_file_path = get_proxies()
 
