@@ -112,6 +112,7 @@ def Get_final_data():
 
     current_directory = os.getcwd()
     logging.info(f"Current working directory: {current_directory}")
+    directory_contents = os.listdir(".")
 
     # Check if the file exists at the specified path
     if os.path.exists(path):
