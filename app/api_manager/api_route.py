@@ -4,6 +4,8 @@ from .auth import valid_api_key, mach_apiKey_to_customer, getting_raw_data
 from .scrapy_manager import newest_raw_data
 from .api_proxy import gather_proxy_data
 from .data_retrieve import get_data_from_scrapy, get_proxies
+from concurrent.futures import ThreadPoolExecutor  # For async execution
+
 #from auth import Test
 
 api_key = 12345
@@ -45,6 +47,7 @@ def get_raw_data():
     else:
         return jsonify({"message" : "The api key provided is incorrect."})
 
+    
 
 #curl -X POST -H "Authorization: Bearer 12345" http://127.0.0.1:5000/check_api_key
 # the tester call
@@ -66,16 +69,27 @@ def get_sth():
     else:
         return jsonify({"message": "No proxy data available"}), 404  # Return a 404 Not Found status
 
+
+executor = ThreadPoolExecutor()
+
 @proxy_blueprint.route('/get_data', methods=['GET'])
 def get_data():
-    # Assuming get_data_from_scrapy() returns the path to the XML file
-    xml_file_path = get_data_from_scrapy()
+    def process():
+        # Assuming get_data_from_scrapy() returns the path to the XML file
+        xml_file_path = get_data_from_scrapy()
 
-    if xml_file_path:
-        # Specify the mimetype as 'application/xml'
-        return send_file(xml_file_path, mimetype='application/xml', as_attachment=True)
+        if xml_file_path:
+            # Specify the mimetype as 'application/xml'
+            return send_file(xml_file_path, mimetype='application/xml', as_attachment=True)
+        
+        return "Spider run failed."
     
-    return "Spider run failed."
+     # Submit the 'process' function to the executor for asynchronous execution
+    future = executor.submit(process)
+
+    # Return a response immediately indicating that the spider is running asynchronously
+    return "Spider is running asynchronously."
+    
 
 
 @proxy_blueprint.route('/get_proxy', methods=['GET'])
