@@ -1,5 +1,6 @@
 from flask import Blueprint, jsonify, request, Response, send_file
 import xml.etree.ElementTree as ET
+import os
 from .auth import valid_api_key, mach_apiKey_to_customer, getting_raw_data
 from .scrapy_manager import newest_raw_data
 from .api_proxy import gather_proxy_data
@@ -88,7 +89,7 @@ def get_data():
     future = executor.submit(process)
 
     # Return a response immediately indicating that the spider is running asynchronously
-    return "Spider is running asynchronously."
+    return "Spider is running asynchronously. The data will be avaiable at /get_final_data"
     
 
 
@@ -102,3 +103,16 @@ def get_proxies():
         return send_file(xml_file_path, mimetype='application/xml', as_attachment=True)
     
     return "Spider run failed."
+
+
+@proxy_blueprint.route('/get_final_data', methods=['GET'])
+def Get_final_data():
+    path = "../heroku_scrapy/result.xml"
+
+    # Check if the file exists at the specified path
+    if os.path.exists(path):
+        # If the file exists, return the file as an attachment
+        return send_file(path, mimetype='application/xml', as_attachment=True)
+    else:
+        # If the file doesn't exist yet, return a message indicating its unavailability
+        return "Data is not yet available. Please try again later."
