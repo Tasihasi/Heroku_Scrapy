@@ -312,7 +312,8 @@ class ArukeresoSpider(scrapy.Spider):
 
             if i == 10:
                 break
-
+        
+        logging.INFO("Here is the data i think: ", lowest_data)
         yield lowest_data
 
     def csvFile_Reader(self):
