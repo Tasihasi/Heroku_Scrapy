@@ -30,6 +30,8 @@ def get_data_from_scrapy():
     if not run_spider(command):
         logging.info("not running spider")
         return
+    
+    logging.info("Theoreticly spider runs")
 
 
 def get_proxies():
