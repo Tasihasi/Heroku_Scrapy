@@ -180,6 +180,7 @@ class ArukeresoSpider(scrapy.Spider):
         self.valid_proxies = Get_valid_Proxy_list() #["195.123.8.186:8080"] #
         self.proxies_retries = 0
         print("----------- Got valid Proxies. ------------------")
+        logging.info("----------- Got valid Proxies. ------------------")
 
 
         # Start a thread to periodically update the proxy list
