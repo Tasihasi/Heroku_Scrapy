@@ -83,6 +83,7 @@ def Getting_new_proxies():  # Runnin the scrapy
         # Define the command as a list of strings
         print()
         print("--------------------   Getting new proxies ---------------------------")
+        logging.info("--------------------   Getting new proxies ---------------------------")
         current_directory = os.getcwd()
         print("Current Working Directory:", current_directory)
         print()
@@ -109,6 +110,8 @@ def Getting_new_proxies():  # Runnin the scrapy
         #run_scrapy_in_thread()
 
 def Get_valid_Proxy_list(): # Return with a list of valid proxies or with a false value      
+    logging.info("---- Get_valid_proxy_list arukereso_all.py---")
+    
     q = queue.Queue()
     valid_proxy_list = []
 
@@ -181,13 +184,15 @@ class ArukeresoSpider(scrapy.Spider):
         self.proxies_retries = 0
         print("----------- Got valid Proxies. ------------------")
         logging.info("----------- Got valid Proxies. ------------------")
+        logging.info("---  Here is the self.valid_proxy list:  ", self.valid_proxies)
 
 
         # Start a thread to periodically update the proxy list
         # it starts a new reactore and breks the code 
-        update_thread = threading.Thread(target=self.update_proxy_list)
-        update_thread.daemon = True  # This will make the thread exit when the main program exits
-        update_thread.start()
+        # -------  Temporary closing this line 
+        #update_thread = threading.Thread(target=self.update_proxy_list)
+        #update_thread.daemon = True  # This will make the thread exit when the main program exits
+        #update_thread.start()
 
     
     def update_proxy_list(self):
