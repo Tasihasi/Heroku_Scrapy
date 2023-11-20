@@ -58,7 +58,7 @@ def run_scrapy_in_thread():
 def check_proxies(q, valid_proxy_list, num_threads=10):
     def check_proxy(proxy):
         logging.info("Currently checking this proxy: ", proxy)
-        print("logging in print: ", proxy)
+        #print("logging in print: ", proxy)
         try:
             res = requests.get("https://tablet-pc.arukereso.hu/", 
                                proxies={"http": proxy, "https": proxy},
@@ -69,7 +69,7 @@ def check_proxies(q, valid_proxy_list, num_threads=10):
             return
 
         logging.info("Response Code for %s: %s", proxy, res.status_code)
-        print("logging in print: ", res.status_code)
+        #print("logging in print: ", res.status_code)
         if res.status_code == 200:
             valid_proxy_list.append(proxy)
 
@@ -189,7 +189,8 @@ class ArukeresoSpider(scrapy.Spider):
 
         # Start a thread to periodically update the proxy list
         # it starts a new reactore and breks the code 
-        # -------  Temporary closing this line 
+
+        # -------  Temporary closing this line ------ !!!
         #update_thread = threading.Thread(target=self.update_proxy_list)
         #update_thread.daemon = True  # This will make the thread exit when the main program exits
         #update_thread.start()
@@ -244,7 +245,7 @@ class ArukeresoSpider(scrapy.Spider):
             url=response.url,
             callback=self.parse_link,
             dont_filter=True,
-            meta={'proxy': proxy}
+            #meta={'proxy': proxy}
         )
 
         yield request
