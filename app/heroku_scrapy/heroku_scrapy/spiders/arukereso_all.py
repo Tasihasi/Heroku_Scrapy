@@ -180,7 +180,7 @@ class ArukeresoSpider(scrapy.Spider):
     def __init__(self, *args, **kwargs):
         super(ArukeresoSpider, self).__init__(*args, **kwargs)
         self.blue_product = 0
-        self.valid_proxies = Get_valid_Proxy_list() #["195.123.8.186:8080"] #
+        #self.valid_proxies = Get_valid_Proxy_list() #["195.123.8.186:8080"] #
         self.proxies_retries = 0
         print("----------- Got valid Proxies. ------------------")
         logging.info("----------- Got valid Proxies. ------------------")
@@ -209,8 +209,8 @@ class ArukeresoSpider(scrapy.Spider):
 
     def select_proxy(self):
         # Select a random proxy from the list of valid proxies
-        print("here is the self.valid proxies: ")
-        print(self.valid_proxies)
+        #print("here is the self.valid proxies: ")
+        #print(self.valid_proxies)
 
         return random.choice(self.valid_proxies)
 
@@ -227,18 +227,18 @@ class ArukeresoSpider(scrapy.Spider):
     def parse(self, response):
 
         # Get a proxy for this request
-        proxy = self.select_proxy()
+        #proxy = self.select_proxy()
     
-        while not proxy and self.proxies_retries <10:
-            self.valid_proxies = Get_valid_Proxy_list()
-            self.proxies_retries+=1
+        #while not proxy and self.proxies_retries <10:
+            #self.valid_proxies = Get_valid_Proxy_list()
+            #self.proxies_retries+=1
 
-            logging.info("trying to get new  proxy list: " , self.proxies_retries)
+            #logging.info("trying to get new  proxy list: " , self.proxies_retries)
         
-        if not proxy:
-            logging.info("------------------  There was no proxies ---------   logging")
-            print("--------------- There was no proxies in the Parse Function ------------")
-            return
+        #if not proxy:
+            #logging.info("------------------  There was no proxies ---------   logging")
+            #print("--------------- There was no proxies in the Parse Function ------------")
+            #return
 
 
         request = scrapy.Request(
