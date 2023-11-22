@@ -180,11 +180,11 @@ class ArukeresoSpider(scrapy.Spider):
     def __init__(self, *args, **kwargs):
         super(ArukeresoSpider, self).__init__(*args, **kwargs)
         self.blue_product = 0
-        #self.valid_proxies = Get_valid_Proxy_list() #["195.123.8.186:8080"] #
+        self.valid_proxies = Get_valid_Proxy_list() #["195.123.8.186:8080"] #
         self.proxies_retries = 0
         print("----------- Got valid Proxies. ------------------")
         logging.info("----------- Got valid Proxies. ------------------")
-        logging.info("---  Here is the self.valid_proxy list:  ", self.valid_proxies)
+        #logging.info("---  Here is the self.valid_proxy list:  ", self.valid_proxies)
 
 
         # Start a thread to periodically update the proxy list
@@ -197,10 +197,10 @@ class ArukeresoSpider(scrapy.Spider):
 
     
     def update_proxy_list(self):
-        while True:
-            if len(self.valid_proxies) < 10:
-                new_proxies = Get_valid_Proxy_list()  # Fetch new proxies here
-                self.valid_proxies.extend(new_proxies)
+        while False:
+            #if len(self.valid_proxies) < 10:
+                #new_proxies = Get_valid_Proxy_list()  # Fetch new proxies here
+                #self.valid_proxies.extend(new_proxies)
 
             # Sleep for some time before checking again
             time.sleep(60)  # Adjust the interval as needed
@@ -285,8 +285,9 @@ class ArukeresoSpider(scrapy.Spider):
         else:
             # Removing proxy from the list if not responding
             # Excluding the value error possibility
-            if proxy in self.valid_proxies:
-                self.valid_proxies.remove(proxy)
+            pass
+            #if proxy in self.valid_proxies:
+               #self.valid_proxies.remove(proxy)
             
         
         # Check if you need to get new proxies (e.g., fewer than 10 valid proxies)
