@@ -22,9 +22,10 @@ def delete_existing_file(file_path):
 
 def run_spider(command):
     try:
-        result = subprocess.run(command, capture_output=True, text=True, check=True)
-
-        # Capture the spider's log output
+        # Redirecting subprocess output to stdout explicitly
+        result = subprocess.run(command, stdout=subprocess.PIPE, text=True, check=True)
+        
+         # Capture the spider's log output
         spider_log = result.stdout
         print("Spider Log:")
         logging.info("--------  Spider log : ")
