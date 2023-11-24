@@ -184,7 +184,7 @@ class ArukeresoSpider(scrapy.Spider):
         self.proxies_retries = 0
         print("----------- Got valid Proxies. ------------------")
         logging.info("----------- Got valid Proxies. ------------------")
-        #logging.info("---  Here is the self.valid_proxy list:  ", self.valid_proxies)
+        logging.info("---  Here is the self.valid_proxy list:  ", self.valid_proxies)
 
 
         # Start a thread to periodically update the proxy list
@@ -197,10 +197,10 @@ class ArukeresoSpider(scrapy.Spider):
 
     
     def update_proxy_list(self):
-        while False:
-            #if len(self.valid_proxies) < 10:
-                #new_proxies = Get_valid_Proxy_list()  # Fetch new proxies here
-                #self.valid_proxies.extend(new_proxies)
+        while len(self.valid_proxies) < 10:
+            if len(self.valid_proxies) < 10:
+                new_proxies = Get_valid_Proxy_list()  # Fetch new proxies here
+                self.valid_proxies.extend(new_proxies)
 
             # Sleep for some time before checking again
             time.sleep(60)  # Adjust the interval as needed
@@ -210,7 +210,7 @@ class ArukeresoSpider(scrapy.Spider):
     def select_proxy(self):
         # Select a random proxy from the list of valid proxies
         #print("here is the self.valid proxies: ")
-        #print(self.valid_proxies)
+        print(self.valid_proxies)
 
         return random.choice(self.valid_proxies)
 
@@ -227,25 +227,25 @@ class ArukeresoSpider(scrapy.Spider):
     def parse(self, response):
 
         # Get a proxy for this request
-        #proxy = self.select_proxy()
+        proxy = self.select_proxy()
     
-        #while not proxy and self.proxies_retries <10:
-            #self.valid_proxies = Get_valid_Proxy_list()
-            #self.proxies_retries+=1
+        while not proxy and self.proxies_retries <10:
+            self.valid_proxies = Get_valid_Proxy_list()
+            self.proxies_retries+=1
 
-            #logging.info("trying to get new  proxy list: " , self.proxies_retries)
+            logging.info("trying to get new  proxy list: " , self.proxies_retries)
         
-        #if not proxy:
-            #logging.info("------------------  There was no proxies ---------   logging")
-            #print("--------------- There was no proxies in the Parse Function ------------")
-            #return
+        if not proxy:
+            logging.info("------------------  There was no proxies ---------   logging")
+            print("--------------- There was no proxies in the Parse Function ------------")
+            return
 
 
         request = scrapy.Request(
             url=response.url,
             callback=self.parse_link,
             dont_filter=True,
-            #meta={'proxy': proxy}
+            meta={'proxy': proxy}
         )
 
         yield request
@@ -292,9 +292,8 @@ class ArukeresoSpider(scrapy.Spider):
         
         # Check if you need to get new proxies (e.g., fewer than 10 valid proxies)
         # Temporarly removing this codition !!!!! --------N
-        #if len(self.valid_proxies) < 5:
-            #pass
-            #self.valid_proxies = Get_valid_Proxy_list()
+        if len(self.valid_proxies) < 5:
+            self.valid_proxies = Get_valid_Proxy_list()
 
         logging.info("-------------------------- Reached the bottom of parse function in arukereso_all.py ----------------------")
 
