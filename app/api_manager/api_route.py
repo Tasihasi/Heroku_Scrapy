@@ -108,7 +108,7 @@ def get_proxies():
 
 @proxy_blueprint.route('/get_final_data', methods=['GET'])
 def Get_final_data():
-    path = "app" #/heroku_scrapy/result.xml"
+    path = ".app/heroku_scrapy/result.xml"
 
     current_directory = os.getcwd()
     logging.info(f"Current working directory: {current_directory}")
@@ -116,22 +116,21 @@ def Get_final_data():
     logging.info(f"Current directory dir:  {directory_contents}")
 
         # Define the folder name you want to check within the current directory
-    folder_name = "app"  # Replace 'your_folder_name' with the actual folder name
+    #folder_name = "app"  # Replace 'your_folder_name' with the actual folder name
 
     # Construct the path to the folder within the current directory
-    folder_path = os.path.join(current_directory, folder_name)
+    #folder_path = os.path.join(current_directory, folder_name)
 
     # Check if the folder exists
-    if os.path.exists(folder_path) and os.path.isdir(folder_path):
+    #if os.path.exists(folder_path) and os.path.isdir(folder_path):
         # List the contents of the specified folder
-        folder_contents = os.listdir(folder_path)
+        #folder_contents = os.listdir(folder_path)
 
         # Log the list of files/folders in the specified folder
-        logging.info(f"Files/Folders in '{folder_name}' folder:")
-        for item in folder_contents:
-            logging.info(item)
-    else:
-        logging.info(f"'{folder_name}' folder does not exist or is not a directory.")
+        #logging.info(f"Files/Folders in '{folder_name}' folder:")
+        #for item in folder_contents:
+            #logging.info(item)
+   
 
     
 
