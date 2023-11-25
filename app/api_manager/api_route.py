@@ -110,6 +110,11 @@ def get_proxies():
 def Get_final_data():
     path = "app" #/heroku_scrapy/result.xml"
 
+    current_directory = os.getcwd()
+    logging.info(f"Current working directory: {current_directory}")
+    directory_contents = os.listdir(".")
+    logging.info(f"Current directory dir:  {directory_contents}")
+
         # Define the folder name you want to check within the current directory
     folder_name = "app"  # Replace 'your_folder_name' with the actual folder name
 
@@ -128,10 +133,7 @@ def Get_final_data():
     else:
         logging.info(f"'{folder_name}' folder does not exist or is not a directory.")
 
-    current_directory = os.getcwd()
-    logging.info(f"Current working directory: {current_directory}")
-    directory_contents = os.listdir(".")
-    logging.info(f"Current directory dir:  {directory_contents}")
+    
 
     # Check if the file exists at the specified path
     if os.path.exists(path):
