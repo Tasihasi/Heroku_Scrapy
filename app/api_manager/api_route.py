@@ -124,7 +124,7 @@ def get_proxies():
 
 @proxy_blueprint.route('/get_final_data', methods=['GET'])
 def Get_final_data():
-    path = "app/heroku_scrapy/result.xml"
+    #path = "app/heroku_scrapy/result.xml"
 
     log_folder_content("app/heroku_scrapy")
 
@@ -133,6 +133,14 @@ def Get_final_data():
     directory_contents = os.listdir(".")
     logging.info(f"Current directory dir:  {directory_contents}")
 
+    directory = "app/heroku_scrapy"
+    filename = "Result.xml"
+    path = os.path.join(os.getcwd(), directory, filename)
+
+    # Log the contents of the folder
+    log_folder_content(directory)
+
+    # Check if the file exists at the specified path
     if os.path.exists(path):
         # If the file exists, return the file as an attachment
         return send_file(path, mimetype='application/xml', as_attachment=True)
