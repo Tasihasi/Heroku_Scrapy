@@ -124,7 +124,12 @@ def get_proxies():
 
 @proxy_blueprint.route('/get_final_data', methods=['GET'])
 def Get_final_data():
-    #path = "app/heroku_scrapy/result.xml"
+
+    # Retrieve the API key from the request headers
+    api_key = request.headers.get('API-Key')
+
+    # Retrieve the Clondike_Key from the environment variables
+    valid_api_key = os.environ.get('Clondike_Key')
 
     log_folder_content("app/heroku_scrapy")
 
