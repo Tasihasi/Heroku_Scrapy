@@ -126,7 +126,7 @@ def get_proxies():
 def Get_final_data():
     path = ".app/heroku_scrapy/Result.xml"
 
-    log_folder_content("app")
+    log_folder_content("app/heroku_scrapy")
 
     current_directory = os.getcwd()
     logging.info(f"Current working directory: {current_directory}")
