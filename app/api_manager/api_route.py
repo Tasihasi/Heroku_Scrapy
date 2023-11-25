@@ -125,7 +125,8 @@ def get_proxies():
 @proxy_blueprint.route('/get_final_data', methods=['GET'])
 def Get_final_data():
     path = "./heroku_scrapy/Result.xml"
-
+    path = "./heroku_scrapy/Result.xml"
+    
     log_folder_content("app/heroku_scrapy")
 
     current_directory = os.getcwd()
