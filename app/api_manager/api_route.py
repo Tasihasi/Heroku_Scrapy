@@ -138,20 +138,23 @@ def Get_final_data():
     directory_contents = os.listdir(".")
     logging.info(f"Current directory dir:  {directory_contents}")
 
-    directory = "app/heroku_scrapy"
-    filename = "Result.xml"
-    path = os.path.join(os.getcwd(), directory, filename)
+    if api_key == valid_api_key:
+        directory = "app/heroku_scrapy"
+        filename = "Result.xml"
+        path = os.path.join(os.getcwd(), directory, filename)
 
-    # Log the contents of the folder
-    log_folder_content(directory)
+        # Log the contents of the folder
+        log_folder_content(directory)
 
-    # Check if the file exists at the specified path
-    if os.path.exists(path):
-        # If the file exists, return the file as an attachment
-        return send_file(path, mimetype='application/xml', as_attachment=True)
+        # Check if the file exists at the specified path
+        if os.path.exists(path):
+            # If the file exists, return the file as an attachment
+            return send_file(path, mimetype='application/xml', as_attachment=True)
+        else:
+            # If the file doesn't exist yet, return a message indicating its unavailability
+            return "Data is not yet available. Please try again later."
     else:
-        # If the file doesn't exist yet, return a message indicating its unavailability
-        return "Data is not yet available. Please try again later."
-    
+        # Invalid API key provided
+        return "Unauthorized access. Invalid API key."
 
 
