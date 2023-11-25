@@ -10,6 +10,19 @@ from concurrent.futures import ThreadPoolExecutor  # For async execution
 
 #from auth import Test
 
+
+def log_folder_content(folder_path):
+    logging.info(f"Listing contents of folder: {folder_path}")
+    try:
+        with os.scandir(folder_path) as entries:
+            for entry in entries:
+                if entry.is_file():
+                    logging.info(f"File: {entry.name}")
+                elif entry.is_dir():
+                    logging.info(f"Directory: {entry.name}")
+    except OSError as e:
+        logging.error(f"Error while listing folder contents: {e}")
+
 api_key = 12345
 
 api = Blueprint('api', __name__)
@@ -106,9 +119,14 @@ def get_proxies():
     return "Spider run failed."
 
 
+
+
+
 @proxy_blueprint.route('/get_final_data', methods=['GET'])
 def Get_final_data():
     path = ".app/heroku_scrapy/Result.xml"
+
+    log_folder_content(".app")
 
     current_directory = os.getcwd()
     logging.info(f"Current working directory: {current_directory}")
