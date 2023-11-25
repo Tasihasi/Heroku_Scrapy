@@ -133,26 +133,6 @@ def Get_final_data():
     directory_contents = os.listdir(".")
     logging.info(f"Current directory dir:  {directory_contents}")
 
-        # Define the folder name you want to check within the current directory
-    #folder_name = "app"  # Replace 'your_folder_name' with the actual folder name
-
-    # Construct the path to the folder within the current directory
-    #folder_path = os.path.join(current_directory, folder_name)
-
-    # Check if the folder exists
-    #if os.path.exists(folder_path) and os.path.isdir(folder_path):
-        # List the contents of the specified folder
-        #folder_contents = os.listdir(folder_path)
-
-        # Log the list of files/folders in the specified folder
-        #logging.info(f"Files/Folders in '{folder_name}' folder:")
-        #for item in folder_contents:
-            #logging.info(item)
-   
-
-    
-
-    # Check if the file exists at the specified path
     if os.path.exists(path):
         # If the file exists, return the file as an attachment
         return send_file(path, mimetype='application/xml', as_attachment=True)
