@@ -62,7 +62,8 @@ def check_proxies(q, valid_proxy_list, num_threads=10):
         try:
             res = requests.get("https://tablet-pc.arukereso.hu/", 
                                proxies={"http": proxy, "https": proxy},
-                               timeout=2.5 )
+                               timeout=2.5,
+                                 )
             
         except Exception as e:
             print("Exception occurred:", e)
@@ -89,25 +90,37 @@ def Getting_new_proxies():  # Runnin the scrapy
         print()
 
         # Define the command as a list of strings
-        command = ['scrapy', 'crawl', 'free_proxy_list', '-O', 'proxies.txt']
-
-        # Run the command
-        subprocess.run(command)
-
-
-
         #command = ['scrapy', 'crawl', 'free_proxy_list', '-O', 'proxies.txt']
 
         # Run the command
-        #result = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        #print(result.stdout.decode())
-        #print(result.stderr.decode())
-        #logging.info(result.stdout.decode())
-        #logging.error(result.stderr.decode())
-
         #subprocess.run(command)
 
-        #run_scrapy_in_thread()
+        url = "https://api.proxyscrape.com/v2/?request=displayproxies&protocol=http&timeout=10000&country=all&ssl=all&anonymity=all"
+        output_file = "proxyes.txt"
+
+        try:
+            response = requests.get(url)
+            if response.status_code == 200:
+                # Successful response
+                proxies = response.text
+                
+                # Write proxies to proxies.txt file
+                with open(output_file, "w") as file:
+                    file.write(proxies)
+                    
+                print("Proxies retrieved and saved to proxies.txt")
+                return proxies
+            else:
+                # Handle other status codes if needed
+                print(f"Request failed with status code: {response.status_code}")
+
+        except requests.RequestException as e:
+            # Handle exceptions or errors
+            print(f"An error occurred: {e}")
+
+
+
+
 
 def Get_valid_Proxy_list(): # Return with a list of valid proxies or with a false value      
     logging.info("---- Get_valid_proxy_list arukereso_all.py---")
@@ -115,7 +128,7 @@ def Get_valid_Proxy_list(): # Return with a list of valid proxies or with a fals
     q = queue.Queue()
     valid_proxy_list = []
 
-    file_name = "./proxies.txt"
+    file_name = "./proxyes.txt"
 
     Getting_new_proxies()
     j = 0
@@ -180,11 +193,12 @@ class ArukeresoSpider(scrapy.Spider):
     def __init__(self, *args, **kwargs):
         super(ArukeresoSpider, self).__init__(*args, **kwargs)
         self.blue_product = 0
-        self.valid_proxies = Get_valid_Proxy_list() #["195.123.8.186:8080"] #
+        #self.valid_proxies = Get_valid_Proxy_list() #["195.123.8.186:8080"] #
+        self.raw_proxy_list = Getting_new_proxies()
         self.proxies_retries = 0
-        print("----------- Got valid Proxies. ------------------")
+        #print("----------- Got valid Proxies. ------------------")
         logging.info("----------- Got valid Proxies. ------------------")
-        logging.info("---  Here is the self.valid_proxy list:  ", self.valid_proxies)
+        #logging.info("---  Here is the self.valid_proxy list:  ", self.valid_proxies)
 
 
         # Start a thread to periodically update the proxy list
@@ -210,11 +224,17 @@ class ArukeresoSpider(scrapy.Spider):
     def select_proxy(self):
         # Select a random proxy from the list of valid proxies
         #print("here is the self.valid proxies: ")
-        print(self.valid_proxies)
-        if not self.valid_proxies:
-            return None
+        #print(self.valid_proxies)
+        #if not self.valid_proxies:
+            #return None
 
-        return random.choice(self.valid_proxies)
+        #return random.choice(self.valid_proxies)
+
+        if not self.raw_proxy_list:
+            return None
+        
+        
+        return random.choice(self.raw_proxy_list)
 
     def check_proxy_status(self, proxy):
         try:
@@ -231,8 +251,8 @@ class ArukeresoSpider(scrapy.Spider):
         # Get a proxy for this request
         proxy = self.select_proxy()
     
-        while not proxy and self.proxies_retries <10:
-            self.valid_proxies = Get_valid_Proxy_list()
+        while not proxy and len(self.raw_proxy_list) <30:
+            self.raw_proxy_list = Getting_new_proxies()
             self.proxies_retries+=1
 
             logging.info("trying to get new  proxy list: " , self.proxies_retries)
@@ -242,12 +262,15 @@ class ArukeresoSpider(scrapy.Spider):
             print("--------------- There was no proxies in the Parse Function ------------")
             return
 
+        headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36'}
+
 
         request = scrapy.Request(
             url=response.url,
             callback=self.parse_link,
             dont_filter=True,
-            meta={'proxy': proxy}
+            meta={'proxy': proxy},
+            headers=headers,
         )
 
         yield request
