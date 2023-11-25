@@ -134,7 +134,7 @@ def Get_final_data():
     logging.info(f"Current directory dir:  {directory_contents}")
 
     directory = "app/heroku_scrapy"
-    filename = "result.xml"
+    filename = "Result.xml"
     path = os.path.join(os.getcwd(), directory, filename)
 
     # Log the contents of the folder
