@@ -4,6 +4,10 @@
 # https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 
 from scrapy import signals
+import random
+from scrapy.downloadermiddlewares.useragent import UserAgentMiddleware
+from scrapy import Request
+
 
 # useful for handling different item types with a single interface
 from itemadapter import is_item, ItemAdapter
@@ -61,10 +65,15 @@ class HerokuScrapyDownloaderMiddleware:
     # scrapy acts as if the downloader middleware does not modify the
     # passed objects.
 
+    def __init__(self, user_agents):
+        self.user_agents = user_agents
+
     @classmethod
     def from_crawler(cls, crawler):
         # This method is used by Scrapy to create your spiders.
-        s = cls()
+        s = cls(
+            user_agents=crawler.settings.getlist('USER_AGENTS')
+        )
         crawler.signals.connect(s.spider_opened, signal=signals.spider_opened)
         return s
 
@@ -78,6 +87,11 @@ class HerokuScrapyDownloaderMiddleware:
         # - or return a Request object
         # - or raise IgnoreRequest: process_exception() methods of
         #   installed downloader middleware will be called
+
+        user_agent = random.choice(self.user_agents)
+        request.headers['User-Agent'] = user_agent
+        request.headers['Accept-Language'] = 'en'
+        request.headers['Referer'] = 'https://www.example.com'  # Set the referer header as needed
         return None
 
     def process_response(self, request, response, spider):
@@ -101,3 +115,13 @@ class HerokuScrapyDownloaderMiddleware:
 
     def spider_opened(self, spider):
         spider.logger.info("Spider opened: %s" % spider.name)
+
+
+class RotateUserAgentMiddleware(UserAgentMiddleware):
+    def __init__(self, user_agent=''):
+        self.user_agent = user_agent
+
+    def process_request(self, request, spider):
+        ua = self.user_agent
+        if ua:
+            request.headers.setdefault('User-Agent', ua)

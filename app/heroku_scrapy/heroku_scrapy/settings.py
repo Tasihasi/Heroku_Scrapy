@@ -93,3 +93,16 @@ REQUEST_FINGERPRINTER_IMPLEMENTATION = "2.7"
 TWISTED_REACTOR = None
 
 FEED_EXPORT_ENCODING = "utf-8"
+
+DOWNLOADER_MIDDLEWARES = {
+    'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None,
+    'heroku_scrapy.middlewares.RotateUserAgentMiddleware': 543,
+    'heroku_scrapy.middlewares.HerokuScrapyDownloaderMiddleware': 543,
+}
+
+
+USER_AGENTS = [
+    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36',
+    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36',
+    # Add more user agents as needed...
+]

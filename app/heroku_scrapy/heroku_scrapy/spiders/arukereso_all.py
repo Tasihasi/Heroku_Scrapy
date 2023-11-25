@@ -57,7 +57,7 @@ def run_scrapy_in_thread():
 
 def check_proxies(q, valid_proxy_list, num_threads=10):
     def check_proxy(proxy):
-        logging.info("Currently checking this proxy: ", proxy)
+        logging.info("Currently checking this proxy: %s", proxy)
         #print("logging in print: ", proxy)
         try:
             res = requests.get("https://tablet-pc.arukereso.hu/", 
@@ -211,6 +211,8 @@ class ArukeresoSpider(scrapy.Spider):
         # Select a random proxy from the list of valid proxies
         #print("here is the self.valid proxies: ")
         print(self.valid_proxies)
+        if not self.valid_proxies:
+            return None
 
         return random.choice(self.valid_proxies)
 
@@ -337,7 +339,7 @@ class ArukeresoSpider(scrapy.Spider):
             if i == 10:
                 break
         
-        logging.INFO("Here is the data i think: ", lowest_data)
+        logging.info("Here is the data i think: %s", lowest_data)
         yield lowest_data
 
     def csvFile_Reader(self):
@@ -345,7 +347,7 @@ class ArukeresoSpider(scrapy.Spider):
 
 class FreeProxyListSpider(scrapy.Spider):
     name = 'free_proxy_list'
-    start_urls = ['https://free-proxy-list.net/']
+    start_urls = ['https://www.sslproxies.org/']
 
     def parse(self, response):
         # Check if the "Get raw list" link is present in the page source
