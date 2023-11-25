@@ -1,7 +1,7 @@
 import requests
 
 url = "https://herokuscrapy-8d468df2dace.herokuapp.com/get_final_data"
-url = 'http://localhost:5000/get_final_data'  # Example URL
+#url = 'http://localhost:5000/get_final_data'  # Example URL
 
 response = requests.get(url)
 
