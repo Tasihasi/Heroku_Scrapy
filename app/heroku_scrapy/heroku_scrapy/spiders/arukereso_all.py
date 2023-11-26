@@ -40,7 +40,7 @@ def Getting_new_proxies():  # Runnin the scrapy
         current_directory = os.getcwd()
         print("Current Working Directory:", current_directory)
 
-        url = "https://api.proxyscrape.com/v2/?request=displayproxies&protocol=http&timeout=10000&country=all&ssl=all&anonymity=all"
+        url = "https://api.proxyscrape.com/v2/?request=displayproxies&protocol=socks5&timeout=10000&country=all&ssl=all&anonymity=all"
         output_file = "proxyes.txt"
 
         try:
@@ -54,7 +54,7 @@ def Getting_new_proxies():  # Runnin the scrapy
                     file.write(proxies)
                     
                 print("Proxies retrieved and saved to proxies.txt")
-                return proxies
+                return proxies.split("\n")
             else:
                 # Handle other status codes if needed
                 print(f"Request failed with status code: {response.status_code}")
@@ -90,8 +90,9 @@ class ArukeresoSpider(scrapy.Spider):
         self.blue_product = 0
         #self.valid_proxies = Get_valid_Proxy_list() #["195.123.8.186:8080"] #
         self.raw_proxy_list = Getting_new_proxies()
+        logging.info(f" here is the proxy list :  {type(self.raw_proxy_list)}")
         self.proxies_retries = 0
-        self.start_urls = self.predicting_url(self.start_urls[0])
+        self.start_urls = ["https://www.arukereso.hu/nyomtato-patron-toner-c3138/?start=30625"] #self.predicting_url(self.start_urls[0])
         self.error_urls = []  # List to store URLs that encountered errors
         self.visited_url = set()
 
@@ -103,14 +104,27 @@ class ArukeresoSpider(scrapy.Spider):
 
     def select_proxy(self):
         if not self.raw_proxy_list:
-            return None   
+            return None  
 
-        selected_proxy = random.choice(self.raw_proxy_list)
+        j = 0 
 
-        while selected_proxy == "-" or not selected_proxy:
+        while True:
             selected_proxy = random.choice(self.raw_proxy_list)
 
-        return selected_proxy
+            if selected_proxy != "-" and selected_proxy:
+                proxy_url = f"https://{selected_proxy}"  # Modify the scheme (http/https) if needed
+                logging.info(f"currently checking this proxy: {proxy_url}")
+
+                try:
+                    response = requests.get("http://www.example.com", proxies={"https": proxy_url}, timeout=5)
+                    if response.status_code == 200:
+                        return proxy_url
+                except Exception as e:
+                    # Log or handle the exception as needed
+                    pass
+            if j == len(self.raw_proxy_list):
+                self.raw_proxy_list = Getting_new_proxies()
+            j+=1
 
     def check_proxy_status(self, proxy):
         try:
@@ -123,9 +137,10 @@ class ArukeresoSpider(scrapy.Spider):
         
 
     def parse(self, response):
-
         # Get a proxy for this request
         proxy = self.select_proxy()
+        logging.info(f"- ----- here is the proxy :  {proxy}")
+
     
         while not proxy and len(self.raw_proxy_list) <30:
             self.raw_proxy_list = Getting_new_proxies()
@@ -134,18 +149,18 @@ class ArukeresoSpider(scrapy.Spider):
             logging.info("trying to get new  proxy list: " , self.proxies_retries)
         
         if not proxy:
-            logging.info("------------------  There was no proxies ---------   logging")
             return
+        
+        logging.info(f"Proxy before parsing: {proxy}")
 
         headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36'}
 
-
-        if response.url not in self.visited_url:
+        if response.url and response.url not in self.visited_url:
             request = scrapy.Request(
                 url=(response.url),
-                callback=self.parse_link,
-                dont_filter=True,
-                meta={'proxy': proxy},
+                callback=self.parse_link,       # calls the parse function for the respnse handling
+                dont_filter=True,   
+                meta={'proxy': proxy},  #is not a none type 
                 headers=headers,
             )
 
@@ -156,24 +171,46 @@ class ArukeresoSpider(scrapy.Spider):
         all_prices = response.css("div.price::text").getall()
 
         # regex pattern to extract the competitor's name from the URL
-        pattern = r'arukereso\.hu|.hu'
-        all_competitors = response.css("a.offer-num::attr(href)").re(pattern)
-        competitor = all_competitors[0] if all_competitors else ''
+        #pattern = r'arukereso\.hu|.hu'
+        
+        #all_competitors = response.css("a.offer-num::attr(href)").re(pattern)
+        all_competitors = response.css("a.offer-num::attr(href)").getall()
+
+        #competitor = all_competitors[0] if all_competitors else ''
 
         comparison_links = response.css("a.button-orange::attr(href)").getall()
-        
-        for n, p, c, link in zip(all_products, all_prices, all_competitors, comparison_links):
-            
-            if n and p and c:
-                if "arukereso.hu" in link and link not in self.visited_url:
-                    yield scrapy.Request(url=link, callback=self.parse_link)
-                else:
-                    yield {'name': n, 'price': p.strip(), 'competitor': c}
 
-        self.visited_url.add(response.url)
+        if comparison_links:
+            logging.info("------- Entered the the wrong branch ----------------")
+
+            for n, p, c, link in zip(all_products, all_prices, all_competitors, comparison_links):
+                logging.info("------- Entered the loop ----------------")
+                if n and p and c:
+                    if link and "button-orange" in link and "arukereso.hu" in link and link not in self.visited_url:
+                        #pass
+                        yield scrapy.Request(url=link, callback=self.parse_link)
+                    else:
+                        yield {'name': n, 'price': p.strip(), 'competitor': c}
+
+            self.visited_url.add(response.url)
+        else:
+            logging.info("------- Entered the the correct branch ----------------")
+
+            pass 
+
+        logging.info(" -----  etred the last line of the parse function --------")
+
+        try:
+            parsed_proxy = urlparse(proxy)
+            logging.info(f"Parsed proxy: {parsed_proxy}")
+        except Exception as e:
+            logging.error(f"Error parsing proxy: {e}")
+            return
             
 
     def parse_link(self, response):
+
+        logging.info(" --------------  Entering parse_link function -------------")
         prices = ""
         competitors = ""
 
@@ -224,6 +261,7 @@ class ArukeresoSpider(scrapy.Spider):
             yield scrapy.Request(url=url, callback=self.parse)
 
     def closed(self, reason):
+        logging.info(" ----------------   entering the closing function -------- ")
         if self.error_urls:
             self.start_urls = self.error_urls
             yield from self.restart_parsing()
