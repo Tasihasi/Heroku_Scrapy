@@ -1,1 +1,3 @@
-url = 'https://herokuscrapy.herokuapp.com/get_data'
+url = "https://herokuscrapy-8d468df2dace.herokuapp.com/get_data"
+
+response = requests.get(url)
