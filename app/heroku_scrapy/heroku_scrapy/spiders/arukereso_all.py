@@ -93,6 +93,7 @@ class ArukeresoSpider(scrapy.Spider):
         self.proxies_retries = 0
         self.start_urls = self.predicting_url(self.start_urls[0])
         self.error_urls = []  # List to store URLs that encountered errors
+        self.visited_url = set()
 
         logging.info("----------- Got valid Proxies. ------------------")
 
@@ -134,22 +135,22 @@ class ArukeresoSpider(scrapy.Spider):
         
         if not proxy:
             logging.info("------------------  There was no proxies ---------   logging")
-            print("--------------- There was no proxies in the Parse Function ------------")
             return
 
         headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36'}
 
 
+        if response.url not in self.visited_url:
+            request = scrapy.Request(
+                url=(response.url),
+                callback=self.parse_link,
+                dont_filter=True,
+                meta={'proxy': proxy},
+                headers=headers,
+            )
 
-        request = scrapy.Request(
-            url=(response.url),
-            callback=self.parse_link,
-            dont_filter=True,
-            meta={'proxy': proxy},
-            headers=headers,
-        )
-
-        yield request
+            yield request
+            
 
         all_products = response.css("div.name a ::text").getall()
         all_prices = response.css("div.price::text").getall()
@@ -164,23 +165,26 @@ class ArukeresoSpider(scrapy.Spider):
         for n, p, c, link in zip(all_products, all_prices, all_competitors, comparison_links):
             
             if n and p and c:
-                if "arukereso.hu" in link:
-                    #print(n,p,c)
+                if "arukereso.hu" in link and link not in self.visited_url:
                     yield scrapy.Request(url=link, callback=self.parse_link)
                 else:
                     yield {'name': n, 'price': p.strip(), 'competitor': c}
-                    self.blue_product += 1
+
+        self.visited_url.add(response.url)
             
 
     def parse_link(self, response):
+        prices = ""
+        competitors = ""
+
         prices = response.css('span[itemprop="price"]::text').getall()
         availabilities = response.css('span.delivery-time::text').getall()
         competitors = response.css('div.shopname::text').getall()
 
-        if not prices:
+        if len(prices) == 0 or not prices:
             prices = response.css('div.row-price > span::text').getall()
 
-        if not competitor:
+        if len(competitors) == 0 or not competitors:
             competitors = response.css('div.col-logo img::attr(alt)').getall()
 
         
@@ -193,6 +197,7 @@ class ArukeresoSpider(scrapy.Spider):
 
         i = 0
         data = {}
+        data_list = set()
 
         for price, availability, competitor in zip(prices, availabilities, competitors):
             i+=1
@@ -202,8 +207,13 @@ class ArukeresoSpider(scrapy.Spider):
                 'competitor': competitor,
                 'product_name': product_name  # use the extracted product name here
             }
-        
-        yield data
+
+            logging.info(f"The saved data {price} ,  {product_name} ,  {competitor}")
+
+            data_tuple = tuple(data.items())
+            if data_tuple not in data_list:
+                data_list.add(data_tuple)
+                yield data
 
         if response.status != 200:
             self.error_urls.append(response.url)
