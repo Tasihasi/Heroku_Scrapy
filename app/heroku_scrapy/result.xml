@@ -1,354 +1,162 @@
 <?xml version="1.0" encoding="utf-8"?>
 <items>
-<item><price>12290</price><availability>raktáron</availability><competitor>aqua.hu</competitor><product_name>Canon PG-545 + CL-546 Multipack (BS8287B005AA)</product_name></item>
-<item><price>5013</price><availability>raktáron</availability><competitor>nyomtassotthon.hu</competitor><product_name>HP F6V24AE</product_name></item>
-<item><price>5270</price><availability>raktáron</availability><competitor>nyomtassotthon.hu</competitor><product_name>HP CZ101AE</product_name></item>
-<item><price>10190</price><availability>raktáron</availability><competitor>primatinta.hu</competitor><product_name>Epson T00S6 Multipack</product_name></item>
-<item><price>2101</price><availability>raktáron</availability><competitor>cartridge.hu</competitor><product_name>Utángyártott Samsung MLT-D111S</product_name></item>
-<item><price>3550</price><availability>raktáron</availability><competitor>printbazis.hu</competitor><product_name>Utángyártott Canon PGI-580XXL / CLI-581XXL Multipack</product_name></item>
-<item><price>17215</price><availability>raktáron</availability><competitor>tintapatron-rendeles.com</competitor><product_name>HP L0S70AE</product_name></item>
-<item><price>7315</price><availability>raktáron</availability><competitor>nyomtassotthon.hu</competitor><product_name>HP CH561EE Black</product_name></item>
-<item><price>5309</price><availability>raktáron</availability><competitor>zoltech.hu</competitor><product_name>Utángyártott Canon PG-540XL Black (5222B005)</product_name></item>
-<item><price>24287</price><availability>raktáron</availability><competitor>printershop.hu</competitor><product_name>Xerox 006R04403</product_name></item>
-<item><price>6690</price><availability>raktáron</availability><competitor>copygo.hu</competitor><product_name>HP F6U66AE</product_name></item>
-<item><price>5029</price><availability>raktáron</availability><competitor>zoltech.hu</competitor><product_name>Utángyártott Canon CL-546XL Color</product_name></item>
-<item><price>5881</price><availability>raktáron</availability><competitor>officeland.hu</competitor><product_name>Canon CL-546 Color (BS8289B001AA)</product_name></item>
-<item><price>4999</price><availability>raktáron</availability><competitor>irodaoutlet.hu</competitor><product_name>HP N9K06AE</product_name></item>
-<item><price>4158</price><availability>
-      raktáron
-    </availability><competitor>onlinetoner.hu</competitor><product_name>Utángyártott HP F6U68AE</product_name></item>
-<item><price>18235</price><availability>raktáron</availability><competitor>onlinetoner.hu</competitor><product_name>HP CF259A</product_name></item>
-<item><price>22949</price><availability>raktáron</availability><competitor>tonerpiac.com</competitor><product_name>Canon PGI-1500XL Multipack BK/C/M/Y (BS9182B004AA)</product_name></item>
-<item><price>6680</price><availability>raktáron</availability><competitor>nyomtassotthon.hu</competitor><product_name>HP 3YM63AE Tri-Color</product_name></item>
-<item><price>12363</price><availability>raktáron</availability><competitor>irodaoutlet.hu</competitor><product_name>Canon PG-510/CL-511 Multipack (BS2970B010AA)</product_name></item>
-<item><price>7790</price><availability>raktáron</availability><competitor>irodaoutlet.hu</competitor><product_name>Canon PG-512 Black (BS2969B001AA)</product_name></item>
-<item><price>13843</price><availability>raktáron</availability><competitor>patronestoner.hu</competitor><product_name>Brother TN-1030 Black</product_name></item>
-<item><price>37614</price><availability>raktáron</availability><competitor>printershop.hu</competitor><product_name>Xerox 106R04349</product_name></item>
-<item><price>17907</price><availability>raktáron</availability><competitor>zonacomputers.hu</competitor><product_name>Canon PGI-570 + CLI-571 Multipack PGBK/BK/C/M/Y (0372C004AA)</product_name></item>
-<item><price>23120</price><availability>raktáron</availability><competitor>senetic.hu</competitor><product_name>Samsung MLT-D116L Black</product_name></item>
-<item><price>10485</price><availability>raktáron</availability><competitor>nyomtassotthon.hu</competitor><product_name>HP N9K08AE</product_name></item>
-<item><price>13950</price><availability>raktáron</availability><competitor>onlinepatron.hu</competitor><product_name>HP X4D37AE Multipack</product_name></item>
-<item><price>15587</price><availability>raktáron</availability><competitor>printershop.hu</competitor><product_name>Canon PG-40 + CL-41 Multipack BK/Color (BS0615B043AA)</product_name></item>
-<item><price>4051</price><availability>raktáron</availability><competitor>zoltech.hu</competitor><product_name>Utángyártott Canon PG-540 Black</product_name></item>
-<item><price>2477</price><availability>raktáron</availability><competitor>refillshop.hu</competitor><product_name>Utángyártott Samsung MLT-D101S</product_name></item>
-<item><price>79410</price><availability>
-      raktáron
-    </availability><competitor>tonerpartners.hu</competitor><product_name>HP CF259X</product_name></item>
-<item><price>1050</price><availability>raktáron</availability><competitor>refillshop.hu</competitor><product_name>Utángyártott HP CF217A</product_name></item>
-<item><price>2079</price><availability>raktáron</availability><competitor>printershop.hu</competitor><product_name>Canon GI-490BK Black (BS0663C001AA)</product_name></item>
-<item><price>13997</price><availability>raktáron</availability><competitor>tonerpiac.com</competitor><product_name>Canon PG-560 + CL-561 Multipack (3713C006AA)</product_name></item>
-<item><price>4862</price><availability>raktáron</availability><competitor>zoltech.hu</competitor><product_name>Utángyártott Canon CL-541XL Color</product_name></item>
-<item><price>8873</price><availability>raktáron</availability><competitor>senetic.hu</competitor><product_name>Canon KP-108IN Multipack (AJ3115B001AA)</product_name></item>
-<item><price>16604</price><availability>raktáron</availability><competitor>onlinetoner.hu</competitor><product_name>HP W1350A</product_name></item>
-<item><price>17117</price><availability>raktáron</availability><competitor>officeland.hu</competitor><product_name>Brother TN-2411</product_name></item>
-<item><price>978</price><availability>raktáron</availability><competitor>nyomtassotthon.hu</competitor><product_name>Utángyártott Canon PG-510 Black</product_name></item>
-<item><price>8487</price><availability>raktáron</availability><competitor>printershop.hu</competitor><product_name>Canon PGI-580PGBK XXL Pigment Black (1970C001AA)</product_name></item>
-<item><price>2589</price><availability>raktáron</availability><competitor>tintasziget.hu</competitor><product_name>Utángyártott Samsung MLT-D1042S</product_name></item>
-<item><price>6926</price><availability>raktáron</availability><competitor>printershop.hu</competitor><product_name>Canon PG-560 Black (3713C001AA)</product_name></item>
-<item><price>1320</price><availability>raktáron</availability><competitor>onlinetoner.hu</competitor><product_name>Utángyártott Epson T1285 Multipack</product_name></item>
-<item><price>19977</price><availability>raktáron</availability><competitor>nyomtassotthon.hu</competitor><product_name>HP CF244A Black</product_name></item>
-<item><price>26149</price><availability>raktáron</availability><competitor>tonerpiac.com</competitor><product_name>Samsung MLT-D111L</product_name></item>
-<item><price>1548</price><availability>raktáron</availability><competitor>iroda24.hu</competitor><product_name>Utángyártott HP CF283A Black</product_name></item>
-<item><price>8019</price><availability>raktáron</availability><competitor>jatekotthon.hu</competitor><product_name>HP C2P10AE</product_name></item>
-<item><price>12990</price><availability>raktáron</availability><competitor>primatinta.hu</competitor><product_name>Epson T03V6 Multipack</product_name></item>
-<item><price>4870</price><availability>raktáron</availability><competitor>tintatenger.hu</competitor><product_name>Utángyártott HP N9K08AE</product_name></item>
-<item><price>6980</price><availability>raktáron</availability><competitor>nyomtatopatronbolt.hu</competitor><product_name>HP 963XL Black (3JA30AE)</product_name></item>
-<item><price>6100</price><availability>raktáron</availability><competitor>bolt.tonernagyker.hu</competitor><product_name>Utángyártott Xerox 106R04348</product_name></item>
-<item><price>5159</price><availability>raktáron</availability><competitor>tonert.hu</competitor><product_name>Utángyártott HP 3YM62AE</product_name></item>
-<item><price>7740</price><availability>
-      raktáron
-    </availability><competitor>tonerpartners.hu</competitor><product_name>Brother TN-B023</product_name></item>
-<item><price>1263</price><availability>raktáron</availability><competitor>nyomtassotthon.hu</competitor><product_name>Utángyártott Brother TN-1090 Black</product_name></item>
-<item><price>8481</price><availability>raktáron</availability><competitor>nyomtassotthon.hu</competitor><product_name>Canon CL-546XL Color (BS8288B001AA)</product_name></item>
-<item><price>13384</price><availability>raktáron</availability><competitor>tonerpiac.com</competitor><product_name>Epson T9651</product_name></item>
-<item><price>1651</price><availability>raktáron</availability><competitor>refillshop.hu</competitor><product_name>Utángyártott Samsung MLT-D116L</product_name></item>
-<item><price>19144</price><availability>raktáron</availability><competitor>nyomtassotthon.hu</competitor><product_name>HP W1106A</product_name></item>
-<item><price>29730</price><availability>raktáron</availability><competitor>patronestoner.hu</competitor><product_name>Brother TN-2421 Black</product_name></item>
-<item><price>1490</price><availability>raktáron</availability><competitor>tintatenger.hu</competitor><product_name>Utángyártott HP Q2612A Black</product_name></item>
-<item><price>8466</price><availability>raktáron</availability><competitor>printershop.hu</competitor><product_name>Canon PG-540L Black (5224B010)</product_name></item>
-<item><price>9487</price><availability>raktáron</availability><competitor>printershop.hu</competitor><product_name>Canon CL-541XL Color (BS5226B005AA)</product_name></item>
-<item><price>1599</price><availability>raktáron</availability><competitor>iroda24.hu</competitor><product_name>Utángyártott HP CE285A Black</product_name></item>
-<item><price>2750</price><availability>raktáron</availability><competitor>tintatenger.hu</competitor><product_name>Utángyártott HP W1106A (106A)</product_name></item>
-<item><price>39990</price><availability>raktáron</availability><competitor>copygo.hu</competitor><product_name>Epson T8651</product_name></item>
-<item><price>990</price><availability>raktáron</availability><competitor>refillshop.hu</competitor><product_name>Utángyártott HP CF244A Black</product_name></item>
-<item><price>7590</price><availability>raktáron</availability><competitor>notebookstore.hu</competitor><product_name>HP 6ZD17AE Multipack</product_name></item>
-<item><price>1523</price><availability>raktáron</availability><competitor>nyomtassotthon.hu</competitor><product_name>Brother TZe-231</product_name></item>
-<item><price>5250</price><availability>raktáron</availability><competitor>tintatenger.hu</competitor><product_name>Utángyártott Canon PG-545XL Black</product_name></item>
-<item><price>7280</price><availability>raktáron</availability><competitor>nyomtassotthon.hu</competitor><product_name>HP 3YM62AE</product_name></item>
-<item><price>10333</price><availability>raktáron</availability><competitor>senetic.hu</competitor><product_name>Canon RP-108 (CH8568B001AA)</product_name></item>
-<item><price>17840</price><availability>raktáron</availability><competitor>printershop.hu</competitor><product_name>Canon PG-560XL + CL-561XL Multipack (3712C004AA)</product_name></item>
-<item><price>18110</price><availability>raktáron</availability><competitor>printershop.hu</competitor><product_name>Canon PG-540L + CL-541XL Multipack (5224B007)</product_name></item>
-<item><price>6190</price><availability>raktáron</availability><competitor>pepita.hu</competitor><product_name>Canon PG-560-XL (3712C001AA)</product_name></item>
-<item><price>5980</price><availability>raktáron</availability><competitor>nyomtassotthon.hu</competitor><product_name>Canon PG-545 Black (8287B001AA)</product_name></item>
-<item><price>7990</price><availability>raktáron</availability><competitor>nyomtassotthon.hu</competitor><product_name>Canon PG-545XL Black (BS8286B001AA)</product_name></item>
-<item><price>978</price><availability>raktáron</availability><competitor>nyomtassotthon.hu</competitor><product_name>Utángyártott Canon CL-541</product_name></item>
-<item><price>5525</price><availability>raktáron</availability><competitor>irodaoutlet.hu</competitor><product_name>HP F6V25AE</product_name></item>
-<item><price>4390</price><availability>raktáron</availability><competitor>tintatenger.hu</competitor><product_name>Utángyártott HP F6V25AE</product_name></item>
-<item><price>24797</price><availability>raktáron</availability><competitor>printershop.hu</competitor><product_name>Xerox 106R02773</product_name></item>
-<item><price>2159</price><availability>raktáron</availability><competitor>iroda24.hu</competitor><product_name>Utángyártott Xerox 106R02773</product_name></item>
-<item><price>14305</price><availability>
-      raktáron
-    </availability><competitor>tonerpartners.hu</competitor><product_name>HP W1420A</product_name></item>
-<item><price>15741</price><availability>raktáron</availability><competitor>printershop.hu</competitor><product_name>Canon CLI-581 Multipack (2103C004AA)</product_name></item>
-<item><price>30706</price><availability>raktáron</availability><competitor>printershop.hu</competitor><product_name>Canon CLI-581 XXL Multipack (1998C005AA)</product_name></item>
-<item><price>7950</price><availability>raktáron</availability><competitor>bevachip.hu</competitor><product_name>HP W2070A</product_name></item>
-<item><price>2159</price><availability>raktáron</availability><competitor>refillshop.hu</competitor><product_name>Utángyártott Samsung MLT-D111L</product_name></item>
-<item><price>7749</price><availability>raktáron</availability><competitor>patronestoner.hu</competitor><product_name>Brother TN-1090 Black</product_name></item>
-<item><price>4000</price><availability>raktáron</availability><competitor>odeo.hu</competitor><product_name>HP 3YM60AE Tri-color</product_name></item>
-<item><price>2460</price><availability>raktáron</availability><competitor>nyomtassotthon.hu</competitor><product_name>Epson T00S1 EcoTank 103</product_name></item>
-<item><price>38490</price><availability>raktáron</availability><competitor>nyomtassotthon.hu</competitor><product_name>HP 6ZC69AE C/M/Y/K Multipack</product_name></item>
-<item><price>2250</price><availability>raktáron</availability><competitor>tintatenger.hu</competitor><product_name>Utángyártott HP CE505A</product_name></item>
-<item><price>20701</price><availability>raktáron</availability><competitor>cct.hu</competitor><product_name>Samsung MLT-D111S Black</product_name></item>
-<item><price>27835</price><availability>
-      raktáron
-    </availability><competitor>tonerpartners.hu</competitor><product_name>HP CE285A Black</product_name></item>
-<item><price>27440</price><availability>raktáron</availability><competitor>onlinetoner.hu</competitor><product_name>HP W1350X</product_name></item>
-<item><price>1429</price><availability>raktáron</availability><competitor>tintasziget.hu</competitor><product_name>Utángyártott Canon PGI-550PGBK+ CLI-551 MultiPack (6496B005)</product_name></item>
-<item><price>9990</price><availability>raktáron</availability><competitor>pepita.hu</competitor><product_name>Xerox 106R04348</product_name></item>
-<item><price>11190</price><availability>
-      raktáron
-    </availability><competitor>pepita.hu</competitor><product_name>Konica Minolta TN324K Black (A8DA150)</product_name></item>
-<item><price>4500</price><availability>raktáron</availability><competitor>refillshop.hu</competitor><product_name>Utángyártott Canon PG-545BK</product_name></item>
-<item><price>5826</price><availability>raktáron</availability><competitor>easy-shop.hu</competitor><product_name>DYMO S0720530/45013</product_name></item>
-<item><price>9158</price><availability>raktáron</availability><competitor>printershop.hu</competitor><product_name>Canon CL-561XL Color (3730C001)</product_name></item>
-<item><price>4179</price><availability>raktáron</availability><competitor>tonert.hu</competitor><product_name>Utángyártott Samsung CLT-M404S Magenta</product_name></item>
-<item><price>16999</price><availability>raktáron</availability><competitor>tonerhouse.hu</competitor><product_name>Canon CLI-571 Multipack BK/C/M/Y (BS0386C005AA)</product_name></item>
-<item><price>1590</price><availability>raktáron</availability><competitor>refillshop.hu</competitor><product_name>Utángyártott HP CF279A</product_name></item>
-<item><price>10494</price><availability>raktáron</availability><competitor>jatekotthon.hu</competitor><product_name>Epson EcoTank 664 Multipack (T6646)</product_name></item>
-<item><price>14880</price><availability>raktáron</availability><competitor>nyomtassotthon.hu</competitor><product_name>HP T6M15AE</product_name></item>
-<item><price>283</price><availability>raktáron</availability><competitor>cybermedia.hu</competitor><product_name>Utángyártott Epson T0711</product_name></item>
-<item><price>4185</price><availability>raktáron</availability><competitor>cartridge.hu</competitor><product_name>Utángyártott HP F6V24AE</product_name></item>
-<item><price>18769</price><availability>raktáron</availability><competitor>tonerpiac.com</competitor><product_name>Kyocera TK-1248 Black (1T02Y80NL0)</product_name></item>
-<item><price>23799</price><availability>raktáron</availability><competitor>procompkft.hu</competitor><product_name>Epson T9451</product_name></item>
-<item><price>204</price><availability>raktáron</availability><competitor>tobuy.hu</competitor><product_name>Utángyártott Epson T03V1</product_name></item>
-<item><price>4928</price><availability>raktáron</availability><competitor>cartridge.hu</competitor><product_name>HP CZ109AE</product_name></item>
-<item><price>3170</price><availability>raktáron</availability><competitor>bevachip.hu</competitor><product_name>Utángyártott HP CH563EE</product_name></item>
-<item><price>20579</price><availability>
-      raktáron
-    </availability><competitor>onlinetoner.hu</competitor><product_name>Samsung CLT-K404S Black</product_name></item>
-<item><price>5705</price><availability>raktáron</availability><competitor>nyomtassotthon.hu</competitor><product_name>HP 3YL80AE</product_name></item>
-<item><price>6421</price><availability>raktáron</availability><competitor>easy-shop.hu</competitor><product_name>Canon CRG-725BK Black (CR3484B002AA)</product_name></item>
-<item><price>42912</price><availability>raktáron</availability><competitor>zoltech.hu</competitor><product_name>Epson S050691</product_name></item>
-<item><price>15677</price><availability>raktáron</availability><competitor>nyomtassotthon.hu</competitor><product_name>HP 6ZC74AE Multipack B/C/M/Y</product_name></item>
-<item><price>27178</price><availability>
-      raktáron
-    </availability><competitor>onlinetoner.hu</competitor><product_name>HP CF283A</product_name></item>
-<item><price>2203</price><availability>
-      raktáron
-    </availability><competitor>onlinetoner.hu</competitor><product_name>Utángyártott Canon CRG-725</product_name></item>
-<item><price>30930</price><availability>
-      raktáron
-    </availability><competitor>tonerpartners.hu</competitor><product_name>HP CE505A</product_name></item>
-<item><price>2889</price><availability>raktáron</availability><competitor>cybermedia.hu</competitor><product_name>Utángyártott HP CF413X</product_name></item>
-<item><price>4711</price><availability>raktáron</availability><competitor>nyomtassotthon.hu</competitor><product_name>Epson T7741 (C13T77414A/C13T774140)</product_name></item>
-<item><price>6895</price><availability>
-      raktáron
-    </availability><competitor>tonerpartners.hu</competitor><product_name>Utángyártott Lexmark 51B2000</product_name></item>
-<item><price>13565</price><availability>raktáron</availability><competitor>tonerpiac.com</competitor><product_name>OKI 45862840</product_name></item>
-<item><price>65760</price><availability>
-      raktáron
-    </availability><competitor>printbazis.hu</competitor><product_name>HP 3HZ52AE Multipack BK/C/M/Y</product_name></item>
-<item><price>8856</price><availability>raktáron</availability><competitor>officeland.hu</competitor><product_name>Brother LC3619XLBK Black</product_name></item>
-<item><price>35687</price><availability>raktáron</availability><competitor>x-printer.hu</competitor><product_name>Xerox 006R04395</product_name></item>
-<item><price>14259</price><availability>raktáron</availability><competitor>procompkft.hu</competitor><product_name>HP 303 CMYK Multipack (3YM92AE)</product_name></item>
-<item><price>24490</price><availability>
-      raktáron
-    </availability><competitor>mall.hu</competitor><product_name>Canon CLI-551 XL Photo Value Pack BK/C/M/Y (6443B006)</product_name></item>
-<item><price>9779</price><availability>raktáron</availability><competitor>onlinenyomtato.hu</competitor><product_name>Utángyártott Canon PG-560 XL Black</product_name></item>
-<item><price>4590</price><availability>raktáron</availability><competitor>nyomtassotthon.hu</competitor><product_name>HP CZ102AE</product_name></item>
-<item><price>4037</price><availability>raktáron</availability><competitor>zoltech.hu</competitor><product_name>Utángyártott Canon PG-512</product_name></item>
-<item><price>8990</price><availability>raktáron</availability><competitor>tintatenger.hu</competitor><product_name>Utángyártott HP W1350X</product_name></item>
-<item><price>19290</price><availability>
-      raktáron
-    </availability><competitor>alza.hu</competitor><product_name>Xerox 006R04402</product_name></item>
-<item><price>90185</price><availability>
-      raktáron
-    </availability><competitor>tonerpartners.hu</competitor><product_name>Epson T9661</product_name></item>
-<item><price>86390</price><availability>raktáron</availability><competitor>nyomtassotthon.hu</competitor><product_name>HP C1Q10A</product_name></item>
-<item><price>709</price><availability>raktáron</availability><competitor>cybermedia.hu</competitor><product_name>Utángyártott Kyocera TK-1125 Black (1T02M70NLV)</product_name></item>
-<item><price>6224</price><availability>raktáron</availability><competitor>irodaoutlet.hu</competitor><product_name>Canon PGI-550XL PGBK Black (BS6431B001AA)</product_name></item>
-<item><price>24000</price><availability>
-      raktáron
-    </availability><competitor>tonerpartners.hu</competitor><product_name>HP CF217A</product_name></item>
-<item><price>3199</price><availability>raktáron</availability><competitor>tonert.hu</competitor><product_name>Xerox 106R02778</product_name></item>
-<item><price>2990</price><availability>raktáron</availability><competitor>copygo.hu</competitor><product_name>Brother LC3617BK Black</product_name></item>
-<item><price>13990</price><availability>raktáron</availability><competitor>magicsystem.hu</competitor><product_name>Samsung MLT-D116S Black</product_name></item>
-<item><price>1645</price><availability>raktáron</availability><competitor>primatinta.hu</competitor><product_name>Utángyártott HP CE278A</product_name></item>
-<item><price>3376</price><availability>raktáron</availability><competitor>onlinetoner.hu</competitor><product_name>Utángyártott Kyocera TK-5230K Black (1T02R90NL0)</product_name></item>
-<item><price>3990</price><availability>raktáron</availability><competitor>printbazis.hu</competitor><product_name>Utángyártott HP W2070A</product_name></item>
-<item><price>1379</price><availability>raktáron</availability><competitor>cybermedia.hu</competitor><product_name>Utángyártott HP CB436A</product_name></item>
-<item><price>9381</price><availability>raktáron</availability><competitor>onlinetoner.hu</competitor><product_name>HP C9351AE</product_name></item>
-<item><price>2390</price><availability>raktáron</availability><competitor>tonerpiac.hu</competitor><product_name>Epson T03V4</product_name></item>
-<item><price>978</price><availability>raktáron</availability><competitor>nyomtassotthon.hu</competitor><product_name>Utángyártott Canon CL-511 Color</product_name></item>
-<item><price>4675</price><availability>raktáron</availability><competitor>nyomtassotthon.hu</competitor><product_name>Epson T03V1</product_name></item>
-<item><price>174</price><availability>raktáron</availability><competitor>cybermedia.hu</competitor><product_name>Utángyártott Epson T1281</product_name></item>
-<item><price>22440</price><availability>raktáron</availability><competitor>tonerpiac.com</competitor><product_name>Samsung MLT-D101S</product_name></item>
-<item><price>28820</price><availability>raktáron</availability><competitor>bevachip.hu</competitor><product_name>Kyocera TK-1150 Black (1T02RV0NL0)</product_name></item>
-<item><price>3810</price><availability>raktáron</availability><competitor>refillshop.hu</competitor><product_name>Utángyártott HP Q5949X Black</product_name></item>
-<item><price>38872</price><availability>raktáron</availability><competitor>printershop.hu</competitor><product_name>Xerox 006R04404</product_name></item>
-<item><price>37939</price><availability>raktáron</availability><competitor>nyomtassotthon.hu</competitor><product_name>HP W2210X</product_name></item>
-<item><price>8560</price><availability>raktáron</availability><competitor>jatekotthon.hu</competitor><product_name>HP CC640EE</product_name></item>
-<item><price>6677</price><availability>raktáron</availability><competitor>printershop.hu</competitor><product_name>Canon PG-540 Black (BS5225B005AA)</product_name></item>
-<item><price>6182</price><availability>raktáron</availability><competitor>printershop.hu</competitor><product_name>Canon PG-510 Black (BS2970B001AA)</product_name></item>
-<item><price>15990</price><availability>raktáron</availability><competitor>nyomtassotthon.hu</competitor><product_name>Canon PG-545XL/CL-546XL Photo Value Pack (BS8286B006AA)</product_name></item>
-<item><price>5490</price><availability>raktáron</availability><competitor>pcx.hu</competitor><product_name>Utángyártott HP W1106A (106A) V2</product_name></item>
-<item><price>39627</price><availability>raktáron</availability><competitor>printershop.hu</competitor><product_name>Canon CRG069H Black (5098C002)</product_name></item>
-<item><price>14806</price><availability>
-      raktáron
-    </availability><competitor>onlinetoner.hu</competitor><product_name>HP CH563EE</product_name></item>
-<item><price>19310</price><availability>raktáron</availability><competitor>senetic.hu</competitor><product_name>Epson T0715 Multipack</product_name></item>
-<item><price>70390</price><availability>raktáron</availability><competitor>nyomtassotthon.hu</competitor><product_name>Samsung CLT-P404C Multipack</product_name></item>
-<item><price>2730</price><availability>raktáron</availability><competitor>refillshop.hu</competitor><product_name>Utángyártott Samsung MLT-D1052L</product_name></item>
-<item><price>24990</price><availability>raktáron</availability><competitor>primatinta.hu</competitor><product_name>HP W2210A</product_name></item>
-<item><price>18510</price><availability>raktáron</availability><competitor>firstshop.hu</competitor><product_name>Canon PG-545XL/CL546XL Photo 8286B007</product_name></item>
-<item><price>28987</price><availability>raktáron</availability><competitor>printershop.hu</competitor><product_name>Canon CRG-067 Cyan (5101C002)</product_name></item>
-<item><price>3048</price><availability>raktáron</availability><competitor>refillshop.hu</competitor><product_name>Utángyártott Samsung MLT-D1082S</product_name></item>
-<item><price>72595</price><availability>
-      raktáron
-    </availability><competitor>tonerpartners.hu</competitor><product_name>HP CF226X</product_name></item>
-<item><price>7666</price><availability>raktáron</availability><competitor>irodaoutlet.hu</competitor><product_name>Utángyártott HP C3903A</product_name></item>
-<item><price>3300</price><availability>raktáron</availability><competitor>refillshop.hu</competitor><product_name>Utángyártott Samsung SCX-4200A / SCX-4200D3</product_name></item>
-<item><price>6897</price><availability>raktáron</availability><competitor>tonerpiac.com</competitor><product_name>HP 963XL Cyan (3JA27AE)</product_name></item>
-<item><price>4709</price><availability>raktáron</availability><competitor>iroda24.hu</competitor><product_name>HP CZ102E</product_name></item>
-<item><price>24690</price><availability>
-      raktáron
-    </availability><competitor>tonerpartners.hu</competitor><product_name>Kyocera TK-5240K Black</product_name></item>
-<item><price>837</price><availability>raktáron</availability><competitor>tonerpiac.hu</competitor><product_name>Utángyártott Epson T7741</product_name></item>
-<item><price>15415</price><availability>raktáron</availability><competitor>nyomtassotthon.hu</competitor><product_name>HP N9J72AE Multipack</product_name></item>
-<item><price>18890</price><availability>raktáron</availability><competitor>nyomtassotthon.hu</competitor><product_name>HP CN045AE</product_name></item>
-<item><price>2151</price><availability>raktáron</availability><competitor>onlinetoner.hu</competitor><product_name>Utángyártott Brother TN-2420</product_name></item>
-<item><price>2681</price><availability>raktáron</availability><competitor>onlinepatron.hu</competitor><product_name>Utángyártott Brother TN-2411</product_name></item>
-<item><price>39570</price><availability>raktáron</availability><competitor>bevachip.hu</competitor><product_name>Kyocera TK-3160 Black (1T02T90NL1)</product_name></item>
-<item><price>7057</price><availability>raktáron</availability><competitor>nyomtassotthon.hu</competitor><product_name>HP T6L99AE</product_name></item>
-<item><price>709</price><availability>raktáron</availability><competitor>cybermedia.hu</competitor><product_name>Utángyártott Kyocera TK-1115 Black (1T02M50NL0)</product_name></item>
-<item><price>6187</price><availability>raktáron</availability><competitor>printershop.hu</competitor><product_name>Canon PGI-570PGBK XL Black (BS0318C001AA)</product_name></item>
-<item><price>3715</price><availability>raktáron</availability><competitor>onlinetoner.hu</competitor><product_name>Utángyártott Samsung CLT-K404S Black</product_name></item>
-<item><price>13600</price><availability>raktáron</availability><competitor>cartridge.hu</competitor><product_name>HP F6U17AE</product_name></item>
-<item><price>98108</price><availability>raktáron</availability><competitor>tonerpiac.com</competitor><product_name>HP U0SL1AM Multipack</product_name></item>
-<item><price>5248</price><availability>raktáron</availability><competitor>nyomtassotthon.hu</competitor><product_name>HP N9K05AE</product_name></item>
-<item><price>2201</price><availability>raktáron</availability><competitor>cartridge.hu</competitor><product_name>Utángyártott HP C9351CE</product_name></item>
-<item><price>40194</price><availability>raktáron</availability><competitor>tonerpiac.com</competitor><product_name>HP CF230X</product_name></item>
-<item><price>9750</price><availability>raktáron</availability><competitor>irodaoutlet.hu</competitor><product_name>HP 3JB05AE Multipack</product_name></item>
-<item><price>7800</price><availability>raktáron</availability><competitor>tonerhouse.hu</competitor><product_name>Utángyártott HP CF259X</product_name></item>
-<item><price>819</price><availability>raktáron</availability><competitor>cartridge.hu</competitor><product_name>Utángyártott Canon PGI-2500XL Y Yellow</product_name></item>
-<item><price>1750</price><availability>raktáron</availability><competitor>tintatenger.hu</competitor><product_name>Utángyártott HP CB435A Black</product_name></item>
-<item><price>36038</price><availability>raktáron</availability><competitor>tonerpiac.com</competitor><product_name>Kyocera TK-1170 Black (1T02S50NL0)</product_name></item>
-<item><price>8424</price><availability>raktáron</availability><competitor>senetic.hu</competitor><product_name>Brother LC123BK Black</product_name></item>
-<item><price>7760</price><availability>raktáron</availability><competitor>best-toner.hu</competitor><product_name>Canon CL-561 (3731C001)</product_name></item>
-<item><price>22000</price><availability>raktáron</availability><competitor>gazdasagos-nyomtato.hu</competitor><product_name>Epson T7891</product_name></item>
-<item><price>63230</price><availability>raktáron</availability><competitor>bestmarkt.hu</competitor><product_name>Canon CRG-057H BK (3010C002AA)</product_name></item>
-<item><price>4990</price><availability>raktáron</availability><competitor>aqua.hu</competitor><product_name>Canon CLI-551Y XL Yellow (6446B001AA)</product_name></item>
-<item><price>3300</price><availability>raktáron</availability><competitor>refillshop.hu</competitor><product_name>Utángyártott HP C7115X</product_name></item>
-<item><price>71763</price><availability>raktáron</availability><competitor>senetic.hu</competitor><product_name>Brother TN-243CMYK Multipack</product_name></item>
-<item><price>17415</price><availability>
-      raktáron
-    </availability><competitor>tonerpartners.hu</competitor><product_name>Konica Minolta TN321K Black (A33K150)</product_name></item>
-<item><price>4160</price><availability>raktáron</availability><competitor>iway.hu</competitor><product_name>Brother TZe-221</product_name></item>
-<item><price>31582</price><availability>raktáron</availability><competitor>printershop.hu</competitor><product_name>Xerox 006R04379</product_name></item>
-<item><price>44018</price><availability>raktáron</availability><competitor>cct.hu</competitor><product_name>HP CF280A</product_name></item>
-<item><price>10399</price><availability>raktáron</availability><competitor>tintasziget.hu</competitor><product_name>Canon Creative Box PG-512/CL-513 (BS2969B014AA)</product_name></item>
-<item><price>2977</price><availability>raktáron</availability><competitor>jatekotthon.hu</competitor><product_name>Brother BTD60BK (DCP-T310)</product_name></item>
-<item><price>1290</price><availability>raktáron</availability><competitor>cartridge.hu</competitor><product_name>Utángyártott Epson M1400</product_name></item>
-<item><price>44900</price><availability>raktáron</availability><competitor>tonerprint.hu</competitor><product_name>Epson T11E1</product_name></item>
-<item><price>690</price><availability>raktáron</availability><competitor>printbazis.hu</competitor><product_name>Utángyártott Canon CLI-581 XXL Cyan (1995C001FU)</product_name></item>
-<item><price>12480</price><availability>raktáron</availability><competitor>nyomtassotthon.hu</competitor><product_name>HP 3YL84AE</product_name></item>
-<item><price>9788</price><availability>raktáron</availability><competitor>irodaoutlet.hu</competitor><product_name>Canon CL-513 Color (BS2971B001AA)</product_name></item>
-<item><price>8650</price><availability>raktáron</availability><competitor>bevachip.hu</competitor><product_name>Canon CL-41 Color (BS0617B001AA)</product_name></item>
-<item><price>4150</price><availability>raktáron</availability><competitor>tintatenger.hu</competitor><product_name>Utángyártott HP CC641EE</product_name></item>
-<item><price>5380</price><availability>raktáron</availability><competitor>nyomtassotthon.hu</competitor><product_name>HP 3YM75AE</product_name></item>
-<item><price>26487</price><availability>raktáron</availability><competitor>printershop.hu</competitor><product_name>OKI 46508712</product_name></item>
-<item><price>1184</price><availability>raktáron</availability><competitor>cybermedia.hu</competitor><product_name>Utángyártott Kyocera TK-170 (1T02LZ0NL0)</product_name></item>
-<item><price>44390</price><availability>raktáron</availability><competitor>nyomtassotthon.hu</competitor><product_name>HP W2032A</product_name></item>
-<item><price>38252</price><availability>raktáron</availability><competitor>nyomtassotthon.hu</competitor><product_name>HP 6ZC65AE Multipack</product_name></item>
-<item><price>6426</price><availability>raktáron</availability><competitor>printershop.hu</competitor><product_name>Canon PGI-580PGBK XL Black (2024C001AA)</product_name></item>
-<item><price>3339</price><availability>raktáron</availability><competitor>tonert.hu</competitor><product_name>Utángyártott Samsung ML-1660</product_name></item>
-<item><price>2595</price><availability>
-      raktáron
-    </availability><competitor>onlinetoner.hu</competitor><product_name>Utángyártott Brother TN-247 Black</product_name></item>
-<item><price>3450</price><availability>raktáron</availability><competitor>onlinepatron.hu</competitor><product_name>Utángyártott Xerox 106R1159</product_name></item>
-<item><price>12390</price><availability>raktáron</availability><competitor>pcx.hu</competitor><product_name>Kyocera TK-5230K Black (1T02R90NL0)</product_name></item>
-<item><price>39125</price><availability>
-      raktáron
-    </availability><competitor>tonerpartners.hu</competitor><product_name>Kyocera TK-6115 Black (1T02P10NL0)</product_name></item>
-<item><price>39900</price><availability>raktáron</availability><competitor>pc-online.hu</competitor><product_name>HP CE505X</product_name></item>
-<item><price>8980</price><availability>
-      raktáron
-    </availability><competitor>bevachip.hu</competitor><product_name>Canon PG-545 XL BK (8286B004)</product_name></item>
-<item><price>4990</price><availability>raktáron</availability><competitor>pepita.hu</competitor><product_name>HP F6U67AE</product_name></item>
-<item><price>43157</price><availability>raktáron</availability><competitor>x-printer.hu</competitor><product_name>Xerox 006R04380</product_name></item>
-<item><price>2527</price><availability>raktáron</availability><competitor>nyomtassotthon.hu</competitor><product_name>Epson T6642 (C13T66424A/C13T664240)</product_name></item>
-<item><price>3261</price><availability>raktáron</availability><competitor>cybermedia.hu</competitor><product_name>Utángyártott HP CF410X</product_name></item>
-<item><price>16858</price><availability>raktáron</availability><competitor>nyomtassotthon.hu</competitor><product_name>Utángyártott Sharp AR-016T</product_name></item>
-<item><price>25287</price><availability>raktáron</availability><competitor>printershop.hu</competitor><product_name>Canon CRG-067BK (5102C002)</product_name></item>
-<item><price>2144</price><availability>raktáron</availability><competitor>jatekotthon.hu</competitor><product_name>Brother BT5000Y Yellow</product_name></item>
-<item><price>2818</price><availability>raktáron</availability><competitor>tonerpiac.hu</competitor><product_name>Utángyártott Samsung CLT-K4072S Black</product_name></item>
-<item><price>920</price><availability>raktáron</availability><competitor>tobuy.hu</competitor><product_name>Utángyártott Canon PGI-580PGBK XXL Pigment Black (1970C001FU)</product_name></item>
-<item><price>31328</price><availability>raktáron</availability><competitor>tonerpiac.com</competitor><product_name>Canon PGI-2500XL Multipack BK/C/M/Y (BS9254B004AA)</product_name></item>
-<item><price>7010</price><availability>raktáron</availability><competitor>irodaoutlet.hu</competitor><product_name>Canon PG-40 Black (BS0615B001AA)</product_name></item>
-<item><price>30693</price><availability>raktáron</availability><competitor>tonerpiac.hu</competitor><product_name>Brother TN-247BK</product_name></item>
-<item><price>7590</price><availability>raktáron</availability><competitor>patronbolt.hu</competitor><product_name>Canon CL-511 Color (BS2972B001AA)</product_name></item>
-<item><price>5999</price><availability>raktáron</availability><competitor>tonerhouse.hu</competitor><product_name>Canon CLI-551C XL Cyan (BS6444B001AA)</product_name></item>
-<item><price>19321</price><availability>raktáron</availability><competitor>printershop.hu</competitor><product_name>Lexmark B222000</product_name></item>
-<item><price>3198</price><availability>raktáron</availability><competitor>tobuy.hu</competitor><product_name>Brother LC462BK</product_name></item>
-<item><price>25606</price><availability>raktáron</availability><competitor>senetic.hu</competitor><product_name>Epson T9452</product_name></item>
-<item><price>69000</price><availability>
-      raktáron
-    </availability><competitor>tonerpartners.hu</competitor><product_name>HP W2030X</product_name></item>
-<item><price>5023</price><availability>raktáron</availability><competitor>onlinetoner.hu</competitor><product_name>Canon PG-37 Black (BS2145B001AA)</product_name></item>
-<item><price>2356</price><availability>raktáron</availability><competitor>web24.hu</competitor><product_name>Utángyártott HP 903XL Cyan</product_name></item>
-<item><price>31579</price><availability>raktáron</availability><competitor>procompkft.hu</competitor><product_name>Canon CRG069 Black (5094C002)</product_name></item>
-<item><price>4490</price><availability>raktáron</availability><competitor>alza.hu</competitor><product_name>Utángyártott HP 51645AE</product_name></item>
-<item><price>2760</price><availability>raktáron</availability><competitor>cybermedia.hu</competitor><product_name>Utángyártott Canon CRG-719H</product_name></item>
-<item><price>1514</price><availability>raktáron</availability><competitor>onlinepatron.hu</competitor><product_name>Utángyártott HP C6656AE</product_name></item>
-<item><price>5777</price><availability>raktáron</availability><competitor>printershop.hu</competitor><product_name>Canon PGI-570PGBK Black (BS0372C001AA)</product_name></item>
-<item><price>19280</price><availability>raktáron</availability><competitor>nyomtassotthon.hu</competitor><product_name>HP 6ZC73AE Multipack</product_name></item>
-<item><price>2039</price><availability>raktáron</availability><competitor>onlinepatron.hu</competitor><product_name>Utángyártott HP CF230A Black</product_name></item>
-<item><price>4732</price><availability>raktáron</availability><competitor>nyomtassotthon.hu</competitor><product_name>Epson T03P14 EcoTank 110</product_name></item>
-<item><price>49855</price><availability>
-      raktáron
-    </availability><competitor>tonerpartners.hu</competitor><product_name>HP CF226A</product_name></item>
-<item><price>9000</price><availability>raktáron</availability><competitor>refillshop.hu</competitor><product_name>HP 51645AE</product_name></item>
-<item><price>14506</price><availability>
-      raktáron
-    </availability><competitor>onlinenyomtato.hu</competitor><product_name>Canon CLI-526 MultiPack C/M/Y (BS4541B006AA)</product_name></item>
-<item><price>2480</price><availability>raktáron</availability><competitor>nyomtassotthon.hu</competitor><product_name>Epson T6641</product_name></item>
-<item><price>29460</price><availability>raktáron</availability><competitor>tonerpiac.com</competitor><product_name>HP CF541A</product_name></item>
-<item><price>20895</price><availability>raktáron</availability><competitor>nyomtassotthon.hu</competitor><product_name>Epson T40C1</product_name></item>
-<item><price>22000</price><availability>raktáron</availability><competitor>webshop.siraprint.hu</competitor><product_name>Canon CRG-728 Black (CH3500B002AA)</product_name></item>
-<item><price>34900</price><availability>raktáron</availability><competitor>bluechip.hu</competitor><product_name>Canon CRG-718BK Black (CR2662B002AA)</product_name></item>
-<item><price>192339</price><availability>raktáron</availability><competitor>procompkft.hu</competitor><product_name>Lexmark 58D2U0E</product_name></item>
-<item><price>39960</price><availability>raktáron</availability><competitor>printbazis.hu</competitor><product_name>HP 3HZ51AE Multipack BK/C/M/Y</product_name></item>
-<item><price>2615</price><availability>raktáron</availability><competitor>notebook-alkatresz.hu</competitor><product_name>Brother TZe-211</product_name></item>
-<item><price>28448</price><availability>raktáron</availability><competitor>nyomtassotthon.hu</competitor><product_name>Epson T40D140</product_name></item>
-<item><price>18155</price><availability>raktáron</availability><competitor>nyomtatokeskellekek.hu</competitor><product_name>Konica Minolta TN221K Black (A8K3150)</product_name></item>
-<item><price>46855</price><availability>raktáron</availability><competitor>tonerpiac.com</competitor><product_name>Kyocera TK-3190</product_name></item>
-<item><price>2200</price><availability>raktáron</availability><competitor>gravicom.hu</competitor><product_name>Brother BT5000C Cyan</product_name></item>
-<item><price>95920</price><availability>
-      raktáron
-    </availability><competitor>tonerpartners.hu</competitor><product_name>Lexmark 64G0H00</product_name></item>
-<item><price>13600</price><availability>raktáron</availability><competitor>cartridge.hu</competitor><product_name>HP F6U18AE</product_name></item>
-<item><price>79985</price><availability>raktáron</availability><competitor>patronestoner.hu</competitor><product_name>Xerox 006R04381</product_name></item>
-<item><price>19241</price><availability>raktáron</availability><competitor>cct.hu</competitor><product_name>HP W2071A</product_name></item>
-<item><price>739</price><availability>raktáron</availability><competitor>procompkft.hu</competitor><product_name>Utángyártott HP CF400X Black</product_name></item>
-<item><price>60159</price><availability>raktáron</availability><competitor>onlinepatron.hu</competitor><product_name>Lexmark 56F2U0E</product_name></item>
-<item><price>20000</price><availability>raktáron</availability><competitor>webshop.siraprint.hu</competitor><product_name>HP Q6003A</product_name></item>
-<item><price>3889</price><availability>raktáron</availability><competitor>onlinetoner.hu</competitor><product_name>Utángyártott Canon CL-41 Color</product_name></item>
-<item><price>27996</price><availability>raktáron</availability><competitor>senetic.hu</competitor><product_name>HP C7115A</product_name></item>
-<item><price>8592</price><availability>raktáron</availability><competitor>jatekotthon.hu</competitor><product_name>Brother LC462XLBK</product_name></item>
-<item><price>2980</price><availability>raktáron</availability><competitor>nyomtassotthon.hu</competitor><product_name>Epson T6731</product_name></item>
-<item><price>3066</price><availability>raktáron</availability><competitor>onlinepatron.hu</competitor><product_name>Utángyártott HP CF226X Black</product_name></item>
-<item><price>4813</price><availability>raktáron</availability><competitor>reman4uz.hu</competitor><product_name>Utángyártott Ricoh 407254</product_name></item>
-<item><price>7366</price><availability>raktáron</availability><competitor>zoltech.hu</competitor><product_name>HP CZ130A</product_name></item>
-<item><price>35999</price><availability>raktáron</availability><competitor>cartridge.hu</competitor><product_name>HP CF210X</product_name></item>
-<item><price>5455</price><availability>raktáron</availability><competitor>zoltech.hu</competitor><product_name>Canon PGI-525PGBK Black (BS4529B001AA)</product_name></item>
-<item><price>38752</price><availability>raktáron</availability><competitor>tonerpiac.com</competitor><product_name>Konica Minolta TNP-44 Black (A6VK01H)</product_name></item>
-<item><price>16690</price><availability>raktáron</availability><competitor>alza.hu</competitor><product_name>Canon C-EXV33 Black (CF2785B002AA)</product_name></item>
-<item><price>62504</price><availability>raktáron</availability><competitor>tonerpiac.hu</competitor><product_name>Kyocera TK-5280K Black</product_name></item>
-<item><price>19689</price><availability>raktáron</availability><competitor>patronestoner.hu</competitor><product_name>Brother TN-243BK Black</product_name></item>
-<item><price>4990</price><availability>raktáron</availability><competitor>primatinta.hu</competitor><product_name>Canon FX-10 Black (CH0263B002AA)</product_name></item>
-<item><price>23390</price><availability>raktáron</availability><competitor>copygo.hu</competitor><product_name>Samsung MLT-D704S</product_name></item>
-<item><price>2690</price><availability>raktáron</availability><competitor>refillshop.hu</competitor><product_name>Utángyártott HP CE505X Black</product_name></item>
-<item><price>459</price><availability>raktáron</availability><competitor>procompkft.hu</competitor><product_name>Utángyártott HP CF283X</product_name></item>
-<item><price>4582</price><availability>raktáron</availability><competitor>tutitinta.hu</competitor><product_name>Epson T1281</product_name></item>
-<item><price>2744</price><availability>raktáron</availability><competitor>officeland.hu</competitor><product_name>Brother LC525XL-M Magenta</product_name></item>
-<item><price>5000</price><availability>
+<item><price>15990</price><availability>raktáron</availability><competitor>firstshop.hu</competitor><product_name>Utángyártott Canon PGI-580XXL / CLI-581XXL Multipack</product_name></item>
+<item><price>14709</price><availability>raktáron</availability><competitor>homeofficeshop.hu</competitor><product_name>Canon PG-545 + CL-546 Multipack (BS8287B005AA)</product_name></item>
+<item><price>33171</price><availability>raktáron</availability><competitor>jatekotthon.hu</competitor><product_name>Canon CLI-581 XXL Multipack (1998C005AA)</product_name></item>
+<item><price>7751</price><availability>raktáron</availability><competitor>onlinepatron.hu</competitor><product_name>HP F6U66AE</product_name></item>
+<item><price>19990</price><availability>raktáron</availability><competitor>bluechip.hu</competitor><product_name>Kyocera TK-1248 Black (1T02Y80NL0)</product_name></item>
+<item><price>689</price><availability>raktáron</availability><competitor>tonert.hu</competitor><product_name>Utángyártott Epson T03V1</product_name></item>
+<item><price>9684</price><availability>raktáron</availability><competitor>nyomtassingyen.hu</competitor><product_name>Utángyártott HP W1106A (106A) V2</product_name></item>
+<item><price>23276</price><availability>raktáron</availability><competitor>irodaoutlet.hu</competitor><product_name>Samsung CLT-K404S Black</product_name></item>
+<item><price>1295</price><availability>raktáron</availability><competitor>fcmarket.hu</competitor><product_name>Utángyártott Canon CLI-581 XXL Cyan (1995C001FU)</product_name></item>
+<item></item>
+<item><price>26442</price><availability>raktáron</availability><competitor>tonerpiac.com</competitor><product_name>HP 51645AE</product_name></item>
+<item><price>11482</price><availability>raktáron</availability><competitor>zoltech.hu</competitor><product_name>Canon CL-513 Color (BS2971B001AA)</product_name></item>
+<item><price>43600</price><availability>raktáron</availability><competitor>totalprint.hu</competitor><product_name>HP CF400X</product_name></item>
+<item><price>3850</price><availability>raktáron</availability><competitor>papirtar.hu</competitor><product_name>Utángyártott HP CF283X</product_name></item>
+<item><price>13210</price><availability>raktáron</availability><competitor>bestmarkt.hu</competitor><product_name>Canon PGI-2500XL BK Black (BS9254B001AA)</product_name></item>
+<item><price>51543</price><availability>raktáron</availability><competitor>tonerpiac.hu</competitor><product_name>HP C4127X</product_name></item>
+<item><price>11990</price><availability>raktáron</availability><competitor>alza.hu</competitor><product_name>Utángyártott Epson T2996</product_name></item>
+<item><price>712</price><availability>raktáron</availability><competitor>zoltech.hu</competitor><product_name>Utángyártott HP CB323EE</product_name></item>
+<item><price>71990</price><availability>raktáron</availability><competitor>alza.hu</competitor><product_name>OKI 45807111</product_name></item>
+<item><price>100790</price><availability>raktáron</availability><competitor>nyomtassingyen.hu</competitor><product_name>HP CF287A</product_name></item>
+<item><price>15608</price><availability>raktáron</availability><competitor>patronestoner.hu</competitor><product_name>HP F6U16AE</product_name></item>
+<item><price>170990</price><availability>raktáron</availability><competitor>mysoft.hu</competitor><product_name>Lexmark 50F2U0E</product_name></item>
+<item><price>10458</price><availability>raktáron</availability><competitor>mentornet.hu</competitor><product_name>Utángyártott Sharp MX-C30GT-B Black</product_name></item>
+<item><price>46631</price><availability>raktáron</availability><competitor>hyperoutlet.hu</competitor><product_name>Kyocera TK-1160 Black (1T02RY0NL0)</product_name></item>
+<item><price>4870</price><availability>raktáron</availability><competitor>bestmarkt.hu</competitor><product_name>Utángyártott HP CF280X</product_name></item>
+<item><price>101690</price><availability>raktáron</availability><competitor>primatinta.hu</competitor><product_name>Xerox 106R02723</product_name></item>
+<item><price>10400</price><availability>raktáron</availability><competitor>bestmarkt.hu</competitor><product_name>HP F6U13AE</product_name></item>
+<item><price>7189</price><availability>raktáron</availability><competitor>bluechip.hu</competitor><product_name>HP T6N02A</product_name></item>
+<item><price>48190</price><availability>raktáron</availability><competitor>firstshop.hu</competitor><product_name>HP CN625AE</product_name></item>
+<item><price>17000</price><availability>raktáron</availability><competitor>cartridge.hu</competitor><product_name>HP C3906A</product_name></item>
+<item><price>6046</price><availability>raktáron</availability><competitor>easy-shop.hu</competitor><product_name>Brother STE-151</product_name></item>
+<item><price>24590</price><availability>raktáron</availability><competitor>copygo.hu</competitor><product_name>Canon CLI-581XL Photo Value Pack BK/C/M/Y (2052C004AA)</product_name></item>
+<item><price>6526</price><availability>raktáron</availability><competitor>onlinepatron.hu</competitor><product_name>HP CB316EE</product_name></item>
+<item><price>7832</price><availability>raktáron</availability><competitor>tonerpiac.com</competitor><product_name>Epson T2631</product_name></item>
+<item><price>22719</price><availability>raktáron</availability><competitor>procompkft.hu</competitor><product_name>HP W2413A</product_name></item>
+<item><price>104000</price><availability>raktáron</availability><competitor>mysoft.hu</competitor><product_name>Epson T05A3</product_name></item>
+<item><price>13546</price><availability>raktáron</availability><competitor>nyomtassingyen.hu</competitor><product_name>Utángyártott Ricoh 841818</product_name></item>
+<item><price>72818</price><availability>raktáron</availability><competitor>tonerpiac.hu</competitor><product_name>HP W2120A</product_name></item>
+<item><price>3127</price><availability>raktáron</availability><competitor>irodaszer.ink4.hu</competitor><product_name>Epson T03V24A</product_name></item>
+<item><price>15751</price><availability>raktáron</availability><competitor>tonerpiac.com</competitor><product_name>Xerox 006R01573</product_name></item>
+<item></item>
+<item><price>49690</price><availability>raktáron</availability><competitor>rufusz.hu</competitor><product_name>Canon C-EXV34C Cyan (CF3783B002AA)</product_name></item>
+<item><price>40550</price><availability>raktáron</availability><competitor>onlinepatron.hu</competitor><product_name>Develop TN213Y Yellow</product_name></item>
+<item><price>129690</price><availability>raktáron</availability><competitor>ipon.hu</competitor><product_name>Epson T02Q1</product_name></item>
+<item><price>174840</price><availability>raktáron</availability><competitor>firstshop.hu</competitor><product_name>Lexmark 55B2X0E</product_name></item>
+<item><price>20326</price><availability>raktáron</availability><competitor>tintabox.hu</competitor><product_name>Konica Minolta TN217 Black (A202051)</product_name></item>
+<item><price>53426</price><availability>raktáron</availability><competitor>nyomtassingyen.hu</competitor><product_name>HP Q2610A</product_name></item>
+<item><price>3290</price><availability>raktáron</availability><competitor>mall.hu</competitor><product_name>Epson T6644</product_name></item>
+<item><price>78333</price><availability>raktáron</availability><competitor>onlinepatron.hu</competitor><product_name>OKI 44917602</product_name></item>
+<item><price>46803</price><availability>raktáron</availability><competitor>megbizhatonyomtato.hu</competitor><product_name>Brother HGE-261V5</product_name></item>
+<item><price>5898</price><availability>raktáron</availability><competitor>tonerpiac.hu</competitor><product_name>Canon PGI-9G Green (BS1041B001AA)</product_name></item>
+<item><price>738</price><availability>raktáron</availability><competitor>irodaszer.ink4.hu</competitor><product_name>Utángyártott HP CB324EE</product_name></item>
+<item><price>33388</price><availability>raktáron</availability><competitor>nyomtassingyen.hu</competitor><product_name>Brother TN-3430 Black</product_name></item>
+<item><price>5090</price><availability>raktáron</availability><competitor>alza.hu</competitor><product_name>Epson T1801</product_name></item>
+<item></item>
+<item><price>10701</price><availability>raktáron</availability><competitor>zoltech.hu</competitor><product_name>Utángyártott Samsung CLP-510D5Y</product_name></item>
+<item><price>9279</price><availability>raktáron</availability><competitor>tinta-patron.hu</competitor><product_name>Utángyártott Kyocera TK-590K Black (1T02KV0NL0)</product_name></item>
+<item><price>44260</price><availability>raktáron</availability><competitor>printbazis.hu</competitor><product_name>HP C2P42AE</product_name></item>
+<item><price>7410</price><availability>raktáron</availability><competitor>bestmarkt.hu</competitor><product_name>Brother TZe-252</product_name></item>
+<item><price>16177</price><availability>raktáron</availability><competitor>nyomtassingyen.hu</competitor><product_name>Utángyártott Xerox 106R03532</product_name></item>
+<item><price>13090</price><availability>raktáron</availability><competitor>copygo.hu</competitor><product_name>Brother TZe-31M3</product_name></item>
+<item><price>11021</price><availability>raktáron</availability><competitor>tonerpiac.com</competitor><product_name>Epson S015336</product_name></item>
+<item><price>36895</price><availability>raktáron</availability><competitor>nyomtassingyen.hu</competitor><product_name>Canon C-EXV 53 Black (0473C002AA)</product_name></item>
+<item><price>84900</price><availability>raktáron</availability><competitor>bluechip.hu</competitor><product_name>HP CF412X</product_name></item>
+<item><price>6310</price><availability>raktáron</availability><competitor>firstshop.hu</competitor><product_name>Epson S015327</product_name></item>
+<item><price>51990</price><availability>raktáron</availability><competitor>alza.hu</competitor><product_name>Canon CRG-046 HBK Black (CR1254C002AA)</product_name></item>
+<item><price>2070</price><availability>raktáron</availability><competitor>bestmarkt.hu</competitor><product_name>Utángyártott HP CZ110A</product_name></item>
+<item><price>4489</price><availability>raktáron</availability><competitor>bluechip.hu</competitor><product_name>DYMO S0721500/59421</product_name></item>
+<item><price>8470</price><availability>raktáron</availability><competitor>rufusz.hu</competitor><product_name>Brother TZe-M961</product_name></item>
+<item><price>22047</price><availability>raktáron</availability><competitor>tonerkozpont.hu</competitor><product_name>Konica Minolta TNP48M Magenta (A5X0350)</product_name></item>
+<item><price>5652</price><availability>raktáron</availability><competitor>zonacomputers.hu</competitor><product_name>Brother TZe-431</product_name></item>
+<item><price>25599</price><availability>raktáron</availability><competitor>tonert.hu</competitor><product_name>HP W1390A</product_name></item>
+<item><price>90538</price><availability>raktáron</availability><competitor>tripont.hu</competitor><product_name>Kyocera TK-560Y Yellow (1T02HNAEU0)</product_name></item>
+<item><price>47884</price><availability>raktáron</availability><competitor>irodaoutlet.hu</competitor><product_name>Canon C-EXV34Y Yellow (CF3785B002AA)</product_name></item>
+<item><price>60800</price><availability>raktáron</availability><competitor>firstshop.hu</competitor><product_name>OKI 45862837</product_name></item>
+<item><price>57456</price><availability>raktáron</availability><competitor>cartridge.hu</competitor><product_name>Konica Minolta TNP63 Black</product_name></item>
+<item><price>60135</price><availability>raktáron</availability><competitor>irodaoutlet.hu</competitor><product_name>Kyocera 1T02TVBNL0</product_name></item>
+<item><price>13350</price><availability>raktáron</availability><competitor>gazdasagos-nyomtato.hu</competitor><product_name>Epson T07U340</product_name></item>
+<item><price>61259</price><availability>raktáron</availability><competitor>procompkft.hu</competitor><product_name>Xerox 106R02310</product_name></item>
+<item><price>13334</price><availability>raktáron</availability><competitor>netkershop.hu</competitor><product_name>Brother LC1280XL-BK Black</product_name></item>
+<item><price>7612</price><availability>raktáron</availability><competitor>tonerpiac.com</competitor><product_name>HP C8773EE</product_name></item>
+<item></item>
+<item><price>6410</price><availability>raktáron</availability><competitor>firstshop.hu</competitor><product_name>Brother TZe-541</product_name></item>
+<item><price>28990</price><availability>raktáron</availability><competitor>primatinta.hu</competitor><product_name>Brother TN-241BK Black</product_name></item>
+<item><price>7995</price><availability>raktáron</availability><competitor>reman4uz.hu</competitor><product_name>Utángyártott HP CE255X / Canon CRG724H</product_name></item>
+<item><price>40791</price><availability>raktáron</availability><competitor>onlinepatron.hu</competitor><product_name>Ricoh 407645</product_name></item>
+<item></item>
+<item><price>30105</price><availability>raktáron</availability><competitor>tintabox.hu</competitor><product_name>Konica Minolta TN326 Black</product_name></item>
+<item><price>12800</price><availability>raktáron</availability><competitor>firstshop.hu</competitor><product_name>Utángyártott HP Q6471A</product_name></item>
+<item><price>10890</price><availability>raktáron</availability><competitor>primatinta.hu</competitor><product_name>Brother CZ-1004</product_name></item>
+<item><price>37490</price><availability>raktáron</availability><competitor>alza.hu</competitor><product_name>Xerox 006R04360 Black</product_name></item>
+<item></item>
+<item><price>9590</price><availability>raktáron</availability><competitor>printbazis.hu</competitor><product_name>Utángyártott HP Q2671A</product_name></item>
+<item><price>4400</price><availability>raktáron</availability><competitor>bevachip.hu</competitor><product_name>Brother TZe-111</product_name></item>
+<item><price>9769</price><availability>raktáron</availability><competitor>tonert.hu</competitor><product_name>kyocera Kyocera TK-8345</product_name></item>
+<item><price>10653</price><availability>raktáron</availability><competitor>odeo.hu</competitor><product_name>Sharp MX-C30GT-B Black</product_name></item>
+<item><price>6560</price><availability>raktáron</availability><competitor>megbizhatonyomtato.hu</competitor><product_name>Brother MK-231BZ</product_name></item>
+<item><price>33999</price><availability>raktáron</availability><competitor>cartridge.hu</competitor><product_name>HP C9384A</product_name></item>
+<item><price>34717</price><availability>raktáron</availability><competitor>CDRmarket.hu</competitor><product_name>Konica Minolta TN214C Cyan (A0D7454)</product_name></item>
+<item><price>17970</price><availability>raktáron</availability><competitor>firstshop.hu</competitor><product_name>Epson T2986 Multipack</product_name></item>
+<item><price>28924</price><availability>raktáron</availability><competitor>papirdepo.hu</competitor><product_name>Kyocera TK-5240B Blue</product_name></item>
+<item><price>25699</price><availability>raktáron</availability><competitor>procompkft.hu</competitor><product_name>Samsung MLT-D709S</product_name></item>
+<item></item>
+<item><price>7978</price><availability>raktáron</availability><competitor>onlinepatron.hu</competitor><product_name>Brother TZe-555</product_name></item>
+<item><price>5535</price><availability>raktáron</availability><competitor>kecskemetirodaszer.hu</competitor><product_name>HP CZ111E</product_name></item>
+<item><price>25105</price><availability>raktáron</availability><competitor>irodaszer.ink4.hu</competitor><product_name>Ricoh 842030</product_name></item>
+<item><price>12830</price><availability>raktáron</availability><competitor>tonerkozpont.hu</competitor><product_name>HP 3ED69A</product_name></item>
+<item><price>8500</price><availability>raktáron</availability><competitor>refillshop.hu</competitor><product_name>Utángyártott HP C92298A</product_name></item>
+<item><price>46690</price><availability>raktáron</availability><competitor>primatinta.hu</competitor><product_name>Xerox 006R04398</product_name></item>
+<item><price>7653</price><availability>raktáron</availability><competitor>easy-shop.hu</competitor><product_name>Brother TZe-FX241</product_name></item>
+<item><price>6590</price><availability>raktáron</availability><competitor>ipon.hu</competitor><product_name>Brother TZE-FX221</product_name></item>
+<item><price>24712</price><availability>raktáron</availability><competitor>irodaitermekek.hu</competitor><product_name>Xerox 106R02760</product_name></item>
+<item><price>22883</price><availability>raktáron</availability><competitor>easy-shop.hu</competitor><product_name>Ricoh 842311</product_name></item>
+<item><price>36100</price><availability>raktáron</availability><competitor>totalprint.hu</competitor><product_name>Canon CRG-071H Black (5646C002)</product_name></item>
+<item><price>129900</price><availability>raktáron</availability><competitor>webshop.camerakft.hu</competitor><product_name>Canon PFI-1700PC Photo Cyan (CF0779C001AA)</product_name></item>
+<item><price>7869</price><availability>raktáron</availability><competitor>iratkapocs.hu</competitor><product_name>Utángyártott Epson T9452</product_name></item>
+<item></item>
+<item><price>47761</price><availability>raktáron</availability><competitor>dellaprint.hu</competitor><product_name>HP CE410X</product_name></item>
+<item><price>5696</price><availability>raktáron</availability><competitor>bestoffice.hu</competitor><product_name>Utángyártott Xerox 108R00909</product_name></item>
+<item><price>127998</price><availability>raktáron</availability><competitor>tonerpiac.com</competitor><product_name>HP CE261A</product_name></item>
+<item><price>7190</price><availability>raktáron</availability><competitor>primatinta.hu</competitor><product_name>Brother TZe-451</product_name></item>
+<item><price>152268</price><availability>raktáron</availability><competitor>megbizhatonyomtato.hu</competitor><product_name>Lexmark 20N2XM0</product_name></item>
+<item></item>
+<item><price>40890</price><availability>raktáron</availability><competitor>tonerprint.hu</competitor><product_name>Kyocera TK-3060 Black</product_name></item>
+<item></item>
+<item><price>979</price><availability>raktáron</availability><competitor>procompkft.hu</competitor><product_name>Utángyártott Epson T03V3</product_name></item>
+<item><price>1911</price><availability>raktáron</availability><competitor>onlinepatron.hu</competitor><product_name>Utángyártott Epson M2000</product_name></item>
+<item><price>7880</price><availability>raktáron</availability><competitor>nyomtassingyen.hu</competitor><product_name>Brother TZe-355</product_name></item>
+<item><price>152268</price><availability>raktáron</availability><competitor>megbizhatonyomtato.hu</competitor><product_name>Lexmark 20N2XY0</product_name></item>
+<item><price>11190</price><availability>raktáron</availability><competitor>primatinta.hu</competitor><product_name>Brother LC1100HY-BK High Yield Black</product_name></item>
+<item><price>40790</price><availability>raktáron</availability><competitor>ipon.hu</competitor><product_name>Epson T3357 Multipack</product_name></item>
+<item><price>54690</price><availability>raktáron</availability><competitor>alza.hu</competitor><product_name>Canon CRG-056L Black (3006C002AA)</product_name></item>
+<item><price>18067</price><availability>raktáron</availability><competitor>nyomtassotthon.hu</competitor><product_name>Utángyártott Samsung MLT-D307E</product_name></item>
+<item><price>29637</price><availability>raktáron</availability><competitor>irodaoutlet.hu</competitor><product_name>Brother TN-2320</product_name></item>
+<item><price>109649</price><availability>raktáron</availability><competitor>procompkft.hu</competitor><product_name>Epson T6941</product_name></item>
+<item><price>7894</price><availability>raktáron</availability><competitor>easy-shop.hu</competitor><product_name>Canon PFI-300 Y (4196C001AA)</product_name></item>
+<item><price>6584</price><availability>raktáron</availability><competitor>tonerpiac.com</competitor><product_name>Brother TZe-145</product_name></item>
+<item></item>
+<item><price>8763</price><availability>raktáron</availability><competitor>onlinenyomtato.hu</competitor><product_name>Epson S015086</product_name></item>
+<item><price>1233</price><availability>raktáron</availability><competitor>officesprint.hu</competitor><product_name>Utángyártott Epson ERC30</product_name></item>
+<item></item>
+<item><price>5150</price><availability>raktáron</availability><competitor>tonerhouse.hu</competitor><product_name>Utángyártott Brother TN-3520 Black</product_name></item>
+<item><price>37990</price><availability>raktáron</availability><competitor>printbazis.hu</competitor><product_name>HP CF283X Black</product_name></item>
+<item><price>32900</price><availability>raktáron</availability><competitor>warnex.hu</competitor><product_name>Xerox 006R04362 Magenta</product_name></item>
+<item><price>6990</price><availability>raktáron</availability><competitor>nyomtatopatronbolt.hu</competitor><product_name>Utángyártott HP CH564EE</product_name></item>
+<item><price>10340</price><availability>raktáron</availability><competitor>bzcomp.hu</competitor><product_name>Canon PGI-520BK Twin Pack (BS2932B009AA)</product_name></item>
+<item><price>24697</price><availability>raktáron</availability><competitor>CDRmarket.hu</competitor><product_name>Utángyártott Lexmark 80C2SC0</product_name></item>
+<item><price>5029</price><availability>raktáron</availability><competitor>granddigital.hu</competitor><product_name>Brother TZe-131</product_name></item>
+<item></item>
+<item><price>6631</price><availability>raktáron</availability><competitor>easy-shop.hu</competitor><product_name>Brother TZe-FX631</product_name></item>
+<item><price>6890</price><availability>raktáron</availability><competitor>bluechip.hu</competitor><product_name>Canon CLI-36 Color (BS1511B001AA)</product_name></item>
+<item><price>23990</price><availability>raktáron</availability><competitor>copygo.hu</competitor><product_name>Konica Minolta TN912</product_name></item>
+<item><price>6300</price><availability>raktáron</availability><competitor>tonerhouse.hu</competitor><product_name>Canon CLI-526BK Black (BS4540B001AA)</product_name></item>
+<item><price>12050</price><availability>raktáron</availability><competitor>nyomtassotthon.hu</competitor><product_name>Utángyártott HP Q6001A</product_name></item>
+<item><price>67149</price><availability>raktáron</availability><competitor>x-printer.hu</competitor><product_name>Xerox 106R01294</product_name></item>
+<item><price>5900</price><availability>raktáron</availability><competitor>nyomtatopatronbolt.hu</competitor><product_name>Utángyártott Brother TN-660</product_name></item>
+<item><price>7171</price><availability>raktáron</availability><competitor>cartridge.hu</competitor><product_name>Canon CLI-581PB XL (2053C001AA)</product_name></item>
+<item><price>9490</price><availability>raktáron</availability><competitor>firstshop.hu</competitor><product_name>Utángyártott Dell 593-11108</product_name></item>
+<item><price>10990</price><availability>raktáron</availability><competitor>toptoner.hu</competitor><product_name>HP 3YP61AE</product_name></item>
+</items>
