@@ -70,7 +70,7 @@ class ArukeresoSpider(scrapy.Spider):
 
     custom_settings = {
         'DOWNLOAD_DELAY': 0.2,  # add download delay of 1 second
-        'CONCURRENT_REQUESTS': 7,  # Adjust the concurrency level as needed
+        'CONCURRENT_REQUESTS': 13,  # Adjust the concurrency level as needed
         'CONCURRENT_REQUESTS_PER_DOMAIN' : 3, # for the current limit this must be so high
         'RETRY_TIMES': 5,  # Number of times to retry a failed request
         'RETRY_HTTP_CODES': [500, 502, 503, 504, 408, 443],  # HTTP status codes to retry
@@ -176,6 +176,13 @@ class ArukeresoSpider(scrapy.Spider):
         prices = response.css('span[itemprop="price"]::text').getall()
         availabilities = response.css('span.delivery-time::text').getall()
         competitors = response.css('div.shopname::text').getall()
+
+        if not prices:
+            prices = response.css('div.row-price > span::text').getall()
+
+        if not competitor:
+            competitors = response.css('div.col-logo img::attr(alt)').getall()
+
         
         # concatenate the text from the nested span tags to get the product name
         product_name = ' '.join(response.css('h1.hidden-xs span::text').getall())
