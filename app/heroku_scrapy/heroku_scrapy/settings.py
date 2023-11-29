@@ -98,6 +98,7 @@ DOWNLOADER_MIDDLEWARES = {
     'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None,
     'heroku_scrapy.middlewares.RotateUserAgentMiddleware': 543,
     'heroku_scrapy.middlewares.HerokuScrapyDownloaderMiddleware': 543,
+    'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware': 1,
 }
 
 

@@ -23,6 +23,7 @@ from typing import List
 from urllib.parse import urlparse, urlencode, urlunparse,quote, parse_qs
 
 
+
 import logging
 #from ..proxy_manager.proxy_verification import Get_valid_Proxy_list
 
@@ -45,6 +46,8 @@ def Getting_new_proxies():  # Runnin the scrapy
 
         try:
             response = requests.get(url)
+            retList = []
+
             if response.status_code == 200:
                 # Successful response
                 proxies = response.text
@@ -54,6 +57,12 @@ def Getting_new_proxies():  # Runnin the scrapy
                     file.write(proxies)
                     
                 print("Proxies retrieved and saved to proxies.txt")
+                for item in proxies.split("\n"):
+                    retList.append(str("http://") + item)
+                    retList.append(str("https://") + item)
+
+                #return retList
+
                 return proxies
             else:
                 # Handle other status codes if needed
@@ -91,7 +100,7 @@ class ArukeresoSpider(scrapy.Spider):
         #self.valid_proxies = Get_valid_Proxy_list() #["195.123.8.186:8080"] #
         self.raw_proxy_list = Getting_new_proxies()
         self.proxies_retries = 0
-        self.start_urls = self.predicting_url(self.start_urls[0])
+        self.start_urls = ["https://www.arukereso.hu/nyomtato-patron-toner-c3138/"] #self.predicting_url(self.start_urls[0])
         self.error_urls = []  # List to store URLs that encountered errors
         self.visited_url = set()
 
@@ -110,6 +119,8 @@ class ArukeresoSpider(scrapy.Spider):
         while selected_proxy == "-" or not selected_proxy:
             selected_proxy = random.choice(self.raw_proxy_list)
 
+        
+
         return selected_proxy
 
     def check_proxy_status(self, proxy):
@@ -126,6 +137,8 @@ class ArukeresoSpider(scrapy.Spider):
 
         # Get a proxy for this request
         proxy = self.select_proxy()
+
+        logging.info(f" ---- current proxy : {proxy}")
     
         while not proxy and len(self.raw_proxy_list) <30:
             self.raw_proxy_list = Getting_new_proxies()
@@ -145,10 +158,12 @@ class ArukeresoSpider(scrapy.Spider):
                 url=(response.url),
                 callback=self.parse_link,
                 dont_filter=True,
-                meta={'proxy': proxy},
+                meta={'proxy': str("https://")+self.select_proxy()},
                 headers=headers,
             )
 
+
+            logging.info(f"Outgoing request headers: {request.headers}")
             yield request
             
 

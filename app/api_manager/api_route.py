@@ -150,7 +150,15 @@ def Get_final_data():
         if os.path.exists(path):
             # If the file exists, return the file as an attachment
             return send_file(path, mimetype='application/xml', as_attachment=True)
+        
+        
         else:
+            filename = "result.xml"
+
+            if os.path.exists(path):
+                # If the file exists, return the file as an attachment
+                return send_file(path, mimetype='application/xml', as_attachment=True)
+
             # If the file doesn't exist yet, return a message indicating its unavailability
             return "Data is not yet available. Please try again later."
     else:
