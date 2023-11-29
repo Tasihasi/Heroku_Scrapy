@@ -1,5 +1,5 @@
 from flask import Flask
-from api_manager.api_route import api, proxy_blueprint
+from .api_manager.api_route import api, proxy_blueprint
 import requests
 import time
 from datetime import datetime, timedelta
