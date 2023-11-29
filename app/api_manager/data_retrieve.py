@@ -51,7 +51,7 @@ def get_proxies():
     script_directory = os.path.dirname(os.path.abspath(__file__))
 
     # Define the Scrapy command
-    command = ['scrapy', 'crawl', 'free_proxy_list'] #, '-O', 'Result.xml']
+    command = ['scrapy', 'crawl', 'free_proxy_list' , '-O', 'Result.xml']
 
     logging.info("Running spiderin the data_retrive.py")
 
