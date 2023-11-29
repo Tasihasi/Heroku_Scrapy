@@ -129,7 +129,7 @@ def Get_final_data():
     api_key = request.headers.get('API-Key')
 
     # Retrieve the Clondike_Key from the environment variables
-    valid_api_key = os.environ.get('Clondike_Key')
+    valid_api_key =  os.environ.get('Clondike_Key')
 
     log_folder_content("app/heroku_scrapy")
 
@@ -152,15 +152,29 @@ def Get_final_data():
             return send_file(path, mimetype='application/xml', as_attachment=True)
         
         
-        else:
-            filename = "result.xml"
+        
+        filename = "result.xml"
+        path = os.path.join(os.getcwd(), directory, filename)
 
-            if os.path.exists(path):
-                # If the file exists, return the file as an attachment
-                return send_file(path, mimetype='application/xml', as_attachment=True)
+        if os.path.exists(path):
+            # If the file exists, return the file as an attachment
+            return send_file(path, mimetype='application/xml', as_attachment=True)
+        
+        directory = "heroku_scrapy"
+        path = os.path.join(os.getcwd(), directory, filename)
 
-            # If the file doesn't exist yet, return a message indicating its unavailability
-            return "Data is not yet available. Please try again later."
+        if os.path.exists(path):
+            return send_file(path, mimetype='application/xml', as_attachment=True)
+        
+        filename = "Result.xml"
+        path = os.path.join(os.getcwd(), directory, filename)
+
+        if os.path.exists(path):
+            return send_file(path, mimetype='application/xml', as_attachment=True)
+
+        # If the file doesn't exist yet, return a message indicating its unavailability
+        return "Data is not yet available. Please try again later."
+    
     else:
         # Invalid API key provided
         return "Unauthorized access. Invalid API key."
