@@ -21,6 +21,7 @@ from scrapy.crawler import CrawlerRunner
 from scrapy.utils.log import configure_logging
 from typing import List
 from urllib.parse import urlparse, urlencode, urlunparse,quote, parse_qs
+import xml.etree.ElementTree as ET
 
 
 
@@ -73,6 +74,9 @@ def Getting_new_proxies():  # Runnin the scrapy
             print(f"An error occurred: {e}")
 
 
+
+
+
 class ArukeresoSpider(scrapy.Spider):
     name = 'arukereso_all'
     start_urls = ['https://www.arukereso.hu/nyomtato-patron-toner-c3138/']
@@ -93,6 +97,30 @@ class ArukeresoSpider(scrapy.Spider):
             ret_list.append(url + "?start=" + str(i*25))
         
         return ret_list
+    
+    def write_item_to_xml(self, item):
+        filename = 'temp_output.xml'
+
+        if os.path.exists(filename):
+            tree = ET.parse(filename)
+            root = tree.getroot()
+        else:
+            root = ET.Element('items')
+            tree = ET.ElementTree(root)
+
+        item_element = ET.Element('item')
+
+        for key, value in item.items():
+            field = ET.Element(key)
+            field.text = str(value)
+            item_element.append(field)
+
+        root.append(item_element)
+
+        with open(filename, 'wb') as file:
+            tree.write(file)
+
+    
 
     def __init__(self, *args, **kwargs):
         super(ArukeresoSpider, self).__init__(*args, **kwargs)
@@ -185,7 +213,14 @@ class ArukeresoSpider(scrapy.Spider):
                 else:
                     yield {'name': n, 'price': p.strip(), 'competitor': c}
 
+                    item_data = {'name': n, 'price': p.strip(), 'competitor': c}
+                    self.write_item_to_xml(item_data)
+
+                # here is should implement the write to temporary file 
+
         self.visited_url.add(response.url)
+
+
             
 
     def parse_link(self, response):
