@@ -186,9 +186,9 @@ def Get_final_data():
     items_element = ET.SubElement(root, "items")  # New line to add <items> element
 
     # Loop through each line in the JSON Lines file
-     # Loop through each line in the JSON Lines file
-    for line in lines:
-        # Try to parse each line as JSON
+    # Loop through each line in the JSON Lines file
+    for line_number, line in enumerate(lines, start=1):
+        # Try to parse each JSON object
         try:
             data = json.loads(line)
 
@@ -197,8 +197,8 @@ def Get_final_data():
             # Check if all required attributes are present
             if (
                 all(attr in data for attr in ['price', 'availability', 'competitor', 'product_name']) 
-                and data['availability'] and data['availability'] != '\n'
-                and data['competitor'] and data['competitor'] != '\n'
+                and data['availability'] and data['availability'].strip() != ''  # Check for non-empty availability
+                and data['competitor'] and data['competitor'].strip() != ''  # Check for non-empty competitor
             ):
                 # Create an XML element for each JSON object
                 # item_element = ET.SubElement(items_element, "item")  # Use items_element as the parent
@@ -209,13 +209,13 @@ def Get_final_data():
                 # Parse the XML string and append it to the items_element
                 xml_elem = ET.fromstring(xml_str)
                 items_element.append(xml_elem)
-        except json.JSONDecodeError:
+        except json.JSONDecodeError as e:
             # If parsing as JSON fails, log the error and skip to the next line
-            logging.error(f"Error decoding JSON. Skipped line: {line}")
+            logging.error(f"Error decoding JSON at line {line_number}: {e}. Skipped line: {line}")
             continue
         except Exception as e:
             # Handle other exceptions if needed
-            logging.error(f"An unexpected error occurred: {e}. Skipped line: {line}")
+            logging.error(f"An unexpected error occurred at line {line_number}: {e}. Skipped line: {line}")
             continue
 
     # Create XML content as a string
