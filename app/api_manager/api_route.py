@@ -33,6 +33,42 @@ def json2xml(json_obj, line_padding=""):
 
     return "%s%s" % (line_padding, json_obj)
 
+
+def jsonL_to_xml(jsonl_file, xml_file):
+    # Open JSONL file for reading
+    with open(jsonl_file, 'r') as jsonl_file:
+        # Create the root element of the XML document
+        root = ET.Element("root")
+
+        # Loop through each line in the JSONL file
+        for line in jsonl_file:
+            # Parse JSON from the line
+            json_data = json.loads(line)
+
+            # Create an XML element for each JSON object
+            element = ET.SubElement(root, "item")
+
+            # Add sub-elements for each key-value pair in the JSON object
+            for key, value in json_data.items():
+                sub_element = ET.SubElement(element, key)
+                sub_element.text = str(value)
+
+    # Create an ElementTree object from the root element
+    tree = ET.ElementTree(root)
+
+    # Write the XML document to a file
+    tree.write(xml_file)
+
+def create_empty_xml(directory, file_name):
+    items = ET.Element("items")
+    item = ET.SubElement(items, "item")
+
+    # Combine directory and file_name to get the full path
+    file_path = os.path.join(directory, file_name)
+
+    tree = ET.ElementTree(items)
+    tree.write(file_path)
+
 def log_folder_content(folder_path):
     logging.info(f"Listing contents of folder: {folder_path}")
     try:
@@ -168,66 +204,32 @@ def Get_final_data():
 
     directory = "app/heroku_scrapy"
     filename = "output.jsonl"
-    path = os.path.join(os.getcwd(), directory, filename)
+    result = "resulting.xml"
+
+
+    path = os.path.join(os.getcwd(), directory, result)
+
+    if os.path.exists(path):
+        return send_file(path, as_attachment=True)
+
+    create_empty_xml(result, directory)
+    
+
+    jsonl_path = os.path.join(directory, filename)
+    xml_path = os.path.join(directory, result)
 
     # Log the contents of the folder
     log_folder_content(directory)
 
-    # Check if the file exists at the specified path
-    if not os.path.exists(path):
-        return "Data is not here ----"
+    try:
+        jsonL_to_xml(jsonl_path, xml_path)
+    except Exception as e:
+        logging.error(f"Error converting JSONL to XML: {str(e)}")
+        return "Error during file conversion please try again later!"
 
-    # Read JSON Lines file
-    with open(path, 'r') as jsonl_file:
-        lines = jsonl_file.readlines()
-
-    # Create root element for XML
-    root = ET.Element("root")
-    items_element = ET.SubElement(root, "items")  # New line to add <items> element
-
-    # Loop through each line in the JSON Lines file
-    # Loop through each line in the JSON Lines file
-    for line_number, line in enumerate(lines, start=1):
-        # Try to parse each JSON object
-        try:
-            data = json.loads(line)
-
-            logging.info(f"-------  data: {data} ------------------")
-
-            # Check if all required attributes are present
-            if (
-                all(attr in data for attr in ['price', 'availability', 'competitor', 'product_name']) 
-                and data['availability'] and data['availability'].strip() != ''  # Check for non-empty availability
-                and data['competitor'] and data['competitor'].strip() != ''  # Check for non-empty competitor
-            ):
-                # Create an XML element for each JSON object
-                # item_element = ET.SubElement(items_element, "item")  # Use items_element as the parent
-
-                # Convert JSON to XML using the json2xml function
-                xml_str = json2xml(data)
-
-                # Parse the XML string and append it to the items_element
-                xml_elem = ET.fromstring(xml_str)
-                items_element.append(xml_elem)
-        except json.JSONDecodeError as e:
-            # If parsing as JSON fails, log the error and skip to the next line
-            logging.error(f"Error decoding JSON at line {line_number}: {e}. Skipped line: {line}")
-            continue
-        except Exception as e:
-            # Handle other exceptions if needed
-            logging.error(f"An unexpected error occurred at line {line_number}: {e}. Skipped line: {line}")
-            continue
-
-    # Create XML content as a string
-    xml_content = ET.tostring(root, encoding="utf-8", method="xml")
-
-    # Create a response with the XML content
-    response = make_response(xml_content)
-    response.headers["Content-Type"] = "application/xml"
-    response.headers["Content-Disposition"] = "attachment; filename=Result.xml"
-
-    return response
-         
-    return "Unhandled Error "
+    if os.path.exists(path):
+        return send_file(path, as_attachment=True)
+      
+    return "path dose not exist ---- >:"
 
 

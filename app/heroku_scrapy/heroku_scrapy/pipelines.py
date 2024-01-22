@@ -19,7 +19,7 @@ class JsonLinesWriterPipeline:
 
     @classmethod
     def from_crawler(cls, crawler):
-        output_file = crawler.settings.get('JSONL_OUTPUT_FILE', 'output.json')
+        output_file = crawler.settings.get('JSONL_OUTPUT_FILE', 'output.jsonl')
         return cls(output_file)
 
     def open_spider(self, spider):
