@@ -9,8 +9,29 @@ from .api_proxy import gather_proxy_data
 from .data_retrieve import get_data_from_scrapy, get_proxies
 from concurrent.futures import ThreadPoolExecutor  # For async execution
 
-#from auth import Test
 
+
+def json2xml(json_obj, line_padding=""):
+    result_list = list()
+
+    json_obj_type = type(json_obj)
+
+    if json_obj_type is list:
+        for sub_elem in json_obj:
+            result_list.append(json2xml(sub_elem, line_padding))
+
+        return "\n".join(result_list)
+
+    if json_obj_type is dict:
+        for tag_name in json_obj:
+            sub_obj = json_obj[tag_name]
+            result_list.append("%s<%s>" % (line_padding, tag_name))
+            result_list.append(json2xml(sub_obj, "\t" + line_padding))
+            result_list.append("%s</%s>" % (line_padding, tag_name))
+
+        return "\n".join(result_list)
+
+    return "%s%s" % (line_padding, json_obj)
 
 def log_folder_content(folder_path):
     logging.info(f"Listing contents of folder: {folder_path}")
@@ -141,82 +162,60 @@ def Get_final_data():
 
     logging.warning("-------  Finally pushed correctly ------------------")
 
-    if api_key == valid_api_key:
-        directory = "app/heroku_scrapy"
-        filename = "Result.jsonl"
-        path = os.path.join(os.getcwd(), directory, filename)
-
-        # Log the contents of the folder
-        log_folder_content(directory)
-
-        # Check if the file exists at the specified path
-        if os.path.exists(path):
-            # If the file exists, return the file as an attachment
-
-            # Read JSON Lines file
-            with open(path, 'r') as jsonl_file:
-                lines = jsonl_file.readlines()
-
-            # Create root element for XML
-            root = ET.Element("root")
-            items_element = ET.SubElement(root, "items")  # New line to add <items> element
-
-            # Loop through each line in the JSON Lines file
-            for line in lines:
-                # Parse JSON from each line
-                data = json.loads(line)
-                
-                # Check if all required attributes are present
-                if all(attr in data for attr in ['price', 'availability', 'competitor']):
-                # Create an XML element for each JSON object
-                    item_element = ET.SubElement(items_element, "item")  # Use items_element as the parent
-
-
-
-                    # Loop through key-value pairs in the JSON object and add them as XML elements
-                    for key, value in data.items():
-                        child = ET.SubElement(item_element, key)
-                        child.text = str(value)
-
-            
-
-            # Create XML content as a string
-            xml_content = ET.tostring(root, encoding="utf-8", method="xml")
-            
-
-            # Create a response with the XML content
-            response = make_response(xml_content)
-            response.headers["Content-Type"] = "application/xml"
-            response.headers["Content-Disposition"] = "attachment; filename=Result.xml"
-
-            return response
-        
-        return "Data is not here ----"
-        
-        filename = "result.xml"
-        path = os.path.join(os.getcwd(), directory, filename)
-
-        if os.path.exists(path):
-            # If the file exists, return the file as an attachment
-            return send_file(path, mimetype='application/xml', as_attachment=True)
-        
-        directory = "heroku_scrapy"
-        path = os.path.join(os.getcwd(), directory, filename)
-
-        if os.path.exists(path):
-            return send_file(path, mimetype='application/xml', as_attachment=True)
-        
-        filename = "Result.xml"
-        path = os.path.join(os.getcwd(), directory, filename)
-
-        if os.path.exists(path):
-            return send_file(path, mimetype='application/xml', as_attachment=True)
-
-        # If the file doesn't exist yet, return a message indicating its unavailability
-        return "Data is not yet available. Please try again later."
+    if api_key != valid_api_key:
+        return "Invalid API Key ! :("
     
-    else:
-        # Invalid API key provided
-        return "Unauthorized access. Invalid API key."
+
+    directory = "app/heroku_scrapy"
+    filename = "output.jsonl"
+    path = os.path.join(os.getcwd(), directory, filename)
+
+    # Log the contents of the folder
+    log_folder_content(directory)
+
+    # Check if the file exists at the specified path
+    if not os.path.exists(path):
+        return "Data is not here ----"
+
+    # Read JSON Lines file
+    with open(path, 'r') as jsonl_file:
+        lines = jsonl_file.readlines()
+
+    # Create root element for XML
+    root = ET.Element("root")
+    items_element = ET.SubElement(root, "items")  # New line to add <items> element
+
+    # Loop through each line in the JSON Lines file
+    for line in lines:
+    # Parse JSON from each line
+        data = json.loads(line)
+                
+        # Check if all required attributes are present
+        if all(attr in data for attr in ['price', 'availability', 'competitor']):
+        # Create an XML element for each JSON object
+            #item_element = ET.SubElement(items_element, "item")  # Use items_element as the parent
+            
+            # Convert JSON to XML using the json2xml function
+            xml_str = json2xml(data)
+
+
+            #Parse the XML string and append it to the items_element
+            xml_elem = ET.fromstring(xml_str)
+            items_element.append(xml_elem)
+
+            
+
+        # Create XML content as a string
+        xml_content = ET.tostring(root, encoding="utf-8", method="xml")
+            
+
+        # Create a response with the XML content
+        response = make_response(xml_content)
+        response.headers["Content-Type"] = "application/xml"
+        response.headers["Content-Disposition"] = "attachment; filename=Result.xml"
+
+        return response
+         
+    return "Unhandled Error "
 
 
