@@ -138,6 +138,8 @@ def Get_final_data():
     directory_contents = os.listdir(".")
     logging.info(f"Current directory dir:  {directory_contents}")
 
+    logging.warning("-------  Finally pushed correctly ------------------")
+
     if api_key == valid_api_key:
         directory = "app/heroku_scrapy"
         filename = "Result.xml"
