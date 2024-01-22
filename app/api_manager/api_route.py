@@ -178,8 +178,7 @@ def Get_final_data():
                         child = ET.SubElement(item_element, key)
                         child.text = str(value)
 
-            # Create an ElementTree from the root element
-            tree = ET.ElementTree(root)
+            
 
             # Create XML content as a string
             xml_content = ET.tostring(root, encoding="utf-8", method="xml")
