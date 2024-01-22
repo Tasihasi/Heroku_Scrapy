@@ -50,6 +50,7 @@ def jsonL_to_xml(jsonl_file, xml_file):
 
             # Add sub-elements for each key-value pair in the JSON object
             for key, value in json_data.items():
+                logging.info(f"----- the key:  {key}   -----  value :   {value}--------")
                 if value is not None and value != "" and value != "\n":
                     sub_element = ET.SubElement(element, key)
                     sub_element.text = str(value)
