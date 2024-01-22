@@ -142,7 +142,7 @@ def Get_final_data():
     logging.warning("-------  Finally pushed correctly ------------------")
 
     if api_key == valid_api_key:
-        directory = "heroku_scrapy"
+        directory = "app/heroku_scrapy"
         filename = "Result.jsonl"
         path = os.path.join(os.getcwd(), directory, filename)
 
