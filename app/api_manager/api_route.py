@@ -223,15 +223,15 @@ def Get_final_data():
             
 
         # Create XML content as a string
-        xml_content = ET.tostring(root, encoding="utf-8", method="xml")
+    xml_content = ET.tostring(root, encoding="utf-8", method="xml")
             
 
-        # Create a response with the XML content
-        response = make_response(xml_content)
-        response.headers["Content-Type"] = "application/xml"
-        response.headers["Content-Disposition"] = "attachment; filename=Result.xml"
+    # Create a response with the XML content
+    response = make_response(xml_content)
+    response.headers["Content-Type"] = "application/xml"
+    response.headers["Content-Disposition"] = "attachment; filename=Result.xml"
 
-        return response
+    return response
          
     return "Unhandled Error "
 
