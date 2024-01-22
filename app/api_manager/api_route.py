@@ -189,6 +189,8 @@ def Get_final_data():
     for line in lines:
     # Parse JSON from each line
         data = json.loads(line)
+
+        logging.info(f"-------  data: {data} ------------------")
                 
         # Check if all required attributes are present
         if (
@@ -199,7 +201,7 @@ def Get_final_data():
         # Create an XML element for each JSON object
             #item_element = ET.SubElement(items_element, "item")  # Use items_element as the parent
             
-            logging.info(f"-------  data: {data} ------------------")
+            
 
             # Convert JSON to XML using the json2xml function
             xml_str = json2xml(data)
