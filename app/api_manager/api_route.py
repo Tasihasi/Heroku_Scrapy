@@ -188,28 +188,37 @@ def Get_final_data():
     # Loop through each line in the JSON Lines file
     for line in lines:
     # Parse JSON from each line
-        data = json.loads(line)
+        try:
+            data = json.loads(line)
 
-        logging.info(f"-------  data: {data} ------------------")
+            logging.info(f"-------  data: {data} ------------------")
+                    
+            # Check if all required attributes are present
+            if (
+                all(attr in data for attr in ['price', 'availability', 'competitor', 'product_name']) 
+                and data['availability'] and data['availability'] != '\n'
+                and data['competitor'] and data['competitor'] != '\n'
+                ):
+            # Create an XML element for each JSON object
+                #item_element = ET.SubElement(items_element, "item")  # Use items_element as the parent
                 
-        # Check if all required attributes are present
-        if (
-            all(attr in data for attr in ['price', 'availability', 'competitor', 'product_name']) 
-            and data['availability'] and data['availability'] != '\n'
-            and data['competitor'] and data['competitor'] != '\n'
-            ):
-        # Create an XML element for each JSON object
-            #item_element = ET.SubElement(items_element, "item")  # Use items_element as the parent
-            
-            
+                
 
-            # Convert JSON to XML using the json2xml function
-            xml_str = json2xml(data)
+                # Convert JSON to XML using the json2xml function
+                xml_str = json2xml(data)
 
 
-            #Parse the XML string and append it to the items_element
-            xml_elem = ET.fromstring(xml_str)
-            items_element.append(xml_elem)
+                #Parse the XML string and append it to the items_element
+                xml_elem = ET.fromstring(xml_str)
+                items_element.append(xml_elem)
+        except json.JSONDecodeError as e:
+            # Handle the exception (e.g., log it) and continue to the next line
+            logging.error(f"Error decoding JSON: {e}. Skipped line: {line}")
+            continue
+        except Exception as e:
+            # Handle other exceptions if needed
+            logging.error(f"An unexpected error occurred: {e}. Skipped line: {line}")
+            continue
 
             
 
