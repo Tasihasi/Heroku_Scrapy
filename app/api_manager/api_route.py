@@ -165,17 +165,18 @@ def Get_final_data():
             for line in lines:
                 # Parse JSON from each line
                 data = json.loads(line)
-
-                 # Create an XML element for each JSON object
-                item_element = ET.SubElement(items_element, "item")  # Use items_element as the parent
-
+                
+                # Check if all required attributes are present
+                if all(attr in data for attr in ['price', 'availability', 'competitor']):
                 # Create an XML element for each JSON object
-                #element = ET.SubElement(root, "item")
+                    item_element = ET.SubElement(items_element, "item")  # Use items_element as the parent
 
-                # Loop through key-value pairs in the JSON object and add them as XML elements
-                for key, value in data.items():
-                    child = ET.SubElement(item_element, key)
-                    child.text = str(value)
+
+
+                    # Loop through key-value pairs in the JSON object and add them as XML elements
+                    for key, value in data.items():
+                        child = ET.SubElement(item_element, key)
+                        child.text = str(value)
 
             # Create an ElementTree from the root element
             tree = ET.ElementTree(root)
