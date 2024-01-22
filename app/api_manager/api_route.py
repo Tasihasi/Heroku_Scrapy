@@ -1,5 +1,6 @@
-from flask import Blueprint, jsonify, request, Response, send_file
+from flask import Blueprint, jsonify, request, Response, send_file, make_response
 import xml.etree.ElementTree as ET
+import json
 import os
 import logging
 from .auth import valid_api_key, mach_apiKey_to_customer, getting_raw_data
@@ -142,7 +143,7 @@ def Get_final_data():
 
     if api_key == valid_api_key:
         directory = "app/heroku_scrapy"
-        filename = "Result.xml"
+        filename = "Result.jsonl"
         path = os.path.join(os.getcwd(), directory, filename)
 
         # Log the contents of the folder
@@ -151,9 +152,42 @@ def Get_final_data():
         # Check if the file exists at the specified path
         if os.path.exists(path):
             # If the file exists, return the file as an attachment
-            return send_file(path, mimetype='application/xml', as_attachment=True)
+
+            # Read JSON Lines file
+            with open(path, 'r') as jsonl_file:
+                lines = jsonl_file.readlines()
+
+            # Create root element for XML
+            root = ET.Element("root")
+
+            # Loop through each line in the JSON Lines file
+            for line in lines:
+                # Parse JSON from each line
+                data = json.loads(line)
+
+                # Create an XML element for each JSON object
+                element = ET.SubElement(root, "item")
+
+                # Loop through key-value pairs in the JSON object and add them as XML elements
+                for key, value in data.items():
+                    child = ET.SubElement(element, key)
+                    child.text = str(value)
+
+            # Create an ElementTree from the root element
+            tree = ET.ElementTree(root)
+
+            # Create XML content as a string
+            xml_content = ET.tostring(root, encoding="utf-8", method="xml")
+            
+
+            # Create a response with the XML content
+            response = make_response(xml_content)
+            response.headers["Content-Type"] = "application/xml"
+            response.headers["Content-Disposition"] = "attachment; filename=Result.xml"
+
+            return response
         
-        
+        return "Data is not here ----"
         
         filename = "result.xml"
         path = os.path.join(os.getcwd(), directory, filename)

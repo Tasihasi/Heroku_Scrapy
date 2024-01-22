@@ -93,6 +93,9 @@ REQUEST_FINGERPRINTER_IMPLEMENTATION = "2.7"
 TWISTED_REACTOR = None
 
 FEED_EXPORT_ENCODING = "utf-8"
+FEED_FORMAT = 'jsonlines'  # Use JSON lines format
+FEED_URI = 'output.jsonl'  # Output file in jsonl format
+
 
 DOWNLOADER_MIDDLEWARES = {
     'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None,

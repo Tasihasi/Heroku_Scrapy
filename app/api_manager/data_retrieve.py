@@ -22,7 +22,7 @@ def get_data_from_scrapy():
     script_directory = os.path.dirname(os.path.abspath(__file__))
 
     # Define the Scrapy command
-    command = ['scrapy', 'crawl', 'arukereso_all', '-O', 'Result.xml']
+    command = ['scrapy', 'crawl', 'arukereso_all', '-O', 'Result.jsonl']
 
     logging.info("Running spider  the data_retrive.py")
 
