@@ -139,7 +139,7 @@ def Get_final_data():
     logging.info(f"Current directory dir:  {directory_contents}")
 
     if api_key == valid_api_key:
-        directory = "heroku_scrapy"
+        directory = ".heroku_scrapy"
         filename = "Result.xml"
         path = os.path.join(os.getcwd(), directory, filename)
 
