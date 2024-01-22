@@ -160,7 +160,7 @@ def Get_final_data():
     directory_contents = os.listdir(".")
     logging.info(f"Current directory dir:  {directory_contents}")
 
-    logging.warning("-------  Finally pushed correctly ------------------")
+    
 
     if api_key != valid_api_key:
         return "Invalid API Key ! :("
@@ -195,6 +195,8 @@ def Get_final_data():
         # Create an XML element for each JSON object
             #item_element = ET.SubElement(items_element, "item")  # Use items_element as the parent
             
+            logging.info(f"-------  data: {data} ------------------")
+
             # Convert JSON to XML using the json2xml function
             xml_str = json2xml(data)
 
