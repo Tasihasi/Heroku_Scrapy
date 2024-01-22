@@ -191,7 +191,7 @@ def Get_final_data():
         data = json.loads(line)
                 
         # Check if all required attributes are present
-        if all(attr in data for attr in ['price', 'availability', 'competitor']):
+        if all(attr in data for attr in ['price', 'availability', 'competitor', 'product_name']) and data['availability'] != '\n':
         # Create an XML element for each JSON object
             #item_element = ET.SubElement(items_element, "item")  # Use items_element as the parent
             
