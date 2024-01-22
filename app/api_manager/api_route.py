@@ -131,10 +131,10 @@ def Get_final_data():
     # Retrieve the Clondike_Key from the environment variables
     valid_api_key =  os.environ.get('Clondike_Key')
 
-    log_folder_content("app/heroku_scrapy ofsth")
+    log_folder_content("app/heroku_scrapy")
 
     current_directory = os.getcwd()
-    logging.info(f"Current working directory: {current_directory}")
+    logging.info(f"Current working directory:  haaagh :: {current_directory}")
     directory_contents = os.listdir(".")
     logging.info(f"Current directory dir:  {directory_contents}")
 
