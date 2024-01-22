@@ -159,23 +159,26 @@ def Get_final_data():
 
             # Create root element for XML
             root = ET.Element("root")
+            items_element = ET.SubElement(root, "items")  # New line to add <items> element
 
             # Loop through each line in the JSON Lines file
             for line in lines:
                 # Parse JSON from each line
                 data = json.loads(line)
 
+                 # Create an XML element for each JSON object
+                item_element = ET.SubElement(items_element, "item")  # Use items_element as the parent
+
                 # Create an XML element for each JSON object
-                element = ET.SubElement(root, "item")
+                #element = ET.SubElement(root, "item")
 
                 # Loop through key-value pairs in the JSON object and add them as XML elements
                 for key, value in data.items():
-                    child = ET.SubElement(element, key)
+                    child = ET.SubElement(item_element, key)
                     child.text = str(value)
 
             # Create an ElementTree from the root element
             tree = ET.ElementTree(root)
-            items_element = ET.SubElement(root, "items")  # New line to add <items> element
 
             # Create XML content as a string
             xml_content = ET.tostring(root, encoding="utf-8", method="xml")
