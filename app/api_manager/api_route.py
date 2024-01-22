@@ -59,15 +59,24 @@ def jsonL_to_xml(jsonl_file, xml_file):
     # Write the XML document to a file
     tree.write(xml_file)
 
-def create_empty_xml(directory, file_name):
+
+def create_empty_xml(file_path):
+    # Extract the directory path from the file path
+    directory = os.path.dirname(file_path)
+
+    # Create the directory if it doesn't exist
+    os.makedirs(directory, exist_ok=True)
+
+    # Create the root element for the XML document
     items = ET.Element("items")
     item = ET.SubElement(items, "item")
 
-    # Combine directory and file_name to get the full path
-    file_path = os.path.join(directory, file_name)
-
+    # Create an ElementTree object from the root element
     tree = ET.ElementTree(items)
-    tree.write(file_path)
+
+    # Write the XML document to the specified file path
+    with open(file_path, 'wb') as file:
+        tree.write(file)
 
 def log_folder_content(folder_path):
     logging.info(f"Listing contents of folder: {folder_path}")
@@ -212,11 +221,14 @@ def Get_final_data():
     if os.path.exists(path):
         return send_file(path, as_attachment=True)
 
-    create_empty_xml(result, directory)
+
     
 
     jsonl_path = os.path.join(directory, filename)
     xml_path = os.path.join(directory, result)
+
+    create_empty_xml(xml_path)
+
 
     # Log the contents of the folder
     log_folder_content(directory)
