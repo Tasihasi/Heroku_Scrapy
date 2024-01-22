@@ -175,6 +175,7 @@ def Get_final_data():
 
             # Create an ElementTree from the root element
             tree = ET.ElementTree(root)
+            items_element = ET.SubElement(root, "items")  # New line to add <items> element
 
             # Create XML content as a string
             xml_content = ET.tostring(root, encoding="utf-8", method="xml")
