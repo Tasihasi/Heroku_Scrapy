@@ -115,6 +115,29 @@ def jsonL_to_xml(jsonl_file, xml_file, required_keys=None):
         xml_file.write(xml_string.encode('utf-8'))
 
 
+def strip_values_in_jsonl(jsonl_file):
+    stripped_lines = []
+
+    with open(jsonl_file, 'r', encoding="utf-8") as file:
+        for line_number, line in enumerate(file, start=1):
+            try:
+                # Parse JSON from the line
+                json_data = json.loads(line)
+
+                # Strip whitespace from all values in the JSON object
+                stripped_json_data = {key: str(value).strip() for key, value in json_data.items()}
+
+                # Convert the modified JSON object back to a JSON-formatted string
+                stripped_line = json.dumps(stripped_json_data, ensure_ascii=False)
+
+                stripped_lines.append(stripped_line)
+
+            except json.JSONDecodeError as e:
+                # Handle JSON decoding errors if needed
+                print(f"Error on line {line_number}: {e}")
+
+    return stripped_lines
+
 def create_empty_xml(file_path):
     # Extract the directory path from the file path
     directory = os.path.dirname(file_path)
@@ -299,6 +322,7 @@ def preparing_xml():
     return "path dose not exist ---- >:"
 
 
+
 @proxy_blueprint.route('/get_final_data', methods=['GET'])
 def Get_final_data():
 
@@ -306,30 +330,34 @@ def Get_final_data():
     api_key = request.headers.get('API-Key')
 
     # Retrieve the Clondike_Key from the environment variables
-    valid_api_key =  os.environ.get('Clondike_Key')
+    valid_api_key = os.environ.get('Clondike_Key')
 
     if api_key != valid_api_key:
         return "Api key is not valid ---- :("
 
     directory = "heroku_scrapy"
-    result = "resulting.xml"
+    result = "output.jsonl"
     xml_path = os.path.join(directory, result)
     log_folder_content(directory)
 
     try:
-        return send_file(xml_path, as_attachment=True)
+        # Read and strip values from the JSONL file
+        stripped_lines = strip_values_in_jsonl(xml_path)
+
+        # Create a new stripped JSONL file
+        stripped_jsonl_path = os.path.join(directory, "stripped_output.jsonl")
+        with open(stripped_jsonl_path, 'w', encoding="utf-8") as stripped_file:
+            stripped_file.writelines(stripped_lines)
+
+        # Convert the stripped JSONL file to XML (you can use your existing logic here)
+        jsonL_to_xml(stripped_jsonl_path, "resulting.xml")
+
+        # Send the resulting XML file
+        return send_file("resulting.xml", as_attachment=True)
+
     except FileNotFoundError as e:
         logging.error(f"FileNotFoundError: {e}")
         return "File not found", 404
     
-@proxy_blueprint.route('/get_final_data_json', methods=['GET'])
-def Get_final_data_json():
-    directory = "heroku_scrapy"
-    filename = "output.jsonl"
-    path = os.path.join(directory, filename)
-    try:
-        return send_file(path, as_attachment=True)
-    except FileNotFoundError as e:
-        logging.error(f"FileNotFoundError: {e}")
-        return "File not found", 404
 
+    
