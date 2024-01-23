@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify, request, Response, send_file, make_response
+from flask import Blueprint, jsonify, request, Response, send_file, make_response, current_app
 import xml.etree.ElementTree as ET
 import json
 import os
@@ -338,7 +338,7 @@ def Get_final_data():
     if api_key != valid_api_key:
         return "Api key is not valid ---- :("
 
-    directory = "app/heroku_scrapy"
+    directory = os.path.join(current_app.root_path, "app/heroku_scrapy")
     result = "output.jsonl"
     json_path = os.path.join(directory, result)
     log_folder_content(directory)
