@@ -311,6 +311,7 @@ def Get_final_data():
     directory = "app/heroku_scrapy"
     result = "resulting.xml"
     xml_path = os.path.join(directory, result)
+    log_folder_content(directory)
 
     if os.path.exists(xml_path):
         return send_file(xml_path, as_attachment=True)
