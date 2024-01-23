@@ -35,33 +35,43 @@ def json2xml(json_obj, line_padding=""):
     return "%s%s" % (line_padding, json_obj)
 
 
-def jsonL_to_xml(jsonl_file, xml_file):
+def jsonL_to_xml(jsonl_file, xml_file, required_keys=None):
+    if required_keys is None:
+        required_keys = set()
+
     # Open JSONL file for reading
     with open(jsonl_file, 'r') as jsonl_file:
         # Create the root element of the XML document
         root = ET.Element("items")
 
         # Loop through each line in the JSONL file
-        for line in jsonl_file:
-            # Parse JSON from the line
-            json_data = json.loads(line)
+        for line_number, line in enumerate(jsonl_file, start=1):
+            try:
+                # Parse JSON from the line
+                json_data = json.loads(line)
 
-            # Create an XML element for each JSON object
-            element = ET.SubElement(root, "item")
+                # Check if all required keys are present in the JSON data
+                if all(key in json_data for key in required_keys):
+                    # Create an XML element for each JSON object
+                    element = ET.SubElement(root, "item")
 
-            # Add sub-elements for each key-value pair in the JSON object
-            for key, value in json_data.items():
-                logging.info(f"----- the key: {key}   -----  value : {value}--------")
-                if value is not None and value != "" and value != "\n":
-                    sub_element = ET.SubElement(element, key)
-                    sub_element.text = str(value).strip()
-                    #ET.SubElement(element, key)
+                    # Add sub-elements for each key-value pair in the JSON object
+                    for key, value in json_data.items():
+                        logging.info(f"----- the key: {key}   -----  value : {value}--------")
+                        if value is not None and value != "" and value != "\n":
+                            sub_element = ET.SubElement(element, key)
+                            sub_element.text = str(value).strip()
+                else:
+                    logging.warning(f"Incomplete item on line {line_number}: Missing required keys")
+
+            except json.JSONDecodeError as e:
+                logging.error(f"Error on line {line_number}: {e}")
 
     # Create an ElementTree object from the root element
     tree = ET.ElementTree(root)
 
     # Write the XML to the specified file
-    with open(xml_file, 'wb') as xml_file:
+    with open(xml_file, 'w') as xml_file:
         tree.write(xml_file)
 
 
