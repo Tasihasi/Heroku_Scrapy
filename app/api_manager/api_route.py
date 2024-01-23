@@ -192,8 +192,11 @@ def Get_final_data():
         return send_file(json_path, as_attachment=True)
 
     except FileNotFoundError as e:
-        logging.error(f"FileNotFoundError: {e}")
-        return "File not found", 404
+        try:
+            return send_file(result, as_attachment=True)
+        except e as execption:
+            logging.error(f"FileNotFoundError: {e}")
+            return "File not found", 404
     
 
     
