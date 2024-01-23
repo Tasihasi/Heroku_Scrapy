@@ -338,7 +338,7 @@ def Get_final_data():
     if api_key != valid_api_key:
         return "Api key is not valid ---- :("
 
-    directory = "heroku_scrapy"
+    directory = "app"
     result = "output.jsonl"
     json_path = os.path.join(directory, result)
     log_folder_content(directory)
