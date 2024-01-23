@@ -41,7 +41,7 @@ def jsonL_to_xml(jsonl_file, xml_file, required_keys=None):
         required_keys = set()
 
     # Open JSONL file for reading
-    with os.fdopen(os.open(jsonl_file, os.O_RDONLY), 'r') as jsonl_file:
+    with os.fdopen(os.open(jsonl_file, os.O_RDONLY), 'r', encoding="utf-8") as jsonl_file:
         fcntl.flock(jsonl_file.fileno(), fcntl.LOCK_SH)
         # locking the file 
 
