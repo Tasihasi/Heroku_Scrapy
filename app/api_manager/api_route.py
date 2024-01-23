@@ -8,6 +8,7 @@ from .scrapy_manager import newest_raw_data
 from .api_proxy import gather_proxy_data
 from .data_retrieve import get_data_from_scrapy, get_proxies
 from concurrent.futures import ThreadPoolExecutor  # For async execution
+import fcntl
 
 
 
@@ -41,6 +42,9 @@ def jsonL_to_xml(jsonl_file, xml_file, required_keys=None):
 
     # Open JSONL file for reading
     with open(jsonl_file, 'r') as jsonl_file:
+        # locking the file 
+        fcntl.flock(jsonl_file.fileno(), fcntl.LOCK_SH)
+
         # Create the root element of the XML document
         root = ET.Element("items")
 
@@ -71,7 +75,7 @@ def jsonL_to_xml(jsonl_file, xml_file, required_keys=None):
     tree = ET.ElementTree(root)
 
     # Write the XML to the specified file
-    with open(xml_file, 'wb') as xml_file:
+    with open(xml_file, 'wb', encoding='utf-8') as xml_file:
         tree.write(xml_file)
 
 
