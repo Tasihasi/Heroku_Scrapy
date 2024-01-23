@@ -319,3 +319,14 @@ def Get_final_data():
         logging.error(f"FileNotFoundError: {e}")
         return "File not found", 404
     
+@proxy_blueprint.route('/get_final_data_json', methods=['GET'])
+def Get_final_data_json():
+    directory = "app/heroku_scrapy"
+    filename = "output.jsonl"
+    path = os.path.join(directory, filename)
+    try:
+        return send_file(path, as_attachment=True)
+    except FileNotFoundError as e:
+        logging.error(f"FileNotFoundError: {e}")
+        return "File not found", 404
+
