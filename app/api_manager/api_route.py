@@ -321,7 +321,7 @@ def Get_final_data():
     
 @proxy_blueprint.route('/get_final_data_json', methods=['GET'])
 def Get_final_data_json():
-    directory = "app/heroku_scrapy"
+    directory = "heroku_scrapy"
     filename = "output.jsonl"
     path = os.path.join(directory, filename)
     try:
