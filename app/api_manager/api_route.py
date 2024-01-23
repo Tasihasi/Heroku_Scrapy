@@ -168,8 +168,8 @@ def Get_final_data():
     current_directory = os.getcwd()
     logging.info(f"Current Working Directory: {current_directory}")
 
-    directory = os.path.join(current_app.root_path, "app/heroku_scrapy")
-    directory = "/heroku_scrapy"
+    #directory = os.path.join(current_app.root_path, "app/heroku_scrapy")
+    directory = "~/app/heroku_scrapy"
     result = "output.jsonl"
     json_path = os.path.join(directory, result)
     logging.info("app/heroku_scrapy")
