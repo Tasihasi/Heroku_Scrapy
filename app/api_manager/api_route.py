@@ -345,6 +345,12 @@ def Get_final_data():
     directory = "app/heroku_scrapy"
     result = "output.jsonl"
     json_path = os.path.join(directory, result)
+    logging.info("app/heroku_scrapy")
+    log_folder_content(directory)
+
+    directory = "app"
+    json_path = os.path.join(directory, result)
+    logging.info("app/heroku_scrapy")
     log_folder_content(directory)
 
     try:
