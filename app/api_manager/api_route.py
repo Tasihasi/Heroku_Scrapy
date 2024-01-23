@@ -70,6 +70,9 @@ def jsonL_to_xml(jsonl_file, xml_file, required_keys=None):
         fcntl.flock(jsonl_file.fileno(), fcntl.LOCK_SH)
         # locking the file 
 
+        # Read all lines into a list, excluding the last line
+        json_lines = list(jsonl_file)[:-1]
+
         # Create the root element of the XML document
         root = ET.Element("items")
 
