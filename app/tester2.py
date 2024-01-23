@@ -12,13 +12,7 @@ headers = {
 
 response = requests.get(url, headers=headers)
 
-"""
-i = 0 
-while "Data is not yet available. Please try again later." in response.text or i == 100:
-    i+=1
-    response = requests.get(url, headers=headers)
-    print(i)
-"""
+
 
 print("Status Code:", response.status_code)
 print("Response Body:", response.text)
