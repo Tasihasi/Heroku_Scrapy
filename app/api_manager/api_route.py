@@ -193,8 +193,12 @@ def Get_final_data():
 
     except FileNotFoundError as e:
         try:
-            return send_file(result, as_attachment=True)
-        except e as execption:
+
+            directory = "."
+            log_folder_content(directory)
+            json_path = os.path.join(directory, result)
+            return send_file(json_path, as_attachment=True)
+        except FileNotFoundError as e:
             logging.error(f"FileNotFoundError: {e}")
             return "File not found", 404
     
