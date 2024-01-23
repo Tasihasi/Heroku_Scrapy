@@ -344,8 +344,10 @@ def Get_final_data():
     log_folder_content(directory)
 
     try:
+
+        json_file = strip_values_in_jsonl(json_path)
         # Send the resulting XML file
-        return send_file(strip_values_in_jsonl(json_path), as_attachment=True)
+        return send_file(json_file, as_attachment=True)
 
     except FileNotFoundError as e:
         logging.error(f"FileNotFoundError: {e}")
