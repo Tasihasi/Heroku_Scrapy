@@ -99,11 +99,13 @@ def jsonL_to_xml(jsonl_file, xml_file, required_keys=None):
     # Convert the ElementTree to an XML string
     xml_string = ET.tostring(root, encoding='utf-8').decode('utf-8')
 
-    # Fix missing </item> tag
-    xml_string = fix_missing_item_tag(xml_string)
+    
 
     # Remove incomplete last <item> element
     xml_string = remove_incomplete_last_item(xml_string, required_keys)
+
+    # Fix missing </item> tag
+    xml_string = fix_missing_item_tag(xml_string)
 
     # Write the XML string to the specified file
     with open(xml_file, 'wb') as xml_file:
