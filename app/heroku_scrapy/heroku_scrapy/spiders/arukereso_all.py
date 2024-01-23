@@ -29,7 +29,7 @@ import logging
 #from ..proxy_manager.proxy_verification import Get_valid_Proxy_list
 
 
-logging.info("Spider started")
+#logging.info("Spider started")
 
 
 
@@ -40,7 +40,7 @@ def Getting_new_proxies():  # Runnin the scrapy
         # Define the command as a list of strings
         logging.info("--------------------   Getting new proxies ---------------------------")
         current_directory = os.getcwd()
-        print("Current Working Directory:", current_directory)
+        #print("Current Working Directory:", current_directory)
 
         url = "https://api.proxyscrape.com/v2/?request=displayproxies&protocol=http&timeout=10000&country=all&ssl=all&anonymity=all"
         output_file = "proxyes.txt"
@@ -57,7 +57,7 @@ def Getting_new_proxies():  # Runnin the scrapy
                 with open(output_file, "w") as file:
                     file.write(proxies)
                     
-                print("Proxies retrieved and saved to proxies.txt")
+                #print("Proxies retrieved and saved to proxies.txt")
                 for item in proxies.split("\n"):
                     retList.append(str("http://") + item)
                     retList.append(str("https://") + item)
@@ -67,11 +67,13 @@ def Getting_new_proxies():  # Runnin the scrapy
                 return proxies
             else:
                 # Handle other status codes if needed
-                print(f"Request failed with status code: {response.status_code}")
+                pass
+                #print(f"Request failed with status code: {response.status_code}")
 
         except requests.RequestException as e:
             # Handle exceptions or errors
-            print(f"An error occurred: {e}")
+            pass
+            #print(f"An error occurred: {e}")
 
 
 
@@ -132,7 +134,7 @@ class ArukeresoSpider(scrapy.Spider):
         self.error_urls = []  # List to store URLs that encountered errors
         self.visited_url = set()
 
-        logging.info("----------- Got valid Proxies. ------------------")
+        #logging.info("----------- Got valid Proxies. ------------------")
 
 
     
@@ -166,16 +168,16 @@ class ArukeresoSpider(scrapy.Spider):
         # Get a proxy for this request
         proxy = self.select_proxy()
 
-        logging.info(f" ---- current proxy : {proxy}")
+        #logging.info(f" ---- current proxy : {proxy}")
     
         while not proxy and len(self.raw_proxy_list) <30:
             self.raw_proxy_list = Getting_new_proxies()
             self.proxies_retries+=1
 
-            logging.info("trying to get new  proxy list: " , self.proxies_retries)
+            #logging.info("trying to get new  proxy list: " , self.proxies_retries)
         
         if not proxy:
-            logging.info("------------------  There was no proxies ---------   logging")
+            #logging.info("------------------  There was no proxies ---------   logging")
             return
 
         headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36'}
@@ -191,7 +193,7 @@ class ArukeresoSpider(scrapy.Spider):
             )
 
 
-            logging.info(f"Outgoing request headers: {request.headers}")
+            #logging.info(f"Outgoing request headers: {request.headers}")
             yield request
             
 
@@ -258,7 +260,7 @@ class ArukeresoSpider(scrapy.Spider):
                 'product_name': product_name  # use the extracted product name here
             }
 
-            logging.info(f"The saved data {price} ,  {product_name} ,  {competitor}")
+            #logging.info(f"The saved data {price} ,  {product_name} ,  {competitor}")
 
             data_tuple = tuple(data.items())
             if data_tuple not in data_list:
