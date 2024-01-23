@@ -305,7 +305,7 @@ def Get_final_data():
     # Retrieve the Clondike_Key from the environment variables
     valid_api_key =  os.environ.get('Clondike_Key')
 
-    if api_key == valid_api_key:
+    if api_key != valid_api_key:
         return "Api key is not valid ---- :("
 
     directory = "app/heroku_scrapy"
