@@ -54,6 +54,7 @@ def jsonL_to_xml(jsonl_file, xml_file):
                 if value is not None and value != "" and value != "\n":
                     sub_element = ET.SubElement(element, key)
                     sub_element.text = str(value)
+                    ET.SubElement(element, key).text = value
 
     # Create an ElementTree object from the root element
     tree = ET.ElementTree(root)
@@ -92,7 +93,7 @@ def log_folder_content(folder_path):
     except OSError as e:
         logging.error(f"Error while listing folder contents: {e}")
 
-api_key = 12345
+
 
 api = Blueprint('api', __name__)
 
@@ -133,8 +134,7 @@ def get_raw_data():
 
     
 
-#curl -X POST -H "Authorization: Bearer 12345" http://127.0.0.1:5000/check_api_key
-# the tester call
+
 
 
 #The part where get proxy api route will return a json file
