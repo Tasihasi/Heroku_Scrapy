@@ -11,6 +11,7 @@ from concurrent.futures import ThreadPoolExecutor  # For async execution
 
 
 
+
 def json2xml(json_obj, line_padding=""):
     result_list = list()
 
@@ -50,17 +51,19 @@ def jsonL_to_xml(jsonl_file, xml_file):
 
             # Add sub-elements for each key-value pair in the JSON object
             for key, value in json_data.items():
-                logging.info(f"----- the key:  {key}   -----  value :   {value}--------")
+                logging.info(f"----- the key: {key}   -----  value : {value}--------")
                 if value is not None and value != "" and value != "\n":
                     sub_element = ET.SubElement(element, key)
-                    sub_element.text = str(value)
-                    ET.SubElement(element, key).text = value
+                    sub_element.text = str(value).strip()
+                    ET.SubElement(element, key)
 
     # Create an ElementTree object from the root element
     tree = ET.ElementTree(root)
 
-    # Write the XML document to a file
-    tree.write(xml_file, xml_declaration=True, encoding='utf-8', method='xml')
+    # Write the XML to the specified file
+    with open(xml_file, 'wb') as xml_file:
+        tree.write(xml_file)
+
 
 
 def create_empty_xml(file_path):
@@ -220,8 +223,8 @@ def Get_final_data():
 
     path = os.path.join(os.getcwd(), directory, result)
 
-    if os.path.exists(path):
-        return send_file(path, as_attachment=True)
+    #if os.path.exists(path):
+        #return send_file(path, as_attachment=True)
 
 
     
