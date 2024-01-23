@@ -10,7 +10,32 @@ from .data_retrieve import get_data_from_scrapy, get_proxies
 from concurrent.futures import ThreadPoolExecutor  # For async execution
 import fcntl
 
+def fix_missing_item_tag(xml_string):
+    # Check if the XML string ends with </item>
+    if not xml_string.strip().endswith('</item>'):
+        # Append </item> if it's missing
+        xml_string += '</item>'
+    return xml_string
 
+def remove_incomplete_last_item(xml_string, required_attributes):
+    # Parse the XML string into an ElementTree
+    root = ET.fromstring(xml_string)
+
+    # Find the last <item> element
+    last_item = root.find('.//item[last()]')
+
+    # Check if the last <item> has all required attributes
+    if last_item is not None and all(attr in last_item.attrib for attr in required_attributes):
+        return xml_string  # No changes needed if the last <item> is complete
+
+    # Remove the incomplete last <item> element
+    if last_item is not None:
+        root.remove(last_item)
+
+    # Convert the modified ElementTree back to an XML string
+    modified_xml_string = ET.tostring(root, encoding='utf-8').decode('utf-8')
+
+    return modified_xml_string
 
 
 def json2xml(json_obj, line_padding=""):
@@ -71,13 +96,18 @@ def jsonL_to_xml(jsonl_file, xml_file, required_keys=None):
             except json.JSONDecodeError as e:
                 logging.error(f"Error on line {line_number}: {e}")
 
-    # Create an ElementTree object from the root element
-    tree = ET.ElementTree(root)
+    # Convert the ElementTree to an XML string
+    xml_string = ET.tostring(root, encoding='utf-8').decode('utf-8')
 
-    # Write the XML to the specified file
+    # Fix missing </item> tag
+    xml_string = fix_missing_item_tag(xml_string)
+
+    # Remove incomplete last <item> element
+    xml_string = remove_incomplete_last_item(xml_string, required_keys)
+
+    # Write the XML string to the specified file
     with open(xml_file, 'wb') as xml_file:
-        tree.write(xml_file)
-
+        xml_file.write(xml_string.encode('utf-8'))
 
 
 def create_empty_xml(file_path):
