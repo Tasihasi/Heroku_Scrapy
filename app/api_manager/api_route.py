@@ -55,7 +55,7 @@ def jsonL_to_xml(jsonl_file, xml_file):
                 if value is not None and value != "" and value != "\n":
                     sub_element = ET.SubElement(element, key)
                     sub_element.text = str(value).strip()
-                    ET.SubElement(element, key)
+                    #ET.SubElement(element, key)
 
     # Create an ElementTree object from the root element
     tree = ET.ElementTree(root)
