@@ -38,7 +38,7 @@ def jsonL_to_xml(jsonl_file, xml_file):
     # Open JSONL file for reading
     with open(jsonl_file, 'r') as jsonl_file:
         # Create the root element of the XML document
-        root = ET.Element("root")
+        root = ET.Element("items")
 
         # Loop through each line in the JSONL file
         for line in jsonl_file:
@@ -59,7 +59,7 @@ def jsonL_to_xml(jsonl_file, xml_file):
     tree = ET.ElementTree(root)
 
     # Write the XML document to a file
-    tree.write(xml_file)
+    tree.write(xml_file, xml_declaration=True, encoding='utf-8', method='xml')
 
 
 def create_empty_xml(file_path):
