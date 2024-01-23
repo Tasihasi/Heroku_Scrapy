@@ -313,7 +313,9 @@ def Get_final_data():
     xml_path = os.path.join(directory, result)
     log_folder_content(directory)
 
-    if os.path.exists(xml_path):
+    try:
         return send_file(xml_path, as_attachment=True)
+    except FileNotFoundError as e:
+        logging.error(f"FileNotFoundError: {e}")
+        return "File not found", 404
     
-    return "there is no data here"
