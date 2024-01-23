@@ -240,8 +240,8 @@ def get_proxies():
 
 
 
-@proxy_blueprint.route('/get_final_data', methods=['GET'])
-def Get_final_data():
+@proxy_blueprint.route('/preparing_xml', methods=['GET'])
+def preparing_xml():
 
     # Retrieve the API key from the request headers
     api_key = request.headers.get('API-Key')
@@ -258,8 +258,7 @@ def Get_final_data():
 
     
 
-    if api_key != valid_api_key:
-        return "Invalid API Key ! :("
+
     
 
     directory = "app/heroku_scrapy"
@@ -291,8 +290,29 @@ def Get_final_data():
         return "Error during file conversion please try again later!"
 
     if os.path.exists(path):
-        return send_file(path, as_attachment=True)
+        #return send_file(path, as_attachment=True)
+        return "the file is ready"
       
     return "path dose not exist ---- >:"
 
 
+@proxy_blueprint.route('/get_final_data', methods=['GET'])
+def Get_final_data():
+
+    # Retrieve the API key from the request headers
+    api_key = request.headers.get('API-Key')
+
+    # Retrieve the Clondike_Key from the environment variables
+    valid_api_key =  os.environ.get('Clondike_Key')
+
+    if api_key == valid_api_key:
+        return "Api key is not valid ---- :("
+
+    directory = "app/heroku_scrapy"
+    result = "resulting.xml"
+    xml_path = os.path.join(directory, result)
+
+    if os.path.exists(xml_path):
+        return send_file(xml_path, as_attachment=True)
+    
+    return "there is no data here"
