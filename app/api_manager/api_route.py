@@ -175,10 +175,15 @@ def Get_final_data():
     logging.info("----------  app/heroku_scrapy -------------")
     log_folder_content(directory)
 
-    directory = "app"
+    directory = ".app"
     json_path = os.path.join(directory, result)
     logging.info(f"-----------------------   {directory} -------------------- ")
     log_folder_content(directory)
+
+    directory = "."
+    logging.info(f"-----------------------   {directory} -------------------- ")
+    log_folder_content(directory)
+
 
     try:
 
