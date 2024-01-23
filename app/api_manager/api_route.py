@@ -340,23 +340,12 @@ def Get_final_data():
 
     directory = "."
     result = "output.jsonl"
-    xml_path = os.path.join(directory, result)
+    json_path = os.path.join(directory, result)
     log_folder_content(directory)
 
     try:
-        # Read and strip values from the JSONL file
-        stripped_lines = strip_values_in_jsonl(xml_path)
-
-        # Create a new stripped JSONL file
-        stripped_jsonl_path = os.path.join(directory, "stripped_output.jsonl")
-        with open(stripped_jsonl_path, 'w', encoding="utf-8") as stripped_file:
-            stripped_file.writelines(stripped_lines)
-
-        # Convert the stripped JSONL file to XML (you can use your existing logic here)
-        jsonL_to_xml(stripped_jsonl_path, "resulting.xml")
-
         # Send the resulting XML file
-        return send_file("resulting.xml", as_attachment=True)
+        return send_file(strip_values_in_jsonl(json_path), as_attachment=True)
 
     except FileNotFoundError as e:
         logging.error(f"FileNotFoundError: {e}")
