@@ -36,14 +36,14 @@ def json2xml(json_obj, line_padding=""):
     return "%s%s" % (line_padding, json_obj)
 
 
-def jsonL_to_xml(jsonl_file, xml_file, required_keys=None):
+def jsonL_to_xml(jsonl_file, xml_file):
     if required_keys is None:
         required_keys = set()
 
     # Open JSONL file for reading
-    with open(jsonl_file, 'r') as jsonl_file:
-        # locking the file 
+    with os.fdopen(os.open(jsonl_file, os.O_RDONLY), 'r') as jsonl_file:
         fcntl.flock(jsonl_file.fileno(), fcntl.LOCK_SH)
+        # locking the file 
 
         # Create the root element of the XML document
         root = ET.Element("items")
