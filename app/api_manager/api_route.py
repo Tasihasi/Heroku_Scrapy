@@ -61,7 +61,7 @@ def jsonL_to_xml(jsonl_file, xml_file):
     tree = ET.ElementTree(root)
 
     # Write the XML to the specified file
-    with open(xml_file, 'wb') as xml_file:
+    with open(xml_file, 'w') as xml_file:
         tree.write(xml_file)
 
 
