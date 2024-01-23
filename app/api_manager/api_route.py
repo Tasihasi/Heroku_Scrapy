@@ -347,7 +347,7 @@ def Get_final_data():
 
         json_file = strip_values_in_jsonl(json_path)
         # Send the resulting XML file
-        return send_file(json_file, as_attachment=True)
+        return send_file(json_path, as_attachment=True)
 
     except FileNotFoundError as e:
         logging.error(f"FileNotFoundError: {e}")
