@@ -119,6 +119,9 @@ def strip_values_in_jsonl(jsonl_file):
     stripped_lines = []
 
     with open(jsonl_file, 'r', encoding="utf-8") as file:
+        # Read all lines into a list, excluding the last line
+        file = list(jsonl_file)[:-1]
+
         for line_number, line in enumerate(file, start=1):
             try:
                 # Parse JSON from the line
