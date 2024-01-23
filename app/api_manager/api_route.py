@@ -43,7 +43,7 @@ def jsonL_to_xml(jsonl_file, xml_file, required_keys=None):
     # Open JSONL file for reading
     with open(jsonl_file, 'r') as jsonl_file:
         # locking the file 
-        fcntl.flock(jsonl_file.fileno(), fcntl.LOCK_SH)
+        #fcntl.flock(jsonl_file.fileno(), fcntl.LOCK_SH)
 
         # Create the root element of the XML document
         root = ET.Element("items")
