@@ -50,16 +50,15 @@ def process_jsonl(input_path, output_filename="BigOutput.jsonl", required_keys=[
         # Log the content of the first line
         logging.info(f"First line of input file: {lines[0].rstrip()}")
 
-
-         # Remove the last line and strip whitespace from all values
+        # Remove the last line and strip whitespace from all values
         data = [json.loads(line) for line in lines]
 
         stripped_data = [{key: value.strip() if isinstance(value, str) else value for key, value in record.items()} for record in data]
-        
+
         # Filter records based on the presence of required keys
         filtered_data = [record for record in stripped_data if all(key in record for key in required_keys)]
         logging.info(f"this is the filtered_data:  {filtered_data}" )
-        
+
         # Write the modified content to the output JSONL file
         output_path = output_filename
         with open(output_path, 'w', encoding="utf-8") as output_file:
@@ -67,14 +66,13 @@ def process_jsonl(input_path, output_filename="BigOutput.jsonl", required_keys=[
                 logging.info(f"Current record added :   {record}")
                 output_file.write(json.dumps(record) + '\n')
 
-        logging.info("---------------  Succesfully transfromed the JSONL --------")
+        logging.info("---------------  Successfully transformed the JSONL --------")
         return output_path
 
     except Exception as e:
         # Handle exceptions (e.g., file not found, JSON decoding error)
         logging.error(f"------   Error processing JSONL file: {e} -----")
         return None
-
 def strip_values_in_jsonl(jsonl_file):
     stripped_lines = []
 

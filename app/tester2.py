@@ -15,4 +15,5 @@ response = requests.get(url, headers=headers)
 
 
 print("Status Code:", response.status_code)
+print("response header:  " , response.headers)
 print("Response Body:", response.text)
