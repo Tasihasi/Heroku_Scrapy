@@ -59,6 +59,7 @@ def process_jsonl(input_path, output_filename="BigOutput.jsonl", required_keys=[
             for record in filtered_data:
                 output_file.write(json.dumps(record) + '\n')
 
+        logging.info("---------------  Succesfully transfromed the JSONL --------")
         return output_path
 
     except Exception as e:
