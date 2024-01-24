@@ -170,7 +170,7 @@ def Get_final_data():
 
     # Get the absolute path of the Flask app's root directory
     app_root = os.path.abspath(os.path.dirname(__file__))
-    directory = "heroku_scrapy"
+    directory = "."
     folder_log = os.path.join(app_root, directory)
     logging.info(f"---------- {folder_log}  -------------")
     log_folder_content(directory)
