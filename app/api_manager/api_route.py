@@ -41,14 +41,10 @@ def remove_incomplete_last_item(xml_string, required_attributes):
 # stripping all values in the jsonl file 
 # returns the file name to the resulting file 
 def process_jsonl(input_path, output_filename="BigOutput.jsonl", required_keys=["price", "availability", "competitor", "product_name"]):
-    logging.info("---------------------  Running transformation -------------")
     try:
         # Read the content from the input JSONL file
         with open(input_path, 'r', encoding="utf-8") as input_file:
             lines = [line.strip() for line in input_file.readlines()]
-
-        # Log the content of the first line
-        logging.info(f"First line of input file: {lines[0].rstrip()}")
 
         # Remove the last line and strip whitespace from all values
         data = []
@@ -63,7 +59,7 @@ def process_jsonl(input_path, output_filename="BigOutput.jsonl", required_keys=[
 
         # Filter records based on the presence of required keys
         filtered_data = [record for record in stripped_data if all(key in record for key in required_keys)]
-        logging.info(f"this is the filtered_data:  {filtered_data}" )
+        #logging.info(f"this is the filtered_data:  {filtered_data}" )
 
         # Write the modified content to the output JSONL file
         output_path = output_filename
@@ -72,7 +68,7 @@ def process_jsonl(input_path, output_filename="BigOutput.jsonl", required_keys=[
                 logging.info(f"Current record added :   {record}")
                 output_file.write(json.dumps(record) + '\n')
 
-        logging.info("---------------  Successfully transformed the JSONL --------")
+        #logging.info("---------------  Successfully transformed the JSONL --------")
         return output_path
 
     except Exception as e:
