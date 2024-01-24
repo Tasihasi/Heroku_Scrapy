@@ -61,6 +61,11 @@ def process_jsonl(input_path, output_filename="BigOutput.jsonl", required_keys=[
         filtered_data = [record for record in stripped_data if all(key in record for key in required_keys)]
         #logging.info(f"this is the filtered_data:  {filtered_data}" )
 
+        # Remove the "availability" column from each record in filtered_data
+        for record in filtered_data:
+            if "availability" in record:
+                del record["availability"]
+
         # trying to return with simply filtered data 
         return filtered_data
 
@@ -78,6 +83,9 @@ def process_jsonl(input_path, output_filename="BigOutput.jsonl", required_keys=[
         # Handle exceptions (e.g., file not found, JSON decoding error)
         logging.error(f"------   Error processing JSONL file: {e} -----")
         return None
+    
+
+
 def strip_values_in_jsonl(jsonl_file):
     stripped_lines = []
 
@@ -221,7 +229,6 @@ def Get_final_data():
     result = "output.jsonl"
     json_path = os.path.join(folder_log, result)
     
-    return "dhddddddddddddwdddddddddddddddddddddddddddddddddddddddddddddddddjdwdhwdjddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd12"
     return process_jsonl(json_path)
 
     json_path = os.path.join(folder_log, process_jsonl(json_path)) 
