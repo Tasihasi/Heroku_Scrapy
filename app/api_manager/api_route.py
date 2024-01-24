@@ -233,10 +233,13 @@ def Get_final_data():
     data = process_jsonl(json_path)
     logging.critical(data)
 
+    # Log the length of the data in bytes
+    logging.info(f"Data length: {len(data)} bytes")
+
     # Create a Flask response with the data and set Content-Length
     response = Response(data, content_type='application/json')
     response.headers['Content-Length'] = len(data)
-    return data
+    return response
 
     json_path = os.path.join(folder_log, process_jsonl(json_path)) 
     # if procces_jsonl return wit an exception than the code crashes
