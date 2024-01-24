@@ -45,15 +45,15 @@ def process_jsonl(input_path, output_filename="BigOutput.jsonl", required_keys=[
     try:
         # Read the content from the input JSONL file
         with open(input_path, 'r', encoding="utf-8") as input_file:
-            lines = input_file.readlines()
+            lines = [line.strip() for line in input_file.readlines()]
 
         # Log the content of the first line
         logging.info(f"First line of input file: {lines[0].rstrip()}")
 
-         # Remove the last line and strip whitespace from all values
-        data = [json.loads(line.rstrip()) for line in lines]
 
-        # Strip whitespace from all values
+         # Remove the last line and strip whitespace from all values
+        data = [json.loads(line) for line in lines]
+
         stripped_data = [{key: value.strip() if isinstance(value, str) else value for key, value in record.items()} for record in data]
         
         # Filter records based on the presence of required keys
