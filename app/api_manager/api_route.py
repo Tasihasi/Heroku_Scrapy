@@ -51,7 +51,13 @@ def process_jsonl(input_path, output_filename="BigOutput.jsonl", required_keys=[
         logging.info(f"First line of input file: {lines[0].rstrip()}")
 
         # Remove the last line and strip whitespace from all values
-        data = [json.loads(line) for line in lines]
+        data = []
+        for line in lines:
+            try:
+                record = json.loads(line)
+                data.append(record)
+            except json.JSONDecodeError as e:
+                logging.error(f"Error decoding JSON for line: {line}. Error: {e}")
 
         stripped_data = [{key: value.strip() if isinstance(value, str) else value for key, value in record.items()} for record in data]
 
