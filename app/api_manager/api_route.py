@@ -40,7 +40,7 @@ def remove_incomplete_last_item(xml_string, required_attributes):
 # remowing the last line from the jsonl file 
 # stripping all values in the jsonl file 
 # returns the file name to the resulting file 
-def process_jsonl(input_path, output_filename="BigOutput.jsonl"):
+def process_jsonl(input_path, output_filename="BigOutput.jsonl", required_keys=["price", "availability", "competitor", "product_name"]):
     try:
         # Read the content from the input JSONL file
         with open(input_path, 'r', encoding="utf-8") as input_file:
@@ -48,6 +48,9 @@ def process_jsonl(input_path, output_filename="BigOutput.jsonl"):
 
         # Strip whitespace from all values
         stripped_data = [{key: value.strip() if isinstance(value, str) else value for key, value in record.items()} for record in data[:-1]]
+        
+        # Filter records based on the presence of required keys
+        filtered_data = [record for record in stripped_data if all(key in record for key in required_keys)]
 
         # Write the modified content to the output JSONL file
         output_path = output_filename
