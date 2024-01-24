@@ -55,6 +55,7 @@ def process_jsonl(input_path, output_filename="BigOutput.jsonl", required_keys=[
         
         # Filter records based on the presence of required keys
         filtered_data = [record for record in stripped_data if all(key in record for key in required_keys)]
+        logging.info(f"this is the filtered_data:  {filtered_data}" )
 
         # Write the modified content to the output JSONL file
         output_path = output_filename
