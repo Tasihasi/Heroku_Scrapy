@@ -229,6 +229,8 @@ def Get_final_data():
     result = "output.jsonl"
     json_path = os.path.join(folder_log, result)
     
+    logging.CRITICAL("---------------------   The data being sent -----------")
+    logging.critical(process_jsonl(json_path))
     return process_jsonl(json_path)
 
     json_path = os.path.join(folder_log, process_jsonl(json_path)) 
