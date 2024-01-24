@@ -2,6 +2,7 @@ from flask import Blueprint, jsonify, request, Response, send_file, make_respons
 import xml.etree.ElementTree as ET
 import json
 import os
+import sys
 import logging
 from .auth import valid_api_key, mach_apiKey_to_customer, getting_raw_data
 from .scrapy_manager import newest_raw_data
@@ -234,9 +235,9 @@ def Get_final_data():
     logging.critical(data)
 
     # Log the length of the data in bytes
-    logging.info(f"Data length: {len(data)} bytes")
+    logging.info(f"Data length: {sys.getsizeof(data)} bytes")
 
-  
+
     return data
 
     json_path = os.path.join(folder_log, process_jsonl(json_path)) 
