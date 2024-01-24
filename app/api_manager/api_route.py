@@ -168,6 +168,13 @@ def Get_final_data():
     current_directory = os.getcwd()
     logging.info(f"Current Working Directory: {current_directory}")
 
+    # Get the absolute path of the Flask app's root directory
+    app_root = os.path.abspath(os.path.dirname(__file__))
+    directory = "heroku_scrapy"
+    folder_log = os.path.join(app_root, directory)
+    logging.info(f"---------- {folder_log}  -------------")
+    log_folder_content(directory)
+
     #directory = os.path.join(current_app.root_path, "app/heroku_scrapy")
     directory = "."
     result = "output.jsonl"
