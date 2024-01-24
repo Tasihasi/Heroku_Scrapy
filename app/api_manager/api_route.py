@@ -173,7 +173,7 @@ def Get_final_data():
     directory = "."
     folder_log = os.path.join(app_root, directory)
     logging.info(f"---------- {folder_log}  -------------")
-    log_folder_content(directory)
+    log_folder_content(app_root)
 
     #directory = os.path.join(current_app.root_path, "app/heroku_scrapy")
     directory = "."
