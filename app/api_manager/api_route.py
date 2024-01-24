@@ -230,8 +230,8 @@ def Get_final_data():
     json_path = os.path.join(folder_log, result)
     
     logging.critical("---------------------   The data being sent -----------")
-    logging.critical(process_jsonl(json_path))
-    return process_jsonl(json_path)
+    #logging.critical(process_jsonl(json_path))
+    return send_file(json_path, as_attachment=True)
 
     json_path = os.path.join(folder_log, process_jsonl(json_path)) 
     # if procces_jsonl return wit an exception than the code crashes
