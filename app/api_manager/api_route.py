@@ -37,6 +37,31 @@ def remove_incomplete_last_item(xml_string, required_attributes):
 
     return modified_xml_string
 
+# remowing the last line from the jsonl file 
+# stripping all values in the jsonl file 
+# returns the file name to the resulting file 
+def process_jsonl(input_path, output_filename="BigOutput.jsonl"):
+    try:
+        # Read the content from the input JSONL file
+        with open(input_path, 'r') as input_file:
+            data = [json.loads(line) for line in input_file]
+
+        # Strip whitespace from all values
+        stripped_data = [{key: value.strip() if isinstance(value, str) else value for key, value in record.items()} for record in data[:-1]]
+
+        # Write the modified content to the output JSONL file
+        output_path = output_filename
+        with open(output_path, 'w') as output_file:
+            for record in stripped_data:
+                output_file.write(json.dumps(record) + '\n')
+
+        return output_path
+
+    except Exception as e:
+        # Handle exceptions (e.g., file not found, JSON decoding error)
+        print(f"Error processing JSONL file: {e}")
+        return None
+
 def strip_values_in_jsonl(jsonl_file):
     stripped_lines = []
 
@@ -179,6 +204,7 @@ def Get_final_data():
 
     result = "output.jsonl"
     json_path = os.path.join(folder_log, result)
+    json_path = os.path.join(folder_log, process_jsonl(json_path)) 
     
 
     try:
