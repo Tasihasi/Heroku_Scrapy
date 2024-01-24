@@ -41,6 +41,7 @@ def remove_incomplete_last_item(xml_string, required_attributes):
 # stripping all values in the jsonl file 
 # returns the file name to the resulting file 
 def process_jsonl(input_path, output_filename="BigOutput.jsonl", required_keys=["price", "availability", "competitor", "product_name"]):
+    logging.info("---------------------  Running transformation -------------")
     try:
         # Read the content from the input JSONL file
         with open(input_path, 'r', encoding="utf-8") as input_file:
@@ -210,6 +211,7 @@ def Get_final_data():
     result = "output.jsonl"
     json_path = os.path.join(folder_log, result)
     json_path = os.path.join(folder_log, process_jsonl(json_path)) 
+    # if procces_jsonl return wit an exception than the code crashes
     
 
     try:
