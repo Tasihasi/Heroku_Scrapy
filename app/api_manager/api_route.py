@@ -59,7 +59,7 @@ def process_jsonl(input_path, output_filename="BigOutput.jsonl"):
 
     except Exception as e:
         # Handle exceptions (e.g., file not found, JSON decoding error)
-        print(f"Error processing JSONL file: {e}")
+        logging.error(f"Error processing JSONL file: {e}")
         return None
 
 def strip_values_in_jsonl(jsonl_file):
