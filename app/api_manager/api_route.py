@@ -232,6 +232,10 @@ def Get_final_data():
     logging.critical("---------------------   The data being sent -----------")
     data = process_jsonl(json_path)
     logging.critical(data)
+
+    # Create a Flask response with the data and set Content-Length
+    response = Response(data, content_type='application/json')
+    response.headers['Content-Length'] = len(data)
     return data
 
     json_path = os.path.join(folder_log, process_jsonl(json_path)) 
