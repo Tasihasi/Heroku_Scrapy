@@ -65,7 +65,7 @@ def process_jsonl(input_path, output_filename="BigOutput.jsonl", required_keys=[
         output_path = output_filename
         with open(output_path, 'w', encoding="utf-8") as output_file:
             for record in filtered_data:
-                logging.info(f"Current record added :   {record}")
+                #logging.info(f"Current record added :   {record}")
                 output_file.write(json.dumps(record) + '\n')
 
         #logging.info("---------------  Successfully transformed the JSONL --------")
@@ -215,7 +215,7 @@ def Get_final_data():
     logging.info(f"---------- {folder_log}  -------------")
     log_folder_content(folder_log)
 
-    result = "output.jsonl"
+    result = ".Result.xml"
     json_path = os.path.join(folder_log, result)
     json_path = os.path.join(folder_log, process_jsonl(json_path)) 
     # if procces_jsonl return wit an exception than the code crashes
@@ -237,6 +237,8 @@ def Get_final_data():
         except FileNotFoundError as e:
             logging.error(f"FileNotFoundError: {e}")
             return "File not found", 404
+        
+    
     
 
     
