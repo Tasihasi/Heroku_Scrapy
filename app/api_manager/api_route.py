@@ -46,6 +46,7 @@ def process_jsonl(input_path, output_filename="BigOutput.jsonl", required_keys=[
         with open(input_path, 'r', encoding="utf-8") as input_file:
             data = [json.loads(line) for line in input_file.readlines()[:-1]]
 
+        data.remove(data[-1])
         # Strip whitespace from all values
         stripped_data = [{key: value.strip() if isinstance(value, str) else value for key, value in record.items()} for record in data]
         
