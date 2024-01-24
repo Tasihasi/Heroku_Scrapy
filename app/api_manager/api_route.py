@@ -168,9 +168,11 @@ def Get_final_data():
     current_directory = os.getcwd()
     logging.info(f"Current Working Directory: {current_directory}")
 
+    basename = os.path.basename(__file__)
+    dirname = os.path.dirname(__file__)
 
-    logging.info('File name :    ', os.path.basename(__file__))
-    logging.info('Directory Name:     ', os.path.dirname(__file__))
+    logging.info('File name :    ', basename)
+    logging.info('Directory Name:     ', dirname)
 
     # Get the absolute path of the Flask app's root directory
     app_root = os.path.abspath(os.path.dirname(__file__))
