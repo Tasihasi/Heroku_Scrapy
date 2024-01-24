@@ -238,7 +238,18 @@ def Get_final_data():
     logging.info(f"Data length: {sys.getsizeof(data)} bytes")
 
 
-    return data
+    # Split the list into two strings
+    string1 = ''.join(map(str, data[0:len(data)//2]))
+    string2 = ''.join(map(str, data[len(data)//2:]))
+
+    # Create a dictionary with two keys and their corresponding values
+    response_data = {
+        "string1": string1,
+        "string2": string2
+    }
+
+    return jsonify(response_data)
+
 
     json_path = os.path.join(folder_log, process_jsonl(json_path)) 
     # if procces_jsonl return wit an exception than the code crashes
