@@ -177,26 +177,13 @@ def Get_final_data():
     logging.info(f"---------- {folder_log}  -------------")
     log_folder_content(folder_log)
 
-    #directory = os.path.join(current_app.root_path, "app/heroku_scrapy")
-    directory = "."
     result = "output.jsonl"
-    json_path = os.path.join(directory, result)
-    logging.info("----------  app/heroku_scrapy -------------")
-    log_folder_content(directory)
-
-    directory = "./app"
-    json_path = os.path.join(directory, result)
-    logging.info(f"-----------------------   {directory} -------------------- ")
-    log_folder_content(directory)
-
-    directory = "./app/heroku_scrapy"
-    logging.info(f"-----------------------   {directory} -------------------- ")
-    log_folder_content(directory)
-    json_path = os.path.join(directory, result)
+    json_path = os.path.join(folder_log, result)
+    
 
     try:
 
-        json_file = strip_values_in_jsonl(json_path)
+        #json_file = strip_values_in_jsonl(json_path)
         # Send the resulting XML file
         return send_file(json_path, as_attachment=True)
 
