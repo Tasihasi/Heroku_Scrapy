@@ -43,7 +43,7 @@ def remove_incomplete_last_item(xml_string, required_attributes):
 def process_jsonl(input_path, output_filename="BigOutput.jsonl"):
     try:
         # Read the content from the input JSONL file
-        with open(input_path, 'r') as input_file:
+        with open(input_path, 'r', encoding="utf-8") as input_file:
             data = [json.loads(line) for line in input_file]
 
         # Strip whitespace from all values
@@ -51,7 +51,7 @@ def process_jsonl(input_path, output_filename="BigOutput.jsonl"):
 
         # Write the modified content to the output JSONL file
         output_path = output_filename
-        with open(output_path, 'w') as output_file:
+        with open(output_path, 'w', encoding="utf-8") as output_file:
             for record in stripped_data:
                 output_file.write(json.dumps(record) + '\n')
 
