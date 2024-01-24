@@ -61,6 +61,9 @@ def process_jsonl(input_path, output_filename="BigOutput.jsonl", required_keys=[
         filtered_data = [record for record in stripped_data if all(key in record for key in required_keys)]
         #logging.info(f"this is the filtered_data:  {filtered_data}" )
 
+        # trying to return with simply filtered data 
+        return filtered_data
+
         # Write the modified content to the output JSONL file
         output_path = output_filename
         with open(output_path, 'w', encoding="utf-8") as output_file:
@@ -215,8 +218,11 @@ def Get_final_data():
     logging.info(f"---------- {folder_log}  -------------")
     log_folder_content(folder_log)
 
-    result = ".Result.xml"
+    result = "output.jsonl"
     json_path = os.path.join(folder_log, result)
+    
+    return process_jsonl(json_path)
+
     json_path = os.path.join(folder_log, process_jsonl(json_path)) 
     # if procces_jsonl return wit an exception than the code crashes
     
