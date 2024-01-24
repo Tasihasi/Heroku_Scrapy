@@ -59,7 +59,7 @@ def process_jsonl(input_path, output_filename="BigOutput.jsonl", required_keys=[
         # Write the modified content to the output JSONL file
         output_path = output_filename
         with open(output_path, 'w', encoding="utf-8") as output_file:
-            for record in filtered_data:
+            for record in filtered_data[-1]:
                 output_file.write(json.dumps(record) + '\n')
 
         logging.info("---------------  Succesfully transfromed the JSONL --------")
