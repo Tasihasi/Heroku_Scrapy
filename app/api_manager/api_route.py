@@ -236,7 +236,7 @@ def Get_final_data():
 
     # Log the length of the data in bytes
     logging.info(f"Data length: {sys.getsizeof(data)} bytes")
-    logging.info()
+    logging.info("---------------------------------------------")
 
 
     # Function to stream data in chunks
