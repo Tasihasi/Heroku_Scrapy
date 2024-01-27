@@ -236,12 +236,14 @@ def Get_final_data():
 
     # Log the length of the data in bytes
     logging.info(f"Data length: {sys.getsizeof(data)} bytes")
+    logging.info()
 
 
     # Function to stream data in chunks
     def generate():
         chunk_size = 4096  # Adjust chunk size as needed
-        for i in range(0, len(data), chunk_size):
+        for i in range(0, len(data.encode('utf-8')), chunk_size):
+            logging.info(f"here is a data chunk:  {data[i:i+chunk_size]}")
             yield data[i:i+chunk_size]
 
     return Response(generate(), content_type='text/plain')
