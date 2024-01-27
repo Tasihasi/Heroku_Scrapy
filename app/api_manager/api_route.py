@@ -11,12 +11,7 @@ from .data_retrieve import get_data_from_scrapy, get_proxies
 from concurrent.futures import ThreadPoolExecutor  # For async execution
 import fcntl
 
-def fix_missing_item_tag(xml_string):
-    # Check if the XML string ends with </item>
-    if not xml_string.strip().endswith('</item>'):
-        # Append </item> if it's missing
-        xml_string += '</item>'
-    return xml_string
+
 
 def remove_incomplete_last_item(xml_string, required_attributes):
     # Parse the XML string into an ElementTree
