@@ -68,7 +68,7 @@ def process_jsonl(input_path, output_filename="BigOutput.jsonl", required_keys=[
                 del record["availability"]
 
         # trying to return with simply filtered data 
-        return filtered_data
+        return json.dumps(filtered_data, indent=2)
 
         # Write the modified content to the output JSONL file
         output_path = output_filename
