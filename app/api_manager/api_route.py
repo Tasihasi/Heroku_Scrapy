@@ -211,7 +211,7 @@ def Get_final_data():
         return "Api key is not valid ---- :("
     
     current_directory = os.getcwd()
-    logging.info(f"Current Working Directory: {current_directory}")
+    #logging.info(f"Current Working Directory: {current_directory}")
 
     
 
@@ -220,28 +220,30 @@ def Get_final_data():
     directory = "../heroku_scrapy"
     folder_log = os.path.join(app_root, directory)
     logging.info(f"---------- {folder_log}  -------------")
-    log_folder_content(folder_log)
+    #log_folder_content(folder_log)
 
     result = "output.jsonl"
     json_path = os.path.join(folder_log, result)
     
-    logging.critical("---------------------   The data being sent -----------")
+    #logging.critical("---------------------   The data being sent -----------")
     data = process_jsonl(json_path)
-    logging.critical(data)
+    #logging.critical(data)
 
     # Log the length of the data in bytes
-    logging.info(f"Data length: {sys.getsizeof(data)} bytes")
-    logging.info("---------------------------------------------")
+    #logging.info(f"Data length: {sys.getsizeof(data)} bytes")
+    #logging.info("---------------------------------------------")
 
 
     # Function to stream data in chunks
     def generate():
         chunk_size = 4096  # Adjust chunk size as needed
         for i in range(0, len(data.encode('utf-8')), chunk_size):
-            logging.info(f"here is a data chunk:  {data[i:i+chunk_size]}")
+            #logging.info(f"here is a data chunk:  {data[i:i+chunk_size]}")
             yield data[i:i+chunk_size]
 
     return Response(generate(), content_type='text/plain')
+
+    
 
 
     json_path = os.path.join(folder_log, process_jsonl(json_path)) 
