@@ -238,17 +238,13 @@ def Get_final_data():
     logging.info(f"Data length: {sys.getsizeof(data)} bytes")
 
 
-    # Split the list into two strings
-    string1 = ''.join(map(str, data[0:len(data)//2]))
-    string2 = ''.join(map(str, data[len(data)//2:]))
+    # Function to stream data in chunks
+    def generate():
+        chunk_size = 4096  # Adjust chunk size as needed
+        for i in range(0, len(data), chunk_size):
+            yield data[i:i+chunk_size]
 
-    # Create a dictionary with two keys and their corresponding values
-    response_data = {
-        "string1": string1,
-        "string2": string2
-    }
-
-    return jsonify(response_data)
+    return Response(generate(), content_type='text/plain')
 
 
     json_path = os.path.join(folder_log, process_jsonl(json_path)) 
