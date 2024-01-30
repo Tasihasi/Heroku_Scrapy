@@ -280,9 +280,10 @@ def Get_final_data():
     # Function to stream data in chunks
     def generate():
         chunk_size = 4096  # Adjust chunk size as needed
-        for i in range(0, len(data.encode('utf-8')), chunk_size):
-            #logging.info(f"here is a data chunk:  {data[i:i+chunk_size]}")
-            yield data[i:i+chunk_size]
+        for item in data:
+            item_str = json.dumps(item)
+            for i in range(0, len(item_str.encode('utf-8')), chunk_size):
+                yield item_str[i:i+chunk_size]
 
     return Response(generate(), content_type='text/plain')
 
