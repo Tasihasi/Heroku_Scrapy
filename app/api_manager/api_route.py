@@ -108,6 +108,45 @@ def strip_values_in_jsonl(jsonl_file):
 
     return stripped_lines
 
+
+import json
+
+def process_data(data_str):
+    # Convert the string data to a list of dictionaries
+    data = json.loads(data_str)
+
+    # Dictionary to store the lowest prices for each product
+    lowest_prices = {}
+
+    # Iterate over each item in the data
+    for item in data:
+        product_name = item['product_name']
+        price = int(item['price'])
+
+        # Update lowest price for the product
+        if product_name not in lowest_prices:
+            lowest_prices[product_name] = [price]
+        else:
+            lowest_prices[product_name].append(price)
+
+    # Calculate the top 3 lowest prices for each product
+    for product_name, prices in lowest_prices.items():
+        lowest_prices[product_name] = sorted(prices)[:3]
+
+    # Generate the new version of the data with unique product names and top 3 lowest prices
+    new_data = []
+    for product_name, prices in lowest_prices.items():
+        new_data.append({
+            "product_name": product_name,
+            "lowest_prices": prices
+        })
+
+    return new_data
+
+
+
+
+
 def log_folder_content(folder_path):
     logging.info(f"Listing contents of folder: {folder_path}")
     try:
@@ -119,6 +158,8 @@ def log_folder_content(folder_path):
                     logging.info(f"Directory: {entry.name}")
     except OSError as e:
         logging.error(f"Error while listing folder contents: {e}")
+
+
 
 
 api = Blueprint('api', __name__)
@@ -227,7 +268,9 @@ def Get_final_data():
     
     #logging.critical("---------------------   The data being sent -----------")
     data = process_jsonl(json_path)
-    #logging.critical(data)
+    data = process_data(data)
+
+    logging.critical(data)
 
     # Log the length of the data in bytes
     #logging.info(f"Data length: {sys.getsizeof(data)} bytes")
