@@ -26,8 +26,8 @@ def list_files():
             return jsonify({'message': 'No files found'})
         else:
             # Extract file names
-            file_names = [item['name'] for item in items]
-            return jsonify({'files': file_names})
+            files_info = [{'name': item['name'], 'id': item['id']} for item in items]
+            return jsonify({'files': files_info})
     
     except Exception as e:
         logging.error("Authentication failed or an error occurred: {}".format(str(e)))
