@@ -75,6 +75,9 @@ def get_file():
             return jsonify({'error': 'File not found'}), 404
         else:
             logging.error("Error occurred while retrieving file: {}".format(error_reason))
-            logging.error("Google Drive Response: {}".format(e.response.json() if hasattr(e, 'response') else 'No response available'))
+            if hasattr(e, 'response') and hasattr(e.response, 'json'):
+                logging.error("Google Drive Response: {}".format(e.response.json()))
+            else:
+                logging.error("Google Drive Response: No response available")
             return jsonify({'error': 'Error occurred while retrieving file'}), 500
 
