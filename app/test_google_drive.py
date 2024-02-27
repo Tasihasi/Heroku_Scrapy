@@ -20,7 +20,7 @@ def test_api():
     base_url = "https://herokuscrapy-8d468df2dace.herokuapp.com"  # Update this with your actual API domain
     
     # Define the endpoint URL
-    endpoint_url = base_url + "/get_file?file_id=023_05_28.csv"  # Update YOUR_FILE_ID with the actual file ID
+    endpoint_url = base_url + "/get_file?file_id=1F4D-A0OOTEP91ArgMYohEbbOpHKsgWT3"  # Update YOUR_FILE_ID with the actual file ID
     
     try:
         # Make a GET request to the API endpoint

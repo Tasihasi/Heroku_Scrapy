@@ -37,7 +37,7 @@ def list_files():
 
 @google_drive_api.route('/get_file', methods=['GET'])
 def get_file():
-    logging.info("API endpoint triggered")
+    logging.info("Get file API endpoint triggered")
     
     try:
         file_id = request.args.get('file_id')  # Get the file ID from the request parameters
@@ -47,7 +47,7 @@ def get_file():
         # Get authenticated Drive API service
         drive_service = Get_drive_service()
 
-        logging.info("Successfully authenticated with Google Drive API")
+        logging.info("Successfully authenticated with Google Drive API in get file endpoint")
 
         # Call Drive API to get file metadata
         file_metadata = drive_service.files().get(fileId=file_id).execute()
@@ -71,8 +71,10 @@ def get_file():
         error_details = getattr(e, 'resp', {}).get('error', {})
         error_reason = error_details.get('message', 'Unknown error')
         if isinstance(e, requests.exceptions.HTTPError) and e.response.status_code == 404:
+            logging.error("File not found: {}".format(error_reason))
             return jsonify({'error': 'File not found'}), 404
         else:
             logging.error("Error occurred while retrieving file: {}".format(error_reason))
+            logging.error("Google Drive Response: {}".format(e.response.json() if hasattr(e, 'response') else 'No response available'))
             return jsonify({'error': 'Error occurred while retrieving file'}), 500
 
