@@ -1,4 +1,5 @@
 from flask import Blueprint, jsonify, request, send_file
+import requests
 from googleapiclient.http import MediaIoBaseDownload
 from io import BytesIO
 from .google_drive_api_auth import Get_drive_service
@@ -67,10 +68,11 @@ def get_file():
         return send_file(file_bytes, mimetype=content_type, as_attachment=True, attachment_filename=file_metadata['name'])
     
     except Exception as e:
-        error_details = e.resp.get('error', {})
+        error_details = getattr(e, 'resp', {}).get('error', {})
         error_reason = error_details.get('message', 'Unknown error')
-        if e.resp.status == 404:
+        if isinstance(e, requests.exceptions.HTTPError) and e.response.status_code == 404:
             return jsonify({'error': 'File not found'}), 404
         else:
             logging.error("Error occurred while retrieving file: {}".format(error_reason))
             return jsonify({'error': 'Error occurred while retrieving file'}), 500
+
