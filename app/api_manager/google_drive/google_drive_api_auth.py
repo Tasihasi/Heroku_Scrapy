@@ -9,16 +9,16 @@ import logging
 def Get_drive_service():
     # Load service account credentials from environment variables
     credentials = service_account.Credentials.from_service_account_info({
-        "type": os.environ.get("GOOGLE_DRIVE_API_TYPE"),
-        "project_id": os.environ.get("GOOGLE_ADRIVE_API_PROJECT_ID"),
-        "private_key_id": os.environ.get("GOOGLE_DRIVE_API_PRIVATE_KEY_ID"),
-        "private_key": os.environ.get("GOOGLE_DRIVE_API_PRIVATE_KEY").replace('\\n', '\n'),
-        "client_email": os.environ.get("GOOGLE_DRIVE_API_CLIENT_EMAIL"),
-        "client_id": os.environ.get("GOOGLE_DRIVE_API_CLIENT_ID"),
-        "auth_uri": os.environ.get("GOOGLE_DRIVE_API_AUTH_URI"),
-        "token_uri": os.environ.get("GOOGLE_DRIVE_API_TOKEN_URI"),
-        "auth_provider_x509_cert_url": os.environ.get("GOOGLE_DRIVE_API_AUTH_PROVIDER_X509_CERT_URL"),
-        "client_x509_cert_url": os.environ.get("GOOGLE_DRIVE_API_CLIENT_X509_CERT_URL")
+        "type": os.environ.get("google_drive_api_type"),
+        "project_id": os.environ.get("google_adrive_api_project_id"),
+        "private_key_id": os.environ.get("google_drive_api_private_key_id"),
+        "private_key": os.environ.get("google_drive_api_private_key").replace('\\n', '\n'),
+        "client_email": os.environ.get("google_drive_api_client_email"),
+        "client_id": os.environ.get("google_drive_api_client_id"),
+        "auth_uri": os.environ.get("google_drive_api_auth_uri"),
+        "token_uri": os.environ.get("google_drive_api_token_uri"),
+        "auth_provider_x509_cert_url": os.environ.get("google_drive_api_auth_provider_x509_cert_url"),
+        "client_x509_cert_url": os.environ.get("google_drive_api_client_x509_cert_url")
     })
 
 
