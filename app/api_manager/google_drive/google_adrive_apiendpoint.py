@@ -13,7 +13,7 @@ def list_files():
 
     # Call Drive API to list files
     results = drive_service.files().list(pageSize=10).execute()
-    logging.INFO("Succesfully autharized")
+    logging.info("Succesfully autharized")
 
     items = results.get('files', [])
 
