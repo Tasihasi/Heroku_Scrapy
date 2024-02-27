@@ -7,7 +7,7 @@ google_drive_api = Blueprint('google_drive_api', __name__)
 
 @google_drive_api.route('/list_files')
 def list_files():
-    logging.INFO("Api endpoint triggered")
+    logging.info("Api endpoint triggered")
     # Get authenticated Drive API service
     drive_service = Get_drive_service()
 

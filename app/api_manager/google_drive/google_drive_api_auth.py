@@ -25,7 +25,7 @@ def Get_drive_service():
 
     # Authenticate and create the Drive API service
     drive_service = build('drive', 'v3', credentials=credentials)
-    logging.INFO("Succesfully retuned drive servive")
+    logging.info("Succesfully retuned drive servive")
     return drive_service
 
 # Now you can use drive_service to interact with Google Drive API
