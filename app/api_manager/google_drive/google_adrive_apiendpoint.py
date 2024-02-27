@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify
-from google_drive_api_auth import Get_drive_service
+from .google_drive_api_auth import Get_drive_service
 import logging
 
 
