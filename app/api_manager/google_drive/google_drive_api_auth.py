@@ -2,6 +2,7 @@ import os
 from google.oauth2 import service_account
 from google.auth.transport.requests import Request
 from googleapiclient.discovery import build
+import logging
 
 
 
@@ -24,6 +25,7 @@ def Get_drive_service():
 
     # Authenticate and create the Drive API service
     drive_service = build('drive', 'v3', credentials=credentials)
+    logging.INFO("Succesfully retuned drive servive")
     return drive_service
 
 # Now you can use drive_service to interact with Google Drive API
