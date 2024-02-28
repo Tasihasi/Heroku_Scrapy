@@ -39,4 +39,5 @@ def test_api():
         print("Error:", e)
 
 if __name__ == "__main__":
+    test_list_files_endpoint()
     test_api()
