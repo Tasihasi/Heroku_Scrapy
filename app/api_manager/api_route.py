@@ -280,18 +280,27 @@ def Get_final_data():
     # Function to stream data in chunks
     def generate():
         chunk_size = 4096  # Adjust chunk size as needed
-        yield "["  # Start with [
+        #yield "["  # Start with [
         for item in data:
             item_str = json.dumps(item)
             for i in range(0, len(item_str.encode('utf-8')), chunk_size):
                 yield item_str[i:i+chunk_size]
             yield ","  # Append comma between items
-        yield "]"  # End with ]
+        #yield "]"  # End with ]ú
+            
+    def generate():
+        for item in data:
+            item_json = {"product_name": item["product_name"], "lowest_price": min(item["lowest_prices"])}
+            yield json.dumps(item_json) + "\n"
 
 
     return Response(generate(), content_type='text/plain')
 
     
+
+        # Optionally, you can yield the whole JSON array by wrapping it in brackets
+        # yield "[" + ",".join(generate()) + "]"
+
 
 
     json_path = os.path.join(folder_log, process_jsonl(json_path)) 
