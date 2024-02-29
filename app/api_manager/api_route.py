@@ -298,6 +298,13 @@ def Get_final_data():
 
         yield json.dumps(result)  # Convert the dictionary to a JSON string and yield it
 
+    def generate():
+        chunk_size = 4096  # Adjust chunk size as needed
+        for item in data:
+            item_str = json.dumps(item)
+            for i in range(0, len(item_str.encode('utf-8')), chunk_size):
+                yield item_str[i:i+chunk_size]
+            yield ","  # Append comma between items
 
 
     return Response(generate(), content_type='text/plain')
