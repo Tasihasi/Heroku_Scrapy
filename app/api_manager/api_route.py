@@ -291,7 +291,7 @@ def Get_final_data():
         
         for item in data:
             product_name = item["product_name"]
-            lowest_price = min(item["lowest_prices"])
+            lowest_price = sorted(item["lowest_prices"])
             result[product_name] = lowest_price
 
         yield json.dumps(result)  # Convert the dictionary to a JSON string and yield it
