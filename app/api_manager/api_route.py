@@ -320,7 +320,7 @@ def Get_final_data():
     
 
 
-    return Response(generate(), content_type='text/plain')
+    return Response(generate(data), content_type='text/plain')
 
     
 
