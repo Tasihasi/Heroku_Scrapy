@@ -280,18 +280,22 @@ def Get_final_data():
     # Function to stream data in chunks
     def generate():
         chunk_size = 4096  # Adjust chunk size as needed
-        #yield "["  # Start with [
         for item in data:
             item_str = json.dumps(item)
             for i in range(0, len(item_str.encode('utf-8')), chunk_size):
                 yield item_str[i:i+chunk_size]
             yield ","  # Append comma between items
-        #yield "]"  # End with ]ú
             
     def generate():
+        result = {}  # Create an empty dictionary to store product name and lowest price pairs
+        
         for item in data:
-            item_json = {"product_name": item["product_name"], "lowest_price": min(item["lowest_prices"])}
-            yield json.dumps(item_json) + "\n"
+            product_name = item["product_name"]
+            lowest_price = min(item["lowest_prices"])
+            result[product_name] = lowest_price
+
+        yield json.dumps(result)  # Convert the dictionary to a JSON string and yield it
+
 
 
     return Response(generate(), content_type='text/plain')
