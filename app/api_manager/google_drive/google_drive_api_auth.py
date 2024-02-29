@@ -21,11 +21,13 @@ def Get_drive_service():
         "client_x509_cert_url": os.environ.get("google_drive_api_client_x509_cert_url")
     })
 
-
+    logging.info("---- Starting the auth procces in Get_drive_service")
 
     # Authenticate and create the Drive API service
     drive_service = build('drive', 'v3', credentials=credentials)
     logging.info("Succesfully retuned drive servive")
+    if not drive_service:
+        logging.error(" -----   COULD NOT AUTHENTICATE ----")
     return drive_service
 
 # Now you can use drive_service to interact with Google Drive API
