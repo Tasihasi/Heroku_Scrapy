@@ -311,12 +311,13 @@ def Get_final_data():
     def generate(data):
         chunk_size = 4096  # Adjust chunk size as needed
         yield "[\n"
-        for index, item in enumerate(data):
-            item_str = json.dumps(item, ensure_ascii=False)
-            yield '{{"product_name": "{}", "lowest_prices": {}}}'.format(item["product_name"], item["lowest_prices"])
-            if index < len(data) - 1:
-                yield ',\n'
-        yield "\n]"
+        for item in data:
+            item_str = json.dumps({"product_name": item["product_name"], "lowest_prices": item["lowest_prices"]})
+            for i in range(0, len(item_str.encode('utf-8')), chunk_size):
+                yield "  " + item_str[i:i + chunk_size] + "\n"
+        yield "]"
+
+    
 
 
     return Response(generate(), content_type='text/plain')
