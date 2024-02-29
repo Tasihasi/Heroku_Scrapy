@@ -294,6 +294,8 @@ def Get_final_data():
             lowest_price = sorted(item["lowest_prices"])
             result[product_name] = lowest_price
 
+            logging.info(lowest_price)
+
         yield json.dumps(result)  # Convert the dictionary to a JSON string and yield it
 
 
