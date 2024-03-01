@@ -131,7 +131,8 @@ def process_data(data_str):
 
     # Calculate the top 3 lowest prices for each product
     for product_name, prices in lowest_prices.items():
-        lowest_prices[product_name] = sorted(prices)[:3]
+        rounded_prices = [round(price / 0.5, 2) for price in prices]
+        lowest_prices[product_name] = sorted(rounded_prices)[:3]
 
     # Generate the new version of the data with unique product names and top 3 lowest prices
     new_data = []
@@ -278,45 +279,6 @@ def Get_final_data():
 
 
     # Function to stream data in chunks
-    def generate():
-        chunk_size = 4096  # Adjust chunk size as needed
-        for item in data:
-            item_str = json.dumps(item)
-            for i in range(0, len(item_str.encode('utf-8')), chunk_size):
-                yield item_str[i:i+chunk_size]
-            yield ","  # Append comma between items
-            
-    def generate():
-        result = {}  # Create an empty dictionary to store product name and lowest price pairs
-        
-        for item in data:
-            product_name = item["product_name"]
-            lowest_price = sorted(item["lowest_prices"])
-            result[product_name] = lowest_price
-
-            logging.info(lowest_price)
-
-        yield json.dumps(result)  # Convert the dictionary to a JSON string and yield it
-
-    def generate():
-        chunk_size = 4096  # Adjust chunk size as needed[]
-        yield "["
-        for item in data:
-            item_str = json.dumps(item)
-            for i in range(0, len(item_str.encode('utf-8')), chunk_size):
-                yield item_str[i:i+chunk_size]
-            yield ","  # Append comma between items
-        yield "]"
-
-    def generate(data):
-        chunk_size = 4096  # Adjust chunk size as needed
-        yield "[\n"
-        for item in data:
-            item_str = json.dumps({"product_name": item["product_name"], "lowest_prices": item["lowest_prices"]})
-            for i in range(0, len(item_str.encode('utf-8')), chunk_size):
-                yield "  " + item_str[i:i + chunk_size] + "\n"
-        yield "]"
-
     
     def generate(data):
         if data is None:

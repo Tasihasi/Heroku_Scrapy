@@ -1,58 +1,190 @@
 [
-  {"product_name": "Ut\u00e1ngy\u00e1rtott HP CF244A Black", "lowest_prices": [1890, 1999, 1999]}
-  {"product_name": "Ut\u00e1ngy\u00e1rtott Canon PG-540XL Black (5222B005)", "lowest_prices": [5199, 5350, 6185]}
-  {"product_name": "Xerox 006R04395", "lowest_prices": [34074, 34074, 34415]}
-  {"product_name": "Ut\u00e1ngy\u00e1rtott HP F6U68AE", "lowest_prices": [4254, 4447, 4676]}
-  {"product_name": "HP CF226A", "lowest_prices": [49990, 49999, 49999]}
-  {"product_name": "Ut\u00e1ngy\u00e1rtott HP F6V24AE", "lowest_prices": [4185, 4191, 4290]}
-  {"product_name": "Brother TZe-S651", "lowest_prices": [7167, 7167, 7167]}
-  {"product_name": "HP CE285A Black", "lowest_prices": [28000, 28401, 28401]}
-  {"product_name": "Canon CRG-737 Black (CH9435B002AA)", "lowest_prices": [16945, 16962, 17130]}
-  {"product_name": "Brother CZ-1002", "lowest_prices": [6666, 7590, 7590]}
-  {"product_name": "Brother CZ-1003", "lowest_prices": [9230, 9328, 9328]}
-  {"product_name": "HP 3YM75AE", "lowest_prices": [5717, 5727, 5728]}
-  {"product_name": "Brother TZe-FX651", "lowest_prices": [8416, 8454, 8490]}
-  {"product_name": "Ut\u00e1ngy\u00e1rtott HP C9351CE", "lowest_prices": [2201, 2254, 2270]}
-  {"product_name": "Samsung CLT-P406C Multipack", "lowest_prices": [68110, 68280, 68280]}
-  {"product_name": "Xerox 106R02778", "lowest_prices": [4367, 25795, 25795]}
-  {"product_name": "Kyocera TK-3100", "lowest_prices": [38565, 38565, 38990]}
-  {"product_name": "Lexmark 60F2X0E", "lowest_prices": [50140, 116190, 117983]}
-  {"product_name": "Ut\u00e1ngy\u00e1rtott HP CF287X", "lowest_prices": [726, 739, 790]}
-  {"product_name": "Brother TZe-335", "lowest_prices": [5309, 5531, 5839]}
-  {"product_name": "Ut\u00e1ngy\u00e1rtott Canon CLI-581 XXL Black (1998C001FU)", "lowest_prices": [498, 499, 550]}
-  {"product_name": "Brother TZe-242", "lowest_prices": [4790, 4793, 4890]}
-  {"product_name": "Canon CLI-571BK XL Black (BS0331C001AA)", "lowest_prices": [5930, 5950, 5950]}
-  {"product_name": "Canon CLI-551M XL Magenta (BS6445B001AA)", "lowest_prices": [6327, 6344, 6344]}
-  {"product_name": "Brother TZe-161", "lowest_prices": [8684, 8790, 8801]}
-  {"product_name": "Brother TN-2590XL", "lowest_prices": [30895, 30895, 31240]}
-  {"product_name": "Brother TZe-M931", "lowest_prices": [6174, 6290, 6290]}
-  {"product_name": "Epson S015354 (ERC09B)", "lowest_prices": [560, 560, 582]}
-  {"product_name": "Ut\u00e1ngy\u00e1rtott Canon FX-10 Black", "lowest_prices": [1905, 2189, 2290]}
-  {"product_name": "Ut\u00e1ngy\u00e1rtott HP CF226A Black", "lowest_prices": [2849, 2849, 2850]}
-  {"product_name": "Ut\u00e1ngy\u00e1rtott HP CE505X Black", "lowest_prices": [2679, 2690, 2790]}
-  {"product_name": "Canon CRG-728 Black (CH3500B002AA)", "lowest_prices": [22000, 22593, 22625]}
-  {"product_name": "Ut\u00e1ngy\u00e1rtott HP 51645AE", "lowest_prices": [4900, 5090, 5190]}
-  {"product_name": "Ut\u00e1ngy\u00e1rtott HP CE278A", "lowest_prices": [1690, 1790, 1990]}
-  {"product_name": "HP CF210A", "lowest_prices": [30000, 31018, 31018]}
-  {"product_name": "Brother TZe-FX661", "lowest_prices": [8830, 8890, 9090]}
-  {"product_name": "Ut\u00e1ngy\u00e1rtott Brother TN-B023", "lowest_prices": [910, 990, 1020]}
-  {"product_name": "HP F6U18AE", "lowest_prices": [13980, 14211, 14290]}
-  {"product_name": "Brother TZe-S131", "lowest_prices": [5290, 5611, 5720]}
-  {"product_name": "Brother TZe-C51", "lowest_prices": [7360, 7417, 7417]}
-  {"product_name": "HP CF280A", "lowest_prices": [46881, 46987, 46990]}
-  {"product_name": "Brother TZe-S261", "lowest_prices": [10376, 10730, 11090]}
-  {"product_name": "Ut\u00e1ngy\u00e1rtott Epson T7011", "lowest_prices": [730, 760, 762]}
-  {"product_name": "HP CF540A", "lowest_prices": [26175, 26400, 26500]}
-  {"product_name": "Brother TZe-MQG35", "lowest_prices": [4497, 4590, 4690]}
-  {"product_name": "Ut\u00e1ngy\u00e1rtott Epson T1291", "lowest_prices": [373, 380, 380]}
-  {"product_name": "HP C6615DE", "lowest_prices": [22199, 24390, 24456]}
-  {"product_name": "Ut\u00e1ngy\u00e1rtott Epson T6641 Black", "lowest_prices": [390, 404, 408]}
-  {"product_name": "Brother TC-601", "lowest_prices": [5890, 9004]}
-  {"product_name": "Ut\u00e1ngy\u00e1rtott Samsung MLT-D117S Black", "lowest_prices": [3810, 4101, 4149]}
-  {"product_name": "HP CB335EE", "lowest_prices": [8200, 10000, 10090]}
-  {"product_name": "Brother CK-1000", "lowest_prices": [10390, 10436, 10490]}
-  {"product_name": "Epson S041943", "lowest_prices": [7127, 7205, 7460]}
-  {"product_name": "Ut\u00e1ngy\u00e1rtott Samsung MLT-D1052L", "lowest_prices": [2899, 2921, 2998]}
-  {"product_name": "Brother TZe-FX251", "lowest_prices": [7530, 7590, 8007]}
-  {"product_name": "Canon PGI-580PGBK XXL Pigment Black (1970C001AA)", "lowest_prices": [8453, 8490, 8494]}
-  {"product_name": "Epson T00S2 EcoTank 103", "lowest_prices": [2480, 2480, 2490]}]
+  {"product_name": "Ut\u00e1ngy\u00e1rtott Canon PG-540XL Black (5222B005)", "lowest_prices": [5199, 5350, 6185]},
+  {"product_name": "Canon PGI-580 + CLI-581 Multipack PGBK/C/M/Y/BK (2078C005AA)", "lowest_prices": [18990, 19869, 19949]},
+  {"product_name": "HP CF226A", "lowest_prices": [49990, 49999, 49999]},
+  {"product_name": "Ut\u00e1ngy\u00e1rtott HP F6U68AE", "lowest_prices": [4254, 4447, 4676]},
+  {"product_name": "Ut\u00e1ngy\u00e1rtott HP F6V24AE", "lowest_prices": [4185, 4191, 4290]},
+  {"product_name": "Brother TZe-S651", "lowest_prices": [7167, 7167, 7167]},
+  {"product_name": "HP 3YL84AE", "lowest_prices": [12390, 13890, 13890]},
+  {"product_name": "HP CE285A Black", "lowest_prices": [28000, 28401, 28401]},
+  {"product_name": "Canon CRG-737 Black (CH9435B002AA)", "lowest_prices": [16945, 16962, 17130]},
+  {"product_name": "HP 3YM75AE", "lowest_prices": [5717, 5727, 5728]},
+  {"product_name": "Brother CZ-1002", "lowest_prices": [6666, 7590, 7590]},
+  {"product_name": "Brother CZ-1003", "lowest_prices": [9230, 9328, 9328]},
+  {"product_name": "Samsung CLT-P406C Multipack", "lowest_prices": [68110, 68280, 68280]},
+  {"product_name": "Ut\u00e1ngy\u00e1rtott HP C9351CE", "lowest_prices": [2201, 2254, 2270]},
+  {"product_name": "Brother TZe-335", "lowest_prices": [5309, 5531, 5839]},
+  {"product_name": "Brother TZe-242", "lowest_prices": [4790, 4793, 4890]},
+  {"product_name": "Kyocera TK-3100", "lowest_prices": [38565, 38565, 38990]},
+  {"product_name": "Lexmark 60F2X0E", "lowest_prices": [50140, 116190, 117983]},
+  {"product_name": "Brother TZe-FX651", "lowest_prices": [8416, 8454, 8490]},
+  {"product_name": "Ut\u00e1ngy\u00e1rtott HP CF287X", "lowest_prices": [726, 739, 790]},
+  {"product_name": "Ut\u00e1ngy\u00e1rtott Canon CLI-581 XXL Black (1998C001FU)", "lowest_prices": [498, 499, 550]},
+  {"product_name": "Canon CLI-571BK XL Black (BS0331C001AA)", "lowest_prices": [5930, 5950, 5950]},
+  {"product_name": "Xerox 106R02778", "lowest_prices": [4367, 25795, 25795]},
+  {"product_name": "Canon CLI-551M XL Magenta (BS6445B001AA)", "lowest_prices": [6327, 6344, 6344]},
+  {"product_name": "Canon CRG-728 Black (CH3500B002AA)", "lowest_prices": [22000, 22593, 22625]},
+  {"product_name": "Brother TN-2590XL", "lowest_prices": [30895, 30895, 31240]},
+  {"product_name": "Brother TZe-M931", "lowest_prices": [6174, 6290, 6290]},
+  {"product_name": "Brother TZe-161", "lowest_prices": [8684, 8790, 8801]},
+  {"product_name": "Epson S015354 (ERC09B)", "lowest_prices": [560, 560, 582]},
+  {"product_name": "Ut\u00e1ngy\u00e1rtott HP CF226A Black", "lowest_prices": [2849, 2849, 2850]},
+  {"product_name": "HP CF210A", "lowest_prices": [30000, 31018, 31018]},
+  {"product_name": "Ut\u00e1ngy\u00e1rtott HP 51645AE", "lowest_prices": [4900, 5090, 5190]},
+  {"product_name": "Ut\u00e1ngy\u00e1rtott Canon FX-10 Black", "lowest_prices": [1905, 2189, 2290]},
+  {"product_name": "HP C6615DE", "lowest_prices": [22199, 24390, 24456]},
+  {"product_name": "HP CB335EE", "lowest_prices": [8200, 10000, 10090]},
+  {"product_name": "Brother TZe-FX661", "lowest_prices": [8830, 8890, 9090]},
+  {"product_name": "Ut\u00e1ngy\u00e1rtott HP CE278A", "lowest_prices": [1690, 1790, 1990]},
+  {"product_name": "Ut\u00e1ngy\u00e1rtott Brother TN-B023", "lowest_prices": [910, 990, 1020]},
+  {"product_name": "Brother TZe-S131", "lowest_prices": [5290, 5611, 5720]},
+  {"product_name": "Brother TZe-C51", "lowest_prices": [7360, 7417, 7417]},
+  {"product_name": "HP F6U18AE", "lowest_prices": [13980, 14211, 14290]},
+  {"product_name": "HP CF280A", "lowest_prices": [46881, 46987, 46990]},
+  {"product_name": "Ut\u00e1ngy\u00e1rtott Epson T7011", "lowest_prices": [730, 760, 762]},
+  {"product_name": "Brother TZe-S261", "lowest_prices": [10376, 10730, 11090]},
+  {"product_name": "HP CF540A", "lowest_prices": [26175, 26400, 26500]},
+  {"product_name": "Brother TZe-MQG35", "lowest_prices": [4497, 4590, 4690]},
+  {"product_name": "Ut\u00e1ngy\u00e1rtott Epson T1291", "lowest_prices": [373, 380, 380]},
+  {"product_name": "Ut\u00e1ngy\u00e1rtott Epson T6641 Black", "lowest_prices": [390, 404, 408]},
+  {"product_name": "DYMO S0718600/18444", "lowest_prices": [7766, 8490, 8541]},
+  {"product_name": "Brother TC-601", "lowest_prices": [5890, 9004]},
+  {"product_name": "Ut\u00e1ngy\u00e1rtott Samsung MLT-D117S Black", "lowest_prices": [3810, 4101, 4149]},
+  {"product_name": "Epson S041943", "lowest_prices": [7127, 7205, 7460]},
+  {"product_name": "Brother CK-1000", "lowest_prices": [10390, 10436, 10490]},
+  {"product_name": "Brother TZe-FX251", "lowest_prices": [7530, 7590, 8007]},
+  {"product_name": "Canon PGI-580PGBK XXL Pigment Black (1970C001AA)", "lowest_prices": [8453, 8490, 8494]},
+  {"product_name": "Ut\u00e1ngy\u00e1rtott Samsung MLT-D1052L", "lowest_prices": [2899, 2921, 2998]},
+  {"product_name": "Canon CRG-055 H BK (3020C002AA)", "lowest_prices": [17090, 48125, 52680]},
+  {"product_name": "Epson T00S2 EcoTank 103", "lowest_prices": [2480, 2490, 2490]},
+  {"product_name": "Ut\u00e1ngy\u00e1rtott HP W1420A", "lowest_prices": [6090, 9313, 9486]},
+  {"product_name": "Brother STE-151", "lowest_prices": [5830, 5840, 6389]},
+  {"product_name": "Brother TN-2310 Black", "lowest_prices": [15299, 15299, 15299]},
+  {"product_name": "Canon CRG-071 Black (5645C002)", "lowest_prices": [18990, 21740, 23990]},
+  {"product_name": "Ut\u00e1ngy\u00e1rtott HP CE505X Black", "lowest_prices": [2679, 2690, 2790]},
+  {"product_name": "Brother TZe-141", "lowest_prices": [5053, 5053, 5053]},
+  {"product_name": "Xerox 006R04380", "lowest_prices": [43097, 43097, 43100]},
+  {"product_name": "Kyocera TK-3160 Black (1T02T90NL1)", "lowest_prices": [37775, 37775, 38093]},
+  {"product_name": "Ut\u00e1ngy\u00e1rtott Samsung SCX-4200A / SCX-4200D3", "lowest_prices": [3400, 3556, 3987]},
+  {"product_name": "Brother TN-243CMYK Multipack", "lowest_prices": [72225, 72225, 72990]},
+  {"product_name": "Brother TZe-FX641", "lowest_prices": [7288, 7590]},
+  {"product_name": "HP CF410A", "lowest_prices": [38097, 38100, 38633]},
+  {"product_name": "Ut\u00e1ngy\u00e1rtott Epson T9451", "lowest_prices": [5849, 5884, 5952]},
+  {"product_name": "Canon CRG-712 Black (CR1870B002AA)", "lowest_prices": [4990, 23390, 23607]},
+  {"product_name": "Ut\u00e1ngy\u00e1rtott Canon CL-511 Color", "lowest_prices": [978, 4600, 4900]},
+  {"product_name": "Ut\u00e1ngy\u00e1rtott Canon PGI-550XL PGBK Black", "lowest_prices": [250, 257, 257]},
+  {"product_name": "Brother TZe-B31", "lowest_prices": [5042, 5042, 5042]},
+  {"product_name": "HP CN637EE Multipack", "lowest_prices": [18479, 18980, 19027]},
+  {"product_name": "Brother TZe-151", "lowest_prices": [6190, 6200, 6260]},
+  {"product_name": "Canon FX-10 Black (CH0263B002AA)", "lowest_prices": [4990, 19600, 20536]},
+  {"product_name": "Epson S015086", "lowest_prices": [3584, 3585, 3632]},
+  {"product_name": "Brother TZe-621", "lowest_prices": [4320, 4363, 4389]},
+  {"product_name": "Konica Minolta TN324K Black (A8DA150)", "lowest_prices": [15747, 15787, 15787]},
+  {"product_name": "Brother TZe-751", "lowest_prices": [7490, 8990]},
+  {"product_name": "Brother TZe-N231", "lowest_prices": [4020, 4059, 4090]},
+  {"product_name": "Ut\u00e1ngy\u00e1rtott HP CB435A Black", "lowest_prices": [1750, 1800, 2082]},
+  {"product_name": "Brother TZe-241", "lowest_prices": [5769, 5790, 5878]},
+  {"product_name": "Brother TZe-641", "lowest_prices": [5842, 5890, 5890]},
+  {"product_name": "Canon CLI-571 Multipack BK/C/M/Y (BS0386C005AA)", "lowest_prices": [16900, 17039, 17083]},
+  {"product_name": "Brother TZe-231S", "lowest_prices": [3115]},
+  {"product_name": "Ut\u00e1ngy\u00e1rtott Kyocera TK-170 (1T02LZ0NL0)", "lowest_prices": [1783, 1990, 2149]},
+  {"product_name": "Brother TZe-731", "lowest_prices": [4900, 4909, 5117]},
+  {"product_name": "Brother TZe-111", "lowest_prices": [3207, 3207, 3390]},
+  {"product_name": "Kyocera TK-1150 Black (1T02RV0NL0)", "lowest_prices": [28829, 28901, 28901]},
+  {"product_name": "Brother CZ1005", "lowest_prices": [12990, 12990, 14139]},
+  {"product_name": "Canon PGI-570PGBK XL Black (BS0318C001AA)", "lowest_prices": [6350, 6567, 6660]},
+  {"product_name": "Samsung MLT-D101S", "lowest_prices": [23796, 23856, 23856]},
+  {"product_name": "HP 3YL80AE", "lowest_prices": [5890, 6090, 6109]},
+  {"product_name": "Brother TZe-334", "lowest_prices": [5790, 5963, 6080]},
+  {"product_name": "Brother TZe-N241", "lowest_prices": [4980, 4990, 5290]},
+  {"product_name": "Brother TZe-FX611", "lowest_prices": [4849, 5490]},
+  {"product_name": "HP C7115A", "lowest_prices": [29289, 29420, 30350]},
+  {"product_name": "Brother TZe-435", "lowest_prices": [6140, 6390, 6890]},
+  {"product_name": "Brother TZe-135", "lowest_prices": [6090, 6315, 6354]},
+  {"product_name": "HP 963XL Yellow (3JA29AE)", "lowest_prices": [8355, 9990, 13200]},
+  {"product_name": "HP X4D37AE Multipack", "lowest_prices": [14200, 14474, 14490]},
+  {"product_name": "Ut\u00e1ngy\u00e1rtott HP CC654AE", "lowest_prices": [3750, 3821, 4248]},
+  {"product_name": "Kyocera TK-1248 Black (1T02Y80NL0)", "lowest_prices": [18948, 18949, 19025]},
+  {"product_name": "Brother TZe-N201", "lowest_prices": [3330, 3380, 3490]},
+  {"product_name": "Kyocera TK-5230K Black (1T02R90NL0)", "lowest_prices": [12590, 24974, 25037]},
+  {"product_name": "Ut\u00e1ngy\u00e1rtott HP C6615DE", "lowest_prices": [4699, 4771, 5090]},
+  {"product_name": "Ut\u00e1ngy\u00e1rtott Epson T03A1", "lowest_prices": [635, 799, 969]},
+  {"product_name": "Brother TZe-451", "lowest_prices": [6709, 6826, 6826]},
+  {"product_name": "Ut\u00e1ngy\u00e1rtott Brother TN-2320 Black", "lowest_prices": [1690, 1750, 1788]},
+  {"product_name": "Ut\u00e1ngy\u00e1rtott Brother TN-2420", "lowest_prices": [2200, 2419, 2484]},
+  {"product_name": "Epson T04B140", "lowest_prices": [29090, 29290, 29699]},
+  {"product_name": "Brother TZe-551", "lowest_prices": [7133, 7268, 7490]},
+  {"product_name": "HP C2P11AE", "lowest_prices": [7290, 7342, 7390]},
+  {"product_name": "Canon CRG-725BK Black (CR3484B002AA)", "lowest_prices": [6490, 6789, 6789]},
+  {"product_name": "Brother TZe-FA3", "lowest_prices": [5145, 5390, 5390]},
+  {"product_name": "Brother TZe-C31", "lowest_prices": [5890, 5893, 5921]},
+  {"product_name": "HP C1Q10A", "lowest_prices": [91999, 94955, 94958]},
+  {"product_name": "DYMO S0720580/45018", "lowest_prices": [5965, 6007, 7694]},
+  {"product_name": "HP F6U68AE", "lowest_prices": [13715, 14472, 14999]},
+  {"product_name": "HP T6N04AE", "lowest_prices": [14309, 15290, 15362]},
+  {"product_name": "HP W2031A", "lowest_prices": [42999, 42999, 44700]},
+  {"product_name": "Ut\u00e1ngy\u00e1rtott HP CZ101AE", "lowest_prices": [3090, 3115, 3650]},
+  {"product_name": "Brother CZ-1004", "lowest_prices": [10910, 10970, 10990]},
+  {"product_name": "HP CF230X", "lowest_prices": [40999, 41999, 41999]},
+  {"product_name": "HP 6ZC73AE Multipack", "lowest_prices": [20680, 20790, 20890]},
+  {"product_name": "Canon PGI-2500XL Multipack BK/C/M/Y (BS9254B004AA)", "lowest_prices": [31990, 32590, 33200]},
+  {"product_name": "Brother TZe-232", "lowest_prices": [4890, 4950, 5131]},
+  {"product_name": "Canon CRG-067H Yellow (5103C002)", "lowest_prices": [39587, 39590, 39999]},
+  {"product_name": "Brother TZe-N251", "lowest_prices": [6390, 6390, 6654]},
+  {"product_name": "Canon PG-545XL/CL546XL Photo 8286B007", "lowest_prices": [17610, 22050]},
+  {"product_name": "Konica Minolta TN-328K", "lowest_prices": [16100, 16100, 17400]},
+  {"product_name": "Epson S015327", "lowest_prices": [5440, 5599, 5649]},
+  {"product_name": "Brother TZe-535", "lowest_prices": [6174, 6203, 6241]},
+  {"product_name": "Canon CLI-526 MultiPack C/M/Y (BS4541B006AA)", "lowest_prices": [15276, 15697, 15960]},
+  {"product_name": "Brother TZe-222", "lowest_prices": [4280, 4290, 4497]},
+  {"product_name": "Brother TZe-611", "lowest_prices": [3575, 3860, 4173]},
+  {"product_name": "Xerox 006R04387", "lowest_prices": [25524, 25524, 25527]},
+  {"product_name": "Brother TZe-421", "lowest_prices": [4430, 4439, 4511]},
+  {"product_name": "Brother TZe-661", "lowest_prices": [8720, 8782, 8782]},
+  {"product_name": "Canon PG-37 Black (BS2145B001AA)", "lowest_prices": [5767, 5770, 5801]},
+  {"product_name": "Epson S015020", "lowest_prices": [2714, 2716, 2717]},
+  {"product_name": "Brother TZe-M951", "lowest_prices": [7590, 8148, 8290]},
+  {"product_name": "HP 6ZC69AE C/M/Y/K Multipack", "lowest_prices": [41338, 41690, 41890]},
+  {"product_name": "HP F6U65AE", "lowest_prices": [6790, 7501, 7868]},
+  {"product_name": "Epson S015329 (FX-890)", "lowest_prices": [1341, 1509, 1789]},
+  {"product_name": "Ut\u00e1ngy\u00e1rtott Canon PG-512", "lowest_prices": [4359, 4890, 4900]},
+  {"product_name": "HP CZ109AE", "lowest_prices": [4928, 4999, 4999]},
+  {"product_name": "HP CF283A", "lowest_prices": [28226, 28226, 29000]},
+  {"product_name": "Brother TZe-541", "lowest_prices": [6174, 6203, 6241]},
+  {"product_name": "Ut\u00e1ngy\u00e1rtott Epson T1295", "lowest_prices": [1530, 1530, 1970]},
+  {"product_name": "Ut\u00e1ngy\u00e1rtott HP CF226X Black", "lowest_prices": [3399, 3415, 3479]},
+  {"product_name": "Ut\u00e1ngy\u00e1rtott HP Q2612X", "lowest_prices": [1905, 2306, 2309]},
+  {"product_name": "Konica Minolta TN221K Black (A8K3150)", "lowest_prices": [18155, 19265, 19265]},
+  {"product_name": "Ut\u00e1ngy\u00e1rtott Samsung CLT-K404S Black", "lowest_prices": [3800, 3827, 3898]},
+  {"product_name": "Canon PFI-107MBK Matt Black (CF6704B001AA)", "lowest_prices": [31170, 31890, 32670]},
+  {"product_name": "Canon PGI-580PGBK Black (2078C001AA)", "lowest_prices": [4671, 4682, 4682]},
+  {"product_name": "Canon CLI-551 Multipack BK/C/M/Y (BS6509B009AA)", "lowest_prices": [17350, 17463, 17550]},
+  {"product_name": "Epson T9451", "lowest_prices": [21699, 24645, 24645]},
+  {"product_name": "Epson T8651", "lowest_prices": [47979, 47989, 47989]},
+  {"product_name": "Epson T07D1", "lowest_prices": [5906, 5910, 6198]},
+  {"product_name": "Epson T03P14 EcoTank 110", "lowest_prices": [4690, 4974, 4977]},
+  {"product_name": "Ut\u00e1ngy\u00e1rtott HP C2P23AE", "lowest_prices": [999, 1000, 1029]},
+  {"product_name": "Lexmark 84C2HKE", "lowest_prices": [87380, 146690, 150372]},
+  {"product_name": "Ut\u00e1ngy\u00e1rtott HP CC641EE", "lowest_prices": [4250, 4270, 4471]},
+  {"product_name": "Brother TZe-325", "lowest_prices": [5018, 5120, 5296]},
+  {"product_name": "Brother TZe-S231", "lowest_prices": [5830, 5841, 5889]},
+  {"product_name": "Canon CLI-551Y XL Yellow (6446B001AA)", "lowest_prices": [6290, 6300, 6301]},
+  {"product_name": "Xerox 006R04404", "lowest_prices": [38287, 38387, 38387]},
+  {"product_name": "Brother TZe-S631", "lowest_prices": [6267, 6267, 6273]},
+  {"product_name": "Canon CL-41 Color (BS0617B001AA)", "lowest_prices": [8737, 8759, 8759]},
+  {"product_name": "Brother TZe-651", "lowest_prices": [6789, 7093, 7093]},
+  {"product_name": "Kyocera TK-5240K Black", "lowest_prices": [24615, 24615, 24899]},
+  {"product_name": "HP 6ZC74AE Multipack B/C/M/Y", "lowest_prices": [16600, 16630, 16671]},
+  {"product_name": "Canon PFI-120MBK (CF2884C001AA)", "lowest_prices": [27802, 28795, 28893]},
+  {"product_name": "Epson T2704", "lowest_prices": [4575, 4667, 4690]},
+  {"product_name": "Canon CRG-054H BK (3028C002AA)", "lowest_prices": [35145, 35145, 36200]},
+  {"product_name": "Brother TZe-121", "lowest_prices": [3900, 3909, 4102]},
+  {"product_name": "Brother TZe-S221", "lowest_prices": [4790, 4799, 5099]},
+  {"product_name": "Kyocera TK-1160 Black (1T02RY0NL0)", "lowest_prices": [40615, 41062, 41062]},
+  {"product_name": "Kyocera TK-1170 Black (1T02S50NL0)", "lowest_prices": [34865, 34865, 34928]},
+  {"product_name": "Brother TZe-131", "lowest_prices": [4275, 4449, 4610]},
+  {"product_name": "Ut\u00e1ngy\u00e1rtott Samsung MLT-D205L", "lowest_prices": [4924, 4981, 5015]},
+  {"product_name": "Ut\u00e1ngy\u00e1rtott Canon CRG070H (5640C002)", "lowest_prices": [17817, 18023, 18099]},
+  {"product_name": "HP W2030A", "lowest_prices": [34700, 35687, 35842]},
+  {"product_name": "HP N9K05AE", "lowest_prices": [5245, 5245, 5280]},
+  {"product_name": "Ut\u00e1ngy\u00e1rtott HP W2070A", "lowest_prices": [3790, 3990, 5990]}]
