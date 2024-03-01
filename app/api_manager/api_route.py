@@ -131,7 +131,7 @@ def process_data(data_str):
 
     # Calculate the top 3 lowest prices for each product
     for product_name, prices in lowest_prices.items():
-        rounded_prices = [round(price / 1.27, 2) for price in prices]
+        rounded_prices = [price / 1.27 for price in prices]
         lowest_prices[product_name] = sorted(rounded_prices)[:3]
 
     # Generate the new version of the data with unique product names and top 3 lowest prices
