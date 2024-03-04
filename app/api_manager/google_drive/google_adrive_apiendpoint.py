@@ -8,6 +8,8 @@ from .google_drive_api_auth import Get_drive_service
 import logging
 import random
 import string
+from googleapiclient.http import MediaFileUpload
+
 
 
 google_drive_api = Blueprint('google_drive_api', __name__)
@@ -97,24 +99,37 @@ def create_file():
         'mimeType': 'text/plain'
     }
 
+    media = MediaFileUpload("Testing.txt", mimetype="text/plain", resumable=True)
+
+    
+
     logging.info("Create the file with the provided content")
-     # Create the file with the provided content
-    file = drive_service.files().create(body=file_metadata, media_body=file_content).execute()
 
-    # Adjust file permissions to allow the service account to read and alter it
-    permission = {
-        'type': 'serviceAccount',
-        'role': 'writer',
-        'emailAddress': 'YOUR_SERVICE_ACCOUNT_EMAIL_HERE'
-    }
+    
+    try:
+        # Create the file with the provided content
+        file = (
+            drive_service.files()
+            .create(body=file_metadata, media_body=media, fields="id")
+            .execute()
+        )
 
-    logging.info("Starting The post method")
-    drive_service.permissions().create(fileId=file['id'], body=permission).execute()
+        # Adjust file permissions to allow the service account to read and alter it
+        permission = {
+            'type': 'serviceAccount',
+            'role': 'writer',
+            'emailAddress': 'YOUR_SERVICE_ACCOUNT_EMAIL_HERE'
+        }
 
-    logging.info("Succefully made  The post method")
+        drive_service.permissions().create(fileId=file['id'], body=permission).execute()
 
-    # Return a response indicating success
-    return "File created successfully", 200
+        # Return a response indicating success
+        return "File created successfully", 200
+
+    except Exception as e:
+        # Handle any exceptions that occur during the upload process
+        logging.error("An error occurred during file upload: %s", str(e))
+        return "Error occurred during file upload", 500
 
     
     
