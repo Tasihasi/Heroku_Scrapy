@@ -107,7 +107,10 @@ def create_file():
         'emailAddress': 'YOUR_SERVICE_ACCOUNT_EMAIL_HERE'
     }
 
+    logging.info("Starting The post method")
     drive_service.permissions().create(fileId=file['id'], body=permission).execute()
+
+    logging.info("Succefully made  The post method")
 
     # Return a response indicating success
     return "File created successfully", 200

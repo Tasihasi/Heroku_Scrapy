@@ -67,3 +67,4 @@ if __name__ == "__main__":
     #test_list_files_endpoint()
     #test_api()
     post_proxies(base_url)
+    test_list_files_endpoint()
