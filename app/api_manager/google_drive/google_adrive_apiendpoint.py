@@ -133,7 +133,7 @@ def create_file(file_name : str, file_mimeType : str):
         return "Error occurred during file upload", 500
 
 
-@google_drive_api.route('/get_file/<file_id>', methods=['GET'])
+@google_drive_api.route('/delete_file/<file_id>', methods=['GET'])
 def delete_file(file_id):
      # Get authenticated Drive API service
     drive_service = Get_drive_service()
