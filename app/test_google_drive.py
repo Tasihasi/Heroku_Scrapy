@@ -22,7 +22,8 @@ def test_api():
     
     # Define the endpoint URL
     endpoint_url = base_url + "/get_file?file_id=1F4D-A0OOTEP91ArgMYohEbbOpHKsgWT3"  # Update YOUR_FILE_ID with the actual file ID
-    
+    endpoint_url = base_url + "/get_file/1F4D-A0OOTEP91ArgMYohEbbOpHKsgWT3"  # Update YOUR_FILE_ID with the actual file ID
+
     try:
         # Make a GET request to the API endpoint
         response = requests.get(endpoint_url)

@@ -1,4 +1,5 @@
-from flask import Blueprint, jsonify, request, send_file
+from flask import Blueprint, jsonify, send_file
+from flask import request
 import requests
 from googleapiclient.http import MediaIoBaseDownload, MediaIoBaseUpload
 from io import BytesIO
@@ -44,11 +45,14 @@ def list_files():
 
 
 @google_drive_api.route('/get_file/<file_id>', methods=['GET'])
-def get_file():
+def get_file(file_id):
     logging.info("Get file API endpoint triggered")
+
 
     # Get authenticated Drive API service
     drive_service = Get_drive_service()
+
+    logging.info(f"Here is the file Id:  {file_id}")
 
     logging.info(f"--- logging the request.args dictorany:  {request.args}")
 
