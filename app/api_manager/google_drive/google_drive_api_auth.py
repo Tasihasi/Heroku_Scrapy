@@ -10,6 +10,12 @@ def Get_drive_service():
 
     logging.info("---- Starting the auth procces in Get_drive_service")
 
+    # Define the scopes required by your application
+    SCOPES = [
+        'https://www.googleapis.com/auth/drive',
+        'https://www.googleapis.com/auth/drive.file'
+    ]
+
     # Load service account credentials from environment variables
     credentials = service_account.Credentials.from_service_account_info({
         "type": os.environ.get("google_drive_api_type"),
@@ -21,7 +27,8 @@ def Get_drive_service():
         "auth_uri": os.environ.get("google_drive_api_auth_uri"),
         "token_uri": os.environ.get("google_drive_api_token_uri"),
         "auth_provider_x509_cert_url": os.environ.get("google_drive_api_auth_provider_x509_cert_url"),
-        "client_x509_cert_url": os.environ.get("google_drive_api_client_x509_cert_url")
+        "client_x509_cert_url": os.environ.get("google_drive_api_client_x509_cert_url"),
+        "scopes": SCOPES
     })
 
     logging.info("Got the apropriet variables from the system enviroment!  ----- ")
