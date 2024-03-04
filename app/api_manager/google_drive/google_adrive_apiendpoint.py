@@ -97,6 +97,7 @@ def create_file():
         'mimeType': 'text/plain'
     }
 
+    logging.info("Create the file with the provided content")
      # Create the file with the provided content
     file = drive_service.files().create(body=file_metadata, media_body=file_content).execute()
 
