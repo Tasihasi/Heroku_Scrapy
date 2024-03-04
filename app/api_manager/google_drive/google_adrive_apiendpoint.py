@@ -72,7 +72,7 @@ def get_file(file_id):
         # You can now use the file_content object to do whatever you want with the file content
 
         # For example, you can return the file content as a response
-        return send_file(file_content, mimetype=file_metadata['mimeType'], as_attachment=True) #, attachment_filename=file_metadata['name'])
+        return send_file(file_content, mimetype=file_metadata['mimeType'], as_attachment=True, download_name=file_metadata['name'])
         
     except Exception as e:
         # Handle any errors that occur during the process
