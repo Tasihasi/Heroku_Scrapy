@@ -46,7 +46,9 @@ def list_files():
 @google_drive_api.route('/get_file', methods=['GET'])
 def get_file():
     logging.info("Get file API endpoint triggered")
-    
+    logging.info(f"--- logging the request.args dictorany:  {request.args}")
+
+
     try:
 
         logging.info("entered try branch")
