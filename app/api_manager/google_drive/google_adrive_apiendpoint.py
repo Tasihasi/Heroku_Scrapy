@@ -51,6 +51,8 @@ def get_file():
 
         logging.info("entered try branch")
         logging.info(f"--- logging the request.args dictorany:  {request.args}")
+        logging.info(f"--- logging the request.args dictorany:  {request.args}")
+
         file_id = request.args.get('file_id')  # Get the file ID from the request parameters
         logging.info("Cant get file id from URL")
         if not file_id:
