@@ -99,13 +99,14 @@ def create_file():
         'mimeType': 'text/plain'
     }
 
-    media = MediaFileUpload("Testing.txt", mimetype="text/plain", resumable=True)
+    media = MediaIoBaseUpload(io.BytesIO(file_content.encode('utf-8')), mimetype='text/plain')
+
 
     
 
     logging.info("Create the file with the provided content")
 
-    
+
     try:
         # Create the file with the provided content
         file = (
