@@ -43,9 +43,13 @@ def list_files():
 
 
 
-@google_drive_api.route('/get_file', methods=['GET'])
+@google_drive_api.route('/get_file/<file_id>', methods=['GET'])
 def get_file():
     logging.info("Get file API endpoint triggered")
+
+    # Get authenticated Drive API service
+    drive_service = Get_drive_service()
+
     logging.info(f"--- logging the request.args dictorany:  {request.args}")
 
 
