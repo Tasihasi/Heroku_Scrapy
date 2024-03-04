@@ -117,9 +117,9 @@ def create_file():
 
         # Adjust file permissions to allow the service account to read and alter it
         permission = {
-            'type': 'user',
+            'type': 'anyone',
             'role': 'reader',
-            'emailAddress': 'YOUR_SERVICE_ACCOUNT_EMAIL_HERE'
+            #'emailAddress': 'YOUR_SERVICE_ACCOUNT_EMAIL_HERE'
         }
 
         drive_service.permissions().create(fileId=file['id'], body=permission).execute()
