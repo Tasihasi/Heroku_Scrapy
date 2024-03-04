@@ -48,6 +48,8 @@ def get_file():
     logging.info("Get file API endpoint triggered")
     
     try:
+
+        logging.info("entered try branch")
         file_id = request.args.get('file_id')  # Get the file ID from the request parameters
         if not file_id:
             return jsonify({'error': 'File ID is required'}), 400
