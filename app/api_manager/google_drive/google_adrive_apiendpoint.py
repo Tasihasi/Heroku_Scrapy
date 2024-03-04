@@ -84,7 +84,7 @@ def get_file(file_id):
     
 
 @google_drive_api.route('/create_file', methods=['POST'])
-def create_file():
+def create_file(file_name : str, file_mimeType : str):
     # Assuming the file content is sent as part of the request body
     file_content = request.data.decode('utf-8')  # Decode the bytes to string assuming utf-8 encoding
     
@@ -95,8 +95,8 @@ def create_file():
     drive_service = Get_drive_service()
 
     file_metadata = {
-        'name': 'Testing.txt',
-        'mimeType': 'text/plain'
+        'name': file_name,
+        'mimeType': file_mimeType
     }
 
     media = MediaIoBaseUpload(io.BytesIO(file_content.encode('utf-8')), mimetype='text/plain')
@@ -132,5 +132,15 @@ def create_file():
         logging.error("An error occurred during file upload: %s", str(e))
         return "Error occurred during file upload", 500
 
-    
+
+@google_drive_api.route('/get_file/<file_id>', methods=['GET'])
+def delete_file(file_id):
+     # Get authenticated Drive API service
+    drive_service = Get_drive_service()
+
+    try:
+        drive_service.files().delete(fileId=file_id).execute()
+        return jsonify("File deleted successfully.")
+    except Exception as e:
+        return jsonify("An error occurred:", e)
     
