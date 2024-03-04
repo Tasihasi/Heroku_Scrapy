@@ -85,11 +85,32 @@ def get_file(file_id):
 def create_file():
     # Assuming the file content is sent as part of the request body
     file_content = request.data.decode('utf-8')  # Decode the bytes to string assuming utf-8 encoding
-    print("Received file content:")
-    print(file_content)
+    
 
     # Additional code to create the file in Google Drive or perform any other actions
     
+    # Get authenticated Drive API service
+    drive_service = Get_drive_service()
+
+    file_metadata = {
+        'name': 'Testing.txt',
+        'mimeType': 'text/plain'
+    }
+
+     # Create the file with the provided content
+    file = drive_service.files().create(body=file_metadata, media_body=file_content).execute()
+
+    # Adjust file permissions to allow the service account to read and alter it
+    permission = {
+        'type': 'serviceAccount',
+        'role': 'writer',
+        'emailAddress': 'YOUR_SERVICE_ACCOUNT_EMAIL_HERE'
+    }
+
+    drive_service.permissions().create(fileId=file['id'], body=permission).execute()
+
     # Return a response indicating success
-    return "File content received and printed successfully", 200
+    return "File created successfully", 200
+
+    
     
