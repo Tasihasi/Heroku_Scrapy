@@ -21,7 +21,6 @@ def test_api():
     base_url = "https://herokuscrapy-8d468df2dace.herokuapp.com"  # Update this with your actual API domain
     
     # Define the endpoint URL
-    endpoint_url = base_url + "/get_file?file_id=1F4D-A0OOTEP91ArgMYohEbbOpHKsgWT3"  # Update YOUR_FILE_ID with the actual file ID
     endpoint_url = base_url + "/get_file/1F4D-A0OOTEP91ArgMYohEbbOpHKsgWT3"  # Update YOUR_FILE_ID with the actual file ID
 
     try:
@@ -42,29 +41,29 @@ def test_api():
 
 
 base_url = "https://herokuscrapy-8d468df2dace.herokuapp.com/create_file"
-def trigger_create_file_endpoint():
+def post_proxies(url):
+    proxies_file_path = "proxies.txt"
+
+    print(proxies_file_path)
+
+    
     try:
-        # Make a POST request to the API endpoint
-        response = requests.post(base_url)
-            
-        # Check if the request was successful (status code 200)
-        if response.status_code == 200:
-            print("File created successfully.")
-            response_data = json.loads(response.text)
-            file_id = response_data.get('file_id')
-            if file_id:
-                print("File ID:", file_id)
-            else:
-                print("File ID not found in response.")
-        else:
-            print("Failed to create file. Status code:", response.status_code)
-            print("Response:", response.text)
+        with open(proxies_file_path, 'r') as file:
+            proxies = file.read()
+
+        response = requests.post(url, data=proxies)
         
+        if response.status_code == 200:
+            print("Proxies posted successfully!")
+        else:
+            print(f"Failed to post proxies. Status code: {response.status_code}")
+    except FileNotFoundError:
+        print(f"File '{proxies_file_path}' not found.")
     except Exception as e:
-        print("Error occurred:", str(e))
+        print(f"An error occurred: {e}")
+    
 
 if __name__ == "__main__":
     #test_list_files_endpoint()
-    test_api()
-    #trigger_create_file_endpoint()
-
+    #test_api()
+    post_proxies(base_url)
