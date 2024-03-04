@@ -3,6 +3,7 @@ from flask import request
 import requests
 from googleapiclient.http import MediaIoBaseDownload, MediaIoBaseUpload
 from io import BytesIO
+import io
 from .google_drive_api_auth import Get_drive_service
 import logging
 import random
@@ -46,18 +47,37 @@ def list_files():
 
 @google_drive_api.route('/get_file/<file_id>', methods=['GET'])
 def get_file(file_id):
-    logging.info("Get file API endpoint triggered")
 
 
     # Get authenticated Drive API service
     drive_service = Get_drive_service()
 
-    logging.info(f"Here is the file Id:  {file_id}")
+    try:
+        # Call the Drive API to retrieve the file metadata
+        file_metadata = drive_service.files().get(fileId=file_id).execute()
 
-    logging.info(f"--- logging the request.args dictorany:  {request.args}")
+        # Create a file-like object to store the file content
+        file_content = io.BytesIO()
 
+        # Request the file content from Google Drive
+        request = drive_service.files().get_media(fileId=file_id)
+        downloader = MediaIoBaseDownload(file_content, request)
+        done = False
+        while not done:
+            status, done = downloader.next_chunk()
 
-    return jsonify(f"Here is the request.args:  {request.args}")
+        # Rewind the file-like object to the beginning
+        file_content.seek(0)
+
+        # You can now use the file_content object to do whatever you want with the file content
+
+        # For example, you can return the file content as a response
+        return send_file(file_content, mimetype=file_metadata['mimeType'], as_attachment=True, attachment_filename=file_metadata['name'])
+        
+    except Exception as e:
+        # Handle any errors that occur during the process
+        print("An error occurred:", e)
+        return "Error occurred while retrieving the file.", 500
     
     
 
