@@ -9,6 +9,8 @@ import logging
 import random
 import string
 from googleapiclient.http import MediaFileUpload
+from googleapiclient.errors import HttpError
+import json
 
 
 
@@ -141,6 +143,17 @@ def delete_file(file_id):
     try:
         drive_service.files().delete(fileId=file_id).execute()
         return jsonify("File deleted successfully.")
+    except HttpError as e:
+        # Handle HTTP errors
+        error_message = json.loads(e.content)['error']['message']
+        if e.resp.status == 404:
+            # File not found error
+            return jsonify({'error': f'File with ID {file_id} not found.'}), 404
+        else:
+            # Other HTTP errors
+            return jsonify({'error': f'An HTTP error occurred: {error_message}'}), e.resp.status
+
     except Exception as e:
-        return jsonify("An error occurred:", e)
+        # Handle other exceptions
+        return jsonify({'error': f'An error occurred: {str(e)}'}), 500
     
