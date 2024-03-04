@@ -51,6 +51,7 @@ def get_file():
 
         logging.info("entered try branch")
         file_id = request.args.get('file_id')  # Get the file ID from the request parameters
+        logging.info("Cant get file id from URL")
         if not file_id:
             return jsonify({'error': 'File ID is required'}), 400
 
