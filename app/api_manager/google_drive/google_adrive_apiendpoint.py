@@ -117,7 +117,7 @@ def create_file():
 
         # Adjust file permissions to allow the service account to read and alter it
         permission = {
-            'type': 'serviceAccount',
+            'type': 'user',
             'role': 'writer',
             'emailAddress': 'YOUR_SERVICE_ACCOUNT_EMAIL_HERE'
         }
