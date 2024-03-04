@@ -49,7 +49,7 @@ def get_file():
     logging.info(f"--- logging the request.args dictorany:  {request.args}")
 
 
-    
+    return jsonify(f"Here is the request.args:  {request.args}")
     
     
 
