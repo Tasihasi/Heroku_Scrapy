@@ -7,6 +7,9 @@ import logging
 
 
 def Get_drive_service():
+
+    logging.info("---- Starting the auth procces in Get_drive_service")
+
     # Load service account credentials from environment variables
     credentials = service_account.Credentials.from_service_account_info({
         "type": os.environ.get("google_drive_api_type"),
@@ -21,7 +24,7 @@ def Get_drive_service():
         "client_x509_cert_url": os.environ.get("google_drive_api_client_x509_cert_url")
     })
 
-    logging.info("---- Starting the auth procces in Get_drive_service")
+    logging.info("Got the apropriet variables from the system enviroment!  ----- ")
 
     # Authenticate and create the Drive API service
     drive_service = build('drive', 'v3', credentials=credentials)
