@@ -4,7 +4,7 @@ import json
 # URL of your Flask API endpoint
 API_ENDPOINT = 'https://herokuscrapy-8d468df2dace.herokuapp.com/list_files'  # Update with your actual API endpoint URL
 
-def test_list_files_endpoint():
+def list_files_endpoint():
     # Send a GET request to the API endpoint
     response = requests.get(API_ENDPOINT)
 
@@ -16,12 +16,12 @@ def test_list_files_endpoint():
     print(response.json())
 
 
-def test_api():
+def retrieve_file_by_id(file_id : str):
     # Define the base URL of your API
     base_url = "https://herokuscrapy-8d468df2dace.herokuapp.com"  # Update this with your actual API domain
     
     # Define the endpoint URL
-    endpoint_url = base_url + "/get_file/1F4D-A0OOTEP91ArgMYohEbbOpHKsgWT3"  # Update YOUR_FILE_ID with the actual file ID
+    endpoint_url = base_url + f"/get_file/{file_id}"  # Update YOUR_FILE_ID with the actual file ID
 
     try:
         # Make a GET request to the API endpoint
@@ -39,12 +39,12 @@ def test_api():
         # Print an error message if an exception occurs during the request
         print("Error:", e)
 
-def test_delete():
+def delete_file_by_id(file_id : str):
     # Define the base URL of your API
     base_url = "https://herokuscrapy-8d468df2dace.herokuapp.com"  # Update this with your actual API domain
     
     # Define the endpoint URL
-    endpoint_url = base_url + "/delete_file/15qMCoYmw4qd2ngGlvvRQhdgTyli7ZWTS"  # Update YOUR_FILE_ID with the actual file ID
+    endpoint_url = base_url + f"/delete_file/{file_id}"  # Update YOUR_FILE_ID with the actual file ID
 
     try:
         # Make a GET request to the API endpoint
@@ -91,6 +91,6 @@ if __name__ == "__main__":
     #test_list_files_endpoint()
     #test_api()
     #post_proxies(base_url)
-    test_list_files_endpoint()
-    test_delete()
-    test_list_files_endpoint()
+    list_files_endpoint()
+    
+    list_files_endpoint()
