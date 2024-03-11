@@ -112,34 +112,34 @@ def strip_values_in_jsonl(jsonl_file):
 import json
 
 def process_data(data_str):
-    # Convert the string data to a list of dictionaries
-    data = json.loads(data_str)
-
-    # Dictionary to store the lowest prices for each product
-    lowest_prices = {}
-
-    # Iterate over each item in the data
+        # Iterate over each item in the data
     for item in data:
         product_name = item['product_name']
         price = int(item['price'])
+        availability = item['availability']
+        url = item['url']  # get the url from the item
 
-        # Update lowest price for the product
-        if product_name not in lowest_prices:
-            lowest_prices[product_name] = [price]
-        else:
-            lowest_prices[product_name].append(price)
+        # Only process the item if the availability is "raktáron"
+        if availability.lower() == "raktáron":
+            # Update lowest price for the product
+            if product_name not in lowest_prices:
+                lowest_prices[product_name] = {'prices': [price], 'url': url}
+            else:
+                lowest_prices[product_name]['prices'].append(price)
 
     # Calculate the top 3 lowest prices for each product
-    for product_name, prices in lowest_prices.items():
+    for product_name, data in lowest_prices.items():
+        prices = data['prices']
         rounded_prices = [round(price / 1.27) for price in prices]
-        lowest_prices[product_name] = sorted(rounded_prices)[:3]
+        lowest_prices[product_name]['prices'] = sorted(rounded_prices)[:3]
 
     # Generate the new version of the data with unique product names and top 3 lowest prices
     new_data = []
-    for product_name, prices in lowest_prices.items():
+    for product_name, data in lowest_prices.items():
         new_data.append({
             "product_name": product_name,
-            "lowest_prices": prices
+            "lowest_prices": data['prices'],
+            "url": data['url']  # include the url in the new data
         })
 
     return new_data
@@ -269,7 +269,7 @@ def Get_final_data():
     
     #logging.critical("---------------------   The data being sent -----------")
     data = process_jsonl(json_path)
-    #data = process_data(data)
+    data = process_data(data)
 
     logging.critical(data)
 
