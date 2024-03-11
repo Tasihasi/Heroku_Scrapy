@@ -111,7 +111,7 @@ def strip_values_in_jsonl(jsonl_file):
 
 import json
 
-def process_data(data_str):
+def process_data(data):
         # Iterate over each item in the data
     for item in data:
         product_name = item['product_name']
