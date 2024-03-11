@@ -109,10 +109,15 @@ def strip_values_in_jsonl(jsonl_file):
     return stripped_lines
 
 
-import json
 
-def process_data(data):
-        # Iterate over each item in the data
+def process_data(data_str):
+    # Convert the string data to a list of dictionaries
+    data = json.loads(data_str)
+
+    # Dictionary to store the lowest prices for each product
+    lowest_prices = {}
+
+    # Iterate over each item in the data
     for item in data:
         product_name = item['product_name']
         price = int(item['price'])
