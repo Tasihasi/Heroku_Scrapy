@@ -213,9 +213,9 @@ class ArukeresoSpider(scrapy.Spider):
                 if "arukereso.hu" in link and link not in self.visited_url:
                     yield scrapy.Request(url=link, callback=self.parse_link)
                 else:
-                    yield {'name': n, 'price': p.strip(), 'competitor': c}
+                    yield {'name': n, 'price': p.strip(), 'competitor': c, 'url': response.url}
 
-                    item_data = {'name': n, 'price': p.strip(), 'competitor': c}
+                    item_data = {'name': n, 'price': p.strip(), 'competitor': c, 'url': response.url}
                     self.write_item_to_xml(item_data)
 
                 # here is should implement the write to temporary file 
