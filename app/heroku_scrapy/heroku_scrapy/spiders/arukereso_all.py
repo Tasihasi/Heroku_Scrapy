@@ -219,6 +219,8 @@ class ArukeresoSpider(scrapy.Spider):
                     item_data = {'name': n, 'price': p.strip(), 'availability': a.strip(), 'competitor': c, 'url': response.url}
                     self.write_item_to_xml(item_data)
 
+                    logging.info(f"here is the item being writen in the aurekereso main parse method:   {item_data}")
+
                 # here is should implement the write to temporary file 
 
         self.visited_url.add(response.url)
