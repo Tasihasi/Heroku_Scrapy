@@ -121,11 +121,11 @@ def process_data(data_str):
     for item in data:
         product_name = item['product_name']
         price = int(item['price'])
-        availability = item['availability']
+        availability = item.get('availability')  # use get() to safely access 'availability'
         url = item['url']  # get the url from the item
 
         # Only process the item if the availability is "raktáron"
-        if availability.lower() == "raktáron":
+        if availability and availability.lower() == "raktáron":
             # Update lowest price for the product
             if product_name not in lowest_prices:
                 lowest_prices[product_name] = {'prices': [price], 'url': url}
