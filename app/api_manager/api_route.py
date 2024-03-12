@@ -291,7 +291,6 @@ def Get_final_data():
         yield "[\n"
         for index, item in enumerate(data):
             if item is not None:
-                logging.info(f"here is an item:   {item}")
                 item_str = json.dumps({"product_name": item["product_name"], "lowest_prices": item["lowest_prices"]})
                 for i in range(0, len(item_str.encode('utf-8')), chunk_size):
                     yield "  " + item_str[i:i + chunk_size] + (",\n" if index < len(data) - 1 else "")  # Add comma unless it's the last element
