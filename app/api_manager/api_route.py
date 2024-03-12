@@ -270,6 +270,9 @@ def Get_final_data():
     
     #logging.critical("---------------------   The data being sent -----------")
     data = process_jsonl(json_path)
+
+    logging.critical(f" here is the data being logged Before processing it :   {data}")
+
     data = process_data(data)
 
 
