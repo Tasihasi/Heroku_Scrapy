@@ -260,7 +260,7 @@ class ArukeresoSpider(scrapy.Spider):
                 'product_name': product_name  # use the extracted product name here
             }
 
-            #logging.info(f"The saved data {price} ,  {product_name} ,  {competitor}")
+            logging.info(f"The saved data {price} ,  {product_name} ,  {competitor},   {availability}")
 
             data_tuple = tuple(data.items())
             if data_tuple not in data_list:
