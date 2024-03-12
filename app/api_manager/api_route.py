@@ -122,12 +122,14 @@ def process_data(data_str):
     for item in data:
         product_name = item['product_name']
         price = int(item['price'])
+        availability = item['availability']
 
-        # Update lowest price for the product
-        if product_name not in lowest_prices:
-            lowest_prices[product_name] = [price]
-        else:
-            lowest_prices[product_name].append(price)
+        if "raktáron" in availability:
+            # Update lowest price for the product
+            if product_name not in lowest_prices:
+                lowest_prices[product_name] = [price]
+            else:
+                lowest_prices[product_name].append(price)
 
     # Calculate the top 3 lowest prices for each product
     for product_name, prices in lowest_prices.items():
