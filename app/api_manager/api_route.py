@@ -122,9 +122,8 @@ def process_data(data_str):
     for item in data:
         product_name = item['product_name']
         price = int(item['price'])
-        availability = item['availability']
 
-        if "raktáron" in availability:
+        if 'availability' in item and item['availability'] == "raktáron":
             # Update lowest price for the product
             if product_name not in lowest_prices:
                 lowest_prices[product_name] = [price]
