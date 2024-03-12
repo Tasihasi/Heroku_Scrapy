@@ -269,9 +269,10 @@ def Get_final_data():
     
     #logging.critical("---------------------   The data being sent -----------")
     data = process_jsonl(json_path)
-    #data = process_data(data)
+    data = process_data(data)
 
-    logging.critical(data)
+
+    logging.critical(f" here is the data being logged :   {data}")
 
     # Log the length of the data in bytes
     #logging.info(f"Data length: {sys.getsizeof(data)} bytes")
@@ -288,9 +289,6 @@ def Get_final_data():
         yield "[\n"
         for index, item in enumerate(data):
             if item is not None:
-                for key, value in item.items():
-                    logging.info(f"i think here is the key:  {key}   and here is the value:   {value}")
-
                 logging.info(f"here is an item:   {item}")
                 item_str = json.dumps({"product_name": item["product_name"], "lowest_prices": item["lowest_prices"]})
                 for i in range(0, len(item_str.encode('utf-8')), chunk_size):
