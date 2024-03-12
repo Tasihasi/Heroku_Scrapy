@@ -199,7 +199,7 @@ class ArukeresoSpider(scrapy.Spider):
 
         all_products = response.css("div.name a ::text").getall()
         all_prices = response.css("div.price::text").getall()
-        all_availabilities = response.css("span.delivery-time::text").getall()  # Extract availabilities
+        
 
         # regex pattern to extract the competitor's name from the URL
         pattern = r'arukereso\.hu|.hu'
@@ -208,19 +208,16 @@ class ArukeresoSpider(scrapy.Spider):
 
         comparison_links = response.css("a.button-orange::attr(href)").getall()
         
-        for n, p, a, c, link in zip(all_products, all_prices,all_availabilities, all_competitors, comparison_links):
+        for n, p, c, link in zip(all_products, all_prices, all_competitors, comparison_links):
             
             if n and p and c:
                 if "arukereso.hu" in link and link not in self.visited_url:
                     yield scrapy.Request(url=link, callback=self.parse_link)
-                    logging.info("Sth fucked up")
                 else:
-                    yield {'name': n, 'price': p.strip(), 'availability': a.strip(), 'competitor': c, 'url': response.url}
+                    yield {'name': n, 'price': p.strip(), 'competitor': c, 'url': response.url}
 
-                    item_data = {'name': n, 'price': p.strip(), 'availability': a.strip(), 'competitor': c, 'url': response.url}
+                    item_data = {'name': n, 'price': p.strip(), 'competitor': c, 'url': response.url}
                     self.write_item_to_xml(item_data)
-
-                    logging.info(f"here is the item being writen in the aurekereso main parse method: {item_data}")
 
                 # here is should implement the write to temporary file 
 
