@@ -133,6 +133,7 @@ class ArukeresoSpider(scrapy.Spider):
         self.start_urls = self.predicting_url(self.start_urls[0])
         self.error_urls = []  # List to store URLs that encountered errors
         self.visited_url = set()
+        self.lock = threading.Lock()
 
         #logging.info("----------- Got valid Proxies. ------------------")
 
@@ -228,6 +229,7 @@ class ArukeresoSpider(scrapy.Spider):
     def parse_link(self, response):
         prices = ""
         competitors = ""
+        availabilities = ""
 
         prices = response.css('span[itemprop="price"]::text').getall()
         availabilities = response.css('span.delivery-time::text').getall()
@@ -238,6 +240,10 @@ class ArukeresoSpider(scrapy.Spider):
 
         if len(competitors) == 0 or not competitors:
             competitors = response.css('div.col-logo img::attr(alt)').getall()
+
+        if len(availabilities) == 0 or not availabilities:
+            availabilities = response.css('span.delivery-time::text').getall()
+
 
         
         # concatenate the text from the nested span tags to get the product name
@@ -265,7 +271,13 @@ class ArukeresoSpider(scrapy.Spider):
             data_tuple = tuple(data.items())
             if data_tuple not in data_list:
                 data_list.add(data_tuple)
-                yield data
+
+                self.lock.acquire()
+
+                try:
+                    yield data
+                finally:
+                    self.lock.release()
 
         if response.status != 200:
             self.error_urls.append(response.url)
