@@ -36,7 +36,7 @@ def remove_incomplete_last_item(xml_string, required_attributes):
 # remowing the last line from the jsonl file 
 # stripping all values in the jsonl file 
 # returns the file name to the resulting file 
-def process_jsonl(input_path, output_filename="BigOutput.jsonl", required_keys=["price", "availability", "competitor", "product_name"]):
+def process_jsonl(input_path, output_filename="BigOutput.jsonl", required_keys=["price", "availability", "competitor", "product_name", "url"]):
     try:
         # Read the content from the input JSONL file
         with open(input_path, 'r', encoding="utf-8") as input_file:
@@ -122,6 +122,7 @@ def process_data(data_str):
     for item in data:
         product_name = item['product_name']
         price = int(item['price'])
+        url = item["url"]
 
         if 'availability' in item and item['availability'] == "raktáron":
             # Update lowest price for the product
@@ -141,6 +142,7 @@ def process_data(data_str):
         new_data.append({
             "product_name": product_name,
             "lowest_prices": prices
+            "url": product_info['url']  # add the URL to the new data
         })
 
     return new_data

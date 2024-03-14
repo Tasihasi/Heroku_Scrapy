@@ -265,9 +265,10 @@ class ArukeresoSpider(scrapy.Spider):
                 'availability': availability,
                 'competitor': competitor,
                 'product_name': product_name  # use the extracted product name here
+                'url' : response.url
             }
 
-            logging.info(f"The saved data in parse_link method:   {price} ,  {product_name} ,  {competitor},   {availability}")
+            #logging.info(f"The saved data in parse_link method:   {price} ,  {product_name} ,  {competitor},   {availability},  ")
 
             data_tuple = tuple(data.items())
             if data_tuple not in data_list:
