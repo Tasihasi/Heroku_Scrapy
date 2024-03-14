@@ -132,16 +132,16 @@ def process_data(data_str):
                 lowest_prices[product_name].append(price)
 
     # Calculate the top 3 lowest prices for each product
-    for product_name, prices in lowest_prices.items():
-        rounded_prices = [round(price / 1.27) for price in prices]
-        lowest_prices[product_name] = sorted(rounded_prices)[:3]
+    for product_name, product_info in lowest_prices.items():
+        rounded_prices = [round(price / 1.27) for price in product_info['prices']]
+        lowest_prices[product_name]['prices'] = sorted(rounded_prices)[:3]
 
     # Generate the new version of the data with unique product names and top 3 lowest prices
     new_data = []
-    for product_name, prices in lowest_prices.items():
+    for product_name, product_info in lowest_prices.items():
         new_data.append({
             "product_name": product_name,
-            "lowest_prices": prices,
+            "lowest_prices": product_info['prices'],
             "url": product_info['url']  # add the URL to the new data
         })
 
