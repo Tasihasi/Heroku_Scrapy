@@ -264,7 +264,7 @@ class ArukeresoSpider(scrapy.Spider):
                 'price': price,
                 'availability': availability,
                 'competitor': competitor,
-                'product_name': product_name  # use the extracted product name here
+                'product_name': product_name,  # use the extracted product name here
                 'url' : response.url
             }
 

@@ -118,4 +118,4 @@ ITEM_PIPELINES = {
 
 JSONL_OUTPUT_FILE = 'output.jsonl'
 
-LOG_ENABLED = True
+LOG_ENABLED = False
