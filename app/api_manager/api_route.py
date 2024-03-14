@@ -128,9 +128,9 @@ def process_data(data_str):
             # Update lowest price for the product
             # TODO The prices diseapr here !!!! 
             if product_name not in lowest_prices:
-                lowest_prices[product_name] = [price]
+                lowest_prices[product_name] = {'prices': [price], 'url': item['url']}
             else:
-                lowest_prices[product_name].append(price)
+                lowest_prices[product_name]["prices"].append(price)
 
     
     logging.info(f"here is the lowest prices variable after adding items :  {lowest_prices}")
