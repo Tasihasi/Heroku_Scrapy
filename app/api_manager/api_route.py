@@ -132,8 +132,8 @@ def process_data(data_str):
             else:
                 lowest_prices[product_name].append(price)
 
-        logging.info(f" here is an item aftre pocessing it :  {item}")
-
+    
+    logging.info(f"here is the lowest prices variable after adding items :  {lowest_prices}")
     # Calculate the top 3 lowest prices for each product
     for product_name, product_info in lowest_prices.items():
         if 'prices' in product_info and isinstance(product_info['prices'], list):
