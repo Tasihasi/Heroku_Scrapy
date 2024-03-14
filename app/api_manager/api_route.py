@@ -127,6 +127,9 @@ def process_data(data_str):
         if 'availability' in item and  "rakt" in item["availability"] : # (item['availability'] == "raktáron" or item["availability"] == "rakt\u00e1ron"):
             # Update lowest price for the product
             # TODO The prices diseapr here !!!! 
+
+            logging.info("---- Can see a product with availability ------")
+
             if product_name not in lowest_prices:
                 lowest_prices[product_name] = [price]
             else:
