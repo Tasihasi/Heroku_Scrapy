@@ -228,6 +228,7 @@ class ArukeresoSpider(scrapy.Spider):
             
 
     def parse_link(self, response):
+        logging.info("Parse link method being called --------------------")
         prices = ""
         competitors = ""
         availabilities = ""
