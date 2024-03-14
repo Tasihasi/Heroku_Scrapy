@@ -141,7 +141,7 @@ def process_data(data_str):
     for product_name, prices in lowest_prices.items():
         new_data.append({
             "product_name": product_name,
-            "lowest_prices": prices
+            "lowest_prices": prices,
             "url": product_info['url']  # add the URL to the new data
         })
 
