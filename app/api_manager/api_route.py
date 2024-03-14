@@ -129,6 +129,7 @@ def process_data(data_str):
             # TODO The prices diseapr here !!!! 
             if product_name not in lowest_prices:
                 lowest_prices[product_name] = {'prices': [price], 'url': item['url']}
+                logging.info(f"this url is added to the lowest prices :  {item["url"]}")
             else:
                 lowest_prices[product_name]["prices"].append(price)
 
