@@ -58,9 +58,9 @@ def process_jsonl(input_path, output_filename="BigOutput.jsonl", required_keys=[
         #logging.info(f"this is the filtered_data:  {filtered_data}" )
 
         # Remove the "availability" column from each record in filtered_data
-        for record in filtered_data:
-            if "availability" in record:
-                del record["availability"]
+        #for record in filtered_data:
+            #if "availability" in record:
+                #del record["availability"]
 
         # trying to return with simply filtered data 
         return json.dumps(filtered_data, indent=2)
