@@ -215,6 +215,7 @@ class ArukeresoSpider(scrapy.Spider):
                     yield scrapy.Request(url=link, callback=self.parse_link)
                 else:
                     yield {'name': n, 'price': p.strip(), 'competitor': c}
+                    logging.info(f"The saved data in main parse method:  {n},  {p.strip()},   {c}")
 
                     item_data = {'name': n, 'price': p.strip(), 'competitor': c}
                     self.write_item_to_xml(item_data)
@@ -266,7 +267,7 @@ class ArukeresoSpider(scrapy.Spider):
                 'product_name': product_name  # use the extracted product name here
             }
 
-            logging.info(f"The saved data {price} ,  {product_name} ,  {competitor},   {availability}")
+            logging.info(f"The saved data in parse_link method:   {price} ,  {product_name} ,  {competitor},   {availability}")
 
             data_tuple = tuple(data.items())
             if data_tuple not in data_list:
