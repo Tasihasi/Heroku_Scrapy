@@ -140,11 +140,12 @@ def process_data(data_str):
     # Generate the new version of the data with unique product names and top 3 lowest prices
     new_data = []
     for product_name, product_info in lowest_prices.items():
-        new_data.append({
-            "product_name": product_name,
-            "lowest_prices": product_info['prices'],
-            "url": product_info['url']  # add the URL to the new data
-        })
+        if 'prices' in product_info and isinstance(product_info['prices'], list):
+            new_data.append({
+                "product_name": product_name,
+                "lowest_prices": product_info['prices'],
+                "url": product_info['url']  # add the URL to the new data
+            })
 
     return new_data
 
