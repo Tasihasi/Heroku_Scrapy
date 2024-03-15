@@ -7,7 +7,7 @@ import logging
 from .auth import valid_api_key, mach_apiKey_to_customer, getting_raw_data
 from .scrapy_manager import newest_raw_data
 from .api_proxy import gather_proxy_data
-from .data_retrieve import get_data_from_scrapy, get_proxies
+from .data_retrieve import get_data_from_scrapy, get_proxies, get_link_data_from_scrapy
 from concurrent.futures import ThreadPoolExecutor  # For async execution
 import fcntl
 
@@ -109,7 +109,7 @@ def strip_values_in_jsonl(jsonl_file):
     return stripped_lines
 
 
-import json
+
 
 def process_data(data_str):
     # Convert the string data to a list of dictionaries
@@ -343,8 +343,111 @@ def Get_final_data():
     
 @proxy_blueprint.route('/get_link_data', methods=['GET'])
 def get_link_data():
-    # Your code here
-    return "This is the get_link_data endpoint"
+    def process():
+        # Assuming get_link_data_from_scrapy() returns the path to the JSON file
+        success, result = get_link_data_from_scrapy()
+
+        if success:
+            # Provide the JSON file as a download
+            return send_file('link_data.json', mimetype='application/json', as_attachment=True)
+        else:
+            return "Failed to retrieve link data."
+
+    # Submit the 'process' function to the executor for asynchronous execution
+    future = executor.submit(process)
+
+    # Return a response immediately indicating that the spider is running asynchronously
+    return "Spider is running asynchronously to fetch link data. Results will be available shortly."
+    
+@proxy_blueprint.route('/get_link_data', methods=['GET'])
+def Get_link_data():
+
+    # Retrieve the API key from the request headers
+    api_key = request.headers.get('API-Key')
+
+    # Retrieve the Clondike_Key from the environment variables
+    valid_api_key = os.environ.get('Clondike_Key')
+
+    if api_key != valid_api_key:
+        return "Api key is not valid ---- :("
+    
+    current_directory = os.getcwd()
+    #logging.info(f"Current Working Directory: {current_directory}")
+
     
 
+    # Get the absolute path of the Flask app's root directory
+    app_root = os.path.abspath(os.path.dirname(__file__))
+    directory = "../heroku_scrapy"
+    folder_log = os.path.join(app_root, directory)
+    logging.info(f"---------- {folder_log}  -------------")
+    #log_folder_content(folder_log)
+
+    result = "link_data.json"
+    json_path = os.path.join(folder_log, result)
+    
+    #logging.critical("---------------------   The data being sent -----------")
+    data = process_jsonl(json_path)
+
+    logging.critical(f" here is the data being logged Before processing it :   {data}")
+
+    data = process_data(data)
+
+
+    logging.critical(f" here is the data being logged :   {data}")
+
+    # Log the length of the data in bytes
+    #logging.info(f"Data length: {sys.getsizeof(data)} bytes")
+    #logging.info("---------------------------------------------")
+
+
+    # Function to stream data in chunks
+    
+    def generate(data):
+        if data is None:
+            raise ValueError("Data cannot be None")
+        
+        chunk_size = 4096  # Adjust chunk size as needed
+        yield "[\n"
+        for index, item in enumerate(data):
+            if item is not None:
+                item_str = json.dumps({
+                    "product_name": item["product_name"], 
+                    "lowest_prices": item["lowest_prices"],
+                    "url": item["url"]  # include the url
+                })
+                for i in range(0, len(item_str.encode('utf-8')), chunk_size):
+                    yield "  " + item_str[i:i + chunk_size] + (",\n" if index < len(data) - 1 else "")  # Add comma unless it's the last element
+        yield "]"
+
+    return Response(generate(data), content_type='text/plain')
+
+    
+
+        # Optionally, you can yield the whole JSON array by wrapping it in brackets
+        # yield "[" + ",".join(generate()) + "]"
+
+
+
+    json_path = os.path.join(folder_log, process_jsonl(json_path)) 
+    # if procces_jsonl return wit an exception than the code crashes
+    
+
+    try:
+
+        #json_file = strip_values_in_jsonl(json_path)
+        # Send the resulting XML file
+        return send_file(json_path, as_attachment=True)
+
+    except FileNotFoundError as e:
+        try:
+
+            directory = "."
+            log_folder_content(directory)
+            json_path = os.path.join(directory, result)
+            return send_file(result, as_attachment=True)
+        except FileNotFoundError as e:
+            logging.error(f"FileNotFoundError: {e}")
+            return "File not found", 404
+ 
     
