@@ -341,8 +341,8 @@ def Get_final_data():
             return "File not found", 404
         
     
-@proxy_blueprint.route('/get_link_data', methods=['GET'])
-def get_link_data():
+@proxy_blueprint.route('/start_link_scrape', methods=['GET'])
+def start_link_scrape():
     def process():
         # Assuming get_link_data_from_scrapy() returns the path to the JSON file
         success, result = get_link_data_from_scrapy()
