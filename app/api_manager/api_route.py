@@ -341,6 +341,10 @@ def Get_final_data():
             return "File not found", 404
         
     
+@proxy_blueprint.route('/get_link_data', methods=['GET'])
+def get_link_data():
+    # Your code here
+    return "This is the get_link_data endpoint"
     
 
     

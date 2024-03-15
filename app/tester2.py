@@ -26,7 +26,7 @@ def download_file(url, api_key):
     return local_filename
 
 url = "https://herokuscrapy-8d468df2dace.herokuapp.com/get_final_data"
-#url = 'http://localhost:5000/get_final_data'  # Example URL
+#url = 'http://git.nettower.hu/get_final_data'  # Example URL
 
 
 api_key = 'aqswdefr12345'
