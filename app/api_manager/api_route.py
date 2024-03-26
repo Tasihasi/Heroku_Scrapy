@@ -46,8 +46,13 @@ def process_jsonl(input_path, output_filename="BigOutput.jsonl", required_keys=[
         data = []
         for line in lines:
             try:
-                record = json.loads(line)
-                data.append(record)
+                 # Split the line into parts by comma
+                parts = line.split(',')
+
+                # Try to decode each part separately
+                for part in parts:
+                    record = json.loads(part)
+                    data.append(record)
             except json.JSONDecodeError as e:
                 logging.error(f"Error decoding JSON for line: {line}. Error: {e}")
 
