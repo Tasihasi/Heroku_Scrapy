@@ -391,6 +391,15 @@ def Get_link_data():
     logging.info(f"---------- Here is the folder content :  {folder_log}  -------------")
     #log_folder_content(folder_log)
 
+
+        # Log the content of the directory
+    try:
+        folder_content = os.listdir(folder_log)
+        for item in folder_content:
+            logging.info(item)
+    except FileNotFoundError:
+        logging.error(f"Directory not found: {folder_log}")
+
     result = "link_data.json"
     json_path = os.path.join(folder_log, result)
     
