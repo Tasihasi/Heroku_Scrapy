@@ -388,7 +388,7 @@ def Get_link_data():
     app_root = os.path.abspath(os.path.dirname(__file__))
     directory = "../heroku_scrapy"
     folder_log = os.path.join(app_root, directory)
-    logging.info(f"---------- {folder_log}  -------------")
+    logging.info(f"---------- Here is the folder content :  {folder_log}  -------------")
     #log_folder_content(folder_log)
 
     result = "link_data.json"
