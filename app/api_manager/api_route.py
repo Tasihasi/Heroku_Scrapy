@@ -53,7 +53,7 @@ def process_jsonl(input_path, output_filename="BigOutput.jsonl", required_keys=[
             try:
                 # Decode the entire line as a JSON object
 
-                logging.WARNING(f"this is the line :  {line}")
+                logging.warning(f"this is the line :  {line}")
                 record = json.loads(line)
                 data.append(record)
             except json.JSONDecodeError as e:
@@ -72,16 +72,6 @@ def process_jsonl(input_path, output_filename="BigOutput.jsonl", required_keys=[
 
         # trying to return with simply filtered data 
         return json.dumps(filtered_data, indent=2)
-
-        # Write the modified content to the output JSONL file
-        output_path = output_filename
-        with open(output_path, 'w', encoding="utf-8") as output_file:
-            for record in filtered_data:
-                #logging.info(f"Current record added :   {record}")
-                output_file.write(json.dumps(record) + '\n')
-
-        #logging.info("---------------  Successfully transformed the JSONL --------")
-        return output_path
 
     except Exception as e:
         # Handle exceptions (e.g., file not found, JSON decoding error)
