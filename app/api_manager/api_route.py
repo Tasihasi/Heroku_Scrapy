@@ -44,6 +44,11 @@ def process_jsonl(input_path, output_filename="BigOutput.jsonl", required_keys=[
 
         # Remove the last line and strip whitespace from all values
         data = []
+
+        if len(lines) == 0:
+            logging.error("No lines found in the JSONL file")
+            return None
+        
         for line in lines:
             try:
                 # Decode the entire line as a JSON object
@@ -391,6 +396,9 @@ def Get_link_data():
     
     logging.critical("---------------------   The data being sent -----------")
     data = process_jsonl(json_path)
+
+    if data is None:
+        return "Data is Not yet available !"
 
     logging.critical(f" here is the data being logged Before processing it :   {data}")
 
