@@ -47,6 +47,8 @@ def process_jsonl(input_path, output_filename="BigOutput.jsonl", required_keys=[
         for line in lines:
             try:
                 # Decode the entire line as a JSON object
+
+                logging.WARNING(f"this is the line :  {line}")
                 record = json.loads(line)
                 data.append(record)
             except json.JSONDecodeError as e:
