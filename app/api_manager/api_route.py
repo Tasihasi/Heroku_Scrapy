@@ -386,7 +386,7 @@ def Get_link_data():
     result = "link_data.json"
     json_path = os.path.join(folder_log, result)
     
-    #logging.critical("---------------------   The data being sent -----------")
+    logging.critical("---------------------   The data being sent -----------")
     data = process_jsonl(json_path)
 
     logging.critical(f" here is the data being logged Before processing it :   {data}")
