@@ -74,7 +74,14 @@ def post_proxies(url):
         with open(proxies_file_path, 'r') as file:
             proxies = file.read()
 
-        response = requests.post(url, data=proxies)
+        # Prepare the data for the POST request
+        data = {
+            'file_name': proxies_file_path,
+            'file_mimeType': 'text/plain',
+            'file_content': proxies
+        }
+
+        response = requests.post(url, data=json.dumps(data), headers={'Content-Type': 'application/json'})
         
         if response.status_code == 200:
             print("Proxies posted successfully!")
@@ -90,7 +97,7 @@ def post_proxies(url):
 if __name__ == "__main__":
     #test_list_files_endpoint()
     #test_api()
-    #post_proxies(base_url)
-    list_files_endpoint()
+    post_proxies(base_url)
+    #list_files_endpoint()
     
     list_files_endpoint()

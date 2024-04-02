@@ -87,9 +87,19 @@ def get_file(file_id):
 
 @google_drive_api.route('/create_file', methods=['POST'])
 def create_file(file_name : str, file_mimeType : str):
-    # Assuming the file content is sent as part of the request body
-    file_content = request.data.decode('utf-8')  # Decode the bytes to string assuming utf-8 encoding
-    
+    # Get the request data
+    data = request.get_json()
+
+    # Extract file_name and file_mimeType from the data
+    file_name = data.get('file_name')
+    file_mimeType = data.get('file_mimeType')
+    file_content = data.get('file_content')
+
+    # Check if the file_name and file_content are provided
+
+    if file_name is None or file_content is None:
+        return "File name and content are required", 400
+
 
     # Additional code to create the file in Google Drive or perform any other actions
     
