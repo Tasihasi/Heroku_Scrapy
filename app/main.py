@@ -46,7 +46,7 @@ def main():
     app.register_blueprint(api)  # Register the 'api' Blueprint
     app.register_blueprint(proxy_blueprint)
     #app.register_blueprint(google_drive_api)
-    app.run(debug=True, threaded=True  )#, port=5000)
+    app.run(debug=True, threaded=True  , port=5000)
 
 if __name__ == '__main__':
     daemon = Daemonize(app="my_app", pid="/tmp/my_app.pid", action=main)
