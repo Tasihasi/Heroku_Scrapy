@@ -1,10 +1,10 @@
 from flask import Flask
 from .api_manager.api_route import api, proxy_blueprint
-from .api_manager.google_drive.google_adrive_apiendpoint import google_drive_api
+#from .api_manager.google_drive.google_adrive_apiendpoint import google_drive_api
 import requests
 import time
 from datetime import datetime, timedelta
-import json
+from daemonize import Daemonize
 
 
 def send_request():
@@ -35,27 +35,19 @@ def run_daily_job():
 
 
 
-# Create a Flask application instance
-app = Flask(__name__)
 
-# Register the API blueprint
-app.register_blueprint(api)  # Register the 'api' Blueprint
-app.register_blueprint(proxy_blueprint)
-app.register_blueprint(google_drive_api)
 
 # Define a main function to run the app
+def main():
+    # Create a Flask application instance
+    app = Flask(__name__)
 
-# Define a main function to run the app
-def run_flask_app():
-    with open('run.json', 'r') as f:
-        config = json.load(f)
-
-    daemon = config.get('daemon', 0) == 1
-    port = config.get('port', 5000)
-
-    app.run(debug=True, threaded=True, daemon=daemon, port=port)
-
+    # Register the API blueprint
+    app.register_blueprint(api)  # Register the 'api' Blueprint
+    app.register_blueprint(proxy_blueprint)
+    #app.register_blueprint(google_drive_api)
+    app.run(debug=True, threaded=True  )#, port=5000)
 
 if __name__ == '__main__':
-
-    app.run(debug=True, threaded=True)
+    daemon = Daemonize(app="my_app", pid="/tmp/my_app.pid", action=main)
+    daemon.start()
