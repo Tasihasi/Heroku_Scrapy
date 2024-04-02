@@ -4,6 +4,7 @@ from .api_manager.api_route import api, proxy_blueprint
 import requests
 import time
 from datetime import datetime, timedelta
+import json
 
 
 def send_request():
@@ -44,8 +45,17 @@ app.register_blueprint(proxy_blueprint)
 
 # Define a main function to run the app
 
+# Define a main function to run the app
 def run_flask_app():
-    app.run(debug=True, threaded=True)
+    with open('run.json', 'r') as f:
+        config = json.load(f)
+
+    daemon = config.get('daemon', 0) == 1
+    port = config.get('port', 5000)
+
+    app.run(debug=True, threaded=True, daemon=daemon, port=port)
+
 
 if __name__ == '__main__':
+
     app.run(debug=True, threaded=True)

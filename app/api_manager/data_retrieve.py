@@ -1,6 +1,6 @@
 import os
 import logging
-from .api_proxy import wait_for_file, delete_existing_file, run_spider
+from .api_proxy import run_spider
 import psutil
 
 
