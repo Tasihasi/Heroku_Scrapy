@@ -12,6 +12,8 @@ from googleapiclient.http import MediaFileUpload
 from googleapiclient.errors import HttpError
 import json
 
+from google_drive_actions import upload_basic
+
 
 
 google_drive_api = Blueprint('google_drive_api', __name__)
@@ -85,47 +87,13 @@ def get_file(file_id):
     
     
 
-#TODO Make the file upload mimeType universal or can be passed as a parameter
-@google_drive_api.route('/create_file', methods=['POST'])
-def upload_basic():
-  """Insert new file.
-  Returns : Id's of the file uploaded
-
-  Load pre-authorized user credentials from the environment.
-  TODO(developer) - See https://developers.google.com/identity
-  for guides on implementing OAuth2 for the application.
-  """
-
-
-  drive_service = Get_drive_service()
-
-  try:
-
-    file_metadata = {"name": "download.jpeg",
-                     "permissions": [
-                {
-                    "type": "serviceAccount",
-                    "role": "writer",  # Gives write access
-                    "emailAddress": "google-drive-api-heroku@herokudatabase-412913.iam.gserviceaccount.com"
-                }
-            ],
-            "mimeType": "text/plain",
-            }
+@google_drive_api.route('/create_file', methods=['GET' , 'POST'])
+def create_file():
     
-    media = MediaFileUpload("download.jpeg", mimetype="image/jpeg")
-    # pylint: disable=maybe-no-member
-    file = (
-        drive_service.files()
-        .create(body=file_metadata, media_body=media, fields="id")
-        .execute()
-    )
-    print(f'File ID: {file.get("id")}')
 
-  except HttpError as error:
-    print(f"An error occurred: {error}")
-    file = None
+    return upload_basic("something", "test.txt")
 
-  return file.get("id")
+    
 
 @google_drive_api.route('/delete_file/<file_id>', methods=['GET'])
 def delete_file(file_id):

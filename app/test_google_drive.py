@@ -93,11 +93,18 @@ def post_proxies(url):
         print(f"An error occurred: {e}")
 
 
+def get_request_and_print_response(base_url):
+    try:
+        response = requests.get(base_url)
+        print(response.text)
+    except requests.exceptions.RequestException as e:
+        print(f"An error occurred: {e}")
+
 
 if __name__ == "__main__":
     #test_list_files_endpoint()
     #test_api()
-    post_proxies(base_url)
+    get_request_and_print_response(base_url)
     #list_files_endpoint()
     
     list_files_endpoint()
