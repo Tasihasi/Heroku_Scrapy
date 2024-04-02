@@ -85,65 +85,47 @@ def get_file(file_id):
     
     
 
+#TODO Make the file upload mimeType universal or can be passed as a parameter
 @google_drive_api.route('/create_file', methods=['POST'])
-def create_file(file_name : str, file_mimeType : str):
-    # Get the request data
-    data = request.get_json()
+def upload_basic():
+  """Insert new file.
+  Returns : Id's of the file uploaded
 
-    # Extract file_name and file_mimeType from the data
-    file_name = data.get('file_name')
-    file_mimeType = data.get('file_mimeType')
-    file_content = data.get('file_content')
-
-    # Check if the file_name and file_content are provided
-
-    if file_name is None or file_content is None:
-        return "File name and content are required", 400
+  Load pre-authorized user credentials from the environment.
+  TODO(developer) - See https://developers.google.com/identity
+  for guides on implementing OAuth2 for the application.
+  """
 
 
-    # Additional code to create the file in Google Drive or perform any other actions
+  drive_service = Get_drive_service()
+
+  try:
+
+    file_metadata = {"name": "download.jpeg",
+                     "permissions": [
+                {
+                    "type": "serviceAccount",
+                    "role": "writer",  # Gives write access
+                    "emailAddress": "google-drive-api-heroku@herokudatabase-412913.iam.gserviceaccount.com"
+                }
+            ],
+            "mimeType": "text/plain",
+            }
     
-    # Get authenticated Drive API service
-    drive_service = Get_drive_service()
+    media = MediaFileUpload("download.jpeg", mimetype="image/jpeg")
+    # pylint: disable=maybe-no-member
+    file = (
+        drive_service.files()
+        .create(body=file_metadata, media_body=media, fields="id")
+        .execute()
+    )
+    print(f'File ID: {file.get("id")}')
 
-    file_metadata = {
-        'name': file_name,
-        'mimeType': file_mimeType
-    }
+  except HttpError as error:
+    print(f"An error occurred: {error}")
+    file = None
 
-    media = MediaIoBaseUpload(io.BytesIO(file_content.encode('utf-8')), mimetype='text/plain')
-
-
-    
-
-    logging.info("Create the file with the provided content")
-
-
-    try:
-        # Create the file with the provided content
-        file = (
-            drive_service.files()
-            .create(body=file_metadata, media_body=media, fields="id")
-            .execute()
-        )
-
-        # Adjust file permissions to allow the service account to read and alter it
-        permission = {
-            'type': 'anyone',
-            'role': 'reader',
-            #'emailAddress': 'YOUR_SERVICE_ACCOUNT_EMAIL_HERE'
-        }
-
-        drive_service.permissions().create(fileId=file['id'], body=permission).execute()
-
-        # Return a response indicating success
-        return "File created successfully", 200
-
-    except Exception as e:
-        # Handle any exceptions that occur during the upload process
-        logging.error("An error occurred during file upload: %s", str(e))
-        return "Error occurred during file upload", 500
-
+  return file.get("id")
 
 @google_drive_api.route('/delete_file/<file_id>', methods=['GET'])
 def delete_file(file_id):
