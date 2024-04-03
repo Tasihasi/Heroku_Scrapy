@@ -112,7 +112,7 @@ def create_file(file_name, file_mimeType):
         fh = io.BytesIO(content)
 
         # Create a media object from the file-like object
-        media = MediaFileUpload(fh, mimetype=file_mimeType)
+        media = MediaIoBaseUpload(fh, mimetype=file_mimeType)
         # pylint: disable=maybe-no-member
         file = (
             service.files()
