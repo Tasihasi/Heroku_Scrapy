@@ -12,7 +12,7 @@ from googleapiclient.http import MediaFileUpload
 from googleapiclient.errors import HttpError
 import json
 
-from google_drive_actions import upload_basic
+from .google_drive_actions import upload_basic
 
 
 
