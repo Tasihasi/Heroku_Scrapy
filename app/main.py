@@ -47,6 +47,9 @@ print("imported the api blueprint printed with print")
 app.register_blueprint(proxy_blueprint)
 print("imported the proxy blueprint printed with print")
 
+app.run(debug=True, threaded=True  , port=5000)
+print("Started the app")
+
 # Define a main function to run the app
 def main():
     # Create a Flask application instance
