@@ -48,6 +48,7 @@ def main():
     # Register the API blueprint
     app.register_blueprint(api)  # Register the 'api' Blueprint
     logging.info("imported the api blueprint")
+    print("imported the api blueprint printed with print")
 
     app.register_blueprint(proxy_blueprint)
     logging.info("imported the api proxy_blueprint")
