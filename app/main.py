@@ -1,11 +1,10 @@
 from flask import Flask
-from api_manager.api_route import api, proxy_blueprint
-#from .api_manager.google_drive.google_adrive_apiendpoint import google_drive_api
+from .api_manager.api_route import api, proxy_blueprint
+from .api_manager.google_drive.google_adrive_apiendpoint import google_drive_api
 import requests
 import time
 from datetime import datetime, timedelta
 from daemonize import Daemonize
-import logging
 
 
 def send_request():
@@ -47,6 +46,8 @@ print("imported the api blueprint printed with print")
 app.register_blueprint(proxy_blueprint)
 print("imported the proxy blueprint printed with print")
 
+app.register_blueprint(google_drive_api)
+
 app.run(debug=False, threaded=True  , port=5000)
 print("Started the app")
 
@@ -55,7 +56,7 @@ def main():
     # Create a Flask application instance
     
 
-    #app.register_blueprint(google_drive_api)
+    #
     app.run(debug=True, threaded=True  , port=5000)
 
 if __name__ == '__main__':
