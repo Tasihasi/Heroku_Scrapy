@@ -41,23 +41,17 @@ print("Started the app")
 
 # Register the API blueprint
 app.register_blueprint(api)  # Register the 'api' Blueprint
-print("imported the api blueprint printed with print")
+# print("imported the api blueprint printed with print")
 
 app.register_blueprint(proxy_blueprint)
-print("imported the proxy blueprint printed with print")
+#print("imported the proxy blueprint printed with print")
 
 app.register_blueprint(google_drive_api)
 
-app.run(debug=False, threaded=True  , port=5000)
+app.run(debug=False, threaded=True )# , port=5000)
 print("Started the app")
 
 # Define a main function to run the app
-def main():
-    # Create a Flask application instance
-    
-
-    #
-    app.run(debug=True, threaded=True  , port=5000)
 
 if __name__ == '__main__':
     #daemon = Daemonize(app="my_app", pid="/tmp/my_app.pid", action=main)
