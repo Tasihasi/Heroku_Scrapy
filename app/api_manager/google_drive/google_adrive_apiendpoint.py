@@ -12,7 +12,6 @@ from googleapiclient.http import MediaFileUpload
 from googleapiclient.errors import HttpError
 import json
 
-from .google_drive_actions import upload_basic
 
 
 
@@ -87,11 +86,39 @@ def get_file(file_id):
     
     
 
-@google_drive_api.route('/create_file', methods=['GET' , 'POST'])
-def create_file():
-    
+@google_drive_api.route('/create_file/<file_name>/<file_mimeType>', methods=['POST'])
+def create_file(file_name, file_mimeType):
+    try:
+        # create drive api client
+        service = Get_drive_service()
 
-    return upload_basic("something", "test.txt")
+        file_metadata = {"name": file_name,
+                        "mimeType": file_mimeType,
+                         
+                         }
+        
+         # Get the content from the POST request
+        content = request.get_data()
+        # Create a file-like object from the content
+        fh = io.BytesIO(content)
+        
+        # Create a media object from the file-like object
+        media = MediaFileUpload(fh, mimetype=file_mimeType)
+        # pylint: disable=maybe-no-member
+        file = (
+            service.files()
+            .create(body=file_metadata, media_body=media, fields="id")
+            .execute()
+        )
+        print(f'File ID: {file.get("id")}')
+
+    except HttpError as error:
+        print(f"An error occurred: {error}")
+        file = None
+
+    return file.get("id")
+
+    
 
     
 

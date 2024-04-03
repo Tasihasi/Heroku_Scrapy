@@ -64,34 +64,28 @@ def delete_file_by_id(file_id : str):
 
 
 base_url = "https://herokuscrapy-8d468df2dace.herokuapp.com/create_file"
-def post_proxies(url):
-    proxies_file_path = "proxies.txt"
+def test_create_file_api():
+    # Define the API endpoint URL
+    api_url = base_url + "/proxies.txt/text/plain"
 
-    print(proxies_file_path)
-
-    
     try:
-        with open(proxies_file_path, 'r') as file:
-            proxies = file.read()
-
-        # Prepare the data for the POST request
-        data = {
-            'file_name': proxies_file_path,
-            'file_mimeType': 'text/plain',
-            'file_content': proxies
-        }
-
-        response = requests.post(url, data=json.dumps(data), headers={'Content-Type': 'application/json'})
+        # Open the proxies.txt file and read its content
+        with open("proxies.txt", "rb") as file:
+            content = file.read()
         
+        # Make a POST request to the API endpoint with the file content
+        response = requests.post(api_url, data=content)
+        
+        # Check if the request was successful (status code 200)
         if response.status_code == 200:
-            print("Proxies posted successfully!")
+            print("File uploaded successfully.")
+            print("File ID:", response.text)
         else:
-            print(f"Failed to post proxies. Status code: {response.status_code}")
-    except FileNotFoundError:
-        print(f"File '{proxies_file_path}' not found.")
-    except Exception as e:
-        print(f"An error occurred: {e}")
+            print("Failed to upload file. Status code:", response.status_code)
+            print("Response:", response.text)
 
+    except Exception as e:
+        print("An error occurred:", e)
 
 def get_request_and_print_response(base_url):
     try:
@@ -104,7 +98,7 @@ def get_request_and_print_response(base_url):
 if __name__ == "__main__":
     #test_list_files_endpoint()
     #test_api()
-    get_request_and_print_response(base_url)
+    #get_request_and_print_response(base_url)
     #list_files_endpoint()
     
-    #list_files_endpoint()
+    list_files_endpoint()
