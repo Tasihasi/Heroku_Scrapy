@@ -66,7 +66,7 @@ def delete_file_by_id(file_id : str):
 base_url = "https://herokuscrapy-8d468df2dace.herokuapp.com/create_file"
 def test_create_file_api():
     # Define the API endpoint URL
-    api_url = base_url + "/proxies.txt/text/plain"
+    api_url = base_url + "/proxies.txt/text"
 
     try:
         # Open the proxies.txt file and read its content
@@ -101,4 +101,5 @@ if __name__ == "__main__":
     #get_request_and_print_response(base_url)
     #list_files_endpoint()
     
-    list_files_endpoint()
+    #list_files_endpoint()
+    test_create_file_api()

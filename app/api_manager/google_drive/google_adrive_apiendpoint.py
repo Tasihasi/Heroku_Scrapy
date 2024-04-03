@@ -88,6 +88,15 @@ def get_file(file_id):
 
 @google_drive_api.route('/create_file/<file_name>/<file_mimeType>', methods=['POST'])
 def create_file(file_name, file_mimeType):
+
+    if not file_name or not file_mimeType:
+        return jsonify({'error': 'File name and MIME type are required.'}), 400
+
+
+    if file_mimeType == "text":
+        file_mimeType = "text/plain"
+
+    
     try:
         # create drive api client
         service = Get_drive_service()
@@ -101,7 +110,7 @@ def create_file(file_name, file_mimeType):
         content = request.get_data()
         # Create a file-like object from the content
         fh = io.BytesIO(content)
-        
+
         # Create a media object from the file-like object
         media = MediaFileUpload(fh, mimetype=file_mimeType)
         # pylint: disable=maybe-no-member
