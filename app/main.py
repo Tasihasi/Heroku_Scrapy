@@ -5,6 +5,7 @@ import requests
 import time
 from datetime import datetime, timedelta
 from daemonize import Daemonize
+import logging
 
 
 def send_request():
@@ -42,9 +43,15 @@ def main():
     # Create a Flask application instance
     app = Flask(__name__)
 
+    logging.info("Started the app")
+
     # Register the API blueprint
     app.register_blueprint(api)  # Register the 'api' Blueprint
+    logging.info("imported the api blueprint")
+
     app.register_blueprint(proxy_blueprint)
+    logging.info("imported the api proxy_blueprint")
+
     #app.register_blueprint(google_drive_api)
     app.run(debug=True, threaded=True  , port=5000)
 
