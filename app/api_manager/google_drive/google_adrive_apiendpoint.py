@@ -11,6 +11,7 @@ import string
 from googleapiclient.http import MediaFileUpload
 from googleapiclient.errors import HttpError
 import json
+import os
 
 
 
@@ -92,9 +93,23 @@ def create_file(file_name, file_mimeType):
     if not file_name or not file_mimeType:
         return jsonify({'error': 'File name and MIME type are required.'}), 400
 
-
+    
     if file_mimeType == "text":
         file_mimeType = "text/plain"
+
+    home_url = os.getenv('home_url')
+
+    # Make a GET request to the list_files endpoint
+    response = requests.get(f'{home_url}/list_files')
+
+    # Check if the request was successful
+    if response.status_code == 200:
+        # Parse the JSON response
+        files = response.json()
+
+        # Check if the file name already exists
+        if file_name in files:
+            return jsonify({'error': 'File name already exists.'}), 400
 
     
     try:

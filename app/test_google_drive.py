@@ -101,5 +101,5 @@ if __name__ == "__main__":
     #get_request_and_print_response(base_url)
     #list_files_endpoint()
     
-    #list_files_endpoint()
-    test_create_file_api()
+    list_files_endpoint()
+    #test_create_file_api()
