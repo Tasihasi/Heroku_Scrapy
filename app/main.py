@@ -36,22 +36,21 @@ def run_daily_job():
 
 
 
-print("hello world!!")
+app = Flask(__name__)
+
+print("Started the app")
+
+# Register the API blueprint
+app.register_blueprint(api)  # Register the 'api' Blueprint
+print("imported the api blueprint printed with print")
+
+app.register_blueprint(proxy_blueprint)
+print("imported the proxy blueprint printed with print")
 
 # Define a main function to run the app
 def main():
     # Create a Flask application instance
-    app = Flask(__name__)
-
-    logging.info("Started the app")
-
-    # Register the API blueprint
-    app.register_blueprint(api)  # Register the 'api' Blueprint
-    logging.info("imported the api blueprint")
-    print("imported the api blueprint printed with print")
-
-    app.register_blueprint(proxy_blueprint)
-    logging.info("imported the api proxy_blueprint")
+    
 
     #app.register_blueprint(google_drive_api)
     app.run(debug=True, threaded=True  , port=5000)
