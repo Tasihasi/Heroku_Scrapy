@@ -59,5 +59,6 @@ def main():
     app.run(debug=True, threaded=True  , port=5000)
 
 if __name__ == '__main__':
-    daemon = Daemonize(app="my_app", pid="/tmp/my_app.pid", action=main)
-    daemon.start()
+    #daemon = Daemonize(app="my_app", pid="/tmp/my_app.pid", action=main)
+    #aemon.start()
+    pass
