@@ -105,11 +105,12 @@ def create_file(file_name, file_mimeType):
     # Check if the request was successful
     if response.status_code == 200:
         # Parse the JSON response
-        files = response.json()
+        files = response.json()["files"]
 
         # Check if the file name already exists
-        if file_name in files:
-            return jsonify({'error': 'File name already exists.'}), 400
+        for file in files:
+            if file_name == file['name']:
+                return jsonify({'error': 'File name already exists.'}), 400
 
     
     try:

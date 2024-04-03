@@ -102,4 +102,5 @@ if __name__ == "__main__":
     #list_files_endpoint()
     
     list_files_endpoint()
-    #test_create_file_api()
+    test_create_file_api()
+    list_files_endpoint()
