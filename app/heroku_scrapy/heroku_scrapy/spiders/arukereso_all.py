@@ -284,5 +284,6 @@ class ArukeresoSpider(scrapy.Spider):
         if self.error_urls:
             self.start_urls = self.error_urls
             yield from self.restart_parsing()
-
+        logging.info(f"-------------------------------------")
         logging.info(f"data :  {self.data}")
+        logging.info(f"-------------------------------------")
