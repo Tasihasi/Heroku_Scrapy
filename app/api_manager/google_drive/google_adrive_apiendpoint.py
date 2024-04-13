@@ -149,6 +149,31 @@ def create_file(file_name, file_mimeType):
 
 @google_drive_api.route('/delete_file/<file_id>', methods=['GET'])
 def delete_file(file_id):
+     
+    if not file_id:
+        return jsonify({'error': 'File ID is required.'}), 400
+     
+    home_url = os.getenv('home_url')
+
+    # Make a GET request to the list_files endpoint
+    response = requests.get(f'{home_url}/list_files')
+
+    # Check if the request was successful
+    if response.status_code == 200:
+        # Parse the JSON response
+        files = response.json()['files']
+
+        # Check if the file name does not exist
+        file_exists = False
+        for file in files:
+            if file_id == file['id']:
+                file_exists = True
+                break
+
+        if not file_exists:
+            return jsonify({'error': 'File does not exist.'}), 400
+     
+     
      # Get authenticated Drive API service
     drive_service = Get_drive_service()
 

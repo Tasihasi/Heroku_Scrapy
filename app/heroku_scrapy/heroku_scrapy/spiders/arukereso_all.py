@@ -277,7 +277,12 @@ class ArukeresoSpider(scrapy.Spider):
         for url in self.start_urls:
             yield scrapy.Request(url=url, callback=self.parse)
 
+
+    # closing ----------------
+
     def closed(self, reason):
         if self.error_urls:
             self.start_urls = self.error_urls
             yield from self.restart_parsing()
+
+        logging.info(f"data :  {self.data}")

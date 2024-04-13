@@ -40,8 +40,9 @@ app = Flask(__name__)
 # Register the API blueprint
 app.register_blueprint(api)  # Register the 'api' Blueprint
 app.register_blueprint(proxy_blueprint)
-app.register_blueprint(google_drive_api)
+#app.register_blueprint(google_drive_api)
 
 # Define a main function to run the app
 if __name__ == '__main__':
     app.run(debug=True, threaded=True)
+
