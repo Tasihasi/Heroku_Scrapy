@@ -157,8 +157,10 @@ class ArukeresoSpider(scrapy.Spider):
         try:
             response = requests.get("https://www.arukereso.hu/nyomtato-patron-toner-c3138/", proxies={"http": proxy, "https": proxy}, timeout=10)
             if response.status_code == 200:
+                logging.info(f'-------------------  Proxy {proxy} is being used for the request.------------------------------')
                 return True
         except requests.exceptions.RequestException:
+            logging.info(f'------------------------- Proxy {proxy} is not being used for the request.--------------------')
             pass
         return False
         
