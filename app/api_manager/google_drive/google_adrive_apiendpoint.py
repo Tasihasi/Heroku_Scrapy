@@ -238,15 +238,17 @@ def run_script(file_id):
 def upload_file():
 
     logging.info("Api endpoint triggered")
-
-    if 'file' not in request.files:
-        return 'No file part in the request', 400
-    file = request.files['file']
-    if file.filename == '':
-        return 'No selected file', 400
-    if file:
-        filename = os.path.join('uploads', (file.filename))
-        file.save(filename)
-        logging.info(f'File saved as {filename}')
-        logging.info(f'Current file path: {os.path.abspath(filename)}')
-        return 'File saved successfully', 200
+    try:
+        if 'file' not in request.files:
+            return 'No file part in the request', 400
+        file = request.files['file']
+        if file.filename == '':
+            return 'No selected file', 400
+        if file:
+            filename = os.path.join('uploads', (file.filename))
+            file.save(filename)
+            logging.info(f'File saved as {filename}')
+            logging.info(f'Current file path: {os.path.abspath(filename)}')
+            return 'File saved successfully', 200
+    except Exception as e:
+        logging.error(f"An error occurred: {e}")
