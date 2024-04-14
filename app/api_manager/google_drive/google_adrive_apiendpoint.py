@@ -264,10 +264,13 @@ def run_script(api_key, file_id):
     exec(script_content.decode('utf-8'))
 
 
-@google_drive_api.route('/upload/<api_key>', methods=['POST'])
-def upload_file(api_key):
+@google_drive_api.route('/upload', methods=['POST'])
+def upload_file():
 
-    if not check_inner_api_key(api_key):
+
+    request_api_key = request.headers.get('shrek_key')
+
+    if not check_inner_api_key(request_api_key):
         return jsonify({'error': 'Invalid API key'}), 403
 
     logging.info("Api endpoint triggered")
