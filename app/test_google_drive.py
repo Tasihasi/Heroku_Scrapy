@@ -2,12 +2,14 @@ import requests
 import json
 import os
 
+shrek_key  = "g96#NjLc}wJR=C~/F7?k2$.,5TDumGEW@s)^M38K](t<;y>[r%"
+
 # URL of your Flask API endpoint
 API_ENDPOINT = 'https://herokuscrapy-8d468df2dace.herokuapp.com/list_files'  # Update with your actual API endpoint URL
 
 def list_files_endpoint():
     # Send a GET request to the API endpoint
-    response = requests.get(API_ENDPOINT)
+    response = requests.get(API_ENDPOINT+f"/@{shrek_key}")
 
     # Print the response status code
     print(f"Response Status Code: {response.status_code}")
@@ -126,7 +128,7 @@ def test_file_upload(file_path : str):
     base_url = f"https://herokuscrapy-8d468df2dace.herokuapp.com"  # Update this with your actual API domain
 
     # Define the endpoint URL
-    endpoint_url = base_url + f"/upload"  
+    endpoint_url = base_url + f"/upload/{shrek_key}"  
 
 
     files = {'file': open(file_path, 'rb')}
@@ -139,7 +141,12 @@ def test_file_upload(file_path : str):
     else:
         print(f"Failed to upload the file. Status code: {response.status_code}")
 
-
+def test_my_api_key():
+    # Define the base URL of your API
+    base_url = "https://herokuscrapy-8d468df2dace.herokuapp.com"  # Update this with your actual API domain
+    
+    # Define the endpoint URL
+    endpoint_url = base_url + f"/test_key/{shrek_key}"  # Update YOUR_API_KEY with the
 
 if __name__ == "__main__":
     #create_file_api()
