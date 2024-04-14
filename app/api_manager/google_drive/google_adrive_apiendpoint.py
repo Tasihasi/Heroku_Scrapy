@@ -99,6 +99,8 @@ def create_file(file_name, file_mimeType):
     
     if file_mimeType == "text":
         file_mimeType = "text/plain"
+    elif file_mimeType == "ipynb":
+        file_mimeType = "application/x-ipynb+json"
 
     home_url = os.getenv('home_url')
 
