@@ -94,9 +94,59 @@ def get_request_and_print_response(base_url):
     except requests.exceptions.RequestException as e:
         print(f"An error occurred: {e}")
 
+def run_coolab_code(file_id : str):
+    # Define the base URL of your API
+    
+    base_url = f"https://herokuscrapy-8d468df2dace.herokuapp.com"  # Update this with your actual API domain
+    
+    # Define the endpoint URL
+    endpoint_url = base_url + f"/run_script/{file_id}"  # Update YOUR_FILE_ID with the actual file ID
+
+    try:
+        # Make a GET request to the API endpoint
+        response = requests.get(endpoint_url)
+        
+        # Check if the request was successful (status code 200)
+        if response.status_code == 200:
+            # Print the content of the file to the console
+            print(response.text)
+        else:
+            # Print an error message if the request was not successful
+            print("Error: Unable to run script. Status code:", response.status_code)
+    
+    except requests.RequestException as e:
+        # Print an error message if an exception occurs during the request
+        print("Error:", e)
+
+
+def test_file_upload(file_path : str):
+     # Define the base URL of your API
+    
+    base_url = f"https://herokuscrapy-8d468df2dace.herokuapp.com"  # Update this with your actual API domain
+    
+    # Define the endpoint URL
+    endpoint_url = base_url + f"/run_script"  # Update YOUR_FILE_ID with the actual file ID
+
+
+    # Open the file in binary mode
+    with open(file_path, 'rb') as file:
+        # Define the headers for the request
+        headers = {'Content-Type': 'application/octet-stream'}
+
+        # Send the POST request
+        response = requests.post(endpoint_url, headers=headers, data=file)
+
+    # Check the status of the request
+    if response.status_code == 200:
+        print("File uploaded successfully.")
+    else:
+        print(f"Failed to upload the file. Status code: {response.status_code}")
+
+
 
 if __name__ == "__main__":
     #create_file_api()
 
 
     list_files_endpoint()
+    test_file_upload("proxies.txt")

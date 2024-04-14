@@ -10,6 +10,7 @@ import random
 import string
 from googleapiclient.http import MediaFileUpload
 from googleapiclient.errors import HttpError
+
 import json
 import os
 
@@ -194,3 +195,32 @@ def delete_file(file_id):
         # Handle other exceptions
         return jsonify({'error': f'An error occurred: {str(e)}'}), 500
     
+
+
+@google_drive_api.route('/run_script/<file_id>', methods=['GET'])
+def run_script(file_id):
+
+    # Authenticate with Google Drive API using credentials JSON file
+    drive_service = Get_drive_service()
+
+
+
+    # Retrieve the script content from Google Drive
+    request = drive_service.files().get_media(fileId=file_id)
+    script_content = request.execute()
+
+    # Execute the script
+    exec(script_content.decode('utf-8'))
+
+
+@google_drive_api.route('/upload', methods=['POST'])
+def upload_file():
+    if 'file' not in request.files:
+        return 'No file part in the request', 400
+    file = request.files['file']
+    if file.filename == '':
+        return 'No selected file', 400
+    if file:
+        filename = os.path.join('uploads', file.filename)
+        file.save(filename)
+        return 'File saved successfully', 200
