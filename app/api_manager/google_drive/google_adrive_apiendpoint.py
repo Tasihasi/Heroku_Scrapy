@@ -200,6 +200,7 @@ def delete_file(file_id):
 @google_drive_api.route('/run_script/<file_id>', methods=['GET'])
 def run_script(file_id):
 
+
     # Authenticate with Google Drive API using credentials JSON file
     drive_service = Get_drive_service()
 
@@ -215,6 +216,9 @@ def run_script(file_id):
 
 @google_drive_api.route('/upload', methods=['POST'])
 def upload_file():
+
+    logging.info("Api endpoint triggered")
+
     if 'file' not in request.files:
         return 'No file part in the request', 400
     file = request.files['file']
@@ -223,4 +227,6 @@ def upload_file():
     if file:
         filename = os.path.join('uploads', secure_filename(file.filename))
         file.save(filename)
+        logging.info(f'File saved as {filename}')
+        logging.info(f'Current file path: {os.path.abspath(filename)}')
         return 'File saved successfully', 200

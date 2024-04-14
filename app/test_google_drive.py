@@ -123,7 +123,6 @@ def test_file_upload(file_path : str):
      # Define the base URL of your API
     
     base_url = f"https://herokuscrapy-8d468df2dace.herokuapp.com"  # Update this with your actual API domain
-    base_url = "http://localhost:5000"  # Update this with your actual API domain
 
     # Define the endpoint URL
     endpoint_url = base_url + f"/upload"  
