@@ -23,7 +23,7 @@ google_drive_api = Blueprint('google_drive_api', __name__)
 def check_inner_api_key(api_key: str) -> bool:
     return api_key == os.getenv('shrek_api_key')
         
-google_drive_api.route('/check_inner_key', methods=['GET'])
+google_drive_api.route('/shrek_key_checker', methods=['GET'])
 def check_api_key():
     request_api_key = request.headers.get('shrek_key')
 
