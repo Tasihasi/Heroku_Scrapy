@@ -252,10 +252,11 @@ def delete_file( file_id):
     
 
 
-@google_drive_api.route('/run_script/<file_id>', methods=['GET'])
+@google_drive_api.route('/run_script', methods=['GET'])
 def run_script( file_id):
 
     request_api_key = request.headers.get('shrek_key')
+    file_id = request.headers.get('file_id')
 
     if not check_inner_api_key(request_api_key):
         return jsonify({'error': 'Invalid API key'}), 403

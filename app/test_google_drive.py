@@ -8,8 +8,12 @@ shrek_key  = "g96#NjLc}wJR=C~/F7?k2$.,5TDumGEW@s)^M38K](t<;y>[r%"
 API_ENDPOINT = 'https://herokuscrapy-8d468df2dace.herokuapp.com/list_files'  # Update with your actual API endpoint URL
 
 def list_files_endpoint():
+
+    headers = {"shrek_key": shrek_key}
+
+
     # Send a GET request to the API endpoint
-    response = requests.get(API_ENDPOINT+f"/@{shrek_key}")
+    response = requests.get(API_ENDPOINT, headers=headers)
 
     # Print the response status code
     print(f"Response Status Code: {response.status_code}")
@@ -51,7 +55,9 @@ def delete_file_by_id(file_id : str):
 
     try:
         # Make a GET request to the API endpoint
-        response = requests.get(endpoint_url)
+
+        headers = {"shrek_key": shrek_key}
+        response = requests.get(endpoint_url, headers=headers)
         
         # Check if the request was successful (status code 200)
         if response.status_code == 200:
@@ -76,8 +82,10 @@ def create_file_api():
         with open("proxies.txt", "rb") as file:
             content = file.read()
         
+
+        headers = {"shrek_key": shrek_key}
         # Make a POST request to the API endpoint with the file content
-        response = requests.post(api_url, data=content)
+        response = requests.post(api_url, data=content, headers= headers)
         
         # Check if the request was successful (status code 200)
         if response.status_code == 200:
@@ -103,11 +111,12 @@ def run_coolab_code(file_id : str):
     base_url = f"https://herokuscrapy-8d468df2dace.herokuapp.com"  # Update this with your actual API domain
     
     # Define the endpoint URL
-    endpoint_url = base_url + f"/run_script/{file_id}"  # Update YOUR_FILE_ID with the actual file ID
+    endpoint_url = base_url + f"/run_script"  # Update YOUR_FILE_ID with the actual file ID
 
     try:
         # Make a GET request to the API endpoint
-        response = requests.get(endpoint_url)
+        headers = {"shrek_key": shrek_key, "file_id": file_id}
+        response = requests.post(endpoint_url, headers= headers)
         
         # Check if the request was successful (status code 200)
         if response.status_code == 200:
@@ -142,6 +151,7 @@ def test_file_upload(file_path : str):
     else:
         print(f"Failed to upload the file. Status code: {response.status_code}")
 
+
 def test_my_api_key():
     # Define the base URL of your API
     base_url = "https://herokuscrapy-8d468df2dace.herokuapp.com"  # Update this with your actual API domain
@@ -157,12 +167,16 @@ def test_my_api_key():
     print(response.status_code)
 
 if __name__ == "__main__":
+
+    #delete_file_by_id("1cezRpUaAEEaHyPsVcMCbbTNF3rPlRCLH")
     #create_file_api()
 
-    test_my_api_key()
+    run_coolab_code("")
+
+    #test_my_api_key()
 
     #create_file_api()
     #list_files_endpoint()
-    #list_files_endpoint()
+    list_files_endpoint()
 
-    test_file_upload("proxies.txt")
+    #test_file_upload("proxies.txt")
