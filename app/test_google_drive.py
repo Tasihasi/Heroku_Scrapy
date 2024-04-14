@@ -146,13 +146,21 @@ def test_my_api_key():
     base_url = "https://herokuscrapy-8d468df2dace.herokuapp.com"  # Update this with your actual API domain
     
     # Define the endpoint URL
-    endpoint_url = base_url + f"/test_key/{shrek_key}"  # Update YOUR_API_KEY with the
+    endpoint_url = base_url + f"/check_api_key"  # Update YOUR_API_KEY with the
+    
+    headers = {"shrek_key": shrek_key}
+
+    response = requests.get(endpoint_url, headers=headers)
+
+    print(response.text)
 
 if __name__ == "__main__":
     #create_file_api()
 
+    test_my_api_key()
+
     #create_file_api()
-    list_files_endpoint()
+    #list_files_endpoint()
     #list_files_endpoint()
 
-    test_file_upload("proxies.txt")
+    #test_file_upload("proxies.txt")

@@ -23,9 +23,14 @@ google_drive_api = Blueprint('google_drive_api', __name__)
 def check_inner_api_key(api_key: str) -> bool:
     return api_key == os.getenv('shrek_api_key')
         
-google_drive_api.route('/check_api_key/<api_key>', methods=['GET'])
-def check_api_key(api_key):
-    if check_inner_api_key(api_key):
+google_drive_api.route('/check_api_key', methods=['GET'])
+def check_api_key():
+    request_api_key = request.args.get('shrek_key')
+
+    if not request_api_key:
+        return jsonify({'error': 'API key is required'}), 400
+    
+    if check_inner_api_key(request_api_key):
         return jsonify({'message': 'API key is valid'}), 200
     else:
         return jsonify({'error': 'Invalid API key'}), 403
