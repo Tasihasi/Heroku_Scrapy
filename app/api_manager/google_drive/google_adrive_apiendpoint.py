@@ -255,6 +255,8 @@ def delete_file( file_id):
 @google_drive_api.route('/run_script', methods=['GET'])
 def run_script( file_id):
 
+    logging.info("Run script api endpoint triggered")   
+
     request_api_key = request.headers.get('shrek_key')
     file_id = request.headers.get('file_id')
 
@@ -265,11 +267,13 @@ def run_script( file_id):
     # Authenticate with Google Drive API using credentials JSON file
     drive_service = Get_drive_service()
 
-
+    logging.info("Successfully authenticated with Google Drive API")
 
     # Retrieve the script content from Google Drive
     request = drive_service.files().get_media(fileId=file_id)
     script_content = request.execute()
+
+    logging.info("Script content retrieved successfully")
 
     # Execute the script
     exec(script_content.decode('utf-8'))
