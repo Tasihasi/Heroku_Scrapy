@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify, send_file, send_from_directory, secure_filename
+from flask import Blueprint, jsonify, send_file, send_from_directory
 from flask import request
 import requests
 from googleapiclient.http import MediaIoBaseDownload, MediaIoBaseUpload
@@ -239,7 +239,7 @@ def upload_file():
     if file.filename == '':
         return 'No selected file', 400
     if file:
-        filename = os.path.join('uploads', secure_filename(file.filename))
+        filename = os.path.join('uploads', (file.filename))
         file.save(filename)
         logging.info(f'File saved as {filename}')
         logging.info(f'Current file path: {os.path.abspath(filename)}')
