@@ -116,7 +116,7 @@ def run_coolab_code(file_id : str):
     try:
         # Make a GET request to the API endpoint
         headers = {"shrek_key": shrek_key, "file_id": file_id}
-        response = requests.post(endpoint_url, headers= headers)
+        response = requests.get(endpoint_url, headers= headers)
         
         # Check if the request was successful (status code 200)
         if response.status_code == 200:

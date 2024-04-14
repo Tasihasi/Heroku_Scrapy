@@ -254,6 +254,7 @@ def delete_file( file_id):
 
 @google_drive_api.route('/run_script', methods=['GET'])
 def run_script():
+    from flask import request
 
     logging.info("Run script api endpoint triggered")   
 
