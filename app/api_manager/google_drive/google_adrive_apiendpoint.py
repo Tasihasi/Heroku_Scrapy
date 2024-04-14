@@ -245,6 +245,7 @@ def upload_file():
         if file.filename == '':
             return 'No selected file', 400
         if file:
+            os.makedirs('uploads', exist_ok=True)
             filename = os.path.join('uploads', (file.filename))
             file.save(filename)
             logging.info(f'File saved as {filename}')
