@@ -24,7 +24,7 @@ def check_inner_api_key(api_key: str) -> bool:
     return api_key == os.getenv('shrek_api_key')
         
 google_drive_api.route('/shrek_key_checker', methods=['GET'])
-def check_api_key():
+def shrek_key_checker():
     request_api_key = request.headers.get('shrek_key')
 
     if not request_api_key:
@@ -40,11 +40,13 @@ def generate_random_string(length):
     letters = string.ascii_letters + string.digits
     return ''.join(random.choice(letters) for i in range(length))
 
-@google_drive_api.route('/list_files/<api_key>', methods=['GET'])
-def list_files(api_key):
+@google_drive_api.route('/list_files', methods=['GET'])
+def list_files():
     logging.info("List files api endpoint triggered")
 
-    if not check_inner_api_key(api_key):
+    request_api_key = request.headers.get('shrek_key')
+
+    if not check_inner_api_key(request_api_key):
         return jsonify({'error': 'Invalid API key'}), 403
     
 
@@ -71,10 +73,12 @@ def list_files(api_key):
 
 
 
-@google_drive_api.route('/get_file/<api_key>/<file_id>', methods=['GET'])
-def get_file(api_key,file_id):
+@google_drive_api.route('/get_file/<file_id>', methods=['GET'])
+def get_file(file_id):
 
-    if not check_inner_api_key(api_key):
+    request_api_key = request.headers.get('shrek_key')
+
+    if not check_inner_api_key(request_api_key):
         return jsonify({'error': 'Invalid API key'}), 403
 
     # Get authenticated Drive API service
@@ -109,12 +113,14 @@ def get_file(api_key,file_id):
     
     
 
-@google_drive_api.route('/create_file/<api_key>/<file_name>/<file_mimeType>', methods=['POST'])
-def create_file(api_key, file_name, file_mimeType):
+@google_drive_api.route('/create_file/<file_name>/<file_mimeType>', methods=['POST'])
+def create_file( file_name, file_mimeType):
 
     logging.info("Create file api endpoint triggered")
 
-    if not check_inner_api_key(api_key):
+    request_api_key = request.headers.get('shrek_key')
+
+    if not check_inner_api_key(request_api_key):
         return jsonify({'error': 'Invalid API key'}), 403
 
     if not file_name or not file_mimeType:
@@ -192,10 +198,12 @@ def create_file(api_key, file_name, file_mimeType):
 
     
 
-@google_drive_api.route('/delete_file/<api_key>/<file_id>', methods=['GET'])
-def delete_file(api_key, file_id):
+@google_drive_api.route('/delete_file/<file_id>', methods=['GET'])
+def delete_file( file_id):
      
-    if not check_inner_api_key(api_key):
+    request_api_key = request.headers.get('shrek_key')
+
+    if not check_inner_api_key(request_api_key):
         return jsonify({'error': 'Invalid API key'}), 403
 
     if not file_id:
@@ -244,10 +252,12 @@ def delete_file(api_key, file_id):
     
 
 
-@google_drive_api.route('/run_script/<api_key>/<file_id>', methods=['GET'])
-def run_script(api_key, file_id):
+@google_drive_api.route('/run_script/<file_id>', methods=['GET'])
+def run_script( file_id):
 
-    if not check_inner_api_key(api_key):
+    request_api_key = request.headers.get('shrek_key')
+
+    if not check_inner_api_key(request_api_key):
         return jsonify({'error': 'Invalid API key'}), 403
 
 
@@ -292,10 +302,12 @@ def upload_file():
         return 'An error occurred', 500
 
 
-@google_drive_api.route('/download_uploaded/<api_key>/<file_name>', methods=['GET'])
-def download_download_uploaded_file(api_key, file_name):
+@google_drive_api.route('/download_uploaded/<file_name>', methods=['GET'])
+def download_download_uploaded_file( file_name):
 
-    if not check_inner_api_key(api_key):
+    request_api_key = request.headers.get('shrek_key')
+
+    if not check_inner_api_key(request_api_key):
         return jsonify({'error': 'Invalid API key'}), 403
 
     logging.info("Api endpoint triggered")
@@ -310,10 +322,12 @@ def download_download_uploaded_file(api_key, file_name):
         return 'An error occurred', 500
 
 
-@google_drive_api.route('/delete/<api_key>/<file_name>', methods=['GET'])
-def delete_uploaded_file(api_key, file_name):
+@google_drive_api.route('/delete/<file_name>', methods=['GET'])
+def delete_uploaded_file( file_name):
 
-    if not check_inner_api_key(api_key):
+    request_api_key = request.headers.get('shrek_key')
+
+    if not check_inner_api_key(request_api_key):
         return jsonify({'error': 'Invalid API key'}), 403
 
     logging.info("Api endpoint triggered")

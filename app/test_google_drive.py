@@ -128,11 +128,12 @@ def test_file_upload(file_path : str):
     base_url = f"https://herokuscrapy-8d468df2dace.herokuapp.com"  # Update this with your actual API domain
 
     # Define the endpoint URL
-    endpoint_url = base_url + f"/upload/{shrek_key}"  
+    endpoint_url = base_url + f"/upload"  
 
+    headers = {"shrek_key": shrek_key}
 
     files = {'file': open(file_path, 'rb')}
-    response = requests.post(endpoint_url, files=files)
+    response = requests.post(endpoint_url, files=files, headers=headers)
     print(response.text)
 
     # Check the status of the request
@@ -164,4 +165,4 @@ if __name__ == "__main__":
     #list_files_endpoint()
     #list_files_endpoint()
 
-    #test_file_upload("proxies.txt")
+    test_file_upload("proxies.txt")
