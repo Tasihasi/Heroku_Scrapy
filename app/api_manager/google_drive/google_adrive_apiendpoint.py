@@ -25,7 +25,7 @@ def check_inner_api_key(api_key: str) -> bool:
         
 google_drive_api.route('/check_inner_key', methods=['GET'])
 def check_api_key():
-    request_api_key = request.args.get('shrek_key')
+    request_api_key = request.headers.get('shrek_key')
 
     if not request_api_key:
         return jsonify({'error': 'API key is required'}), 400

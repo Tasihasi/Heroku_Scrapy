@@ -146,7 +146,7 @@ def test_my_api_key():
     base_url = "https://herokuscrapy-8d468df2dace.herokuapp.com"  # Update this with your actual API domain
     
     # Define the endpoint URL
-    endpoint_url = base_url + f"/check_inner_key"  # Update YOUR_API_KEY with the
+    endpoint_url = base_url + f"/check_inner_key"  # Pass the API key as a query parameter
     
     headers = {"shrek_key": shrek_key}
 
