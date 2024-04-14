@@ -27,7 +27,7 @@ def generate_random_string(length):
 
 @google_drive_api.route('/list_files')
 def list_files():
-    logging.info("Api endpoint triggered")
+    logging.info("List files api endpoint triggered")
 
     try:
         # Get authenticated Drive API service
@@ -91,6 +91,8 @@ def get_file(file_id):
 @google_drive_api.route('/create_file/<file_name>/<file_mimeType>', methods=['POST'])
 def create_file(file_name, file_mimeType):
 
+    logging.info("Create file api endpoint triggered")
+
     if not file_name or not file_mimeType:
         return jsonify({'error': 'File name and MIME type are required.'}), 400
 
@@ -113,7 +115,7 @@ def create_file(file_name, file_mimeType):
             if file_name == file['name']:
                 return jsonify({'error': 'File name already exists.'}), 400
 
-    
+    logging.info("File name does not exist. Proceeding to create the file.")
     try:
         # create drive api client
         service = Get_drive_service()
@@ -136,6 +138,8 @@ def create_file(file_name, file_mimeType):
             .create(body=file_metadata, media_body=media, fields="id")
             .execute()
         )
+
+        logging.info(f"File created successfully: {file.get('id')}")
 
         # Define the permissions to be granted
         permissions = {
