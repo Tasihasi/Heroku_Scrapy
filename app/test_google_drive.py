@@ -1,5 +1,6 @@
 import requests
 import json
+import os
 
 # URL of your Flask API endpoint
 API_ENDPOINT = 'https://herokuscrapy-8d468df2dace.herokuapp.com/list_files'  # Update with your actual API endpoint URL
@@ -128,13 +129,9 @@ def test_file_upload(file_path : str):
     endpoint_url = base_url + f"/upload"  
 
 
-    # Open the file in binary mode
-    with open(file_path, 'rb') as file:
-        # Define the headers for the request
-        headers = {'Content-Type': 'application/octet-stream'}
-
-        # Send the POST request
-        response = requests.post(endpoint_url, headers=headers, data=file)
+    files = {'file': open(file_path, 'rb')}
+    response = requests.post(endpoint_url, files=files)
+    print(response.text)
 
     # Check the status of the request
     if response.status_code == 200:

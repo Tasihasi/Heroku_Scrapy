@@ -252,3 +252,5 @@ def upload_file():
             return 'File saved successfully', 200
     except Exception as e:
         logging.error(f"An error occurred: {e}")
+        return 'An error occurred', 500
+
