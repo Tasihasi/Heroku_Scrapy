@@ -20,14 +20,23 @@ import os
 google_drive_api = Blueprint('google_drive_api', __name__)
 
 
+def check_inner_api_key(api_key: str) -> bool:
+    return api_key == os.getenv('shrek_api_key')
+        
+
+
 # Function to generate a random string
 def generate_random_string(length):
     letters = string.ascii_letters + string.digits
     return ''.join(random.choice(letters) for i in range(length))
 
-@google_drive_api.route('/list_files')
-def list_files():
+@google_drive_api.route('/list_files/<api_key>', methods=['GET'])
+def list_files(api_key):
     logging.info("List files api endpoint triggered")
+
+    if not check_inner_api_key(api_key):
+        return jsonify({'error': 'Invalid API key'}), 403
+    
 
     try:
         # Get authenticated Drive API service
@@ -52,9 +61,11 @@ def list_files():
 
 
 
-@google_drive_api.route('/get_file/<file_id>', methods=['GET'])
-def get_file(file_id):
+@google_drive_api.route('/get_file/<api_key>/<file_id>', methods=['GET'])
+def get_file(api_key,file_id):
 
+    if not check_inner_api_key(api_key):
+        return jsonify({'error': 'Invalid API key'}), 403
 
     # Get authenticated Drive API service
     drive_service = Get_drive_service()
@@ -88,10 +99,13 @@ def get_file(file_id):
     
     
 
-@google_drive_api.route('/create_file/<file_name>/<file_mimeType>', methods=['POST'])
-def create_file(file_name, file_mimeType):
+@google_drive_api.route('/create_file/<api_key>/<file_name>/<file_mimeType>', methods=['POST'])
+def create_file(api_key, file_name, file_mimeType):
 
     logging.info("Create file api endpoint triggered")
+
+    if not check_inner_api_key(api_key):
+        return jsonify({'error': 'Invalid API key'}), 403
 
     if not file_name or not file_mimeType:
         return jsonify({'error': 'File name and MIME type are required.'}), 400
@@ -168,9 +182,12 @@ def create_file(file_name, file_mimeType):
 
     
 
-@google_drive_api.route('/delete_file/<file_id>', methods=['GET'])
-def delete_file(file_id):
+@google_drive_api.route('/delete_file/<api_key>/<file_id>', methods=['GET'])
+def delete_file(api_key, file_id):
      
+    if not check_inner_api_key(api_key):
+        return jsonify({'error': 'Invalid API key'}), 403
+
     if not file_id:
         return jsonify({'error': 'File ID is required.'}), 400
      
@@ -217,8 +234,11 @@ def delete_file(file_id):
     
 
 
-@google_drive_api.route('/run_script/<file_id>', methods=['GET'])
-def run_script(file_id):
+@google_drive_api.route('/run_script/<api_key>/<file_id>', methods=['GET'])
+def run_script(api_key, file_id):
+
+    if not check_inner_api_key(api_key):
+        return jsonify({'error': 'Invalid API key'}), 403
 
 
     # Authenticate with Google Drive API using credentials JSON file
@@ -234,8 +254,11 @@ def run_script(file_id):
     exec(script_content.decode('utf-8'))
 
 
-@google_drive_api.route('/upload', methods=['POST'])
-def upload_file():
+@google_drive_api.route('/upload/<api_key>', methods=['POST'])
+def upload_file(api_key):
+
+    if not check_inner_api_key(api_key):
+        return jsonify({'error': 'Invalid API key'}), 403
 
     logging.info("Api endpoint triggered")
     try:
@@ -255,3 +278,39 @@ def upload_file():
         logging.error(f"An error occurred: {e}")
         return 'An error occurred', 500
 
+
+@google_drive_api.route('/download_uploaded/<api_key>/<file_name>', methods=['GET'])
+def download_download_uploaded_file(api_key, file_name):
+
+    if not check_inner_api_key(api_key):
+        return jsonify({'error': 'Invalid API key'}), 403
+
+    logging.info("Api endpoint triggered")
+    try:
+        file_path = os.path.join('uploads', file_name)
+        if os.path.exists(file_path):
+            return send_file(file_path, as_attachment=True)
+        else:
+            return 'File not found', 404
+    except Exception as e:
+        logging.error(f"An error occurred: {e}")
+        return 'An error occurred', 500
+
+
+@google_drive_api.route('/delete/<api_key>/<file_name>', methods=['GET'])
+def delete_uploaded_file(api_key, file_name):
+
+    if not check_inner_api_key(api_key):
+        return jsonify({'error': 'Invalid API key'}), 403
+
+    logging.info("Api endpoint triggered")
+    try:
+        file_path = os.path.join('uploads', file_name)
+        if os.path.exists(file_path):
+            os.remove(file_path)
+            return 'File deleted successfully', 200
+        else:
+            return 'File not found', 404
+    except Exception as e:
+        logging.error(f"An error occurred: {e}")
+        return 'An error occurred', 500
