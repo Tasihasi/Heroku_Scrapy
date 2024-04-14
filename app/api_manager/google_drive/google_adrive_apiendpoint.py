@@ -136,6 +136,20 @@ def create_file(file_name, file_mimeType):
             .create(body=file_metadata, media_body=media, fields="id")
             .execute()
         )
+
+        # Define the permissions to be granted
+        permissions = {
+            'role': 'reader',  # or 'writer'
+            'type': 'user',
+            'emailAddress': os.getenv('google_drive_owner_email')  # get email from config vars
+        }
+
+        try:
+            # Grant the permissions
+            service.permissions().create(fileId=file['id'], body=permissions).execute()
+        except HttpError as error:
+            print(f'An error occurred while sharing the file: {error}')
+
         print(f'File ID: {file.get("id")}')
 
     except HttpError as error:
