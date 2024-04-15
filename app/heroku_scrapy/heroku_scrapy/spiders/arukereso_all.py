@@ -228,10 +228,7 @@ class ArukeresoSpider(scrapy.Spider):
 
         self.visited_url.add(response.url)
 
-        self.items_scraped += 1
-
-        if self.items_scraped >= 10:
-            raise scrapy.exceptions.CloseSpider('Scraped 10 items')
+        
 
 
             
@@ -282,6 +279,11 @@ class ArukeresoSpider(scrapy.Spider):
         if response.status != 200:
             self.error_urls.append(response.url)
 
+        self.items_scraped += 1
+
+        if self.items_scraped >= 10:
+            raise scrapy.exceptions.CloseSpider('Scraped 10 items')
+
     def restart_parsing(self):
         raise scrapy.exceptions.CloseSpider('Close the spider')
         # Function to replicate initial parsing behavior
@@ -326,9 +328,9 @@ class ArukeresoSpider(scrapy.Spider):
 
     # closing ----------------
 
-    def closed(self, reason):
-        self.push_to_google_drive(self.data)
-
+    def spider_closed(self, reason):
+        push_to_google_drive(self.data)
+        
         if self.error_urls:
             self.start_urls = self.error_urls
             yield from self.restart_parsing()
