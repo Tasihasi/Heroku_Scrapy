@@ -141,7 +141,7 @@ class ArukeresoSpider(scrapy.Spider):
         super(ArukeresoSpider, self).__init__(*args, **kwargs)
         self.blue_product = 0
         #self.valid_proxies = Get_valid_Proxy_list() #["195.123.8.186:8080"] #
-        self.raw_proxy_list = Getting_new_proxies()
+        self.raw_proxy_list = self.Getting_new_proxies()
         self.proxies_retries = 0
         self.start_urls = ['https://www.arukereso.hu/nyomtato-patron-toner-c3138/'] #self.predicting_url(self.start_urls[0])
         self.error_urls = []  # List to store URLs that encountered errors
@@ -197,7 +197,7 @@ class ArukeresoSpider(scrapy.Spider):
         # They are getting banned also
 
         while not proxy and len(self.raw_proxy_list) <30:
-            self.raw_proxy_list = Getting_new_proxies()
+            self.raw_proxy_list = self.Getting_new_proxies()
             self.proxies_retries+=1
 
             #logging.info("trying to get new  proxy list: " , self.proxies_retries)
