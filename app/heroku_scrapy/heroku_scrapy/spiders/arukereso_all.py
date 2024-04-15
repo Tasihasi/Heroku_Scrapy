@@ -38,7 +38,7 @@ import logging
 
 
 
-def Getting_new_proxies():  # Runnin the scrapy 
+def Getting_new_proxies():  # Running the scrapy 
         # Define the command as a list of strings
         logging.info("--------------------   Getting new proxies ---------------------------")
         current_directory = os.getcwd()
@@ -65,6 +65,8 @@ def Getting_new_proxies():  # Runnin the scrapy
                     retList.append(str("https://") + item)
 
                 #return retList
+
+                logging.info(f"Proxies retrieved and saved to {proxies}")
 
                 return proxies
             else:
