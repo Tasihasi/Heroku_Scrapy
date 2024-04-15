@@ -345,8 +345,8 @@ class ArukeresoSpider(scrapy.Spider):
             self.start_urls = self.error_urls
             #yield from self.restart_parsing()
         
-        output_file = getattr(self, 'output_file', None)
-        self.push_to_google_drive(output_file)
+        
+        self.push_to_google_drive("output.jsonl")
 
 
     
