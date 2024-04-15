@@ -199,7 +199,7 @@ class ArukeresoSpider(scrapy.Spider):
                 url=(response.url),
                 callback=self.parse_link,
                 dont_filter=True,
-                errback=self.remove_proxy,  # add this line
+                errback=self.remove_proxy(proxy),  # add this line
                 meta={'proxy': str("https://")+self.select_proxy()},
                 headers=headers,
             )
@@ -310,6 +310,8 @@ class ArukeresoSpider(scrapy.Spider):
         # Print the content of the current directory
         for item in directory_content:
             logging.info(f"Here is a file :  {item}")
+
+
         # Open the file in read mode ('r')
         with open(path, 'r') as file:
             # Read the content of the file
