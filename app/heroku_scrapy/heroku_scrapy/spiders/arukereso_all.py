@@ -61,7 +61,7 @@ def Getting_new_proxies():  # Runnin the scrapy
                 
                 # Write proxies to proxies.txt file
                 with open(output_file, "w") as file:
-                    file.write(proxies)
+                    file.write('\n'.join(proxies))
                     
                 #print("Proxies retrieved and saved to proxies.txt")
                 for item in proxies.split("\n"):
