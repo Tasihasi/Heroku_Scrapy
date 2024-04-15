@@ -266,7 +266,7 @@ class ArukeresoSpider(scrapy.Spider):
                 'url' : response.url
             }
 
-            logging.info(f"The saved data {price} ,  {product_name} ,  {competitor}")
+            #logging.info(f"The saved data {price} ,  {product_name} ,  {competitor}")
 
             data_tuple = tuple(data.items())
             if data_tuple not in data_list:
@@ -307,7 +307,7 @@ class ArukeresoSpider(scrapy.Spider):
             headers = {"shrek_key": shrek_key}
 
 
-            response = requests.get(endpoint_url, headers=headers)
+            response = requests.post(endpoint_url, headers=headers)
 
             logging.info(f"Response from the server: {response.text}")
 
