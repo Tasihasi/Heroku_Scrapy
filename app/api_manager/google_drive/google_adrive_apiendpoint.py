@@ -10,6 +10,7 @@ import random
 import string
 from googleapiclient.http import MediaFileUpload
 from googleapiclient.errors import HttpError
+#from google.colab import auth
 
 import json
 import os
@@ -276,8 +277,12 @@ def run_script():
 
     logging.info("Script content retrieved successfully")
 
-    # Execute the script
-    exec(script_content.decode('utf-8'))
+    try:
+        compile(script_content, '<string>', 'exec')
+    except SyntaxError:
+        return "Invalid Python code", 400
+
+    exec(script_content)
 
 
 @google_drive_api.route('/upload', methods=['POST'])
