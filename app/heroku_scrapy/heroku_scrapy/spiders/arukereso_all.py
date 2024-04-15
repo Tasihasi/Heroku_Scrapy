@@ -167,6 +167,11 @@ class ArukeresoSpider(scrapy.Spider):
             logging.info(f'------------------------- Proxy {proxy} is not being used for the request.--------------------')
             pass
         return False
+    
+
+    def remove_proxy(self, failure):
+            # this function will remove the proxy from the list
+            self.raw_proxy_list.remove(failure.request.meta['proxy'])
         
 
     def parse(self, response):
@@ -190,9 +195,7 @@ class ArukeresoSpider(scrapy.Spider):
         headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36'}
 
 
-        def remove_proxy(self, failure):
-            # this function will remove the proxy from the list
-            self.raw_proxy_list.remove(failure.request.meta['proxy'])
+        
 
         if response.url not in self.visited_url:
             request = scrapy.Request(
@@ -318,12 +321,14 @@ class ArukeresoSpider(scrapy.Spider):
             content = file.read()
 
         # Print the content of the file
-        print(content)
+        logging.info(f"Here is the content :  {content}")
 
         
         # Define the API endpoint URL
         endpoint_url = f"{home_url}/create_file/{file_name}/{file_mimeType}"
         
+
+        logging.info(f"Here is the url that for what the http reques t is being sent:   {endpoint_url}")
         try:
             headers = {"shrek_key": shrek_key}
 
