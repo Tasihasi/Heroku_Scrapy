@@ -286,7 +286,7 @@ class ArukeresoSpider(scrapy.Spider):
 
     # ----------------- Pushing to google drive ---------------------
 
-    def push_to_google_drive(self, data):
+    def push_to_google_drive(self, path : str):
         shrek_key =  os.getenv('shrek_api_key')
         home_url = os.getenv("home_url") + "\create_file"
 
@@ -296,11 +296,13 @@ class ArukeresoSpider(scrapy.Spider):
         file_name = f"{current_date}.csv"  # Set the file name to the current date
         file_mimeType = "csv"  # Replace with your actual MIME type
 
-        # Convert the data to a CSV string
-        csv_string = io.StringIO()
-        writer = csv.writer(csv_string)
-        writer.writerows(data)
-        csv_data = csv_string.getvalue()
+        # Open the file in read mode ('r')
+        with open(file_name, 'r') as file:
+            # Read the content of the file
+            content = file.read()
+
+        # Print the content of the file
+        print(content)
 
         
         # Define the API endpoint URL
@@ -326,12 +328,9 @@ class ArukeresoSpider(scrapy.Spider):
         if self.error_urls:
             self.start_urls = self.error_urls
             #yield from self.restart_parsing()
-        logging.info(f"-------------------------------------")
-        logging.info(f"data :  {self.data}")
-        logging.info(f"data datatype :   {type(self.data)}")
-        logging.info(f"-------------------------------------")
+        
 
-        self.push_to_google_drive(self.data)
+        self.push_to_google_drive(".Result.json")
 
 
     
