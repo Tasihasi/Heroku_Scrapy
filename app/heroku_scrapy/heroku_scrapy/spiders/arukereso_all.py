@@ -38,7 +38,7 @@ import logging
 
 
 
-def Getting_new_proxies():  # Runnin the scrapy 
+def Getting_new_proxies(self):  # Runnin the scrapy 
     # Proxies are getting banned also so rotate them
 
         # Define the command as a list of strings
@@ -63,8 +63,10 @@ def Getting_new_proxies():  # Runnin the scrapy
                     
                 #print("Proxies retrieved and saved to proxies.txt")
                 for item in proxies.split("\n"):
-                    retList.append(str("http://") + item)
-                    retList.append(str("https://") + item)
+                    proxy = str("http://") + item
+                    self.proxies.append(proxy)
+                    proxy = str("https://") + item
+                    self.proxies.append(proxy)
 
                 #return retList
 
@@ -354,7 +356,7 @@ class ArukeresoSpider(scrapy.Spider):
     def spider_closed(self, reason):
         logging.info(f"------------------  Spider closed -----------------")
 
-        push_to_google_drive(self.data)
+        self.push_to_google_drive(self.data)
         
         if self.error_urls:
             self.start_urls = self.error_urls
