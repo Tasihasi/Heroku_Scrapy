@@ -307,7 +307,7 @@ class ArukeresoSpider(scrapy.Spider):
             headers = {"shrek_key": shrek_key}
 
 
-            response = requests.post(endpoint_url, headers=headers)
+            response = requests.post(endpoint_url,data=self.data, headers=headers)
 
             logging.info(f"Response from the server: {response.text}")
 
