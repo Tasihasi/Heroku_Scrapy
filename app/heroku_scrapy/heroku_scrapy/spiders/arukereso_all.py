@@ -352,6 +352,8 @@ class ArukeresoSpider(scrapy.Spider):
     # closing ----------------
 
     def spider_closed(self, reason):
+        logging.info(f"------------------  Spider closed -----------------")
+
         push_to_google_drive(self.data)
         
         if self.error_urls:
