@@ -302,7 +302,7 @@ class ArukeresoSpider(scrapy.Spider):
         file_mimeType = "csv"  # Replace with your actual MIME type
 
         # Open the file in read mode ('r')
-        with open(file_name, 'r') as file:
+        with open(path, 'r') as file:
             # Read the content of the file
             content = file.read()
 
