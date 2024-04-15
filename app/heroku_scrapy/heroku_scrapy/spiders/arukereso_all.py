@@ -93,6 +93,13 @@ class ArukeresoSpider(scrapy.Spider):
         'RETRY_HTTP_CODES': [500, 502, 503, 504, 408, 443],  # HTTP status codes to retry
 
     }
+
+    @classmethod
+    def from_crawler(cls, crawler, *args, **kwargs):
+        spider = super(ArukeresoSpider, cls).from_crawler(crawler, *args, **kwargs)
+        crawler.signals.connect(spider.spider_closed, signal=signals.spider_closed)
+        return spider
+
     def predicting_url(self, url : str) -> List[str]:
 
         ret_list = [url]
