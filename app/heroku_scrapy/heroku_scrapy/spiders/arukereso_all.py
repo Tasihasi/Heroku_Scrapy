@@ -1,5 +1,6 @@
 import scrapy
 import re
+from datetime import datetime
 import threading
 import requests
 import subprocess
@@ -11,6 +12,7 @@ from scrapy.http import FormRequest
 import csv
 import time
 import os
+import io
 from scrapy import signals
 from scrapy.signalmanager import dispatcher
 import random
@@ -279,6 +281,41 @@ class ArukeresoSpider(scrapy.Spider):
         for url in self.start_urls:
             yield scrapy.Request(url=url, callback=self.parse)
 
+    # ----------------- Pushing to google drive ---------------------
+
+    def push_to_google_drive(self, data):
+        shrek_key =  os.getenv('shrek_api_key')
+        home_url = os.getenv("home_url") + "\create_file"
+
+
+        # Define the file name and MIME type
+        current_date = datetime.now().strftime('%Y-%m-%d')  # Get the current date as a string
+        file_name = f"{current_date}.csv"  # Set the file name to the current date
+        file_mimeType = "csv"  # Replace with your actual MIME type
+
+        # Convert the data to a CSV string
+        csv_string = io.StringIO()
+        writer = csv.writer(csv_string)
+        writer.writerows(data)
+        csv_data = csv_string.getvalue()
+
+        
+        # Define the API endpoint URL
+        endpoint_url = f"{home_url}/create_file/{file_name}/{file_mimeType}"
+        
+        try:
+            headers = {"shrek_key": shrek_key}
+
+
+            response = requests.get(endpoint_url, headers=headers)
+
+            logging.info(f"Response from the server: {response.text}")
+
+        except Exception as e:
+            logging.info("Error in pushing to google drive")
+            logging.error("An error occurred:", e)
+
+
 
     # closing ----------------
 
@@ -288,4 +325,10 @@ class ArukeresoSpider(scrapy.Spider):
             yield from self.restart_parsing()
         logging.info(f"-------------------------------------")
         logging.info(f"data :  {self.data}")
+        logging.info(f"data datatype :   {type(self.data)}")
         logging.info(f"-------------------------------------")
+
+        self.push_to_google_drive(self.data)
+
+
+    

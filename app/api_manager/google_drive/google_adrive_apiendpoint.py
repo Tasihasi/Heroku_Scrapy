@@ -132,6 +132,8 @@ def create_file( file_name, file_mimeType):
         file_mimeType = "text/plain"
     elif file_mimeType == "ipynb":
         file_mimeType = "application/x-ipynb+json"
+    elif file_mimeType == "csv":
+        file_mimeType = "text/csv"
 
     home_url = os.getenv('home_url')
 
