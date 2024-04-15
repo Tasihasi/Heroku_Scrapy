@@ -39,6 +39,8 @@ import logging
 
 
 def Getting_new_proxies():  # Runnin the scrapy 
+    # Proxies are getting banned also so rotate them
+
         # Define the command as a list of strings
         logging.info("--------------------   Getting new proxies ---------------------------")
         current_directory = os.getcwd()
@@ -173,6 +175,13 @@ class ArukeresoSpider(scrapy.Spider):
             logging.info(f'------------------------- Proxy {proxy} is not being used for the request.--------------------')
             pass
         return False
+    
+
+    def handle_failure(self, failure):
+        # This function will be called if there's an error in the request
+        # Remove the failed proxy from your proxy list
+        failed_proxy = failure.request.meta['proxy']
+        self.proxies.remove(failed_proxy.replace("https://", ""))
         
 
     def parse(self, response):
@@ -181,7 +190,10 @@ class ArukeresoSpider(scrapy.Spider):
         proxy = self.select_proxy()
 
         #logging.info(f" ---- current proxy : {proxy}")
-    
+
+        # TODO make that rote proxies after uses 
+        # They are getting banned also
+
         while not proxy and len(self.raw_proxy_list) <30:
             self.raw_proxy_list = Getting_new_proxies()
             self.proxies_retries+=1
@@ -196,9 +208,13 @@ class ArukeresoSpider(scrapy.Spider):
 
 
         if response.url not in self.visited_url:
+            proxy = str("https://")+self.select_proxy()
+
+            logging.info(f"-------------------  Proxy {proxy} is being used for the request.------------------------------")
             request = scrapy.Request(
                 url=(response.url),
                 callback=self.parse_link,
+                errback=self.handle_failure,  # Add this line
                 dont_filter=True,
                 meta={'proxy': str("https://")+self.select_proxy()},
                 headers=headers,
