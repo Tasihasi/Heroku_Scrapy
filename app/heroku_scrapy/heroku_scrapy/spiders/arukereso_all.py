@@ -283,6 +283,7 @@ class ArukeresoSpider(scrapy.Spider):
             self.error_urls.append(response.url)
 
     def restart_parsing(self):
+        raise scrapy.exceptions.CloseSpider('Close the spider')
         # Function to replicate initial parsing behavior
         for url in self.start_urls:
             yield scrapy.Request(url=url, callback=self.parse)
@@ -326,6 +327,8 @@ class ArukeresoSpider(scrapy.Spider):
     # closing ----------------
 
     def closed(self, reason):
+        self.push_to_google_drive(self.data)
+
         if self.error_urls:
             self.start_urls = self.error_urls
             yield from self.restart_parsing()
@@ -334,7 +337,7 @@ class ArukeresoSpider(scrapy.Spider):
         logging.info(f"data datatype :   {type(self.data)}")
         logging.info(f"-------------------------------------")
 
-        self.push_to_google_drive(self.data)
+        
 
 
     
