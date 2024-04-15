@@ -57,14 +57,17 @@ def Getting_new_proxies():  # Runnin the scrapy
 
             if response.status_code == 200:
                 # Successful response
-                proxies = response.text.split()
+                proxies = response.text.split('\n')
+
+                logging.info(f"Proxies retrieved: {proxies}")
+                logging.info(f"Proxies type: {type(proxies)}")
                 
                 # Write proxies to proxies.txt file
                 with open(output_file, "w") as file:
                     file.write('\n'.join(proxies))
                     
                 #print("Proxies retrieved and saved to proxies.txt")
-                for item in proxies.split("\n"):
+                for item in proxies:
                     proxy = str("http://") + item
                     proxies.append(proxy)
                     proxy = str("https://") + item
