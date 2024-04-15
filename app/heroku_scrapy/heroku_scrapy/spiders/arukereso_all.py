@@ -301,6 +301,15 @@ class ArukeresoSpider(scrapy.Spider):
         file_name = f"{current_date}.csv"  # Set the file name to the current date
         file_mimeType = "csv"  # Replace with your actual MIME type
 
+        # Get the current directory
+        current_directory = os.getcwd()
+
+        # Get the list of all files and directories in the current directory
+        directory_content = os.listdir(current_directory)
+
+        # Print the content of the current directory
+        for item in directory_content:
+            logging.info(f"Here is a file :  {item}")
         # Open the file in read mode ('r')
         with open(path, 'r') as file:
             # Read the content of the file
