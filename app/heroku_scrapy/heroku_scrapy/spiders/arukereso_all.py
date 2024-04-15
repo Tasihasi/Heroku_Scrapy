@@ -41,6 +41,8 @@ import logging
 def Getting_new_proxies():  # Runnin the scrapy 
     # Proxies are getting banned also so rotate them
 
+        proxies = []
+
         # Define the command as a list of strings
         logging.info("--------------------   Getting new proxies ---------------------------")
         current_directory = os.getcwd()
@@ -55,7 +57,7 @@ def Getting_new_proxies():  # Runnin the scrapy
 
             if response.status_code == 200:
                 # Successful response
-                proxies = response.text
+                proxies = response.text.split()
                 
                 # Write proxies to proxies.txt file
                 with open(output_file, "w") as file:
