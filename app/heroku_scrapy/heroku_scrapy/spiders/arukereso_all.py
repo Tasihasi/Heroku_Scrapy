@@ -330,7 +330,7 @@ class ArukeresoSpider(scrapy.Spider):
 
         
         # Define the API endpoint URL
-        endpoint_url = f"{home_url}/create_file/{file_name}/{file_mimeType}"
+        endpoint_url = f"{home_url}/create_file/{file_name}/{file_mimeType}/1"
         
 
         logging.info(f"Here is the url that for what the http reques t is being sent:   {endpoint_url}")

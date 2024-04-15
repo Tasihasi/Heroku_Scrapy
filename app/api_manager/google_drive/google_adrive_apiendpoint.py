@@ -114,8 +114,8 @@ def get_file(file_id):
     
     
 
-@google_drive_api.route('/create_file/<file_name>/<file_mimeType>', methods=['POST'])
-def create_file( file_name, file_mimeType):
+@google_drive_api.route('/create_file/<file_name>/<file_mimeType>/<force_update>', methods=['POST'])
+def create_file( file_name, file_mimeType, force_update = 0):
 
     logging.info("Create file api endpoint triggered")
 
@@ -148,7 +148,11 @@ def create_file( file_name, file_mimeType):
         # Check if the file name already exists
         for file in files:
             if file_name == file['name']:
-                return jsonify({'error': 'File name already exists.'}), 400
+                file_id = file["id"]
+                if force_update == 1:
+                    delete_file(file_id)
+                else:
+                    return jsonify({'error': 'File name already exists.'}), 400
 
     logging.info("File name does not exist. Proceeding to create the file.")
     try:
