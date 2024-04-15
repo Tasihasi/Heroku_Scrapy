@@ -24,6 +24,8 @@ from scrapy.utils.log import configure_logging
 from typing import List
 from urllib.parse import urlparse, urlencode, urlunparse,quote, parse_qs
 import xml.etree.ElementTree as ET
+from scrapy.exceptions import CloseSpider
+
 
 
 
@@ -170,8 +172,11 @@ class ArukeresoSpider(scrapy.Spider):
     
 
     def remove_proxy(self, failure):
+
+            raise CloseSpider("closed the spider manually at line 176")
+
             # this function will remove the proxy from the list
-            self.raw_proxy_list.remove(failure.request.meta['proxy'])
+            #self.raw_proxy_list.remove(failure.request.meta['proxy'])
         
 
     def parse(self, response):
@@ -202,7 +207,7 @@ class ArukeresoSpider(scrapy.Spider):
                 url=(response.url),
                 callback=self.parse_link,
                 dont_filter=True,
-                #errback=self.remove_proxy(proxy),  # add this line
+                errback=self.remove_proxy(proxy),  # add this line
                 meta={'proxy': str("https://")+self.select_proxy()},
                 headers=headers,
             )
