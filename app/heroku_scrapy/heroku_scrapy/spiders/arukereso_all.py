@@ -135,6 +135,7 @@ class ArukeresoSpider(scrapy.Spider):
         self.start_urls = ['https://www.arukereso.hu/nyomtato-patron-toner-c3138/'] #self.predicting_url(self.start_urls[0])
         self.error_urls = []  # List to store URLs that encountered errors
         self.visited_url = set()
+        self.items_scraped = 0
 
         #logging.info("----------- Got valid Proxies. ------------------")
 
@@ -226,6 +227,11 @@ class ArukeresoSpider(scrapy.Spider):
                 # here is should implement the write to temporary file 
 
         self.visited_url.add(response.url)
+
+        self.items_scraped += 1
+
+        if self.items_scraped >= 10:
+            raise scrapy.exceptions.CloseSpider('Scraped 10 items')
 
 
             
