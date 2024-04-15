@@ -174,13 +174,14 @@ class ArukeresoSpider(scrapy.Spider):
         # Get a proxy for this request
         proxy = self.select_proxy()
 
-        #logging.info(f" ---- current proxy : {proxy}")
+        logging.info(f" ---- current proxy : {proxy}")
     
         while not proxy and len(self.raw_proxy_list) <30:
+
             self.raw_proxy_list = Getting_new_proxies()
             self.proxies_retries+=1
 
-            #logging.info("trying to get new  proxy list: " , self.proxies_retries)
+            logging.info("trying to get new  proxy list: " , self.proxies_retries)
         
         if not proxy:
             #logging.info("------------------  There was no proxies ---------   logging")
@@ -268,7 +269,7 @@ class ArukeresoSpider(scrapy.Spider):
                 'url' : response.url
             }
 
-            logging.info(f"The saved data {price} ,  {product_name} ,  {competitor}")
+            #logging.info(f"The saved data {price} ,  {product_name} ,  {competitor}")
 
             data_tuple = tuple(data.items())
             if data_tuple not in data_list:
