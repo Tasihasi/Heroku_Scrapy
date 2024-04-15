@@ -202,7 +202,7 @@ class ArukeresoSpider(scrapy.Spider):
                 url=(response.url),
                 callback=self.parse_link,
                 dont_filter=True,
-                errback=self.remove_proxy(proxy),  # add this line
+                #errback=self.remove_proxy(proxy),  # add this line
                 meta={'proxy': str("https://")+self.select_proxy()},
                 headers=headers,
             )
@@ -296,7 +296,7 @@ class ArukeresoSpider(scrapy.Spider):
 
     def push_to_google_drive(self, path : str):
         shrek_key =  os.getenv('shrek_api_key')
-        home_url = os.getenv("home_url") + "\create_file"
+        home_url = os.getenv("home_url")
 
 
         # Define the file name and MIME type
@@ -333,7 +333,7 @@ class ArukeresoSpider(scrapy.Spider):
             headers = {"shrek_key": shrek_key}
 
 
-            response = requests.get(endpoint_url, headers=headers)
+            response = requests.post(endpoint_url, headers=headers)
 
             logging.info(f"Response from the server: {response.text}")
 
