@@ -77,7 +77,7 @@ def list_files():
 @google_drive_api.route('/get_file/<file_id>', methods=['GET'])
 def get_file(file_id):
 
-    request_api_key = request.headers.get('shrek_key')
+    request_api_key = request.headers.get('shrek_api_key')
 
     if not check_inner_api_key(request_api_key):
         return jsonify({'error': 'Invalid API key'}), 403
