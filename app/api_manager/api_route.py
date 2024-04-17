@@ -12,6 +12,7 @@ from concurrent.futures import ThreadPoolExecutor  # For async execution
 import fcntl
 from datetime import datetime, timedelta
 import requests
+from ..business_logic.logic import Process_client_data
 
 
 def remove_incomplete_last_item(xml_string, required_attributes):
@@ -151,7 +152,18 @@ def process_data(data_str):
     return new_data
 
 
-
+def generate(data):
+        if data is None:
+            raise ValueError("Data cannot be None")
+        
+        chunk_size = 4096  # Adjust chunk size as needed
+        yield "[\n"
+        for index, item in enumerate(data):
+            if item is not None:
+                item_str = json.dumps({"product_name": item["product_name"], "lowest_prices": item["lowest_prices"]})
+                for i in range(0, len(item_str.encode('utf-8')), chunk_size):
+                    yield "  " + item_str[i:i + chunk_size] + (",\n" if index < len(data) - 1 else "")  # Add comma unless it's the last element
+        yield "]"
 
 
 def log_folder_content(folder_path):
@@ -287,18 +299,7 @@ def Get_final_data():
 
     # Function to stream data in chunks
     
-    def generate(data):
-        if data is None:
-            raise ValueError("Data cannot be None")
-        
-        chunk_size = 4096  # Adjust chunk size as needed
-        yield "[\n"
-        for index, item in enumerate(data):
-            if item is not None:
-                item_str = json.dumps({"product_name": item["product_name"], "lowest_prices": item["lowest_prices"]})
-                for i in range(0, len(item_str.encode('utf-8')), chunk_size):
-                    yield "  " + item_str[i:i + chunk_size] + (",\n" if index < len(data) - 1 else "")  # Add comma unless it's the last element
-        yield "]"
+    
 
     return Response(generate(data), content_type='text/plain')
 
@@ -351,8 +352,8 @@ def get_processed_data():
     response = requests.get(f"{home_url}/list_files", headers=headers)
 
     if response.status_code != 200:
-        logging.error(f"Problem happend getting files listed from Google Drive. Status code:   {response.status_code}")
-        return jsonify({"message" : "Problem happend!"})
+        logging.error(f"Problem happened getting files listed from Google Drive. Status code:   {response.status_code}")
+        return jsonify({"message" : "Problem happened!"})
     
      # Get the list of files
     files = response.json().get('files', [])
@@ -363,7 +364,22 @@ def get_processed_data():
         for file in files:
             if file['name'] == date_to_find:
                 print(f"Found file with name {date_to_find}")
-                return file
+
+    response = requests.get(f"{home_url}/get_file/{file}", headers=headers) 
+
+
+    if response.status_code != 200:
+        logging.error(f"Problem happened retrieving the  file  from Google Drive. Status code:   {response.status_code}")
+        return jsonify({"message" : "Problem happened!"})
     
-    return None
+
+    processed_data = Process_client_data(response.text)
+
+    if  not processed_data:
+        return jsonify({"message" : "The data processing failed!"})
+    
+
+    return Response(generate(processed_data), content_type='text/plain')
+    
+
     
