@@ -344,7 +344,7 @@ def get_processed_data():
         return jsonify({"message" : "No apikey provided."})
     
 
-    shrek_key = os.getenv("shrek_key")
+    shrek_key = os.getenv("shrek_api_key")
 
     # Make an API call to the home URL's list files endpoint
     headers = {"shrek_key" : shrek_key}
