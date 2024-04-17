@@ -365,9 +365,9 @@ def get_processed_data():
             if file['name'] == date_to_find:
                 print(f"Found file with name {date_to_find}")
 
-    logging.info(f"here is the file id:  {file["id"]}")
+    logging.info(f"here is the file id:  {file['id']}")
 
-    response = requests.get(f"{home_url}/get_file/{file["id"]}", headers=headers) 
+    response = requests.get(f"{home_url}/get_file/{file['id']}", headers=headers) 
 
 
     if response.status_code != 200:
