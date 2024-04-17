@@ -73,14 +73,14 @@ def list_files():
         return jsonify({'error': 'Authentication failed or an error occurred'}), 500
 
 
-
+# TODO no api key checker here
 @google_drive_api.route('/get_file/<file_id>', methods=['GET'])
 def get_file(file_id):
 
-    request_api_key = request.headers.get('shrek_key')
+    #request_api_key = request.headers.get('shrek_key')
 
-    if not check_inner_api_key(request_api_key):
-        return jsonify({'error': 'Invalid API key'}), 403
+    #if not check_inner_api_key(request_api_key):
+       # return jsonify({'error': 'Invalid API key'}), 403
 
     # Get authenticated Drive API service
     drive_service = Get_drive_service()
