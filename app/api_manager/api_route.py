@@ -10,7 +10,8 @@ from .api_proxy import gather_proxy_data
 from .data_retrieve import get_data_from_scrapy, get_proxies
 from concurrent.futures import ThreadPoolExecutor  # For async execution
 import fcntl
-
+from datetime import datetime, timedelta
+import requests
 
 
 def remove_incomplete_last_item(xml_string, required_attributes):
@@ -329,7 +330,40 @@ def Get_final_data():
             logging.error(f"FileNotFoundError: {e}")
             return "File not found", 404
         
-    
+
+
+# TODO  have to differentiate between files and product categories !!!
+@api.route('/get_processed_data', methods=['GET'])
+def get_processed_data():
+    client_api_key = request.args.get('api_key')
+    home_url =  os.getenv("home_url")
+
+
+    if client_api_key is None:
+        return jsonify({"message" : "No apikey provided."})
     
 
+    shrek_key = os.getenv("shrek_key")
+
+    # Make an API call to the home URL's list files endpoint
+    headers = {"shrek_key" : shrek_key}
+    
+    response = requests.get(f"{home_url}/list_files", headers=headers)
+
+    if response.status_code != 200:
+        logging.error(f"Problem happend getting files listed from Google Drive. Status code:   {response.status_code}")
+        return jsonify({"message" : "Problem happend!"})
+    
+     # Get the list of files
+    files = response.json().get('files', [])
+
+    # Search for a file named with a date from the past week
+    for i in range(1, 8):
+        date_to_find = (datetime.now() - timedelta(days=i)).strftime('%Y-%m-%d')
+        for file in files:
+            if file['name'] == date_to_find:
+                print(f"Found file with name {date_to_find}")
+                return file
+    
+    return None
     

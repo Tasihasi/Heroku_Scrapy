@@ -207,7 +207,7 @@ class ArukeresoSpider(scrapy.Spider):
                 url=(response.url),
                 callback=self.parse_link,
                 dont_filter=True,
-                errback=self.remove_proxy(proxy),  # add this line
+                #errback=self.remove_proxy(proxy),  # add this line
                 meta={'proxy': str("https://")+self.select_proxy()},
                 headers=headers,
             )
