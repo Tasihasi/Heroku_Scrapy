@@ -380,7 +380,9 @@ def get_processed_data():
     if  not processed_data:
         return jsonify({"message" : "The data processing failed!"})
     
-
+    # TODO  make the response simple 
+    #return processed_data
+    logging.info(f"Here is the data that being sent:  {processed_data}")
     return Response(generate(processed_data), content_type='text/plain')
     
 
