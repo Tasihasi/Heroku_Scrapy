@@ -127,6 +127,7 @@ class ArukeresoSpider(scrapy.Spider):
 
         with open(filename, 'wb') as file:
             tree.write(file)
+            
 
     
 
