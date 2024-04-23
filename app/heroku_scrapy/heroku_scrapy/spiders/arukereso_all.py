@@ -333,12 +333,12 @@ class ArukeresoSpider(scrapy.Spider):
         endpoint_url = f"{home_url}/create_file/{file_name}/{file_mimeType}/1"
         
 
-        logging.info(f"Here is the url that for what the http reques t is being sent:   {endpoint_url}")
+        logging.info(f"Here is the url that for what the http request is being sent:   {endpoint_url}")
         try:
             headers = {"shrek_key": shrek_key}
 
 
-            response = requests.post(endpoint_url, headers=headers)
+            response = requests.post(endpoint_url, headers=headers, data=content)
 
             logging.info(f"Response from the server: {response.text}")
 
