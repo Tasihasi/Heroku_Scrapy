@@ -105,7 +105,7 @@ def get_file(file_id):
         # You can now use the file_content object to do whatever you want with the file content
 
         # For example, you can return the file content as a response
-        logging.info("File retrieved successfully:  "  + file_content)
+        logging.info("File retrieved successfully:  "  + str(len(file_content.getvalue())))
         return send_file(file_content, mimetype=file_metadata['mimeType'], as_attachment=True, download_name=file_metadata['name'])
         
     except Exception as e:
