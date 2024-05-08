@@ -195,6 +195,25 @@ def create_file( file_name, file_mimeType, force_update = 0):
         }
 
         try:
+
+            # Specify the file to be uploaded in chunks
+            file_metadata = {'name': 'My Report', 'mimeType': 'application/pdf'}
+            media = MediaFileUpload('files/report.pdf',
+                                    mimetype='application/pdf',
+                                    resumable=True)
+
+            # Upload the file in chunks
+            request = service.files().create(body=file_metadata,
+                                            media_body=media,
+                                            fields='id')
+            
+            response = None
+            while response is None:
+                status, response = request.next_chunk()
+                if status:
+                    print("Uploaded %d%%." % int(status.progress() * 100))
+
+            print("Upload Complete!")
             # Grant the permissions
             service.permissions().create(fileId=file['id'], body=permissions).execute()
         except HttpError as error:
