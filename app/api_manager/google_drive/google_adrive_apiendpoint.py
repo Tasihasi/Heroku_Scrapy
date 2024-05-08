@@ -98,13 +98,13 @@ def get_file(file_id):
         done = False
         while not done:
             status, done = downloader.next_chunk()
+            logging.info("Download %d%%." % int(status.progress() * 100))
 
         # Rewind the file-like object to the beginning
         file_content.seek(0)
 
         # You can now use the file_content object to do whatever you want with the file content
 
-        # For example, you can return the file content as a response
         file_content.seek(0)
         content = file_content.read()
 
