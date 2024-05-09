@@ -251,12 +251,14 @@ class ArukeresoSpider(scrapy.Spider):
                 # here is should implement the write to temporary file 
 
         self.visited_url.add(response.url)
-        logging.critical(f" --------   Time taken for the request: {time.time() - start_time}   -------")
+        logging.critical(f" --------   Time taken for the request in Parse: {time.time() - start_time}   -------")
 
 
             
 
     def parse_link(self, response):
+        start_time = time.time()
+
         prices = ""
         competitors = ""
 
@@ -301,6 +303,9 @@ class ArukeresoSpider(scrapy.Spider):
 
         if response.status != 200:
             self.error_urls.append(response.url)
+
+        logging.critical(f" --------   Time taken for the request in Parse  _ link: {time.time() - start_time}   -------")
+
 
     def restart_parsing(self):
         # Function to replicate initial parsing behavior
