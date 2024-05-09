@@ -92,7 +92,7 @@ class ArukeresoSpider(scrapy.Spider):
 
     custom_settings = {
         'DOWNLOAD_DELAY': 0.2,  # add download delay of 1 second
-        'CONCURRENT_REQUESTS': 16,  # Adjust the concurrency level as needed
+        'CONCURRENT_REQUESTS': 32,  # Adjust the concurrency level as needed
         'CONCURRENT_REQUESTS_PER_DOMAIN' : 1, # for the current limit this must be so high
         'RETRY_TIMES': 3,  # Number of times to retry a failed request
         'RETRY_HTTP_CODES': [500, 502, 503, 504, 408, 443],  # HTTP status codes to retry
