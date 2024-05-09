@@ -55,14 +55,15 @@ def Getting_new_proxies():  # Running the scrapy
 
             if response.status_code == 200:
                 # Successful response
-                proxies = response.text
+                proxies = response.text.split("\n")
                 
                 # Write proxies to proxies.txt file
                 with open(output_file, "w") as file:
-                    file.write(proxies)
+                    for proxy in proxies:
+                        file.write(f"{proxy}\n")  # write each proxy on a new line
                     
                 #print("Proxies retrieved and saved to proxies.txt")
-                for item in proxies.split("\n"):
+                for item in proxies:
                     retList.append(str("http://") + item)
                     retList.append(str("https://") + item)
 
@@ -149,16 +150,20 @@ class ArukeresoSpider(scrapy.Spider):
 
     def select_proxy(self):
         if not self.raw_proxy_list:
-            return None   
+            return None
 
-        selected_proxy = random.choice(self.raw_proxy_list)
+        # Filter out invalid proxies
+        valid_proxies = [proxy for proxy in self.raw_proxy_list if proxy and proxy != "-"]
 
-        while selected_proxy == "-" or not selected_proxy:
-            selected_proxy = random.choice(self.raw_proxy_list)
+        if not valid_proxies:
+            return None  # Return None if no valid proxies are available
 
-        
+        selected_proxy = random.choice(valid_proxies)
 
         return selected_proxy
+    
+
+    
 
     def check_proxy_status(self, proxy):
         try:
@@ -170,6 +175,8 @@ class ArukeresoSpider(scrapy.Spider):
             logging.info(f'------------------------- Proxy {proxy} is not being used for the request.--------------------')
             pass
         return False
+
+    
     
 
     def remove_proxy(self, failure):
