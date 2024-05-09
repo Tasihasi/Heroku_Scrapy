@@ -188,6 +188,7 @@ class ArukeresoSpider(scrapy.Spider):
         
 
     def parse(self, response):
+        start_time = time.time()
 
         # Get a proxy for this request
         proxy = self.select_proxy()
@@ -250,6 +251,7 @@ class ArukeresoSpider(scrapy.Spider):
                 # here is should implement the write to temporary file 
 
         self.visited_url.add(response.url)
+        logging.critical(f" --------   Time taken for the request: {time.time() - start_time}   -------")
 
 
             
