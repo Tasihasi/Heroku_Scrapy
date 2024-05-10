@@ -119,15 +119,11 @@ class ArukeresoSpider(scrapy.Spider):
         #self.valid_proxies = Get_valid_Proxy_list() #["195.123.8.186:8080"] #
         self.raw_proxy_list = Getting_new_proxies()
         self.proxies_retries = 0
-        self.start_urls = self.start_urls[0] #self.predicting_url(self.start_urls[0])
+        self.start_urls = self.start_urls #self.predicting_url(self.start_urls[0])
         self.error_urls = []  # List to store URLs that encountered errors
         self.visited_url = set()
 
         #logging.info("----------- Got valid Proxies. ------------------")
-
-
-    
-    
 
     def select_proxy(self):
         if not self.raw_proxy_list:
@@ -142,9 +138,6 @@ class ArukeresoSpider(scrapy.Spider):
         selected_proxy = random.choice(valid_proxies)
 
         return selected_proxy
-    
-
-    
 
     def check_proxy_status(self, proxy):
         try:
@@ -156,9 +149,6 @@ class ArukeresoSpider(scrapy.Spider):
             logging.info(f'------------------------- Proxy {proxy} is not being used for the request.--------------------')
             pass
         return False
-
-    
-    
 
     def remove_proxy(self, failure):
         return 
