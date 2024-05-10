@@ -1,18 +1,14 @@
-from flask import Blueprint, jsonify, request, Response, send_file, make_response, current_app
+from flask import Blueprint, jsonify, request, Response, send_file
 import xml.etree.ElementTree as ET
 import json
 import os
-import sys
 import logging
-from .auth import valid_api_key, mach_apiKey_to_customer, getting_raw_data
+from .auth import valid_api_key, getting_raw_data
 from .scrapy_manager import newest_raw_data
-from .api_proxy import gather_proxy_data
 from .data_retrieve import get_data_from_scrapy, get_proxies
 from concurrent.futures import ThreadPoolExecutor  # For async execution
-import fcntl
 from datetime import datetime, timedelta
 import requests
-from ..business_logic.logic import Process_client_data
 
 
 def remove_incomplete_last_item(xml_string, required_attributes):
@@ -375,7 +371,7 @@ def get_processed_data():
         return jsonify({"message" : "Problem happened!"})
     
 
-    processed_data = Process_client_data(response.text)
+    processed_data = (response.text)
 
     if  not processed_data:
         return jsonify({"message" : "The data processing failed!"})

@@ -16,13 +16,18 @@ def download_file(url, api_key):
     with requests.get(url, headers=headers, stream=True) as response:
         response.raise_for_status()  # Raise HTTPError for bad responses (status code >= 400)
 
+        print("here is the response content : ", response.content)
+
         # Open a local file in binary write mode to write the streamed content
         with open(local_filename, 'wb') as f:
             # Iterate over the response content in chunks and write each chunk to the file
             for chunk in response.iter_content(chunk_size=8192): 
                 if chunk: 
                     f.write(chunk)
+                    print("Downloading... : "  , chunk)
 
+    
+    print("File downloaded successfully here is the file : ", local_filename)
     return local_filename
 
 url = "https://herokuscrapy-8d468df2dace.herokuapp.com/get_final_data"

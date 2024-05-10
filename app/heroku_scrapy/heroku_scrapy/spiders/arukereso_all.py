@@ -1,30 +1,11 @@
 import scrapy
-import re
 from datetime import datetime
-import threading
 import requests
-import subprocess
-import queue
-from scrapy.selector import Selector
-#from scrapy_playwright.page import PageCoroutine
-import json
-from scrapy.http import FormRequest
-import csv
 import time
 import os
-import io
-from scrapy import signals
-from scrapy.signalmanager import dispatcher
 import random
-import concurrent.futures
-from scrapy.crawler import CrawlerProcess
-from twisted.internet import reactor, threads
-from scrapy.crawler import CrawlerRunner
-from scrapy.utils.log import configure_logging
 from typing import List
-from urllib.parse import urlparse, urlencode, urlunparse,quote, parse_qs
 import xml.etree.ElementTree as ET
-from scrapy.exceptions import CloseSpider
 
 
 
@@ -138,7 +119,7 @@ class ArukeresoSpider(scrapy.Spider):
         #self.valid_proxies = Get_valid_Proxy_list() #["195.123.8.186:8080"] #
         self.raw_proxy_list = Getting_new_proxies()
         self.proxies_retries = 0
-        self.start_urls = self.predicting_url(self.start_urls[0])
+        self.start_urls = self.start_urls[0] #self.predicting_url(self.start_urls[0])
         self.error_urls = []  # List to store URLs that encountered errors
         self.visited_url = set()
 
@@ -180,8 +161,8 @@ class ArukeresoSpider(scrapy.Spider):
     
 
     def remove_proxy(self, failure):
-
-            raise CloseSpider("closed the spider manually at line 176")
+        return 
+            #raise CloseSpider("closed the spider manually at line 176")
 
             # this function will remove the proxy from the list
             #self.raw_proxy_list.remove(failure.request.meta['proxy'])
@@ -366,8 +347,8 @@ class ArukeresoSpider(scrapy.Spider):
     # closing ----------------
 
     def closed(self, reason):
-        if self.error_urls:
-            self.start_urls = self.error_urls
+        #if self.error_urls:
+            #self.start_urls = self.error_urls
             #yield from self.restart_parsing()
         
         
