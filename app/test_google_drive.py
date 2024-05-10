@@ -32,7 +32,7 @@ def retrieve_file_by_id(file_id : str):
 
     try:
         # Make a GET request to the API endpoint
-        response = requests.get(endpoint_url, timeout=60)
+        response = requests.get(endpoint_url, timeout=120)
         
         # Check if the request was successful (status code 200)
         if response.status_code == 200:
