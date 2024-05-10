@@ -80,8 +80,11 @@ def get_file(file_id):
 
     def send_file_in_chunks(file_content, chunk_size=1024):
         def generate():
-            for i in range(len(file_content), chunk_size):
-                yield file_content[i:i+chunk_size]
+            for chunk in file_content.iter_content(chunk_size):
+                if chunk:
+                    yield chunk
+            #for i in range(len(file_content), chunk_size):
+                #yield file_content[i:i+chunk_size]
         return Response(stream_with_context(generate()), mimetype=file_metadata['mimeType'], headers={"Content-Disposition": "attachment; filename={}".format(file_metadata['name'])})
 
     #request_api_key = request.headers.get('shrek_key')
