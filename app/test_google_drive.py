@@ -32,12 +32,17 @@ def retrieve_file_by_id(file_id : str):
 
     try:
         # Make a GET request to the API endpoint
-        response = requests.get(endpoint_url)
+        response = requests.get(endpoint_url, timeout=60)
         
         # Check if the request was successful (status code 200)
         if response.status_code == 200:
-            # Print the content of the file to the console
-            print(response.text)
+            # Define the chunk size
+            chunk_size = 1024  # You can adjust this value depending on your needs
+            
+            # Iterate over the response data in chunks
+            for chunk in response.iter_content(chunk_size):
+                # Print the chunk to the console
+                print(chunk)
         else:
             # Print an error message if the request was not successful
             print("Error: Unable to retrieve file. Status code:", response.status_code)
@@ -168,7 +173,7 @@ def test_my_api_key():
 
 if __name__ == "__main__":
 
-    #delete_file_by_id("12IneBBe23zka0GhbsN6UEwKdjpJ1a-vA")
+    #delete_file_by_id("1F4D-A0OOTEP91ArgMYohEbbOpHKsgWT3")
     #create_file_api()
 
     #run_coolab_code("1k0pGqUSTSC_cVQ79K7Ucucg49N_ub_On")
@@ -178,6 +183,6 @@ if __name__ == "__main__":
     #create_file_api()
     #list_files_endpoint()
     list_files_endpoint()
-    retrieve_file_by_id("1Lv2Rghr2zsjM08XybTKow9S0EhC0CwBv")
+    retrieve_file_by_id("1F4D-A0OOTEP91ArgMYohEbbOpHKsgWT3")
 
     #test_file_upload("proxies.txt")

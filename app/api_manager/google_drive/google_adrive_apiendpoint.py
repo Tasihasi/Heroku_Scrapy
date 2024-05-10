@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify, send_file, send_from_directory
+from flask import Blueprint, jsonify, send_file, send_from_directory, Response
 from flask import request
 import requests
 from googleapiclient.http import MediaIoBaseDownload, MediaIoBaseUpload
@@ -77,6 +77,13 @@ def list_files():
 @google_drive_api.route('/get_file/<file_id>', methods=['GET'])
 def get_file(file_id):
 
+
+    def send_file_in_chunks(file_content):
+        def generate():
+            for chunk in file_content.iter_content(chunk_size=8192):
+                yield chunk
+        return Response(generate(), mimetype=file_metadata['mimeType'], headers={"Content-Disposition": "attachment; filename={}".format(file_metadata['name'])})
+
     #request_api_key = request.headers.get('shrek_key')
 
     #if not check_inner_api_key(request_api_key):
@@ -112,6 +119,7 @@ def get_file(file_id):
         content_str = content.decode('utf-8')
 
         logging.info("File content: " + content_str)
+        return send_file_in_chunks(file_content)
         return send_file(file_content, mimetype=file_metadata['mimeType'], as_attachment=True, download_name=file_metadata['name'])
         
     except Exception as e:
@@ -226,10 +234,6 @@ def create_file( file_name, file_mimeType, force_update = 0):
         file = None
 
     return file.get("id")
-
-    
-
-    
 
 @google_drive_api.route('/delete_file/<file_id>', methods=['GET'])
 def delete_file( file_id):
