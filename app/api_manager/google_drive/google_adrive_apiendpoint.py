@@ -82,7 +82,7 @@ def get_file(file_id):
         def generate():
             for i in range(len(file_content), chunk_size):
                 yield file_content[i:i+chunk_size]
-        return Response(generate(), mimetype=file_metadata['mimeType'], headers={"Content-Disposition": "attachment; filename={}".format(file_metadata['name'])})
+        return Response(stream_with_context(generate(), mimetype=file_metadata['mimeType'], headers={"Content-Disposition": "attachment; filename={}".format(file_metadata['name'])}))
 
     #request_api_key = request.headers.get('shrek_key')
 
