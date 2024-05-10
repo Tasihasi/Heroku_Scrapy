@@ -36,6 +36,9 @@ def retrieve_file_by_id(file_id : str):
         
         # Check if the request was successful (status code 200)
         if response.status_code == 200:
+            print(f"here is the response : {response.content}")
+            print(f"here is the response : {response.__dict__}")
+
             # Define the chunk size
             chunk_size = 1024  # You can adjust this value depending on your needs
             

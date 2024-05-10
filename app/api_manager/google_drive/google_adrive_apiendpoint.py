@@ -122,7 +122,7 @@ def get_file(file_id):
         content_str = content.decode('utf-8')
 
         logging.info("File content: " + content_str)
-        return send_file_in_chunks(file_content)
+        #return send_file_in_chunks(file_content)
         return send_file(file_content, mimetype=file_metadata['mimeType'], as_attachment=True, download_name=file_metadata['name'])
         
     except Exception as e:
