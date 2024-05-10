@@ -80,7 +80,10 @@ def get_file(file_id):
 
     def send_file_in_chunks(file_content):
         def generate():
-            for chunk in file_content.iter_content(chunk_size=8192):
+            while True:
+                chunk = file_content.read(8192)
+                if not chunk:
+                    break
                 yield chunk
         return Response(generate(), mimetype=file_metadata['mimeType'], headers={"Content-Disposition": "attachment; filename={}".format(file_metadata['name'])})
 
