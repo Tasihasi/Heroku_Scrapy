@@ -161,7 +161,7 @@ class ArukeresoSpider(scrapy.Spider):
 
     def parse(self, response):
         if self.product_count >= 50:
-            self.closed()
+            raise CloseSpider("closed the spider manually reached product limit")
         start_time = time.time()
 
         # Get a proxy for this request
@@ -347,7 +347,7 @@ class ArukeresoSpider(scrapy.Spider):
         
         
         self.push_to_google_drive("output.jsonl")
-        raise CloseSpider("closed the spider in closed functions ")
+        
 
 
     
