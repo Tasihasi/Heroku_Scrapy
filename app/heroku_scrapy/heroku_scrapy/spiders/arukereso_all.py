@@ -78,7 +78,8 @@ class ArukeresoSpider(scrapy.Spider):
         'CONCURRENT_REQUESTS_PER_DOMAIN' : 1, # for the current limit this must be so high
         'RETRY_TIMES': 0,  # Number of times to retry a failed request
         'RETRY_HTTP_CODES': [500, 502, 503, 504, 408, 443],  # HTTP status codes to retry
-
+        #   ------ closing spider aftre 50 items -------
+        'CLOSESPIDER_ITEMCOUNT': 50,
     }
     def predicting_url(self, url : str) -> List[str]:
 
@@ -160,8 +161,6 @@ class ArukeresoSpider(scrapy.Spider):
         
 
     def parse(self, response):
-        if self.product_count >= 50:
-            raise CloseSpider("closed the spider manually reached product limit")
         start_time = time.time()
 
         # Get a proxy for this request
