@@ -1,4 +1,5 @@
 import scrapy
+from scrapy.exceptions import CloseSpider
 from datetime import datetime
 import requests
 import time
@@ -159,7 +160,7 @@ class ArukeresoSpider(scrapy.Spider):
         
 
     def parse(self, response):
-        if self.product_count > 50:
+        if self.product_count >= 50:
             self.closed()
         start_time = time.time()
 
@@ -346,6 +347,7 @@ class ArukeresoSpider(scrapy.Spider):
         
         
         self.push_to_google_drive("output.jsonl")
+        raise CloseSpider("closed the spider in closed functions ")
 
 
     
