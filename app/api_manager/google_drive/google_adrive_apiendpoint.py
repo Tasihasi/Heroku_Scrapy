@@ -108,7 +108,7 @@ def get_file(file_id):
         done = False
         while not done:
             status, done = downloader.next_chunk()
-            logging.info("Download %d%%." % int(status.progress() * 100))
+            #logging.info("Download %d%%." % int(status.progress() * 100))
 
         # Rewind the file-like object to the beginning
         file_content.seek(0)
@@ -122,7 +122,7 @@ def get_file(file_id):
         content_str = content.decode('utf-8')
 
         logging.info("File content: " + content_str)
-        return send_file_in_chunks(content_str)
+        #return send_file_in_chunks(content_str)
         return send_file(file_content, mimetype=file_metadata['mimeType'], as_attachment=True, download_name=file_metadata['name'])
         
     except Exception as e:
