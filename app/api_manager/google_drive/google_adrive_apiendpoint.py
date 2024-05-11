@@ -140,10 +140,12 @@ def get_file(file_id):
 
 @google_drive_api.route('/create_file/<file_name>/<file_mimeType>/<force_update>', methods=['POST'])
 def create_file( file_name, file_mimeType, force_update = 0):
-
+    from flask import request
+    
     logging.info("Create file api endpoint triggered")
 
     request_api_key = request.headers.get('shrek_key')
+
 
     if not check_inner_api_key(request_api_key):
         return jsonify({'error': 'Invalid API key'}), 403
