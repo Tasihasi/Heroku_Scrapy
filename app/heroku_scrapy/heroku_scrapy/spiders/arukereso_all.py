@@ -341,7 +341,7 @@ class ArukeresoSpider(scrapy.Spider):
 
     # closing ----------------
 
-    def closed(self):
+    def closed(self, reason):
         #if self.error_urls:
             #self.start_urls = self.error_urls
             #yield from self.restart_parsing()
