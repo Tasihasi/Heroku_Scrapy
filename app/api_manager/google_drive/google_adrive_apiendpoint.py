@@ -78,8 +78,10 @@ def list_files():
 @google_drive_api.route('/get_file/<file_id>', methods=['GET'])
 def get_file(file_id):
 
-    def send_large_file(file_content, file_metadata):
-        file_size = len(file_content)
+    def send_large_file(file_content : BytesIO, file_metadata ):
+        file_content.seek(0)
+        data = file_content.getvalue()
+        file_size = len(data)
         response = Response(
             file_content,
             mimetype=file_metadata['mimeType'],
