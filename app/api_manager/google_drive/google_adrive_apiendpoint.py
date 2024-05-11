@@ -18,6 +18,7 @@ import os
 
 
 
+
 google_drive_api = Blueprint('google_drive_api', __name__)
 
 
@@ -77,16 +78,19 @@ def list_files():
 @google_drive_api.route('/get_file/<file_id>', methods=['GET'])
 def get_file(file_id):
 
+    def send_large_file(file_content, file_metadata):
+        file_size = len(file_content)
+        response = Response(
+            file_content,
+            mimetype=file_metadata['mimeType'],
+            headers={
+                "Content-Disposition": f"attachment; filename={file_metadata['name']}",
+                "Content-Length": file_size
+            }
+        )
+        return response
 
-    def send_file_in_chunks(file_content, chunk_size=1024):
-        def generate():
-            for chunk in file_content.iter_content(chunk_size):
-                if chunk:
-                    yield chunk
-            #for i in range(len(file_content), chunk_size):
-                #yield file_content[i:i+chunk_size]
-        return Response(stream_with_context(generate()), mimetype=file_metadata['mimeType'], headers={"Content-Disposition": "attachment; filename={}".format(file_metadata['name'])})
-
+   
     #request_api_key = request.headers.get('shrek_key')
 
     #if not check_inner_api_key(request_api_key):
@@ -122,7 +126,7 @@ def get_file(file_id):
         content_str = content.decode('utf-8')
 
         logging.info("File content: " + content_str)
-        #return send_file_in_chunks(content_str)
+        return send_large_file(file_content, file_metadata)
         return send_file(file_content, mimetype=file_metadata['mimeType'], as_attachment=True, download_name=file_metadata['name'])
         
     except Exception as e:
