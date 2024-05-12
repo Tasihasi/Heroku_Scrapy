@@ -119,7 +119,7 @@ class ArukeresoSpider(scrapy.Spider):
     def __init__(self, *args, **kwargs):
         super(ArukeresoSpider, self).__init__(*args, **kwargs)
         self.proxy_time = 0
-        self.parsing_time = 0
+        self.parsing_time = [int]
         self.product_count = 0
         #self.valid_proxies = Get_valid_Proxy_list() #["195.123.8.186:8080"] #
         self.raw_proxy_list = Getting_new_proxies()
@@ -171,7 +171,7 @@ class ArukeresoSpider(scrapy.Spider):
         
 
     def parse(self, response):
-        start_time = time.time()
+        start_time = datetime.now()
 
         # Get a proxy for this request
         proxy = self.select_proxy()
@@ -235,10 +235,10 @@ class ArukeresoSpider(scrapy.Spider):
 
         self.visited_url.add(response.url)
         logging.critical(f" --------   Time taken for the request in Parse: {time.time() - start_time}   -------")
-        self.parsing_time += (datetime.now() - time).total_seconds()
+        self.parsing_time[0] += (datetime.now() - time).total_seconds()
 
     def parse_link(self, response):
-        start_time = time.time()
+        start_time = datetime.now()
 
         prices = ""
         competitors = ""
@@ -287,7 +287,7 @@ class ArukeresoSpider(scrapy.Spider):
 
         self.product_count += 1
         logging.critical(f" --------   Time taken for the request in Parse  _ link: {time.time() - start_time}   -------")
-        self.parsing_time += (datetime.now() - time).total_seconds()
+        self.parsing_time[1] += (datetime.now() - time).total_seconds()
 
     def restart_parsing(self):
         return
@@ -354,7 +354,11 @@ class ArukeresoSpider(scrapy.Spider):
             #yield from self.restart_parsing()
         
         logging.critical(f"  ------  Time took to manage proxies : {self.proxy_time}  ------")
-        logging.critical(f" -------  Time took parsing the data : {self.parsing_time}  -------")
+        logging.critical(f" -------  Time took parsing the data : {self.parsing_time[0]}  -------")
+        logging.critical(f" -------  Time took parsing the link : {self.parsing_time[1]}  -------")
+        logging.critical(f" -------  Time took parsing tSUM : {sum(self.parsing_time)}  -------")
+
+
         self.push_to_google_drive("output.jsonl")
         
 
