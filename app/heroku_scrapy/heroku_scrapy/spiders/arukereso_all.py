@@ -234,7 +234,7 @@ class ArukeresoSpider(scrapy.Spider):
                 # here is should implement the write to temporary file 
 
         self.visited_url.add(response.url)
-        logging.critical(f" --------   Time taken for the request in Parse: {time.time() - start_time}   -------")
+        logging.critical(f" --------   Time taken for the request in Parse: {datetime.now() - start_time}   -------")
         self.parsing_time[0] += (datetime.now() - time).total_seconds()
 
     def parse_link(self, response):
@@ -359,7 +359,7 @@ class ArukeresoSpider(scrapy.Spider):
         logging.critical(f" -------  Time took parsing tSUM : {sum(self.parsing_time)}  -------")
 
 
-        self.push_to_google_drive("output.jsonl")
+        #self.push_to_google_drive("output.jsonl")
         
 
 
