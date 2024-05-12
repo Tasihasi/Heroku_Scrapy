@@ -118,6 +118,8 @@ class ArukeresoSpider(scrapy.Spider):
 
     def __init__(self, *args, **kwargs):
         super(ArukeresoSpider, self).__init__(*args, **kwargs)
+        self.proxy_time = 0
+        self.parsing_time = 0
         self.product_count = 0
         #self.valid_proxies = Get_valid_Proxy_list() #["195.123.8.186:8080"] #
         self.raw_proxy_list = Getting_new_proxies()
@@ -143,18 +145,21 @@ class ArukeresoSpider(scrapy.Spider):
         selected_proxy = random.choice(valid_proxies)
 
         logging.warning(f" -----    !!!! Time took to get a new poxy  time took :  { datetime.now() - time}   !!!!!  ----")
-
+        self.proxy_time += datetime.now() - time
         return selected_proxy
 
     def check_proxy_status(self, proxy):
+        time = datetime.now()
         try:
             response = requests.get("https://www.arukereso.hu/nyomtato-patron-toner-c3138/", proxies={"http": proxy, "https": proxy}, timeout=10)
             if response.status_code == 200:
                 logging.info(f'-------------------  Proxy {proxy} is being used for the request.------------------------------')
+                self.proxy_time += datetime.now() - time
                 return True
         except requests.exceptions.RequestException:
             logging.info(f'------------------------- Proxy {proxy} is not being used for the request.--------------------')
             pass
+        self.proxy_time += datetime.now() - time
         return False
 
     def remove_proxy(self, failure):
@@ -230,6 +235,7 @@ class ArukeresoSpider(scrapy.Spider):
 
         self.visited_url.add(response.url)
         logging.critical(f" --------   Time taken for the request in Parse: {time.time() - start_time}   -------")
+        self.parsing_time += time.time() - start_time
 
     def parse_link(self, response):
         start_time = time.time()
@@ -281,7 +287,7 @@ class ArukeresoSpider(scrapy.Spider):
 
         self.product_count += 1
         logging.critical(f" --------   Time taken for the request in Parse  _ link: {time.time() - start_time}   -------")
-
+        self.parsing_time += time.time() - start_time
 
     def restart_parsing(self):
         return
@@ -347,7 +353,8 @@ class ArukeresoSpider(scrapy.Spider):
             #self.start_urls = self.error_urls
             #yield from self.restart_parsing()
         
-        
+        logging.critical(f"  ------  Time took to manage proxies : {self.proxy_time}  ------")
+        logging.critical(f" -------  Time took parsing the data : {self.parsing_time}  -------")
         self.push_to_google_drive("output.jsonl")
         
 
