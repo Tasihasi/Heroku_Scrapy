@@ -358,7 +358,7 @@ class ArukeresoSpider(scrapy.Spider):
         logging.critical(f" -------  Time took parsing the data : {self.parsing_time[0]}  -------")
         logging.critical(f" -------  Time took parsing the link : {self.parsing_time[1]}  -------")
         logging.critical(f" -------  Time took parsing SUM : {sum(self.parsing_time)}  -------")
-        logging.critical(f" -------  Time took run the spider : {self.crawling_time - datetime.now()}  -------")
+        logging.critical(f" -------  Time took run the spider : {(datetime.now() - self.crawling_time)}  -------")
 
 
         #self.push_to_google_drive("output.jsonl")
