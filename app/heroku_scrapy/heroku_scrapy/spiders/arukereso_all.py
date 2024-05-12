@@ -145,7 +145,7 @@ class ArukeresoSpider(scrapy.Spider):
         selected_proxy = random.choice(valid_proxies)
 
         logging.warning(f" -----    !!!! Time took to get a new poxy  time took :  { datetime.now() - time}   !!!!!  ----")
-        self.proxy_time += datetime.now() - time
+        self.proxy_time += (datetime.now() - time).total_seconds()
         return selected_proxy
 
     def check_proxy_status(self, proxy):
@@ -154,12 +154,12 @@ class ArukeresoSpider(scrapy.Spider):
             response = requests.get("https://www.arukereso.hu/nyomtato-patron-toner-c3138/", proxies={"http": proxy, "https": proxy}, timeout=10)
             if response.status_code == 200:
                 logging.info(f'-------------------  Proxy {proxy} is being used for the request.------------------------------')
-                self.proxy_time += datetime.now() - time
+                self.proxy_time += (datetime.now() - time).total_seconds()
                 return True
         except requests.exceptions.RequestException:
             logging.info(f'------------------------- Proxy {proxy} is not being used for the request.--------------------')
             pass
-        self.proxy_time += datetime.now() - time
+        self.proxy_time += (datetime.now() - time).total_seconds()
         return False
 
     def remove_proxy(self, failure):
@@ -235,7 +235,7 @@ class ArukeresoSpider(scrapy.Spider):
 
         self.visited_url.add(response.url)
         logging.critical(f" --------   Time taken for the request in Parse: {time.time() - start_time}   -------")
-        self.parsing_time += time.time() - start_time
+        self.parsing_time += (datetime.now() - time).total_seconds()
 
     def parse_link(self, response):
         start_time = time.time()
@@ -287,7 +287,7 @@ class ArukeresoSpider(scrapy.Spider):
 
         self.product_count += 1
         logging.critical(f" --------   Time taken for the request in Parse  _ link: {time.time() - start_time}   -------")
-        self.parsing_time += time.time() - start_time
+        self.parsing_time += (datetime.now() - time).total_seconds()
 
     def restart_parsing(self):
         return
