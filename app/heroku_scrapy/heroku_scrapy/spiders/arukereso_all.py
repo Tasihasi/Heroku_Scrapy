@@ -118,6 +118,7 @@ class ArukeresoSpider(scrapy.Spider):
 
     def __init__(self, *args, **kwargs):
         super(ArukeresoSpider, self).__init__(*args, **kwargs)
+        self.request_waiting = 0
         self.crawling_time = datetime.now()
         self.proxy_time = 0
         self.parsing_time = [0,0]
@@ -178,7 +179,8 @@ class ArukeresoSpider(scrapy.Spider):
         proxy = self.select_proxy()
 
         logging.info(f" ---- current proxy : {proxy}")
-    
+
+        proxy_time = datetime.now()
         while not proxy and len(self.raw_proxy_list) <30:
 
             self.raw_proxy_list = Getting_new_proxies()
@@ -186,6 +188,8 @@ class ArukeresoSpider(scrapy.Spider):
 
             logging.info("trying to get new  proxy list: " , self.proxies_retries)
         
+        self.proxy_time += (datetime.now() - proxy_time).total_seconds()
+
         if not proxy:
             #logging.info("------------------  There was no proxies ---------   logging")
             return
@@ -194,7 +198,7 @@ class ArukeresoSpider(scrapy.Spider):
 
 
         
-
+        request_wait = datetime.now()
         if response.url not in self.visited_url:
             request = scrapy.Request(
                 url=(response.url),
@@ -208,7 +212,8 @@ class ArukeresoSpider(scrapy.Spider):
 
             #logging.info(f"Outgoing request headers: {request.headers}")
             yield request
-            
+
+        self.request_waiting += (datetime.now() - request_wait).total_seconds()  
 
         all_products = response.css("div.name a ::text").getall()
         all_prices = response.css("div.price::text").getall()
