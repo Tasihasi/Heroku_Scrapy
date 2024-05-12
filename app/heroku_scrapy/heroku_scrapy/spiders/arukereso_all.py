@@ -118,6 +118,7 @@ class ArukeresoSpider(scrapy.Spider):
 
     def __init__(self, *args, **kwargs):
         super(ArukeresoSpider, self).__init__(*args, **kwargs)
+        self.crawling_time = datetime.now()
         self.proxy_time = 0
         self.parsing_time = [0,0]
         self.product_count = 0
@@ -356,7 +357,8 @@ class ArukeresoSpider(scrapy.Spider):
         logging.critical(f"  ------  Time took to manage proxies : {self.proxy_time}  ------")
         logging.critical(f" -------  Time took parsing the data : {self.parsing_time[0]}  -------")
         logging.critical(f" -------  Time took parsing the link : {self.parsing_time[1]}  -------")
-        logging.critical(f" -------  Time took parsing tSUM : {sum(self.parsing_time)}  -------")
+        logging.critical(f" -------  Time took parsing SUM : {sum(self.parsing_time)}  -------")
+        logging.critical(f" -------  Time took run the spider : {self.crawling_time - datetime.now()}  -------")
 
 
         #self.push_to_google_drive("output.jsonl")
