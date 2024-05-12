@@ -91,28 +91,7 @@ class ArukeresoSpider(scrapy.Spider):
         
         return ret_list
     
-    def write_item_to_xml(self, item):
-        filename = 'temp_output.xml'
-
-        if os.path.exists(filename):
-            tree = ET.parse(filename)
-            root = tree.getroot()
-        else:
-            root = ET.Element('items')
-            tree = ET.ElementTree(root)
-
-        item_element = ET.Element('item')
-
-        for key, value in item.items():
-            field = ET.Element(key)
-            field.text = str(value)
-            item_element.append(field)
-
-        root.append(item_element)
-
-        with open(filename, 'wb') as file:
-            tree.write(file)
-            
+      
 
     
 
@@ -125,6 +104,7 @@ class ArukeresoSpider(scrapy.Spider):
         self.product_count = 0
         #self.valid_proxies = Get_valid_Proxy_list() #["195.123.8.186:8080"] #
         self.raw_proxy_list = Getting_new_proxies()
+        self.valid_proxies = [proxy for proxy in self.raw_proxy_list if proxy and proxy != "-"]
         self.proxies_retries = 0
         self.start_urls = self.predicting_url(self.start_urls[0])
         self.error_urls = []  # List to store URLs that encountered errors
@@ -139,12 +119,12 @@ class ArukeresoSpider(scrapy.Spider):
             return None
 
         # Filter out invalid proxies
-        valid_proxies = [proxy for proxy in self.raw_proxy_list if proxy and proxy != "-"]
+        
 
-        if not valid_proxies:
+        if not self.valid_proxies:
             return None  # Return None if no valid proxies are available
 
-        selected_proxy = random.choice(valid_proxies)
+        selected_proxy = random.choice(self.valid_proxies)
 
         logging.warning(f" -----    !!!! Time took to get a new poxy  time took :  { datetime.now() - time}   !!!!!  ----")
         self.proxy_time += (datetime.now() - time).total_seconds()
@@ -164,7 +144,10 @@ class ArukeresoSpider(scrapy.Spider):
         self.proxy_time += (datetime.now() - time).total_seconds()
         return False
 
-    def remove_proxy(self, failure):
+    def remove_proxy(self, proxy) -> None:
+        if proxy in self.valid_proxies:
+            self.valid_proxies.remove(proxy)
+
         return 
             #raise CloseSpider("closed the spider manually at line 176")
 
@@ -204,7 +187,7 @@ class ArukeresoSpider(scrapy.Spider):
                 url=(response.url),
                 callback=self.parse_link,
                 dont_filter=True,
-                #errback=self.remove_proxy(proxy),  # add this line
+                errback=self.remove_proxy(proxy),  # add this line
                 meta={'proxy': str("https://")+self.select_proxy()},
                 headers=headers,
             )
@@ -364,6 +347,7 @@ class ArukeresoSpider(scrapy.Spider):
         logging.critical(f" -------  Time took parsing the link : {self.parsing_time[1]}  -------")
         logging.critical(f" -------  Time took parsing SUM : {sum(self.parsing_time)}  -------")
         logging.critical(f" -------  Time took run the spider : {(datetime.now() - self.crawling_time).total_seconds()}  -------")
+        logging.critical(f" -------  Times getting new proxies  : {self.proxies_retries}  -------")
 
 
         #self.push_to_google_drive("output.jsonl")
