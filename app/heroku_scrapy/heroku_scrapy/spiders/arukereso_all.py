@@ -119,7 +119,7 @@ class ArukeresoSpider(scrapy.Spider):
     def __init__(self, *args, **kwargs):
         super(ArukeresoSpider, self).__init__(*args, **kwargs)
         self.proxy_time = 0
-        self.parsing_time = [int]
+        self.parsing_time = [0,0]
         self.product_count = 0
         #self.valid_proxies = Get_valid_Proxy_list() #["195.123.8.186:8080"] #
         self.raw_proxy_list = Getting_new_proxies()
@@ -286,7 +286,7 @@ class ArukeresoSpider(scrapy.Spider):
             self.error_urls.append(response.url)
 
         self.product_count += 1
-        logging.critical(f" --------   Time taken for the request in Parse  _ link: {time.time() - start_time}   -------")
+        logging.critical(f" --------   Time taken for the request in Parse  _ link: {datetime.now() - start_time}   -------")
         self.parsing_time[1] += (datetime.now() - time).total_seconds()
 
     def restart_parsing(self):
