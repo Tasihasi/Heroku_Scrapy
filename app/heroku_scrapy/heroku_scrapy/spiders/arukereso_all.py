@@ -235,7 +235,7 @@ class ArukeresoSpider(scrapy.Spider):
 
         self.visited_url.add(response.url)
         logging.critical(f" --------   Time taken for the request in Parse: {datetime.now() - start_time}   -------")
-        self.parsing_time[0] += (datetime.now() - time).total_seconds()
+        self.parsing_time[0] += (datetime.now() - start_time).total_seconds()
 
     def parse_link(self, response):
         start_time = datetime.now()
@@ -287,7 +287,7 @@ class ArukeresoSpider(scrapy.Spider):
 
         self.product_count += 1
         logging.critical(f" --------   Time taken for the request in Parse  _ link: {datetime.now() - start_time}   -------")
-        self.parsing_time[1] += (datetime.now() - time).total_seconds()
+        self.parsing_time[1] += (datetime.now() - start_time).total_seconds()
 
     def restart_parsing(self):
         return
