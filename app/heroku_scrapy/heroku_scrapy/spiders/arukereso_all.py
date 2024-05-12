@@ -7,6 +7,7 @@ import os
 import random
 from typing import List
 import xml.etree.ElementTree as ET
+import cProfile
 
 
 
@@ -79,7 +80,7 @@ class ArukeresoSpider(scrapy.Spider):
         'RETRY_TIMES': 0,  # Number of times to retry a failed request
         'RETRY_HTTP_CODES': [500, 502, 503, 504, 408, 443],  # HTTP status codes to retry
         #   ------ closing spider aftre 50 items -------
-        'CLOSESPIDER_ITEMCOUNT': 50,
+        'CLOSESPIDER_ITEMCOUNT': 1000,
     }
     def predicting_url(self, url : str) -> List[str]:
 
@@ -121,14 +122,16 @@ class ArukeresoSpider(scrapy.Spider):
         #self.valid_proxies = Get_valid_Proxy_list() #["195.123.8.186:8080"] #
         self.raw_proxy_list = Getting_new_proxies()
         self.proxies_retries = 0
-        self.start_urls = self.start_urls #self.predicting_url(self.start_urls[0])
+        self.start_urls = self.predicting_url(self.start_urls[0])
         self.error_urls = []  # List to store URLs that encountered errors
         self.visited_url = set()
 
         #logging.info("----------- Got valid Proxies. ------------------")
 
     def select_proxy(self):
+        time = datetime.now()
         if not self.raw_proxy_list:
+            logging.error(f"No proxies available time took :  { datetime.now() - time}")
             return None
 
         # Filter out invalid proxies
@@ -138,6 +141,8 @@ class ArukeresoSpider(scrapy.Spider):
             return None  # Return None if no valid proxies are available
 
         selected_proxy = random.choice(valid_proxies)
+
+        logging.warning(f" -----    !!!! Time took to get a new poxy  time took :  { datetime.now() - time}   !!!!!  ----")
 
         return selected_proxy
 
@@ -225,9 +230,6 @@ class ArukeresoSpider(scrapy.Spider):
 
         self.visited_url.add(response.url)
         logging.critical(f" --------   Time taken for the request in Parse: {time.time() - start_time}   -------")
-
-
-            
 
     def parse_link(self, response):
         start_time = time.time()
