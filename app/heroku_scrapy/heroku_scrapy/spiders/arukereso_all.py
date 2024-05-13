@@ -97,6 +97,7 @@ class ArukeresoSpider(scrapy.Spider):
 
     def __init__(self, *args, **kwargs):
         super(ArukeresoSpider, self).__init__(*args, **kwargs)
+        self.time_passing = {}
         self.request_waiting = 0
         self.crawling_time = datetime.now()
         self.proxy_time = 0
@@ -157,6 +158,7 @@ class ArukeresoSpider(scrapy.Spider):
 
     def parse(self, response):
         start_time = datetime.now()
+        self.time_passing["start parsing start"] = start_time
 
         # Get a proxy for this request
         proxy = self.select_proxy()
@@ -225,9 +227,11 @@ class ArukeresoSpider(scrapy.Spider):
         self.visited_url.add(response.url)
         logging.critical(f" --------   Time taken for the request in Parse: {datetime.now() - start_time}   -------")
         self.parsing_time[0] += (datetime.now() - start_time).total_seconds()
+        self.time_passing["end parsing"] = (datetime.now() - start_time).total_seconds()
 
     def parse_link(self, response):
         start_time = datetime.now()
+        self.time_passing["start parsing link"] = start_time
 
         prices = ""
         competitors = ""
@@ -277,6 +281,7 @@ class ArukeresoSpider(scrapy.Spider):
         self.product_count += 1
         logging.critical(f" --------   Time taken for the request in Parse  _ link: {datetime.now() - start_time}   -------")
         self.parsing_time[1] += (datetime.now() - start_time).total_seconds()
+        self.time_passing["end parsing link"] = (datetime.now() - start_time).total_seconds()
 
     def restart_parsing(self):
         return
@@ -348,7 +353,7 @@ class ArukeresoSpider(scrapy.Spider):
         logging.critical(f" -------  Time took parsing SUM : {sum(self.parsing_time)}  -------")
         logging.critical(f" -------  Time took run the spider : {(datetime.now() - self.crawling_time).total_seconds()}  -------")
         logging.critical(f" -------  Times getting new proxies  : {self.proxies_retries}  -------")
-
+        logging.critical(f" -------  Times waiting for the request : {self.time_passing}  -------")
 
         #self.push_to_google_drive("output.jsonl")
         
