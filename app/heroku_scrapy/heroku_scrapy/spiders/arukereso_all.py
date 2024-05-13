@@ -111,7 +111,7 @@ class ArukeresoSpider(scrapy.Spider):
 
         #logging.info("----------- Got valid Proxies. ------------------")
 
-    def select_proxy(self):
+    def select_proxy(self) -> str:
         time = datetime.now()
         if not self.raw_proxy_list:
             logging.error(f"No proxies available time took :  { datetime.now() - time}")
@@ -154,7 +154,22 @@ class ArukeresoSpider(scrapy.Spider):
             #self.raw_proxy_list.remove(failure.request.meta['proxy'])
         
     def start_requests(self):
-        urls = [...]  # list of URLs to process
+        # Get a proxy for this request
+        proxy = self.select_proxy()
+
+        proxy_time = datetime.now()
+        while not proxy and len(self.raw_proxy_list) <30:
+
+            self.raw_proxy_list = Getting_new_proxies()
+            self.proxies_retries+=1
+
+            logging.info("trying to get new  proxy list: " , self.proxies_retries)
+        
+        self.proxy_time += (datetime.now() - proxy_time).total_seconds()
+
+
+
+        urls = []  # list of URLs to process
         with ThreadPoolExecutor(max_workers=4) as executor:
             for url in urls:
                 yield scrapy.Request(url, meta={'proxy': self.select_proxy()})
@@ -171,15 +186,7 @@ class ArukeresoSpider(scrapy.Spider):
 
         logging.info(f" ---- current proxy : {proxy}")
 
-        proxy_time = datetime.now()
-        while not proxy and len(self.raw_proxy_list) <30:
-
-            self.raw_proxy_list = Getting_new_proxies()
-            self.proxies_retries+=1
-
-            logging.info("trying to get new  proxy list: " , self.proxies_retries)
-        
-        self.proxy_time += (datetime.now() - proxy_time).total_seconds()
+       
 
         if not proxy:
             #logging.info("------------------  There was no proxies ---------   logging")
