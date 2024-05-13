@@ -8,6 +8,7 @@ import random
 from typing import List
 import xml.etree.ElementTree as ET
 from concurrent.futures import ThreadPoolExecutor
+import socket
 
 
 import logging
@@ -16,43 +17,92 @@ import logging
 
 #logging.info("Spider started")
 
+import socket
+
+def is_port_open(host: str, port: int) -> bool:
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    sock.settimeout(1)  # One second timeout
+    try:
+        sock.connect((host, port))
+        sock.close()
+        return True
+    except socket.error:
+        return False
 
 
 
+def check_proxy_status(proxy : str ) -> int:
+    """
+    Check if a proxy is working by making a request to a test URL.
+    """
+    test_url = "https://www.arukereso.hu/nyomtato-patron-toner-c3138/"
+
+    try:
+        if requests.get(proxy, timeout=5).status_code == 501:
+
+            # TODO implement port scan
+
+            logging.info(f"Proxy {proxy} is not working")
+            return -1
+
+
+        response = requests.get(test_url, proxies={"http": proxy, "https": proxy}, timeout=3)
+        if response.status_code == 200:
+            logging.info(f"Proxy {proxy} is working")
+            return int(proxy.split(":")[-1])
+        
+        
+        return -1
+
+    except requests.RequestException:
+        return False
+
+def check_proxy_multi_threadedly(proxies : List[str] ) -> List[str]:
+    """
+    Check if a proxy is working by making a request to a test URL.
+    """
+
+    def check_and_format_proxy(proxy):
+        if check_proxy_status(proxy):
+            return proxy
+        return None
+    
+
+    valid_proxies = List[str]
+
+    with ThreadPoolExecutor(max_workers=200) as executor:
+        results = executor.map(check_and_format_proxy, proxies)
+
+    # Filter out None values and return the list of valid proxies
+    valid_proxies = [proxy for proxy in results if proxy is not None]
+
+    return valid_proxies
 
 
 def Getting_new_proxies():  # Running the scrapy 
+
+
+
         # Define the command as a list of strings
         logging.info("--------------------   Getting new proxies ---------------------------")
         current_directory = os.getcwd()
         #print("Current Working Directory:", current_directory)
 
-        url = "https://api.proxyscrape.com/v2/?request=displayproxies&protocol=http&timeout=10000&country=all&ssl=all&anonymity=all"
-        output_file = "proxyes.txt"
+        url = "https://api.proxyscrape.com/v2/?request=displayproxies&protocol=http&timeout=10000&country=all&ssl=no&anonymity=elite"
 
         try:
             response = requests.get(url)
-            retList = []
 
             if response.status_code == 200:
                 # Successful response
-                proxies = response.text.split("\n")
-                
-                # Write proxies to proxies.txt file
-                with open(output_file, "w") as file:
-                    for proxy in proxies:
-                        file.write(f"{proxy}\n")  # write each proxy on a new line
-                    
-                #print("Proxies retrieved and saved to proxies.txt")
-                for item in proxies:
-                    retList.append(str("http://") + item)
-                    retList.append(str("https://") + item)
-
+                proxies = response.text.strip().split("\n")
+                proxies = [f"http://{proxy.strip()}" for proxy in proxies]
+                #proxies += [f"https://{proxy.strip()}" for proxy in proxies]
                 #return retList
-
                 logging.info(f"Proxies retrieved and saved to {proxies}")
 
-                return proxies
+
+                return check_proxy_multi_threadedly(proxies)
             else:
                 # Handle other status codes if needed
                 pass
@@ -63,9 +113,37 @@ def Getting_new_proxies():  # Running the scrapy
             pass
             #print(f"An error occurred: {e}")
 
+"""
+def Getting_new_proxies():  # owerwrite Running the scrapy
+    url = ["https://raw.githubusercontent.com/proxifly/free-proxy-list/main/proxies/protocols/http/data.txt"]
+
+    try:
+        response = requests.get(url)
+
+        if response.status_code == 200:
+            # Successful response
+
+            logging.info(f"Proxies retrieved and saved to {response.text.strip()}")
 
 
+            proxies = response.text.strip().split("\n")
+             #proxies = [f"http://{proxy.strip()}" for proxy in proxies]
+            #proxies += [f"https://{proxy.strip()}" for proxy in proxies]
+            #return retList
+            logging.info(f"Proxies retrieved and saved to {proxies}")
 
+
+            return check_proxy_multi_threadedly(proxies)
+        else:
+            # Handle other status codes if needed
+            pass
+            #print(f"Request failed with status code: {response.status_code}")
+
+    except requests.RequestException as e:
+        # Handle exceptions or errors
+        pass
+        #print(f"An error occurred: {e}")
+"""
 
 class ArukeresoSpider(scrapy.Spider):
     name = 'arukereso_all'
@@ -125,11 +203,12 @@ class ArukeresoSpider(scrapy.Spider):
 
         selected_proxy = random.choice(self.valid_proxies)
 
+
         logging.warning(f" -----    !!!! Time took to get a new poxy  time took :  { datetime.now() - time}   !!!!!  ----")
         self.proxy_time += (datetime.now() - time).total_seconds()
         return selected_proxy
 
-    def check_proxy_status(self, proxy):
+    def check_proxy_status(self, proxy : str)-> bool:
         time = datetime.now()
         try:
             response = requests.get("https://www.arukereso.hu/nyomtato-patron-toner-c3138/", proxies={"http": proxy, "https": proxy}, timeout=10)
@@ -143,7 +222,7 @@ class ArukeresoSpider(scrapy.Spider):
         self.proxy_time += (datetime.now() - time).total_seconds()
         return False
 
-    def remove_proxy(self, proxy) -> None:
+    def remove_proxy(self, proxy : str) -> None:
         if proxy in self.valid_proxies:
             self.valid_proxies.remove(proxy)
 
@@ -154,6 +233,8 @@ class ArukeresoSpider(scrapy.Spider):
             #self.raw_proxy_list.remove(failure.request.meta['proxy'])
         
     def start_requests(self):
+        logging.info("--------------   !!!!!   Spider started !!!!!!!!  ------------------")
+
         # Get a proxy for this request
         proxy = self.select_proxy()
 
@@ -169,9 +250,9 @@ class ArukeresoSpider(scrapy.Spider):
 
 
 
-        urls = []  # list of URLs to process
+        
         with ThreadPoolExecutor(max_workers=4) as executor:
-            for url in urls:
+            for url in self.start_urls:
                 yield scrapy.Request(url, meta={'proxy': self.select_proxy()})
 
         logging.info(f" ---- SPidre started IN THE START REQUESTS ----  {datetime.now() - self.crawling_time}  ----")
