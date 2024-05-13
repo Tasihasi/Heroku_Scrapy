@@ -173,7 +173,8 @@ class ArukeresoSpider(scrapy.Spider):
         with ThreadPoolExecutor(max_workers=4) as executor:
             for url in urls:
                 yield scrapy.Request(url, meta={'proxy': self.select_proxy()})
-                #executor.submit(self.parse, url, meta={'proxy': self.select_proxy()})   
+
+        logging.info(f" ---- SPidre started IN THE START REQUESTS ----  {datetime.now() - self.crawling_time}  ----")
 
     def parse(self, response):
         start_time = datetime.now()
@@ -183,6 +184,16 @@ class ArukeresoSpider(scrapy.Spider):
         self.time_passing["start parsing start"].append((datetime.now() - self.crawling_time).total_seconds())
         # Get a proxy for this request
         proxy = self.select_proxy()
+
+        proxy_time = datetime.now()
+        while not proxy and len(self.raw_proxy_list) <30:
+
+            self.raw_proxy_list = Getting_new_proxies()
+            self.proxies_retries+=1
+
+            logging.info("trying to get new  proxy list: " , self.proxies_retries)
+        
+        self.proxy_time += (datetime.now() - proxy_time).total_seconds()
 
         logging.info(f" ---- current proxy : {proxy}")
 
