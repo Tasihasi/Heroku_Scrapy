@@ -7,9 +7,7 @@ import os
 import random
 from typing import List
 import xml.etree.ElementTree as ET
-import cProfile
-
-
+from concurrent.futures import ThreadPoolExecutor
 
 
 import logging
@@ -212,12 +210,14 @@ class ArukeresoSpider(scrapy.Spider):
         competitor = all_competitors[0] if all_competitors else ''
 
         comparison_links = response.css("a.button-orange::attr(href)").getall()
-        
+        parse_links = []
+
         for n, p, c, link in zip(all_products, all_prices, all_competitors, comparison_links):
             
             if n and p and c:
                 if "arukereso.hu" in link and link not in self.visited_url:
-                    yield scrapy.Request(url=link, callback=self.parse_link)
+                    parse_links.append(link)
+                    #yield scrapy.Request(url=link, callback=self.parse_link)
                 else:
                     yield {'name': n, 'price': p.strip(), 'competitor': c, 'url': response.url}
 
@@ -225,6 +225,10 @@ class ArukeresoSpider(scrapy.Spider):
                     self.write_item_to_xml(item_data)
 
                 # here is should implement the write to temporary file 
+
+        with ThreadPoolExecutor(max_workers=25) as executor:
+            for link in parse_links:
+                executor.submit(self.parse_link, link)
 
         self.visited_url.add(response.url)
         logging.critical(f" --------   Time taken for the request in Parse: {datetime.now() - start_time}   -------")
