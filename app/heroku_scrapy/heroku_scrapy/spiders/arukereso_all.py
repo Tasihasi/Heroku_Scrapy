@@ -157,7 +157,7 @@ class ArukeresoSpider(scrapy.Spider):
         urls = [...]  # list of URLs to process
         with ThreadPoolExecutor(max_workers=4) as executor:
             for url in urls:
-                yield requests.get(url, meta={'proxy': self.select_proxy()})
+                yield scrapy.Request(url, meta={'proxy': self.select_proxy()})
                 #executor.submit(self.parse, url, meta={'proxy': self.select_proxy()})   
 
     def parse(self, response):
@@ -235,7 +235,7 @@ class ArukeresoSpider(scrapy.Spider):
         with ThreadPoolExecutor(max_workers=25) as executor:
             for link in parse_links:
                 yield scrapy.Request(url=link, callback=self.parse_link, meta={'proxy': self.select_proxy()}, headers=headers)
-
+        
         self.visited_url.add(response.url)
         logging.critical(f" --------   Time taken for the request in Parse: {datetime.now() - start_time}   -------")
         self.parsing_time[0] += (datetime.now() - start_time).total_seconds()
