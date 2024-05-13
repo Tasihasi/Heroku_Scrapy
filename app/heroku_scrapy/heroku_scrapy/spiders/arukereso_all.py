@@ -158,7 +158,7 @@ class ArukeresoSpider(scrapy.Spider):
 
     def parse(self, response):
         start_time = datetime.now()
-        self.time_passing["start parsing start"] = start_time
+        self.time_passing["start parsing start"] = (datetime.now()  - self.crawling_time).total_seconds()
 
         # Get a proxy for this request
         proxy = self.select_proxy()
@@ -227,11 +227,11 @@ class ArukeresoSpider(scrapy.Spider):
         self.visited_url.add(response.url)
         logging.critical(f" --------   Time taken for the request in Parse: {datetime.now() - start_time}   -------")
         self.parsing_time[0] += (datetime.now() - start_time).total_seconds()
-        self.time_passing["end parsing"] = (datetime.now() - start_time).total_seconds()
+        self.time_passing["end parsing"] = (datetime.now()  - self.crawling_time).total_seconds()
 
     def parse_link(self, response):
         start_time = datetime.now()
-        self.time_passing["start parsing link"] = start_time
+        self.time_passing["start parsing link"] = (datetime.now()  - self.crawling_time).total_seconds()
 
         prices = ""
         competitors = ""
@@ -281,7 +281,7 @@ class ArukeresoSpider(scrapy.Spider):
         self.product_count += 1
         logging.critical(f" --------   Time taken for the request in Parse  _ link: {datetime.now() - start_time}   -------")
         self.parsing_time[1] += (datetime.now() - start_time).total_seconds()
-        self.time_passing["end parsing link"] = (datetime.now() - start_time).total_seconds()
+        self.time_passing["end parsing link"] = (datetime.now() - self.crawling_time).total_seconds()
 
     def restart_parsing(self):
         return
