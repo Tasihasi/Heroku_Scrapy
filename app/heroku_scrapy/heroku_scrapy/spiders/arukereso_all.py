@@ -153,6 +153,11 @@ class ArukeresoSpider(scrapy.Spider):
             # this function will remove the proxy from the list
             #self.raw_proxy_list.remove(failure.request.meta['proxy'])
         
+    def start_requests(self):
+        urls = [...]  # list of URLs to process
+        with ThreadPoolExecutor(max_workers=4) as executor:
+            for url in urls:
+                executor.submit(self.make_request_from_url, url, meta={'proxy': self.select_proxy()})   
 
     def parse(self, response):
         start_time = datetime.now()
@@ -228,7 +233,7 @@ class ArukeresoSpider(scrapy.Spider):
 
         with ThreadPoolExecutor(max_workers=25) as executor:
             for link in parse_links:
-                executor.submit(self.parse_link, link)
+                executor.submit(self.parse_link, link, meta={'proxy': self.select_proxy()})
 
         self.visited_url.add(response.url)
         logging.critical(f" --------   Time taken for the request in Parse: {datetime.now() - start_time}   -------")
