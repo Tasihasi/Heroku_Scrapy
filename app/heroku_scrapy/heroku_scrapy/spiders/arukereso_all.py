@@ -19,6 +19,13 @@ import logging
 
 import socket
 
+#Returns user agent
+def get_user_agents() -> List[str]:
+    with open('lists/useragents.txt') as f:
+        USER_AGENT_PARTS = f.readlines()
+    return USER_AGENT_PARTS
+
+
 def is_port_open(host: str, port: int) -> bool:
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     sock.settimeout(1)  # One second timeout
@@ -28,6 +35,13 @@ def is_port_open(host: str, port: int) -> bool:
         return True
     except socket.error:
         return False
+    
+
+def port_scan(host: str, start_port: int, end_port: int) -> List[int]:
+    with ThreadPoolExecutor(max_workers=50) as executor:
+        futures = {executor.submit(is_port_open, host, port): port for port in range(start_port, end_port + 1)}
+        open_ports = [future.result() for future in futures if future.result() is not None]
+    return open_ports
 
 
 
@@ -38,11 +52,13 @@ def check_proxy_status(proxy : str ) -> int:
     test_url = "https://www.arukereso.hu/nyomtato-patron-toner-c3138/"
 
     try:
-        if requests.get(proxy, timeout=5).status_code == 501:
+        if requests.get(proxy, timeout=5).status_code != 200:
 
             # TODO implement port scan
+            # TODO REplace the port with the working port
 
             logging.info(f"Proxy {proxy} is not working")
+            logging.info(f"Checking the port of the proxy {proxy.split(':')[0] }   {proxy.split(':')[1]}")
             return -1
 
 
@@ -63,7 +79,7 @@ def check_proxy_multi_threadedly(proxies : List[str] ) -> List[str]:
     """
 
     def check_and_format_proxy(proxy):
-        if check_proxy_status(proxy):
+        if -1 < check_proxy_status(proxy):
             return proxy
         return None
     
@@ -186,8 +202,13 @@ class ArukeresoSpider(scrapy.Spider):
         self.start_urls = self.predicting_url(self.start_urls[0])
         self.error_urls = []  # List to store URLs that encountered errors
         self.visited_url = set()
+        self.user_agents = get_user_agents()
 
         #logging.info("----------- Got valid Proxies. ------------------")
+
+    #returns a random user agent
+    def get_random_user_agent(self) -> str:
+        return random.choice(self.user_agents)
 
     def select_proxy(self) -> str:
         time = datetime.now()
@@ -253,7 +274,7 @@ class ArukeresoSpider(scrapy.Spider):
         
         with ThreadPoolExecutor(max_workers=4) as executor:
             for url in self.start_urls:
-                yield scrapy.Request(url, meta={'proxy': self.select_proxy()})
+                yield scrapy.Request(url, meta={'proxy': self.select_proxy()}, header={'User-Agent': self.get_random_user_agent()})
 
         logging.info(f" ---- SPidre started IN THE START REQUESTS ----  {datetime.now() - self.crawling_time}  ----")
 
@@ -296,7 +317,7 @@ class ArukeresoSpider(scrapy.Spider):
                 dont_filter=True,
                 errback=self.remove_proxy(proxy),  # add this line
                 meta={'proxy': str("https://")+self.select_proxy()},
-                headers=headers,
+                headers=self.get_random_user_agent(),
             )
 
 
