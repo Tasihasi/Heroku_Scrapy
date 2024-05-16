@@ -188,6 +188,7 @@ class ArukeresoSpider(scrapy.Spider):
     
 
     def __init__(self, *args, **kwargs):
+        logging.info(f"current directore : {os.getcwd()}")
         super(ArukeresoSpider, self).__init__(*args, **kwargs)
         self.time_passing = {}
         self.request_waiting = 0
