@@ -262,6 +262,7 @@ class ArukeresoSpider(scrapy.Spider):
         proxy = self.select_proxy()
 
         proxy_time = datetime.now()
+        """
         while not proxy and len(self.raw_proxy_list) <30:
 
             self.raw_proxy_list = Getting_new_proxies()
@@ -270,13 +271,13 @@ class ArukeresoSpider(scrapy.Spider):
             logging.info("trying to get new  proxy list: " , self.proxies_retries)
         
         self.proxy_time += (datetime.now() - proxy_time).total_seconds()
-
+        """
 
 
         
         with ThreadPoolExecutor(max_workers=4) as executor:
             for url in self.start_urls:
-                yield scrapy.Request(url,  header={'User-Agent': self.get_random_user_agent()}) #meta={'proxy': self.select_proxy()},
+                yield scrapy.Request(url,  headers={'User-Agent': self.get_random_user_agent()}) #meta={'proxy': self.select_proxy()},
 
         logging.info(f" ---- SPidre started IN THE START REQUESTS ----  {datetime.now() - self.crawling_time}  ----")
 
@@ -286,6 +287,8 @@ class ArukeresoSpider(scrapy.Spider):
             self.time_passing["start parsing start"] = []
 
         self.time_passing["start parsing start"].append((datetime.now() - self.crawling_time).total_seconds())
+        """
+        
         # Get a proxy for this request
         proxy = self.select_proxy()
 
@@ -300,12 +303,12 @@ class ArukeresoSpider(scrapy.Spider):
         self.proxy_time += (datetime.now() - proxy_time).total_seconds()
 
         logging.info(f" ---- current proxy : {proxy}")
-
+        """
        
 
-        if not proxy:
+        #if not proxy:
             #logging.info("------------------  There was no proxies ---------   logging")
-            return
+          #  return
 
         headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36'}
 
@@ -317,7 +320,7 @@ class ArukeresoSpider(scrapy.Spider):
                 url=(response.url),
                 callback=self.parse_link,
                 dont_filter=True,
-                errback=self.remove_proxy(proxy),  # add this line
+                #errback=self.remove_proxy(proxy),  # add this line
                 #meta={'proxy': str("https://")+self.select_proxy()},
                 headers=self.get_random_user_agent(),
             )
