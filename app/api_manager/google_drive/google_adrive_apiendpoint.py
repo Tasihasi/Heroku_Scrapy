@@ -144,6 +144,8 @@ def create_file( file_name, file_mimeType, force_update = 0):
     
     logging.info("Create file api endpoint triggered")
 
+    # Checking the api key
+
     request_api_key = request.headers.get('shrek_key')
 
 
@@ -153,7 +155,8 @@ def create_file( file_name, file_mimeType, force_update = 0):
     if not file_name or not file_mimeType:
         return jsonify({'error': 'File name and MIME type are required.'}), 400
 
-    
+    # modify the MIME type if necessary
+
     if file_mimeType == "text":
         file_mimeType = "text/plain"
     elif file_mimeType == "ipynb":
@@ -179,9 +182,11 @@ def create_file( file_name, file_mimeType, force_update = 0):
                 if force_update != 1:
                     return jsonify({'error': 'File name already exists.'}), 400
 
+        # Delete the file if it already exists and force_update is set to 1
         if force_update == 1 and file_id is not None:
             delete_file(file_id)
     logging.info("File name does not exist. Proceeding to create the file.")
+
     try:
         # create drive api client
         service = Get_drive_service()
@@ -217,10 +222,11 @@ def create_file( file_name, file_mimeType, force_update = 0):
         try:
 
             # Specify the file to be uploaded in chunks
-            file_metadata = {'name': 'My Data', 'mimeType': file_mimeType}
-            media = MediaFileUpload(file_name,
-                                    mimetype=file_metadata['mimeType'],
-                                    resumable=True)
+            #file_metadata = {'name': 'My Data', 'mimeType': file_mimeType}
+
+            #media = MediaFileUpload(file_name,
+                                    #mimetype=file_metadata['mimeType'],
+                                    #resumable=True)
 
             # Upload the file in chunks
             request = service.files().create(body=file_metadata,
