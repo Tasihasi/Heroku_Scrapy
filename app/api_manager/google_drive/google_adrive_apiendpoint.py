@@ -172,14 +172,15 @@ def create_file( file_name, file_mimeType, force_update = 0):
         files = response.json()["files"]
 
         # Check if the file name already exists
+        file_id = None
         for file in files:
             if file_name == file['name']:
                 file_id = file["id"]
-                if force_update == 1:
-                    delete_file(file_id)
-                else:
+                if force_update != 1:
                     return jsonify({'error': 'File name already exists.'}), 400
 
+        if force_update == 1 and file_id is not None:
+            delete_file(file_id)
     logging.info("File name does not exist. Proceeding to create the file.")
     try:
         # create drive api client
