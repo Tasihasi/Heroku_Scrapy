@@ -197,7 +197,7 @@ class ArukeresoSpider(scrapy.Spider):
         self.product_count = 0
         #self.valid_proxies = Get_valid_Proxy_list() #["195.123.8.186:8080"] #
         self.raw_proxy_list = Getting_new_proxies()
-        self.valid_proxies = [proxy for proxy in self.raw_proxy_list if proxy and proxy != "-"]
+        self.valid_proxies = [] #[proxy for proxy in self.raw_proxy_list if proxy and proxy != "-"]
         self.proxies_retries = 0
         self.start_urls = self.predicting_url(self.start_urls[0])
         self.error_urls = []  # List to store URLs that encountered errors
@@ -274,7 +274,7 @@ class ArukeresoSpider(scrapy.Spider):
         
         with ThreadPoolExecutor(max_workers=4) as executor:
             for url in self.start_urls:
-                yield scrapy.Request(url, meta={'proxy': self.select_proxy()}, header={'User-Agent': self.get_random_user_agent()})
+                yield scrapy.Request(url,  header={'User-Agent': self.get_random_user_agent()}) #meta={'proxy': self.select_proxy()},
 
         logging.info(f" ---- SPidre started IN THE START REQUESTS ----  {datetime.now() - self.crawling_time}  ----")
 
@@ -316,7 +316,7 @@ class ArukeresoSpider(scrapy.Spider):
                 callback=self.parse_link,
                 dont_filter=True,
                 errback=self.remove_proxy(proxy),  # add this line
-                meta={'proxy': str("https://")+self.select_proxy()},
+                #meta={'proxy': str("https://")+self.select_proxy()},
                 headers=self.get_random_user_agent(),
             )
 
