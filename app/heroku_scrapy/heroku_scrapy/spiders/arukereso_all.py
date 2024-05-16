@@ -172,7 +172,7 @@ class ArukeresoSpider(scrapy.Spider):
         'RETRY_TIMES': 0,  # Number of times to retry a failed request
         'RETRY_HTTP_CODES': [500, 502, 503, 504, 408, 443],  # HTTP status codes to retry
         #   ------ closing spider aftre 50 items -------
-        'CLOSESPIDER_ITEMCOUNT': 3000,
+        'CLOSESPIDER_ITEMCOUNT': 10_000,
     }
     def predicting_url(self, url : str) -> List[str]:
 
@@ -275,7 +275,7 @@ class ArukeresoSpider(scrapy.Spider):
 
 
         
-        with ThreadPoolExecutor(max_workers=4) as executor:
+        with ThreadPoolExecutor(max_workers=22) as executor:
             for url in self.start_urls:
                 yield scrapy.Request(url,  headers={'User-Agent': self.get_random_user_agent()}) #meta={'proxy': self.select_proxy()},
 
