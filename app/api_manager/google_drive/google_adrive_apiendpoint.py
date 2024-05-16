@@ -217,9 +217,9 @@ def create_file( file_name, file_mimeType, force_update = 0):
         try:
 
             # Specify the file to be uploaded in chunks
-            file_metadata = {'name': 'My Report', 'mimeType': 'application/pdf'}
-            media = MediaFileUpload('files/report.pdf',
-                                    mimetype='application/pdf',
+            file_metadata = {'name': 'My Data', 'mimeType': file_mimeType}
+            media = MediaFileUpload(file_name,
+                                    mimetype=file_metadata['mimeType'],
                                     resumable=True)
 
             # Upload the file in chunks
