@@ -212,6 +212,9 @@ def create_file( file_name, file_mimeType, force_update = 0):
 
         logging.info(f"File created successfully: {file.get('id')}")
 
+        return jsonify({'file_id': file.get('id')})
+
+
         # Define the permissions to be granted
         permissions = {
             'role': 'reader',  # or 'writer'
