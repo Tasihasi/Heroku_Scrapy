@@ -503,6 +503,7 @@ class ArukeresoSpider(scrapy.Spider):
         logging.critical(f" -------  Time took run the spider : {(datetime.now() - self.crawling_time).total_seconds()}  -------")
         logging.critical(f" -------  Times getting new proxies  : {self.proxies_retries}  -------")
         logging.critical(f" -------  Times waiting for the request : {self.time_passing}  -------")
+        logging.critical(f"  -------  HERE IS THE FOLDER CONTENTS : {os.listdir()}  -------")   
 
         self.push_to_google_drive("output.jsonl")
         
