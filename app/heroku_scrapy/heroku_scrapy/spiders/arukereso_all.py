@@ -21,7 +21,7 @@ import socket
 
 #Returns user agent
 def get_user_agents() -> List[str]:
-    with open('useragents.txt') as f:
+    with open('../useragents.txt') as f:
         USER_AGENT_PARTS = f.readlines()
     return USER_AGENT_PARTS
 
@@ -196,7 +196,7 @@ class ArukeresoSpider(scrapy.Spider):
         self.parsing_time = [0,0]
         self.product_count = 0
         #self.valid_proxies = Get_valid_Proxy_list() #["195.123.8.186:8080"] #
-        self.raw_proxy_list = Getting_new_proxies()
+        self.raw_proxy_list = [] #Getting_new_proxies()
         self.valid_proxies = [] #[proxy for proxy in self.raw_proxy_list if proxy and proxy != "-"]
         self.proxies_retries = 0
         self.start_urls = self.predicting_url(self.start_urls[0])
