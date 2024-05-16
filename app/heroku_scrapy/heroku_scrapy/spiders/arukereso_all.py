@@ -310,7 +310,7 @@ class ArukeresoSpider(scrapy.Spider):
             #logging.info("------------------  There was no proxies ---------   logging")
           #  return
 
-        headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36'}
+        headers = {'User-Agent': self.get_random_user_agent()}
 
 
         
@@ -322,7 +322,7 @@ class ArukeresoSpider(scrapy.Spider):
                 dont_filter=True,
                 #errback=self.remove_proxy(proxy),  # add this line
                 #meta={'proxy': str("https://")+self.select_proxy()},
-                headers=self.get_random_user_agent(),
+                headers=headers
             )
 
 
@@ -359,7 +359,10 @@ class ArukeresoSpider(scrapy.Spider):
 
         with ThreadPoolExecutor(max_workers=25) as executor:
             for link in parse_links:
-                yield scrapy.Request(url=link, callback=self.parse_link, meta={'proxy': self.select_proxy()}, headers=headers)
+                headers = {'User-Agent': self.get_random_user_agent()}
+                yield scrapy.Request(url=link, callback=self.parse_link,
+                                      #meta={'proxy': self.select_proxy()},
+                                        headers=headers)
         
         self.visited_url.add(response.url)
         logging.critical(f" --------   Time taken for the request in Parse: {datetime.now() - start_time}   -------")
