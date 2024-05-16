@@ -21,7 +21,7 @@ import socket
 
 #Returns user agent
 def get_user_agents() -> List[str]:
-    with open('../useragents.txt') as f:
+    with open('useragents.txt') as f:
         USER_AGENT_PARTS = f.readlines()
     return USER_AGENT_PARTS
 
