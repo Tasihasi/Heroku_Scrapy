@@ -168,12 +168,12 @@ class ArukeresoSpider(scrapy.Spider):
 
     custom_settings = {
         'DOWNLOAD_DELAY': 0.01,  # add download delay of 1 second
-        'CONCURRENT_REQUESTS': 1, # 128,  # Adjust the concurrency level as needed
+        'CONCURRENT_REQUESTS': 1_000, # 128,  # Adjust the concurrency level as needed
         'CONCURRENT_REQUESTS_PER_DOMAIN' : 1_000, # for the current limit this must be so high
         'RETRY_TIMES': 0,  # Number of times to retry a failed request
         'RETRY_HTTP_CODES': [500, 502, 503, 504, 408, 443],  # HTTP status codes to retry
         #   ------ closing spider aftre 50 items -------
-        'CLOSESPIDER_ITEMCOUNT': 100,
+        #'CLOSESPIDER_ITEMCOUNT': 100,
     }
     def predicting_url(self, url : str) -> List[str]:
 
@@ -448,7 +448,7 @@ class ArukeresoSpider(scrapy.Spider):
 
         # Define the file name and MIME type
         current_date = datetime.now().strftime('%Y-%m-%d')  # Get the current date as a string
-        file_name = f"{current_date}_printer"  # Set the file name to the current date
+        file_name = f"{current_date}_printer.gzip"  # Set the file name to the current date
         file_mimeType = "gzip"  # Replace with your actual MIME type
 
         # Get the current directory
