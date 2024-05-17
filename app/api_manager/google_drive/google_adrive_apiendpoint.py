@@ -91,7 +91,7 @@ def get_file(file_id):
             }
         )
 
-        logging.info("File content: " + data.decode('utf-8'))
+        #logging.info("File content: " + data.decode('utf-8'))
         return response
 
    

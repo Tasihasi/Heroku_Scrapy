@@ -176,7 +176,7 @@ def test_my_api_key():
 
 if __name__ == "__main__":
 
-    #delete_file_by_id("1jCcajnKM70ty4_MtLIF-X3l-r8UPZxOb")
+    #delete_file_by_id("1UvhtonMyiinQQgQGqSJzj_THk-A0ecJf")
 
     #create_file_api()
 
@@ -187,6 +187,6 @@ if __name__ == "__main__":
     #create_file_api()
     #list_files_endpoint()
     list_files_endpoint()
-    retrieve_file_by_id("1wrPdKnSrjNmmKaubvpgt5oO06Gh6FlV_")
+    retrieve_file_by_id("1id0eSiARCuQsYGvqhvzvLHMfMk9dNcyd")
 
     #test_file_upload("proxies.txt")
