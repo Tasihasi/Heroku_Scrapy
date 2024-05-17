@@ -165,6 +165,8 @@ def create_file( file_name, file_mimeType, force_update = 0):
         file_mimeType = "application/x-ipynb+json"
     elif file_mimeType == "csv":
         file_mimeType = "text/csv"
+    elif file_mimeType == "gzip":
+        file_mimeType = "application/gzip"
 
     home_url = os.getenv('home_url')
 

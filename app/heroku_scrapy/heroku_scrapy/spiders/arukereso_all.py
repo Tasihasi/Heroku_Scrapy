@@ -448,8 +448,8 @@ class ArukeresoSpider(scrapy.Spider):
 
         # Define the file name and MIME type
         current_date = datetime.now().strftime('%Y-%m-%d')  # Get the current date as a string
-        file_name = f"{current_date}.csv"  # Set the file name to the current date
-        file_mimeType = "csv"  # Replace with your actual MIME type
+        file_name = f"{current_date}_printer"  # Set the file name to the current date
+        file_mimeType = "gzip"  # Replace with your actual MIME type
 
         # Get the current directory
         current_directory = os.getcwd()
