@@ -90,6 +90,8 @@ def get_file(file_id):
                 "Content-Length": file_size
             }
         )
+
+        logging.info("File content: " + data.decode('utf-8'))
         return response
 
    

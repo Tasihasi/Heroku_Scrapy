@@ -32,7 +32,7 @@ def retrieve_file_by_id(file_id : str):
 
     try:
         # Make a GET request to the API endpoint
-        response = requests.get(endpoint_url, timeout=120)
+        response = requests.get(endpoint_url, timeout=120, stream=True)
         
         # Check if the request was successful (status code 200)
         if response.status_code == 200:
@@ -187,6 +187,6 @@ if __name__ == "__main__":
     #create_file_api()
     #list_files_endpoint()
     list_files_endpoint()
-    #retrieve_file_by_id("1F4D-A0OOTEP91ArgMYohEbbOpHKsgWT3")
+    retrieve_file_by_id("1wrPdKnSrjNmmKaubvpgt5oO06Gh6FlV_")
 
     #test_file_upload("proxies.txt")
