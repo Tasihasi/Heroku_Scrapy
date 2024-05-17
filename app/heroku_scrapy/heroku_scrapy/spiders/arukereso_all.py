@@ -3,6 +3,7 @@ from scrapy.exceptions import CloseSpider
 from datetime import datetime
 import requests
 import time
+import gzip
 import os
 import random
 from typing import List
@@ -275,7 +276,7 @@ class ArukeresoSpider(scrapy.Spider):
 
 
         
-        with ThreadPoolExecutor(max_workers=44) as executor:
+        with ThreadPoolExecutor(max_workers=100) as executor:
             for url in self.start_urls:
                 yield scrapy.Request(url,  headers={'User-Agent': self.get_random_user_agent()}) #meta={'proxy': self.select_proxy()},
 
@@ -469,6 +470,9 @@ class ArukeresoSpider(scrapy.Spider):
         # Print the content of the file
         logging.info(f"Here is the content :  {content}")
 
+        # Compress the content
+        compressed_content = gzip.compress(content.encode())
+
         
         # Define the API endpoint URL
         endpoint_url = f"{home_url}/create_file/{file_name}/{file_mimeType}/1"
@@ -479,7 +483,7 @@ class ArukeresoSpider(scrapy.Spider):
             headers = {"shrek_key": shrek_key}
 
 
-            response = requests.post(endpoint_url, headers=headers, data=content)
+            response = requests.post(endpoint_url, headers=headers, data=compressed_content)
 
             logging.info(f"Response from the server: {response.text}")
 
