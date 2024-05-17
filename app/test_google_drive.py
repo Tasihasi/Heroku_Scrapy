@@ -1,6 +1,8 @@
 import requests
 import json
 import os
+import gzip
+from io import BytesIO
 
 shrek_key  = "g96#NjLc}wJR=C~/F7?k2$.,5TDumGEW@s)^M38K](t<;y>[r%"
 
@@ -36,16 +38,31 @@ def retrieve_file_by_id(file_id : str):
         
         # Check if the request was successful (status code 200)
         if response.status_code == 200:
-            print(f"here is the response : {response.content}")
-            print(f"here is the response : {response.__dict__}")
+
+            try:
+                # Create a BytesIO object from the response content
+                compressed_file = BytesIO(response.content)
+
+                # Decompress the data
+                decompressed_file = gzip.GzipFile(fileobj=compressed_file)
+
+                # Read the decompressed data
+                decoded_content = decompressed_file.read().decode('utf-8')
+
+            except OSError:
+                # If the file is not compressed, read the response content directly
+                decoded_content = response.content.decode('utf-8')
+
+            print(f"here is the response : {decoded_content}")
+            #print(f"here is the response : {response.__dict__}")
 
             # Define the chunk size
             chunk_size = 1024  # You can adjust this value depending on your needs
             
             # Iterate over the response data in chunks
-            for chunk in response.iter_content(chunk_size):
+            #for chunk in response.iter_content(chunk_size):
                 # Print the chunk to the console
-                print(chunk)
+                #print(chunk)
         else:
             # Print an error message if the request was not successful
             print("Error: Unable to retrieve file. Status code:", response.status_code)
