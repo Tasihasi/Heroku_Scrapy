@@ -173,7 +173,7 @@ class ArukeresoSpider(scrapy.Spider):
         'RETRY_TIMES': 0,  # Number of times to retry a failed request
         'RETRY_HTTP_CODES': [500, 502, 503, 504, 408, 443],  # HTTP status codes to retry
         #   ------ closing spider aftre 50 items -------
-        #'CLOSESPIDER_ITEMCOUNT': 100,
+        'CLOSESPIDER_ITEMCOUNT': 100,
     }
     def predicting_url(self, url : str) -> List[str]:
 
