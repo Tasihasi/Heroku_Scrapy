@@ -127,7 +127,7 @@ def get_file(file_id):
         content = file_content.read()
 
         # Convert the bytes to a string for logging
-        content_str = content.decode('utf-8')
+        #content_str = content.decode('utf-8')
 
         #logging.info("File content: " + content_str)
         return send_large_file(file_content, file_metadata)
