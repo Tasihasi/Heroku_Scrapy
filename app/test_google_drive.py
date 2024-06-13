@@ -223,35 +223,39 @@ def test_file_upload(file_path : str):
 
 
 
-def test_gzip_file_upload(file_path : str):
+def test_gzip_file_upload(file_path: str, shrek_key: str):
     # Define the base URL of your API
-    base_url = f"https://herokuscrapy-8d468df2dace.herokuapp.com"  # Update this with your actual API domain
+    base_url = "https://herokuscrapy-8d468df2dace.herokuapp.com"
 
-    # Define the endpoint URL
-    endpoint_url = base_url + f"/upload/google_payload_test.gzip/gzip"  
+    # Correctly format the endpoint URL to match the Flask route
+    file_name = "google_payload_test.gzip"
+    file_mimeType = "gzip"
+    force_update = "1"  # Assuming you want to force update; change as needed
+    endpoint_url = f"{base_url}/create_file/{file_name}/{file_mimeType}/{force_update}"
 
     headers = {"shrek_key": shrek_key}
 
-    # Compress the file to gzip format
-    with open(file_path, 'rb') as f_in:
-        with io.BytesIO() as f_out:
-            with gzip.GzipFile(fileobj=f_out, mode='w') as gz_file:
-                shutil.copyfileobj(f_in, gz_file)
+    # Compress the file to gzip format and prepare it for upload
+    with open(file_path, 'rb') as f_in, io.BytesIO() as f_out:
+        with gzip.GzipFile(fileobj=f_out, mode='w') as gz_file:
+            shutil.copyfileobj(f_in, gz_file)
+        f_out.seek(0)  # reset file pointer to beginning
 
-            f_out.seek(0)  # reset file pointer to beginning
-            files = {'file': (file_path, f_out, 'application/gzip')}
-            response = requests.post(endpoint_url, files=files, headers=headers)
-            print(response.text)
+        # Make the POST request with the gzip file content in the body
+        response = requests.post(endpoint_url, data=f_out.getvalue(), headers=headers)
+        print(response.text)
 
-    # Print the size of the file
-    print(f"File size: {os.path.getsize(compressed_file_path)} bytes")
+        # Print the size of the data being posted
+        print(f"Data size: {f_out.tell()} bytes")
 
-    # Check the status of the request
-    if response.status_code == 200:
-        print("File uploaded successfully.")
-    else:
-        print(f"Failed to upload the file. Status code: {response.status_code}")
+        # Check the status of the request
+        if response.status_code == 200:
+            print("File uploaded successfully.")
+        else:
+            print(f"Failed to upload the file. Status code: {response.status_code}")
 
+# Example usage
+# test_gzip_file_upload("path_to_your_file", "your_shrek_key")
 
 
 
@@ -280,9 +284,11 @@ if __name__ == "__main__":
 
     #test_my_api_key()
 
+    #test_gzip_file_upload("google_drive_payload_tester.json", shrek_key)
+
     #create_file_api()
     #list_files_endpoint()
     list_files_endpoint()
-    #retrieve_gzip_file_by_id("13uj-h1zMA1gnSQHxRPe2vL4d3JYpOWjb", "./test.jsonl")
+    retrieve_gzip_file_by_id("1VSCGMnjh4YtQnfPbgw37ok-QTjP0c5Ea", "./test.jsonl")
 
     #test_file_upload("proxies.txt")

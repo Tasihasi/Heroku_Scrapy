@@ -110,8 +110,6 @@ def get_file(file_id):
         # Create a file-like object to store the file content
         file_content = io.BytesIO()
 
-        # Logg the content lenght 
-        logging.warning(f"Content length: {len(file_content)}  !!!!!    --------------")
 
         # Request the file content from Google Drive
         request = drive_service.files().get_media(fileId=file_id)
@@ -128,6 +126,9 @@ def get_file(file_id):
 
         file_content.seek(0)
         content = file_content.read()
+
+        #Loggin the file content length
+        logging.info(f"File content length: {file_content.tell()}")
 
         # Convert the bytes to a string for logging
         #content_str = content.decode('utf-8')
