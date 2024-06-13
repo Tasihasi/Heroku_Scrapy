@@ -2,7 +2,9 @@ import requests
 import json
 import os
 import gzip
+import shutil
 from io import BytesIO
+import io
 
 shrek_key  = "g96#NjLc}wJR=C~/F7?k2$.,5TDumGEW@s)^M38K](t<;y>[r%"
 
@@ -63,6 +65,48 @@ def retrieve_file_by_id(file_id : str):
             #for chunk in response.iter_content(chunk_size):
                 # Print the chunk to the console
                 #print(chunk)
+        else:
+            # Print an error message if the request was not successful
+            print("Error: Unable to retrieve file. Status code:", response.status_code)
+    
+    except requests.RequestException as e:
+        # Print an error message if an exception occurs during the request
+        print("Error:", e)
+
+
+
+def retrieve_gzip_file_by_id(file_id : str, local_file_path: str):
+    # Define the base URL of your API
+    base_url = "https://herokuscrapy-8d468df2dace.herokuapp.com"  # Update this with your actual API domain
+    
+    # Define the endpoint URL
+    endpoint_url = base_url + f"/get_file/{file_id}"  # Update YOUR_FILE_ID with the actual file ID
+
+    try:
+        # Make a GET request to the API endpoint
+        response = requests.get(endpoint_url, timeout=120, stream=True)
+        
+        # Check if the request was successful (status code 200)
+        if response.status_code == 200:
+
+            try:
+                # Create a BytesIO object from the response content
+                compressed_file = BytesIO(response.content)
+
+                # Decompress the data
+                decompressed_file = gzip.GzipFile(fileobj=compressed_file)
+
+                # Read the decompressed data
+                decoded_content = decompressed_file.read().decode('utf-8')
+
+            except OSError:
+                # If the file is not compressed, read the response content directly
+                decoded_content = response.content.decode('utf-8')
+
+            # Save the decoded content to a local file
+            with open(local_file_path, 'w') as f:
+                f.write(decoded_content)
+
         else:
             # Print an error message if the request was not successful
             print("Error: Unable to retrieve file. Status code:", response.status_code)
@@ -177,6 +221,40 @@ def test_file_upload(file_path : str):
         print(f"Failed to upload the file. Status code: {response.status_code}")
 
 
+
+
+def test_gzip_file_upload(file_path : str):
+    # Define the base URL of your API
+    base_url = f"https://herokuscrapy-8d468df2dace.herokuapp.com"  # Update this with your actual API domain
+
+    # Define the endpoint URL
+    endpoint_url = base_url + f"/upload/google_payload_test.gzip/gzip"  
+
+    headers = {"shrek_key": shrek_key}
+
+    # Compress the file to gzip format
+    with open(file_path, 'rb') as f_in:
+        with io.BytesIO() as f_out:
+            with gzip.GzipFile(fileobj=f_out, mode='w') as gz_file:
+                shutil.copyfileobj(f_in, gz_file)
+
+            f_out.seek(0)  # reset file pointer to beginning
+            files = {'file': (file_path, f_out, 'application/gzip')}
+            response = requests.post(endpoint_url, files=files, headers=headers)
+            print(response.text)
+
+    # Print the size of the file
+    print(f"File size: {os.path.getsize(compressed_file_path)} bytes")
+
+    # Check the status of the request
+    if response.status_code == 200:
+        print("File uploaded successfully.")
+    else:
+        print(f"Failed to upload the file. Status code: {response.status_code}")
+
+
+
+
 def test_my_api_key():
     # Define the base URL of your API
     base_url = "https://herokuscrapy-8d468df2dace.herokuapp.com"  # Update this with your actual API domain
@@ -191,6 +269,7 @@ def test_my_api_key():
     print(response.text)
     print(response.status_code)
 
+
 if __name__ == "__main__":
 
     #delete_file_by_id("1UvhtonMyiinQQgQGqSJzj_THk-A0ecJf")
@@ -204,6 +283,6 @@ if __name__ == "__main__":
     #create_file_api()
     #list_files_endpoint()
     list_files_endpoint()
-    retrieve_file_by_id("13uj-h1zMA1gnSQHxRPe2vL4d3JYpOWjb")
+    #retrieve_gzip_file_by_id("13uj-h1zMA1gnSQHxRPe2vL4d3JYpOWjb", "./test.jsonl")
 
     #test_file_upload("proxies.txt")

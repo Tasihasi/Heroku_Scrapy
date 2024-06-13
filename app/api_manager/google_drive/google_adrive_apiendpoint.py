@@ -110,6 +110,9 @@ def get_file(file_id):
         # Create a file-like object to store the file content
         file_content = io.BytesIO()
 
+        # Logg the content lenght 
+        logging.warning(f"Content length: {len(file_content)}  !!!!!    --------------")
+
         # Request the file content from Google Drive
         request = drive_service.files().get_media(fileId=file_id)
         downloader = MediaIoBaseDownload(file_content, request)
@@ -202,6 +205,10 @@ def create_file( file_name, file_mimeType, force_update = 0):
         
          # Get the content from the POST request
         content = request.get_data()
+
+        # Logg the content lenght 
+        logging.warning(f"Content length: {len(content)}  !!!!!    --------------")
+
         # Create a file-like object from the content
         fh = io.BytesIO(content)
 
