@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='utf-8'?>
+<data>
+  <row>
+    <index>0</index>
+    <product_name>Canon CL-541XL Color (BS5226B005AA)</product_name>
+    <originality>original</originality>
+    <price>10224</price>
+    <competitor>alza.hu</competitor>
+    <min_price>13250</min_price>
+    <lower_min>100</lower_min>
+    <lowered_price>13250</lowered_price>
+  </row>
+  <row>
+    <index>1</index>
+    <product_name>HP CZ101AE</product_name>
+    <originality>original</originality>
+    <price>5480</price>
+    <competitor>alza.hu</competitor>
+    <min_price>500</min_price>
+    <lower_min>100</lower_min>
+    <lowered_price>5380</lowered_price>
+  </row>
+  <row>
+    <index>2</index>
+    <product_name>Samsung MLT-D116L</product_name>
+    <originality>manufactured</originality>
+    <price>1900</price>
+    <competitor>aqua.hu</competitor>
+    <min_price>200</min_price>
+    <lower_min>10</lower_min>
+    <lowered_price>1890</lowered_price>
+  </row>
+</data>
