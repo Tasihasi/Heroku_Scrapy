@@ -386,6 +386,11 @@ def get_processed_data():
 
 @api.route('/get_client_data', methods=['GET'])
 def get_client_data():
+
+    logging.info(f"-----------------    Current working directory: {os.getcwd()}  -------------------  ")
+
+
+
     client_api_key = request.args.get('shrek_key')
     home_url = os.getenv("home_url")
     shrek_key = os.getenv("shrek_api_key")
