@@ -390,7 +390,7 @@ def get_client_data():
 
     logging.info(f"-----------------    Current working directory: {os.getcwd()}  -------------------  ")
     logging.info(f"-----------------    Current working directory: {os.path.dirname(os.path.abspath(__file__))}  -------------------  ")
-    logging.info(f"-----------------    Business logic dose exists: {os.path.exists(".business_logic")}  -------------------  ")
+    logging.info(f"all the current files in this directory: {os.listdir()}")
 
     client_api_key = request.args.get('shrek_key')
     home_url = os.getenv("home_url")
