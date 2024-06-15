@@ -1,17 +1,13 @@
 import os
 import logging
 
-logging.info(f"Current working directory: {os.getcwd()}")
-
-
-
 from flask import Blueprint, jsonify, request, Response, send_file
 import xml.etree.ElementTree as ET
 import json
 from .auth import valid_api_key, getting_raw_data
 from .scrapy_manager import newest_raw_data
 from .data_retrieve import get_data_from_scrapy, get_proxies
-from ..business_logic.run_data_manipulate import run_data_man
+from .business_logic.run_data_manipulate import run_data_man
 from concurrent.futures import ThreadPoolExecutor  # For async execution
 from datetime import datetime, timedelta
 import requests
