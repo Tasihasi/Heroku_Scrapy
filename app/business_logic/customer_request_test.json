@@ -1,8 +1,0 @@
-[
-    {"name" : "Samsung MLT-D116L", "originality" : "manufactured" , "customer_name" : "" , "min_price" : 200 , "lower_min" : 10},
-    {"name" : "Samsung MLT-D116L", "originality" : "original" , "customer_name" : "" , "min_price" : 200 , "lower_min" : 10},
-
-    {"name" : "HP CZ101AE","originality" : "original", "customer_name" : "" , "min_price" : 500 , "lower_min" : 100},
-    {"name" : "Canon CL-541XL Color (BS5226B005AA)","originality" : "original", "customer_name" : "" , "min_price" : 13250 , "lower_min" : 100}
-
-]

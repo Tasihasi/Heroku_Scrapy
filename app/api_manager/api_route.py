@@ -382,4 +382,26 @@ def get_processed_data():
     return Response(generate(processed_data), content_type='text/plain')
     
 
+@api.route('/get_client_data', methods=['GET'])
+def get_client_data():
+    client_api_key = request.args.get('api_key')
+    home_url =  os.getenv("home_url")
+    shrek_key = os.getenv("shrek_api_key")
+
+    if client_api_key is None:
+        return jsonify({"message" : "No apikey provided."})
     
+    elif client_api_key != shrek_key:
+        return jsonify({"message" : "The api key provided is incorrect."})
+
+    client_product_data = request.args.get('product_data')
+
+    def move_client_product_data_to_business_folder(client_product_data):
+        # Move the data to the business logic folder
+        pass
+
+    # copy the scrapy data to the business logic folder
+
+    logging.info(f"here is excetuted this code : {os.getcwd()}")
+
+    return 
