@@ -445,6 +445,9 @@ def get_client_data():
             return jsonify({"message": "Error processing data."}), 404
     else:
         return jsonify({"message": "Error processing data."}), 500
+    
+
+    return jsonify({"message": "Data processing completed successfully."})
 
 
     
