@@ -387,31 +387,28 @@ def get_processed_data():
 @api.route('/get_client_data', methods=['GET'])
 def get_client_data():
     client_api_key = request.args.get('shrek_key')
-    home_url =  os.getenv("home_url")
+    home_url = os.getenv("home_url")
     shrek_key = os.getenv("shrek_api_key")
 
     if client_api_key is None:
-        pass
-        #return jsonify({"message" : "No apikey provided."})
+        return jsonify({"message": "No apikey provided."}), 400
     
     elif client_api_key != shrek_key:
-        pass
-        #return jsonify({"message" : "The api key provided is incorrect."})
+        return jsonify({"message": "The api key provided is incorrect."}), 401
 
     client_product_data = request.args.get('product_data')
 
     if client_product_data is None:
-        return jsonify({"message" : "No product data provided."})
+        return jsonify({"message": "No product data provided."}), 400
 
-    logging.info(f"Here is excetuted this code : {os.getcwd()}")
+    logging.info(f"Here is executed this code: {os.getcwd()}")
 
-    # Looking for outpu.jsonl file in the heroku_scrapy directory
-
+    # Looking for output.jsonl file in the heroku_scrapy directory
     output_file = "./heroku_scrapy/output.jsonl"
 
     if not os.path.exists(output_file):
         logging.info(f"Directory {output_file} NOT exists")
-        return jsonify({"message" : "The output.jsonl file does not exist."})
+        return jsonify({"message": "The output.jsonl file does not exist."}), 404
     
     # Copy the output.jsonl file to the business logic folder
     business_logic_directory = "./business_logic"
@@ -419,42 +416,35 @@ def get_client_data():
     try:
         shutil.copy(output_file, business_logic_directory)
         logging.info(f"File {output_file} copied to {business_logic_directory}")
-
-
     except Exception as e:
         logging.error(f"Error copying file: {e}")
-        return jsonify({"message" : "Error copying file."})
+        return jsonify({"message": "Error copying file."}), 500
 
-    # copy the client data to business_logic directory
+    # Copy the client data to business_logic directory
     try:
         shutil.copy(client_product_data, business_logic_directory)
         logging.info(f"File {client_product_data} copied to {business_logic_directory}")
-
     except Exception as e:
         logging.error(f"Error copying file: {e}")
-        return jsonify({"message" : "Error copying file."})
-    
+        return jsonify({"message": "Error copying file."}), 500
 
     # Process the output.jsonl file
     logging.info(f"Processing the output.jsonl file: {output_file}")
 
-    if run_data_manipulate(".buiness_logic"):
+    # Assuming run_data_manipulate is a function you've defined elsewhere
+    if run_data_manipulate(".business_logic"):  # Fixed typo here
         logging.info("Data processing completed successfully")
 
         resulting_file = "./business_logic/customer_min_prices.xml"
 
         if os.path.exists(resulting_file):
             logging.info(f"File {resulting_file} exists")
-
-            # Send the resulting XML file
-            return send_file(resulting_file, as_attachment=True, mimetype='application/xml', )
-
+            return send_file(resulting_file, as_attachment=True, mimetype='application/xml')
         else:
             logging.error(f"File {resulting_file} does not exist")
-            return jsonify({"message" : "Error processing data."})
-        
-    return jsonify({"message" : "Error processing data."})
-
+            return jsonify({"message": "Error processing data."}), 404
+    else:
+        return jsonify({"message": "Error processing data."}), 500
 
 
     
