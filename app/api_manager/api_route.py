@@ -7,7 +7,7 @@ import json
 from .auth import valid_api_key, getting_raw_data
 from .scrapy_manager import newest_raw_data
 from .data_retrieve import get_data_from_scrapy, get_proxies
-from .business_logic.run_data_manipulate import run_data_man
+#from .business_logic.run_data_manipulate import run_data_man
 from concurrent.futures import ThreadPoolExecutor  # For async execution
 from datetime import datetime, timedelta
 import requests
@@ -389,8 +389,8 @@ def get_processed_data():
 def get_client_data():
 
     logging.info(f"-----------------    Current working directory: {os.getcwd()}  -------------------  ")
-
-
+    logging.info(f"-----------------    Current working directory: {os.path.dirname(os.path.abspath(__file__))}  -------------------  ")
+    logging.info(f"-----------------    Business logic dose exists: {os.path.exists(".business_logic")}  -------------------  ")
 
     client_api_key = request.args.get('shrek_key')
     home_url = os.getenv("home_url")
