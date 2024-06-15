@@ -389,10 +389,12 @@ def get_client_data():
     shrek_key = os.getenv("shrek_api_key")
 
     if client_api_key is None:
-        return jsonify({"message" : "No apikey provided."})
+        pass
+        #return jsonify({"message" : "No apikey provided."})
     
     elif client_api_key != shrek_key:
-        return jsonify({"message" : "The api key provided is incorrect."})
+        pass
+        #return jsonify({"message" : "The api key provided is incorrect."})
 
     client_product_data = request.args.get('product_data')
 
