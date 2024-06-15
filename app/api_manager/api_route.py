@@ -452,6 +452,8 @@ def get_client_data():
         else:
             logging.error(f"File {resulting_file} does not exist")
             return jsonify({"message" : "Error processing data."})
+        
+    return jsonify({"message" : "Error processing data."})
 
 
 
