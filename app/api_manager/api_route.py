@@ -6,7 +6,7 @@ import logging
 from .auth import valid_api_key, getting_raw_data
 from .scrapy_manager import newest_raw_data
 from .data_retrieve import get_data_from_scrapy, get_proxies
-from ..business_logic import run_data_manipulate
+from ..business_logic import run_data_man
 from concurrent.futures import ThreadPoolExecutor  # For async execution
 from datetime import datetime, timedelta
 import requests
@@ -437,7 +437,7 @@ def get_client_data():
     logging.info(f"Processing the output.jsonl file: {output_file}")
 
     # Assuming run_data_manipulate is a function you've defined elsewhere
-    if run_data_manipulate(".business_logic"):  # Fixed typo here
+    if run_data_man(".business_logic"):  # Fixed typo here
         logging.info("Data processing completed successfully")
 
         resulting_file = "./business_logic/customer_min_prices.xml"
