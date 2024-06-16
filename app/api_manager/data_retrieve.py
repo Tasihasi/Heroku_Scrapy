@@ -3,6 +3,87 @@ import logging
 from .api_proxy import wait_for_file, delete_existing_file, run_spider
 
 
+# Import necessary components
+from nbconvert import NotebookExporter, PDFExporter
+from nbformat import read
+from nbconvert.preprocessors import ExecutePreprocessor
+import nbformat
+import logging
+
+import os
+
+
+# Define the path to your notebook file
+notebook_filename = 'get_matching_data.ipynb'
+
+
+def run_notebook(path : str) -> None:
+    # Load the notebook
+    with open(path + notebook_filename) as f:
+        nb = nbformat.read(f, as_version=4)
+
+    # Create an instance of ExecutePreprocessor
+    execute_preprocessor = ExecutePreprocessor(timeout=600, kernel_name='python3')
+
+    # Execute the notebook
+    execute_preprocessor.preprocess(nb, {'metadata': {'path': 'path/to/notebook/directory'}})
+
+def check_dependencies(path : str) -> bool:
+    # Check if the necessary components are installed
+    def check_file_exists(file_path: str) -> bool:
+        # Check if the file exists
+        if os.path.exists(file_path):
+            print(f"The file {file_path} exists.")
+            return True
+        else:
+            print(f"The file {file_path} does not exist.")
+            return False
+
+    file_paths = [
+        notebook_filename,
+        "customer_request.json",
+        "Result.json",
+    ]
+
+    for file_path in file_paths:
+        if not check_file_exists(path +file_path):
+            logging.error(f"The file {path + file_path} does not exist.")
+            return False
+        
+    return True
+
+
+# Input : path to the directory containing the necessary files
+def run_data_man(path : str) -> bool:
+    #print("Current working directory:", os.getcwd())
+
+    # Get the list of all files and directories in the current working directory
+    #file_list = os.listdir(os.getcwd())
+
+    #print("Files and directories in '", os.getcwd(), "':")
+    # Print the list
+    #for file in file_list:
+        #print(file)
+
+    # Check if the necessary files are present
+
+    try:
+        if check_dependencies(path):
+            try :
+                # Run the notebook
+                run_notebook(path)
+                return True
+            except Exception as e:
+                logging.error(f"An error in the run_notebook: {e}")
+                return False
+        else:
+            logging.error("Necessary files are not present.  Please ensure that the necessary files are present.")
+
+    except Exception as e:
+        logging.error(f"An error occurred in the file checking: {e}")
+        return False
+
+
 
 logging.basicConfig(level=logging.DEBUG)
 def get_data_from_scrapy():

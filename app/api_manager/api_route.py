@@ -6,12 +6,12 @@ import xml.etree.ElementTree as ET
 import json
 from .auth import valid_api_key, getting_raw_data
 from .scrapy_manager import newest_raw_data
-from .data_retrieve import get_data_from_scrapy, get_proxies
-from .api_route.business_logic import run_data_manipulate
+from .data_retrieve import get_data_from_scrapy, get_proxies, run_data_man
 from concurrent.futures import ThreadPoolExecutor  # For async execution
 from datetime import datetime, timedelta
 import requests
 import shutil
+
 
 
 def remove_incomplete_last_item(xml_string, required_attributes):
