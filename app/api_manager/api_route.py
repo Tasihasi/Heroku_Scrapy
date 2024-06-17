@@ -408,7 +408,7 @@ def get_customer_data():
 
 
 @api.route('/get_business_logic_data/<file_name>', methods=['GET'])
-def get_business_logic_data(file_name : str):
+def get_business_logic_data(file_name : str = "customer_min_prices.xml"):
 
     client_api_key = request.args.get('shrek_key')
     home_url =  os.getenv("home_url")
