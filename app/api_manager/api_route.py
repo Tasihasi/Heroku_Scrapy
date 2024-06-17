@@ -405,7 +405,7 @@ def get_customer_data():
     
     return jsonify({"message" : "Data processing failed!"})
         
-@api.route('/get_business_logic_data/<file_name>', methods=['GET'])
+@api.route('/get_business_logic_data', methods=['GET'])
 def get_business_logic_data(file_name : str = "customer_min_prices.xml"):
 
     client_api_key = request.args.get('shrek_key')
@@ -455,4 +455,3 @@ def get_top_5_products():
     #
 
 
-    
