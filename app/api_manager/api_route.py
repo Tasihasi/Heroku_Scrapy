@@ -6,6 +6,7 @@ import logging
 from .auth import valid_api_key, getting_raw_data
 from .scrapy_manager import newest_raw_data
 from .data_retrieve import get_data_from_scrapy, get_proxies
+from .business_logic.run_data_manipulate import run_data_man
 from concurrent.futures import ThreadPoolExecutor  # For async execution
 from datetime import datetime, timedelta
 import requests
