@@ -441,7 +441,30 @@ def get_business_logic_data(file_name : str = "customer_min_prices.xml"):
 @api.route('/get_top_5_products', methods=['GET'])
 def get_top_5_products_api():
 
-    """
+    def xml_to_dict(elem):
+        """Recursively convert an XML element to a dictionary."""
+        # Base case: If the element has no children, return its text or an empty string
+        if not elem:
+            return elem.text if elem.text else ""
+        result = {}
+        for child in elem:
+            # Recursively process child elements
+            child_result = xml_to_dict(child)
+            # Handle multiple children with the same tag
+            if child.tag in result:
+                if type(result[child.tag]) is list:
+                    result[child.tag].append(child_result)
+                else:
+                    result[child.tag] = [result[child.tag], child_result]
+            else:
+                result[child.tag] = child_result
+        # Include element's attributes in the result
+        result.update(('@' + k, v) for k, v in elem.attrib.items())
+        return result
+
+    
+
+    #"""
     client_api_key = request.headers.get('shrek_key')
     home_url =  os.getenv("home_url")
 
@@ -454,7 +477,7 @@ def get_top_5_products_api():
 
     if client_api_key != shrek_key:
         return jsonify({"message" : "API key is incorrect"}), 401
-    """
+    #"""
     script_dir = os.path.dirname(os.path.abspath(__file__))
 
     file_path = os.path.join(script_dir, "business_logic")
@@ -468,7 +491,7 @@ def get_top_5_products_api():
     # Checking if path exists
 
     script_dir = os.path.dirname(os.path.abspath(__file__))
-    file_path = os.path.join(script_dir, "business_logic", "get_top_5_products.xml")
+    file_path = os.path.join(script_dir, "business_logic", "top_5_products.xml")
 
     if not os.path.exists(file_path):
         logging.error(f"The file {file_path} does not exist.")
@@ -477,17 +500,24 @@ def get_top_5_products_api():
     # Loading to memory the data
 
     # Path to your XML file
-    xml_file_path = 'business_logic/top_5_products.xml'
+    xml_file_path = file_path
 
     # Parse the XML file and get the root element
     tree = ET.parse(xml_file_path)
     root = tree.getroot()
 
     # Convert the XML data to a JSON string
-    json_data = json.dumps(root, indent=4)
+    dict_data = xml_to_dict(root)
+    json_data = json.dumps(dict_data, indent=4)
+
+    # Create a custom response
+    response = Response(json_data, mimetype='application/json')
+
+    # Set headers to prompt for download
+    response.headers["Content-Disposition"] = "attachment; filename=top5_products.json"
 
     # Return the JSON data  as attachment
 
-    return send_file(json_data, as_attachment=True)
+    return response
 
 
