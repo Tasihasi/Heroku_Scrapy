@@ -54,7 +54,7 @@ def check_dependencies(path : str, notebook_name : str) -> bool:
     ]
 
     for file_path in file_paths:
-        if not check_file_exists(path +file_path):
+        if not check_file_exists(os.path.join(path, file_path)):
             logging.error(f"The file {path + file_path} does not exist.")
             return False
         
