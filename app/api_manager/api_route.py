@@ -407,6 +407,9 @@ def get_customer_data():
         
 
 
+
+
+
 @api.route('/get_business_logic_data/<file_name>', methods=['GET'])
 def get_business_logic_data(file_name : str = "customer_min_prices.xml"):
 
@@ -437,3 +440,21 @@ def get_business_logic_data(file_name : str = "customer_min_prices.xml"):
     
     logging.info(f"Sending file from business logic: {file_path}")
     return send_file(file_path, as_attachment=True)
+
+
+@api.route('/get_top_5_products', methods=['GET'])
+def get_top_5_products():
+
+    return jsonify({"message" : "This is the top 5 products"})
+
+    client_api_key = request.args.get('shrek_key')
+    home_url =  os.getenv("home_url")
+
+
+    if client_api_key is None:
+        return jsonify({"message" : "No apikey provided."})
+    
+
+    shrek_key = os.getenv("shrek_api_key")
+
+    #
