@@ -37,6 +37,9 @@ def run_notebook(path : str, notebook_name : str) -> None:
     execute_preprocessor.preprocess(nb, {'metadata': {'path': script_dir}})
 
 def check_dependencies(path : str, notebook_name : str) -> bool:
+
+    logging.info(f"Checking the dependencies. Path : {path} Notebook name : {notebook_name}")
+
     # Check if the necessary components are installed
     def check_file_exists(file_path: str) -> bool:
         # Check if the file exists
