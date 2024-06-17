@@ -442,7 +442,7 @@ def get_business_logic_data(file_name : str = "customer_min_prices.xml"):
 def get_top_5_products():
 
 
-    client_api_key = request.args.get('shrek_key')
+    client_api_key = request.headers.get('shrek_key')
     home_url =  os.getenv("home_url")
 
 
