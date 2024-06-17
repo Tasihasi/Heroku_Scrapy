@@ -439,7 +439,7 @@ def get_business_logic_data(file_name : str = "customer_min_prices.xml"):
 
 
 @api.route('/get_top_5_products', methods=['GET'])
-def get_top_5_products():
+def get_top_5_products_api():
 
 
     client_api_key = request.headers.get('shrek_key')
