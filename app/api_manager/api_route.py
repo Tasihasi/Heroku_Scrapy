@@ -423,7 +423,8 @@ def get_business_logic_data(file_name : str = "customer_min_prices.xml"):
 
     # Make an API call to the home URL's list files endpoint
 
-    requested_file = request.view_args['file_name']
+    #requested_file = request.view_args['file_name']
+    requested_file = file_name
 
     script_dir = os.path.dirname(os.path.abspath(__file__))
 
