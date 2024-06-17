@@ -41,10 +41,10 @@ def check_dependencies(path : str, notebook_name : str) -> bool:
     def check_file_exists(file_path: str) -> bool:
         # Check if the file exists
         if os.path.exists(file_path):
-            print(f"The file {file_path} exists.")
+            logging.info(f"The file {file_path} exists.")
             return True
         else:
-            print(f"The file {file_path} does not exist.")
+            logging.error(f"The file {file_path} does not exist.")
             return False
 
     file_paths = [
