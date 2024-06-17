@@ -382,5 +382,26 @@ def get_processed_data():
     logging.info(f"Here is the data that being sent:  {processed_data}")
     return Response(generate(processed_data), content_type='text/plain')
     
+@api.route('/customer_data_process', methods=['GET']) 
+def get_customer_data():
+    client_api_key = request.args.get('shrek_key')
+    home_url =  os.getenv("home_url")
 
+    if client_api_key is None:
+        return jsonify({"message" : "No apikey provided."})
     
+
+    shrek_key = os.getenv("shrek_api_key")
+
+    # Check if the provided API key matches the expected API key
+
+    if client_api_key != shrek_key:
+        return jsonify({"message" : "API key is incorrect"}), 401  # Return a 401 Unauthorized status
+    
+    success = run_data_man(".business_logic/")
+
+    if success:
+        return jsonify({"message" : "Data processing was successful!"})
+    
+    return jsonify({"message" : "Data processing failed!"})
+        
