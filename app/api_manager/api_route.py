@@ -405,3 +405,35 @@ def get_customer_data():
     
     return jsonify({"message" : "Data processing failed!"})
         
+
+
+@api.route('/get_business_logic_data/<file_name>', methods=['GET'])
+def get_business_logic_data(file_name : str):
+
+    client_api_key = request.args.get('shrek_key')
+    home_url =  os.getenv("home_url")
+
+
+    if client_api_key is None:
+        return jsonify({"message" : "No apikey provided."})
+    
+
+    shrek_key = os.getenv("shrek_api_key")
+
+    if client_api_key != shrek_key:
+        return jsonify({"message" : "API key is incorrect"}), 401  # Return a 401 Unauthorized status
+
+    # Make an API call to the home URL's list files endpoint
+
+    requested_file = request.view_args['file_name']
+
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+
+    file_path = os.path.join(script_dir, "business_logic", requested_file)
+
+    if not os.path.exists(file_path):  
+        logging.error(f"The file {file_path} does not exist.")
+        return jsonify({"message" : "The file does not exist."})
+    
+    logging.info(f"Sending file from business logic: {file_path}")
+    return send_file(file_path, as_attachment=True)
