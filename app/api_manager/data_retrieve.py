@@ -13,16 +13,16 @@ import os
 
 
 # Define the path to your notebook file
-notebook_filename = 'get_matching_data.ipynb'
 
 
-def run_notebook(path : str) -> None:
+
+def run_notebook(path : str, notebook_name : str) -> None:
 
         # Get the directory of the current script
     script_dir = os.path.dirname(os.path.abspath(__file__))
 
     # Construct the path to the notebook
-    notebook_path = os.path.join(script_dir, notebook_filename)
+    notebook_path = os.path.join(script_dir, notebook_name)
 
     print(f"Notebook path: {notebook_path}")
 
@@ -36,7 +36,7 @@ def run_notebook(path : str) -> None:
     # Execute the notebook
     execute_preprocessor.preprocess(nb, {'metadata': {'path': script_dir}})
 
-def check_dependencies(path : str) -> bool:
+def check_dependencies(path : str, notebook_name : str) -> bool:
     # Check if the necessary components are installed
     def check_file_exists(file_path: str) -> bool:
         # Check if the file exists
@@ -48,9 +48,9 @@ def check_dependencies(path : str) -> bool:
             return False
 
     file_paths = [
-        notebook_filename,
+        notebook_name,
         "customer_request.json",
-        "Result.json",
+        "output.jsonl",
     ]
 
     for file_path in file_paths:
@@ -75,13 +75,15 @@ def run_data_man(path : str) -> bool:
 
     # Check if the necessary files are present
 
+    notebook_filename = 'get_matching_data.ipynb'
+
     try:
-        if check_dependencies(path):
+        if check_dependencies(path, notebook_filename):
             print("All necessary files are present.")
             try :
                 print("Running the notebook.")
                 # Run the notebook
-                run_notebook(path)
+                run_notebook(path, notebook_filename)
                 return True
             except Exception as e:
                 print(f"An error in the run_notebook: {e}")
@@ -96,8 +98,30 @@ def run_data_man(path : str) -> bool:
         logging.error(f"An error occurred in the file checking: {e}")
         return False
 
+def get_top_5_products(path : str) -> bool:
 
-    
+
+    notebook_name = 'get_top_5_products.ipynb'
+    try:
+        if check_dependencies(path, notebook_name):
+            print("All necessary files are present.")
+            try :
+                print("Running the notebook.")
+                # Run the notebook
+                run_notebook(path, notebook_name)
+                return True
+            except Exception as e:
+                print(f"An error in the run_notebook: {e}")
+                logging.error(f"An error in the run_notebook: {e}")
+                return False
+        else:
+            print("Necessary files are not present.  Please ensure that the necessary files are present.")
+            logging.error("Necessary files are not present.  Please ensure that the necessary files are present.")
+
+    except Exception as e:
+        print(f"An error occurred in the file checking: {e}")
+        logging.error(f"An error occurred in the file checking: {e}")
+        return False
 
 
 

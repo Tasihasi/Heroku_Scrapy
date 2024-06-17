@@ -5,7 +5,7 @@ import os
 import logging
 from .auth import valid_api_key, getting_raw_data
 from .scrapy_manager import newest_raw_data
-from .data_retrieve import get_data_from_scrapy, get_proxies, run_data_man
+from .data_retrieve import get_data_from_scrapy, get_proxies, run_data_man, get_top_5_products
 #from .run_data_manipulate import run_data_man
 from concurrent.futures import ThreadPoolExecutor  # For async execution
 from datetime import datetime, timedelta
@@ -441,7 +441,6 @@ def get_business_logic_data(file_name : str = "customer_min_prices.xml"):
 @api.route('/get_top_5_products', methods=['GET'])
 def get_top_5_products():
 
-    return jsonify({"message" : "This is the top 5 products"})
 
     client_api_key = request.args.get('shrek_key')
     home_url =  os.getenv("home_url")
@@ -453,6 +452,37 @@ def get_top_5_products():
 
     shrek_key = os.getenv("shrek_api_key")
 
-    #
+    if client_api_key != shrek_key:
+        return jsonify({"message" : "API key is incorrect"}), 401
+
+    isData = get_top_5_products(".business_logic/")
+
+    if isData is None:
+        return jsonify({"message" : "Data processing failed!"})
+    
+    # Checking if path exists
+
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    file_path = os.path.join(script_dir, "business_logic", "top_5_products.json")
+
+    if not os.path.exists(file_path):
+        logging.error(f"The file {file_path} does not exist.")
+        return jsonify({"message" : "The file does not exist."})
+
+    # Loading to memory the data
+
+    # Path to your XML file
+    xml_file_path = 'business_logic/top_5_products.xml'
+
+    # Parse the XML file and get the root element
+    tree = ET.parse(xml_file_path)
+    root = tree.getroot()
+
+    # Convert the XML data to a JSON string
+    json_data = json.dumps(root, indent=4)
+
+    # Return the JSON data  as attachment
+
+    return send_file(json_data, as_attachment=True)
 
 
