@@ -457,7 +457,7 @@ def get_top_5_products_api():
     
     script_dir = os.path.dirname(os.path.abspath(__file__))
 
-    file_path = os.path.join(script_dir, "business_logic", "get_top_5_products.ipynb")
+    file_path = os.path.join(script_dir, "business_logic")
 
 
     isData = get_top_5_products(file_path)
@@ -468,7 +468,7 @@ def get_top_5_products_api():
     # Checking if path exists
 
     script_dir = os.path.dirname(os.path.abspath(__file__))
-    file_path = os.path.join(script_dir, "business_logic", "get_top_5_products.ipynb")
+    file_path = os.path.join(script_dir, "business_logic", "get_top_5_products.xml")
 
     if not os.path.exists(file_path):
         logging.error(f"The file {file_path} does not exist.")
