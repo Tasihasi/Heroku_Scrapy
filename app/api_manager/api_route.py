@@ -454,8 +454,13 @@ def get_top_5_products_api():
 
     if client_api_key != shrek_key:
         return jsonify({"message" : "API key is incorrect"}), 401
+    
+    script_dir = os.path.dirname(os.path.abspath(__file__))
 
-    isData = get_top_5_products(".business_logic/")
+    file_path = os.path.join(script_dir, "business_logic", "get_top_5_products.ipynb")
+
+
+    isData = get_top_5_products(file_path)
 
     if isData is None:
         return jsonify({"message" : "Data processing failed!"})
