@@ -18,13 +18,14 @@ import os
 
 def run_notebook(path : str, notebook_name : str) -> None:
 
+    logging.info(f"Running the notebook. Path : {path} Notebook name : {notebook_name}")
         # Get the directory of the current script
-    script_dir = os.path.dirname(os.path.abspath(__file__))
+    #script_dir = os.path.dirname(os.path.abspath(__file__))
 
     # Construct the path to the notebook
-    notebook_path = os.path.join(script_dir, notebook_name)
+    notebook_path = os.path.join(path, notebook_name)
 
-    print(f"Notebook path: {notebook_path}")
+    logging.info(f"Notebook path: {notebook_path}")
 
     # Load the notebook
     with open(notebook_path) as f:
@@ -34,7 +35,7 @@ def run_notebook(path : str, notebook_name : str) -> None:
     execute_preprocessor = ExecutePreprocessor(timeout=600, kernel_name='python3')
 
     # Execute the notebook
-    execute_preprocessor.preprocess(nb, {'metadata': {'path': script_dir}})
+    execute_preprocessor.preprocess(nb, {'metadata': {'path': path}})
 
 def check_dependencies(path : str, notebook_name : str) -> bool:
 

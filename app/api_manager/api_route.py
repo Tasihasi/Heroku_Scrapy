@@ -441,7 +441,7 @@ def get_business_logic_data(file_name : str = "customer_min_prices.xml"):
 @api.route('/get_top_5_products', methods=['GET'])
 def get_top_5_products_api():
 
-
+    """
     client_api_key = request.headers.get('shrek_key')
     home_url =  os.getenv("home_url")
 
@@ -454,7 +454,7 @@ def get_top_5_products_api():
 
     if client_api_key != shrek_key:
         return jsonify({"message" : "API key is incorrect"}), 401
-    
+    """
     script_dir = os.path.dirname(os.path.abspath(__file__))
 
     file_path = os.path.join(script_dir, "business_logic")
