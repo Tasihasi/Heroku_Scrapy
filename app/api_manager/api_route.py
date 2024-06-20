@@ -484,13 +484,10 @@ def get_top_5_products_api():
 
     logging.info(f"Sending file from business logic: {file_path}")
 
-    parse_path("business_logic")
-
-
     isData = get_top_5_products(file_path)
 
     if isData is None:
-        return jsonify({"message" : "Data processing failed!"})
+        return jsonify({"message" : "Data processing failed!"}, 500) 
     
     # Checking if path exists
 
@@ -499,7 +496,7 @@ def get_top_5_products_api():
 
     if not os.path.exists(file_path):
         logging.error(f"The file {file_path} does not exist.")
-        return jsonify({"message" : "The file does not exist."})
+        return jsonify({"message" : "The file does not exist."}, 404)
 
     # Loading to memory the data
 
