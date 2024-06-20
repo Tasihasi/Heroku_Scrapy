@@ -65,7 +65,6 @@ def check_dependencies(path : str, notebook_name : str) -> bool:
         
     return True
 
-
 # Input : path to the directory containing the necessary files
 def run_data_man(path : str) -> bool:
     #print("Current working directory:", os.getcwd())
@@ -128,6 +127,23 @@ def get_top_5_products(path : str) -> bool:
         logging.error(f"An error occurred in the file checking: {e}")
         return False
 
+def parse_path(path : str) -> bool:
+    # Get the current directory where this script is located
+    script_dir_home = os.path.dirname(os.path.abspath(__file__))
+    logging.info(f"Script home Directory: {script_dir_home}")
+
+    # Set the relative path to the Scrapy spider directory
+    spider_dir = os.path.join(script_dir_home, path)
+
+    logging.info(f"Script Directory: {spider_dir}")
+
+    # Showing files in the directory
+    file_list = os.listdir(spider_dir)
+
+    logging.info("Files and directories in '", spider_dir, "':")
+    # Print the list
+    for file in file_list:
+        logging.info(file)
 
 
 

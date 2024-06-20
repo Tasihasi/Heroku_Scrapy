@@ -5,7 +5,7 @@ import os
 import logging
 from .auth import valid_api_key, getting_raw_data
 from .scrapy_manager import newest_raw_data
-from .data_retrieve import get_data_from_scrapy, get_proxies, run_data_man, get_top_5_products
+from .data_retrieve import get_data_from_scrapy, get_proxies, run_data_man, get_top_5_products, parse_path
 #from .run_data_manipulate import run_data_man
 from concurrent.futures import ThreadPoolExecutor  # For async execution
 from datetime import datetime, timedelta
@@ -464,7 +464,7 @@ def get_top_5_products_api():
 
     
 
-    #"""
+    """
     client_api_key = request.headers.get('shrek_key')
     home_url =  os.getenv("home_url")
 
@@ -477,10 +477,14 @@ def get_top_5_products_api():
 
     if client_api_key != shrek_key:
         return jsonify({"message" : "API key is incorrect"}), 401
-    #"""
+    """
     script_dir = os.path.dirname(os.path.abspath(__file__))
 
     file_path = os.path.join(script_dir, "business_logic")
+
+    logging.info(f"Sending file from business logic: {file_path}")
+
+    parse_path("business_logic")
 
 
     isData = get_top_5_products(file_path)
