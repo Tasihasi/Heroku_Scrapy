@@ -118,16 +118,7 @@ class AproxSpiderSpider(CrawlSpider):
         for n, p, link in zip(all_products, all_prices, comparison_links):
             
             if n and p and link:
-                if "arukereso.hu" in link and link not in self.visited_url:
-                    parse_links.append(link)
-                    #yield scrapy.Request(url=link, callback=self.parse_link)
-                else:
                     yield {'name': n, 'price': p.strip(),  'url': response.url}
-
-                    item_data = {'name': n, 'price': p.strip(),  'url': response.url}
-                    self.write_item_to_xml(item_data)
-
-
 
         
      
