@@ -288,49 +288,8 @@ class ArukeresoSpider(scrapy.Spider):
             self.time_passing["start parsing start"] = []
 
         self.time_passing["start parsing start"].append((datetime.now() - self.crawling_time).total_seconds())
-        """
-        
-        # Get a proxy for this request
-        proxy = self.select_proxy()
-
-        proxy_time = datetime.now()
-        while not proxy and len(self.raw_proxy_list) <30:
-
-            self.raw_proxy_list = Getting_new_proxies()
-            self.proxies_retries+=1
-
-            logging.info("trying to get new  proxy list: " , self.proxies_retries)
-        
-        self.proxy_time += (datetime.now() - proxy_time).total_seconds()
-
-        logging.info(f" ---- current proxy : {proxy}")
-        """
-       
-
-        #if not proxy:
-            #logging.info("------------------  There was no proxies ---------   logging")
-          #  return
 
         headers = {'User-Agent': self.get_random_user_agent()}
-
-
-        
-        request_wait = datetime.now()
-        if response.url not in self.visited_url:
-            request = scrapy.Request(
-                url=(response.url),
-                callback=self.parse_link,
-                dont_filter=True,
-                #errback=self.remove_proxy(proxy),  # add this line
-                #meta={'proxy': str("https://")+self.select_proxy()},
-                headers=headers
-            )
-
-
-            #logging.info(f"Outgoing request headers: {request.headers}")
-            yield request
-
-        self.request_waiting += (datetime.now() - request_wait).total_seconds()  
 
         all_products = response.css("div.name a ::text").getall()
         all_prices = response.css("div.price::text").getall()
