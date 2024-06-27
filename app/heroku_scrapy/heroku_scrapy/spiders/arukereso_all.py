@@ -276,7 +276,7 @@ class ArukeresoSpider(scrapy.Spider):
 
 
         
-        with ThreadPoolExecutor(max_workers=100) as executor:
+        with ThreadPoolExecutor(max_workers=200) as executor:
             for url in self.start_urls:
                 yield scrapy.Request(url,  headers={'User-Agent': self.get_random_user_agent()}) #meta={'proxy': self.select_proxy()},
 

@@ -15,8 +15,7 @@ import requests
 
 class AproxSpiderSpider(CrawlSpider):
     name = "aprox-spider"
-    rules = (Rule(LinkExtractor(allow=r"Items/"), callback="parse_item", follow=True),)
-
+    
 
     custom_settings = {
         'DOWNLOAD_DELAY': 0.01,  # add download delay of 1 second
@@ -41,13 +40,13 @@ class AproxSpiderSpider(CrawlSpider):
         
         return ret_list
 
-    # Generate the start URLs that the spider cralws
+    # Generate the start URLs that the spider crawls
     def start_url_generator(self) -> list[str]:
-        # Assing the sub categories to crawl
+        # Assign the subcategories to crawl
         category_list = ["nyomtato-patron-toner-c3138/",
-                         "szamitogep-periferia-c3107/"]
+                        "szamitogep-periferia-c3107/"]
 
-        base_url = ["https://www.arukereso.hu/"]
+        base_url = "https://www.arukereso.hu/"  # Corrected to be a plain string
 
         # Generate the base URLs for each category
         initial_urls = [f"{base_url}{category}" for category in category_list]
@@ -58,7 +57,6 @@ class AproxSpiderSpider(CrawlSpider):
             all_urls.extend(self.predicting_url(url))
 
         return all_urls
-    
     #Returns user agent
     def get_user_agents(self) -> List[str]:
         with open('useragents.txt') as f:
@@ -68,21 +66,6 @@ class AproxSpiderSpider(CrawlSpider):
     def __init__(self):
         self.start_urls = self.start_url_generator()
         self.user_agents = self.get_user_agents()
-
-
-
-
-
-
-
-
-
-    def parse_item(self, response):
-        item = {}
-        #item["domain_id"] = response.xpath('//input[@id="sid"]/@value').get()
-        #item["name"] = response.xpath('//div[@id="name"]').get()
-        #item["description"] = response.xpath('//div[@id="description"]').get()
-        return item
 
     #returns a random user agent
     def get_random_user_agent(self) -> str:
