@@ -97,50 +97,38 @@ class AproxSpiderSpider(CrawlSpider):
         #Selecting a random user agent
         headers = {'User-Agent': self.get_random_user_agent()}
         
-
+        #Making the request
         request = scrapy.Request(
             url=(response.url),
             dont_filter=True,
             headers=headers
         )
+        yield request
 
-
-            #logging.info(f"Outgoing request headers: {request.headers}")
-            yield request
-
-
+        #Extracting the links from the response
         all_products = response.css("div.name a ::text").getall()
         all_prices = response.css("div.price::text").getall()
         
 
-        # regex pattern to extract the competitor's name from the URL
-        pattern = r'arukereso\.hu|.hu'
-        all_competitors = response.css("a.offer-num::attr(href)").re(pattern)
-        competitor = all_competitors[0] if all_competitors else ''
+
 
         comparison_links = response.css("a.button-orange::attr(href)").getall()
         parse_links = []
 
-        for n, p, c, link in zip(all_products, all_prices, all_competitors, comparison_links):
+        for n, p, link in zip(all_products, all_prices, comparison_links):
             
-            if n and p and c:
+            if n and p and link:
                 if "arukereso.hu" in link and link not in self.visited_url:
                     parse_links.append(link)
                     #yield scrapy.Request(url=link, callback=self.parse_link)
                 else:
-                    yield {'name': n, 'price': p.strip(), 'competitor': c, 'url': response.url}
+                    yield {'name': n, 'price': p.strip(),  'url': response.url}
 
-                    item_data = {'name': n, 'price': p.strip(), 'competitor': c, 'url': response.url}
+                    item_data = {'name': n, 'price': p.strip(),  'url': response.url}
                     self.write_item_to_xml(item_data)
 
-                # here is should implement the write to temporary file 
 
-        with ThreadPoolExecutor(max_workers=25) as executor:
-            for link in parse_links:
-                headers = {'User-Agent': self.get_random_user_agent()}
-                yield scrapy.Request(url=link, callback=self.parse_link,
-                                      #meta={'proxy': self.select_proxy()},
-                                        headers=headers)
+
         
      
 

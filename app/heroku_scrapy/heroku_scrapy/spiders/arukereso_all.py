@@ -346,7 +346,7 @@ class ArukeresoSpider(scrapy.Spider):
 
         for n, p, c, link in zip(all_products, all_prices, all_competitors, comparison_links):
             
-            if n and p and c:
+            if n and p and c and link:
                 if "arukereso.hu" in link and link not in self.visited_url:
                     parse_links.append(link)
                     #yield scrapy.Request(url=link, callback=self.parse_link)
