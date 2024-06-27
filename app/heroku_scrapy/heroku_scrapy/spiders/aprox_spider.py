@@ -94,26 +94,10 @@ class AproxSpiderSpider(CrawlSpider):
                 yield scrapy.Request(url,  headers={'User-Agent': self.get_random_user_agent()}) #meta={'proxy': self.select_proxy()},
 
     def parse(self, response):
-        #Selecting a random user agent
-        headers = {'User-Agent': self.get_random_user_agent()}
-        
-        #Making the request
-        request = scrapy.Request(
-            url=(response.url),
-            dont_filter=True,
-            headers=headers
-        )
-        yield request
-
-        #Extracting the links from the response
+        #Extracting the names, prices and links from the response
         all_products = response.css("div.name a ::text").getall()
         all_prices = response.css("div.price::text").getall()
-        
-
-
-
         comparison_links = response.css("a.button-orange::attr(href)").getall()
-        parse_links = []
 
         for n, p, link in zip(all_products, all_prices, comparison_links):
             
