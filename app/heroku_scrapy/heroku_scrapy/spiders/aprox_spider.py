@@ -20,7 +20,7 @@ class AproxSpiderSpider(CrawlSpider):
     custom_settings = {
         'DOWNLOAD_DELAY': 0.01,  # add download delay of 1 second
         'CONCURRENT_REQUESTS': 1, # 128,  # Adjust the concurrency level as needed
-        'CONCURRENT_REQUESTS_PER_DOMAIN' : 1_000, # for the current limit this must be so high
+        'CONCURRENT_REQUESTS_PER_DOMAIN' : 2_000, # for the current limit this must be so high
         'RETRY_TIMES': 0,  # Number of times to retry a failed request
         'RETRY_HTTP_CODES': [500, 502, 503, 504, 408, 443],  # HTTP status codes to retry
         #   ------ closing spider aftre 50 items -------
@@ -63,7 +63,8 @@ class AproxSpiderSpider(CrawlSpider):
             USER_AGENT_PARTS = f.readlines()
         return USER_AGENT_PARTS
 
-    def __init__(self):
+    def __init__(self, *args, **kwargs):
+        super(AproxSpiderSpider, self).__init__(*args, **kwargs)
         self.start_urls = self.start_url_generator()
         self.user_agents = self.get_user_agents()
 
@@ -72,10 +73,9 @@ class AproxSpiderSpider(CrawlSpider):
         return random.choice(self.user_agents)
     
     def start_requests(self):
-        with ThreadPoolExecutor(max_workers=100) as executor:
-            for url in self.start_urls:
-                yield scrapy.Request(url,  headers={'User-Agent': self.get_random_user_agent()}) #meta={'proxy': self.select_proxy()},
-
+        for url in self.start_urls:
+            yield scrapy.Request(url, headers={'User-Agent': self.get_random_user_agent()}, callback=self.parse)
+    
     def parse(self, response):
         #Extracting the names, prices and links from the response
         all_products = response.css("div.name a ::text").getall()
@@ -85,7 +85,12 @@ class AproxSpiderSpider(CrawlSpider):
         for n, p, link in zip(all_products, all_prices, comparison_links):
             
             if n and p and link:
-                    yield {'name': n, 'price': p.strip(),  'url': response.url}
+                item = {'name': n, 'price': p.strip(), 'url': link}
+                yield item
+                #logging.info(f"Saved data : name': {item['name']}, 'price': {item['price']},  'url': {item['url']}")
+            else:
+                pass
+                #logging.warning("Missing data for a product (name, price, or link)")
 
         
      
