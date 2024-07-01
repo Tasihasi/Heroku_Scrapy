@@ -522,3 +522,39 @@ def get_top_5_products_api():
     return response
 
 
+# Getting only an prox price and url to a category 
+@api.route('/get_products_url/{category}', methods=['GET'])
+def get_products_url(category : str):
+    
+    client_api_key = request.headers.get('shrek_key')
+    home_url =  os.getenv("home_url")
+
+
+    if client_api_key is None:
+        return jsonify({"message" : "No apikey provided."})
+    
+
+    shrek_key = os.getenv("shrek_api_key")
+
+    if client_api_key != shrek_key:
+        return jsonify({"message" : "API key is incorrect"}), 401  # Return a 401 Unauthorized status
+    
+    # Get the absolute path of the Flask app's root directory
+    app_root = os.path.abspath(os.path.dirname(__file__))
+    directory = "../heroku_scrapy"
+    folder_log = os.path.join(app_root, directory)
+    logging.info(f"---------- {folder_log}  -------------")
+    #log_folder_content(folder_log)
+
+    result = "outputUrl.json"
+    json_path = os.path.join(folder_log, result)
+    
+    #logging.critical("---------------------   The data being sent -----------")
+    data = process_jsonl(json_path)
+    logging.info(f"here is the data:  {data}" )
+    data = process_data(data)
+
+    logging.critical(data)
+
+    # Checking the category 
+    # TODO implement a cetegory differentialization 

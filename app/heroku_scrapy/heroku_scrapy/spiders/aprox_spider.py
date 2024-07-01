@@ -43,22 +43,30 @@ class AproxSpiderSpider(CrawlSpider):
         return ret_list
 
     # Generate the start URLs that the spider crawls
-    def start_url_generator(self) -> list[str]:
-        # Assign the subcategories to crawl
+    def start_url_generator(self) -> list[tuple[str, str]]:
         category_list = ["nyomtato-patron-toner-c3138/",
                         "szamitogep-periferia-c3107/"]
+        
+        category_names = ["nyomtato-patron-toner",
+                        "szamitogep-periferia"]
 
-        base_url = "https://www.arukereso.hu/"  # Corrected to be a plain string
+        base_url = "https://www.arukereso.hu/"
+        initial_urls = [(category.split('-')[0], f"{base_url}{category}") for category in category_list]
 
-        # Generate the base URLs for each category
-        initial_urls = [f"{base_url}{category}" for category in category_list]
+        logging.info(f"Intial urls: {initial_urls}")
 
-        # Apply predicting_url to each URL to account for pagination
+        #category_names = [category.split('-')[0] for category in category_list]
+
+
         all_urls = []
-        for url in initial_urls:
-            all_urls.extend(self.predicting_url(url))
+        for category, url in initial_urls:
+            all_urls.extend([(category, u) for u in self.predicting_url(url)])
+
+        logging.info(f"Here is the resulting all urls list : {all_urls}")
 
         return all_urls
+    
+    
     #Returns user agent
     def get_user_agents(self) -> List[str]:
         with open('useragents.txt') as f:
@@ -76,28 +84,31 @@ class AproxSpiderSpider(CrawlSpider):
         return random.choice(self.user_agents)
     
     def start_requests(self):
-        for url in self.start_urls:
-            yield scrapy.Request(url, headers={'User-Agent': self.get_random_user_agent()}, callback=self.parse)
+        for category, url in self.start_urls:
+            yield scrapy.Request(url, 
+                                headers={'User-Agent': self.get_random_user_agent()}, 
+                                meta={'category': category},
+                                callback=self.parse)
     
     def parse(self, response):
-        #Extracting the names, prices and links from the response
+        category = response.meta.get('category')  # Retrieve category from meta
         all_products = response.css("div.name a ::text").getall()
         all_prices = response.css("div.price::text").getall()
         comparison_links = response.css("a.button-orange::attr(href)").getall()
 
         for n, p, link in zip(all_products, all_prices, comparison_links):
-            
             if n and p and link:
-                item = {'name': n, 'price': p.strip(), 'url': link}
+                item = {
+                    'name': n,
+                    'price': p.strip(),
+                    'url': link,
+                    'category': category  # Add category to the item
+                }
                 yield item
-                #logging.info(f"Saved data : name': {item['name']}, 'price': {item['price']},  'url': {item['url']}")
             else:
                 self.blue_products += 1
-                #logging.warning("Missing data for a product (name, price, or link)")
-
 
         if self.blue_products == 25:
             raise CloseSpider("Reached the un order products part!")
-        
-     
+
 
