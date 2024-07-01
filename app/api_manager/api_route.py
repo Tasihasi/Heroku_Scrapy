@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify, request, Response, send_file
+from flask import Blueprint, jsonify, request, Response, send_file, stream_with_context
 import xml.etree.ElementTree as ET
 import json
 import os
@@ -523,9 +523,9 @@ def get_top_5_products_api():
 
 
 # Getting only an prox price and url to a category 
-@api.route('/get_products_url/{category}', methods=['GET'])
-def get_products_url(category : str):
-    
+@api.route('/get_products_url', methods=['GET'])
+def get_products_url():
+    """
     client_api_key = request.headers.get('shrek_key')
     home_url =  os.getenv("home_url")
 
@@ -539,22 +539,31 @@ def get_products_url(category : str):
     if client_api_key != shrek_key:
         return jsonify({"message" : "API key is incorrect"}), 401  # Return a 401 Unauthorized status
     
-    # Get the absolute path of the Flask app's root directory
-    app_root = os.path.abspath(os.path.dirname(__file__))
-    directory = "../heroku_scrapy"
-    folder_log = os.path.join(app_root, directory)
-    logging.info(f"---------- {folder_log}  -------------")
-    #log_folder_content(folder_log)
+    """
+    try:
+        # Get the absolute path of the Flask app's root directory
+        app_root = os.path.abspath(os.path.dirname(__file__))
+        directory = "../heroku_scrapy"
+        json_filename = "outputUrl.json"
+        json_path = os.path.join(app_root, directory, json_filename)
 
-    result = "outputUrl.json"
-    json_path = os.path.join(folder_log, result)
-    
-    #logging.critical("---------------------   The data being sent -----------")
-    data = process_jsonl(json_path)
-    logging.info(f"here is the data:  {data}" )
-    data = process_data(data)
+        # Check if the file exists
+        if not os.path.exists(json_path):
+            return jsonify({"error": "JSON file not found"}), 404
 
-    logging.critical(data)
+        # Function to stream JSON data from file
+        def generate():
+            with open(json_path, 'r', encoding='utf-8') as f:
+                for line in f:
+                    yield line.rstrip() + '\n'
+
+        return Response(stream_with_context(generate()), content_type='application/json')
+
+    except Exception as e:
+        logging.error(f"Error processing JSON data: {str(e)}")
+        return jsonify({"error": "Error processing JSON data"}), 500
 
     # Checking the category 
     # TODO implement a cetegory differentialization 
+
+
