@@ -1,6 +1,7 @@
 import scrapy
 from scrapy.linkextractors import LinkExtractor
 from scrapy.spiders import CrawlSpider, Rule
+from scrapy.exceptions import CloseSpider
 from typing import List
 import logging
 import random
@@ -23,6 +24,7 @@ class AproxSpiderSpider(CrawlSpider):
         'CONCURRENT_REQUESTS_PER_DOMAIN' : 2_000, # for the current limit this must be so high
         'RETRY_TIMES': 0,  # Number of times to retry a failed request
         'RETRY_HTTP_CODES': [500, 502, 503, 504, 408, 443],  # HTTP status codes to retry
+        'ROBOTSTXT_OBEY' : False,
         #   ------ closing spider aftre 50 items -------
         #'CLOSESPIDER_ITEMCOUNT': 100,
     }
@@ -67,6 +69,7 @@ class AproxSpiderSpider(CrawlSpider):
         super(AproxSpiderSpider, self).__init__(*args, **kwargs)
         self.start_urls = self.start_url_generator()
         self.user_agents = self.get_user_agents()
+        self.blue_products = 0
 
     #returns a random user agent
     def get_random_user_agent(self) -> str:
@@ -89,9 +92,12 @@ class AproxSpiderSpider(CrawlSpider):
                 yield item
                 #logging.info(f"Saved data : name': {item['name']}, 'price': {item['price']},  'url': {item['url']}")
             else:
-                pass
+                self.blue_products += 1
                 #logging.warning("Missing data for a product (name, price, or link)")
 
+
+        if self.blue_products == 25:
+            raise CloseSpider("Reached the un order products part!")
         
      
 
