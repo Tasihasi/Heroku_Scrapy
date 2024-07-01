@@ -5,11 +5,12 @@ import os
 import logging
 from .auth import valid_api_key, getting_raw_data
 from .scrapy_manager import newest_raw_data
-from .data_retrieve import get_data_from_scrapy, get_proxies, run_data_man, get_top_5_products, parse_path
+from .data_retrieve import get_data_from_scrapy, get_proxies, run_data_man, get_top_5_products, run_url_spider
 #from .run_data_manipulate import run_data_man
 from concurrent.futures import ThreadPoolExecutor  # For async execution
 from datetime import datetime, timedelta
 import requests
+import threading
 
 
 def remove_incomplete_last_item(xml_string, required_attributes):
@@ -522,6 +523,15 @@ def get_top_5_products_api():
     return response
 
 
+@api.route('/start_url_scrape', methods=['GET'])
+def start_url_scrape():
+
+    # Start the spider in a separate thread
+    spider_thread = threading.Thread(target=run_url_spider)
+    spider_thread.start()
+
+    return "Spider run correctly! The data will available at /get_products_url endpoint"
+
 # Getting only an prox price and url to a category 
 @api.route('/get_products_url', methods=['GET'])
 def get_products_url():
@@ -539,7 +549,11 @@ def get_products_url():
     if client_api_key != shrek_key:
         return jsonify({"message" : "API key is incorrect"}), 401  # Return a 401 Unauthorized status
     
+        
     """
+    # Checking the category 
+    # TODO implement a cetegory differentialization 
+
     try:
         # Get the absolute path of the Flask app's root directory
         app_root = os.path.abspath(os.path.dirname(__file__))
@@ -563,7 +577,6 @@ def get_products_url():
         logging.error(f"Error processing JSON data: {str(e)}")
         return jsonify({"error": "Error processing JSON data"}), 500
 
-    # Checking the category 
-    # TODO implement a cetegory differentialization 
+    
 
 
