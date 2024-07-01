@@ -523,8 +523,8 @@ def get_top_5_products_api():
     return response
 
 
-@api.route('/start_url_scrape', methods=['GET'])
-def start_url_scrape():
+@api.route('/start_aprox_scrape', methods=['GET'])
+def start_aprox_scrape():
 
     # Start the spider in a separate thread
     spider_thread = threading.Thread(target=run_url_spider)
@@ -578,5 +578,8 @@ def get_products_url():
         return jsonify({"error": "Error processing JSON data"}), 500
 
     
+@api.route('/start_url_scrape', methods=['POST'])
+def start_url_scrape():
 
+    return "Spider run correctly! The data will available at /get_products_url endpoint"
 
