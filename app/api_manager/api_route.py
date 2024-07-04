@@ -587,7 +587,6 @@ def start_url_scrape():
     data = request.get_json()
     urls = data.get('urls', [])
     
-    urls = None
 
     current_directory = os.getcwd()
     logging.info(f"Current Working Directory: {current_directory}")
