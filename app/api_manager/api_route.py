@@ -581,5 +581,7 @@ def get_products_url():
 @api.route('/start_url_scrape', methods=['POST'])
 def start_url_scrape():
 
+    
+
     return "Spider run correctly! The data will available at /get_products_url endpoint"
 
