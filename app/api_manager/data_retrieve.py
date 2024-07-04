@@ -179,7 +179,7 @@ def get_data_from_scrapy():
     logging.info("Theoreticly spider runs")
 
 
-def run_url_spider():
+def run_aprox_spider():
     # Get the current directory where this script is located
     script_dir = os.path.dirname(os.path.abspath(__file__))
 
@@ -197,6 +197,38 @@ def run_url_spider():
 
     # Define the Scrapy command
     command = ['scrapy', 'crawl', 'aprox-spider', '-O', 'outputUrl.json']
+
+    logging.info("Running spider  the data_retrive.py")
+
+    # Step 2: Run the spider
+    if not run_spider(command):
+        logging.info("not running spider")
+        return
+    
+    logging.info("Theoreticly spider runs")
+
+
+def run_url_spider(urls):
+    # Get the current directory where this script is located
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+
+    # Set the relative path to the Scrapy spider directory
+    spider_dir = os.path.join(script_dir, '..', 'heroku_scrapy')
+    #print(f"Script Directory: {script_dir}")
+
+    #logging.info(f"Script Directory: {script_dir}")
+
+     # Change the working directory to the spider directory
+    os.chdir(spider_dir)
+    print(f"Changed working directory to: {os.getcwd()}")
+
+    # Join the URLs into a comma-separated string
+    urls_arg = ','.join(urls)
+
+    script_directory = os.path.dirname(os.path.abspath(__file__))
+
+    # Define the Scrapy command
+    command = ['scrapy', 'crawl', 'url-crawl', '-a', f'start_urls={urls_arg}', '-O', 'marketPrices.json']
 
     logging.info("Running spider  the data_retrive.py")
 

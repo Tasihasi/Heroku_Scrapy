@@ -32,18 +32,18 @@ class UrlCrawlSpider(CrawlSpider):
     def __init__(self, *args, **kwargs):
         super(UrlCrawlSpider, self).__init__(*args, **kwargs)
         self.user_agents = self.get_user_agents()
-        #self.start_urls = kwargs.get('start_urls', [])
-        self.start_urls = ["https://www.arukereso.hu/nyomtato-patron-toner-c3138/canon/pg-545xl-black-bs8286b001aa-p197948661/"]
+        start_urls_arg = kwargs.get('start_urls', None)
+        if start_urls_arg:
+            self.start_urls = start_urls_arg.split(',')
+        #self.start_urls = ["https://www.arukereso.hu/nyomtato-patron-toner-c3138/canon/pg-545xl-black-bs8286b001aa-p197948661/"]
 
     def start_requests(self):
-
-
-
-        for  url in self.start_urls:
+        for url in self.start_urls:
             yield scrapy.Request(url, 
                                 headers={'User-Agent': self.get_random_user_agent()}, 
-                                #meta={'category': category},
                                 callback=self.parse_link)
+            
+            
     
     def parse_link(self, response):
         prices = ""

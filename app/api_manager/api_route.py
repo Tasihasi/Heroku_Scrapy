@@ -5,12 +5,15 @@ import os
 import logging
 from .auth import valid_api_key, getting_raw_data
 from .scrapy_manager import newest_raw_data
-from .data_retrieve import get_data_from_scrapy, get_proxies, run_data_man, get_top_5_products, run_url_spider
+from .data_retrieve import get_data_from_scrapy, get_proxies, run_data_man, get_top_5_products,run_aprox_spider, run_url_spider
 #from .run_data_manipulate import run_data_man
 from concurrent.futures import ThreadPoolExecutor  # For async execution
 from datetime import datetime, timedelta
 import requests
 import threading
+from functools import partial
+
+#from .heroku_scrapy.spiders.url_crawl import UrlCrawlSpider
 
 
 def remove_incomplete_last_item(xml_string, required_attributes):
@@ -527,7 +530,7 @@ def get_top_5_products_api():
 def start_aprox_scrape():
 
     # Start the spider in a separate thread
-    spider_thread = threading.Thread(target=run_url_spider)
+    spider_thread = threading.Thread(target=run_aprox_spider)
     spider_thread.start()
 
     return "Spider run correctly! The data will available at /get_products_url endpoint"
@@ -578,10 +581,55 @@ def get_products_url():
         return jsonify({"error": "Error processing JSON data"}), 500
 
     
-@api.route('/start_url_scrape', methods=['POST'])
+@api.route('/start_url_scrape', methods=['POST', "GET"])
 def start_url_scrape():
+    
+    data = request.get_json()
+    urls = data.get('urls', [])
+    
+    urls = None
 
+    current_directory = os.getcwd()
+    logging.info(f"Current Working Directory: {current_directory}")
+
+    # Run inside the app 
+
+    # Only for testing purpses
+    if not urls:
+        urls = ["https://www.arukereso.hu/nyomtato-patron-toner-c3138/canon/pg-545xl-black-bs8286b001aa-p197948661/"]
+        #return jsonify({"error: " : "No URLS prvided "}), 423
+
+    
+    # Start the spider in a separate thread
+    spider_thread = threading.Thread(target=partial(run_url_spider, urls=urls))
+    spider_thread.start()
+    
     
 
     return "Spider run correctly! The data will available at /get_products_url endpoint"
 
+
+@api.route('/get_url_scrape', methods=["GET"])
+def get_url_scrape():
+    try:
+        # Get the absolute path of the Flask app's root directory
+        app_root = os.path.abspath(os.path.dirname(__file__))
+        directory = "../heroku_scrapy"
+        json_filename = "marketPrices.json"
+        json_path = os.path.join(app_root, directory, json_filename)
+
+        # Check if the file exists
+        if not os.path.exists(json_path):
+            return jsonify({"error": "JSON file not found"}), 404
+
+        # Function to stream JSON data from file
+        def generate():
+            with open(json_path, 'r', encoding='utf-8') as f:
+                for line in f:
+                    yield line.rstrip() + '\n'
+
+        return Response(stream_with_context(generate()), content_type='application/json')
+
+    except Exception as e:
+        logging.error(f"Error processing JSON data: {str(e)}")
+        return jsonify({"error": "Error processing JSON data"}), 500
