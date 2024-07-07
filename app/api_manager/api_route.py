@@ -613,7 +613,7 @@ def get_url_scrape():
     try:
         # Get the absolute path of the Flask app's root directory
         app_root = os.path.abspath(os.path.dirname(__file__))
-        directory = "../app"
+        directory = "../app/app"
         json_filename = "marketPrices.json"
         json_path = os.path.join(app_root, directory, json_filename)
 
