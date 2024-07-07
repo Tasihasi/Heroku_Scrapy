@@ -569,6 +569,16 @@ def get_products_url():
         logging.info(f"Contents of app_root + directory  directory ({directory}): {os.listdir(directory)}")
 
 
+        # Log the full directory path
+        full_directory_path = os.path.join(app_root, directory)
+        if os.path.exists(full_directory_path):
+            logging.info(f"Contents of directory ({full_directory_path}): {os.listdir(full_directory_path)}")
+        else:
+            logging.error(f"Directory not found: {full_directory_path}")
+
+         # Log the full JSON path
+        logging.info(f"Full JSON path: {json_path}")
+
         # Check if the file exists
         if not os.path.exists(json_path):
             return jsonify({"error": "JSON file not found"}), 404
