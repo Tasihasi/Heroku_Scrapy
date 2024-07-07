@@ -564,6 +564,11 @@ def get_products_url():
         json_filename = "outputUrl.json"
         json_path = os.path.join(app_root, directory, json_filename)
 
+        # Log the contents of the app_root directory
+        logging.info(f"Contents of app_root directory ({app_root}): {os.listdir(app_root)}")
+        logging.info(f"Contents of app_root + directory  directory ({directory}): {os.listdir(directory)}")
+
+
         # Check if the file exists
         if not os.path.exists(json_path):
             return jsonify({"error": "JSON file not found"}), 404
