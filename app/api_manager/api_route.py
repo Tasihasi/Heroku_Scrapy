@@ -560,7 +560,7 @@ def get_products_url():
     try:
         # Get the absolute path of the Flask app's root directory
         app_root = os.path.abspath(os.path.dirname(__file__))
-        directory = "../heroku_scrapy"
+        directory = "../app/app/heroku_scrapy"
         json_filename = "outputUrl.json"
         json_path = os.path.join(app_root, directory, json_filename)
 
