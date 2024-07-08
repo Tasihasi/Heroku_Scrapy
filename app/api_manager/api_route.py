@@ -636,6 +636,8 @@ def get_url_scrape():
         logging.info(f"Contents of app_root directory ({app_root}): {os.listdir(app_root)}")
         logging.info(f"Contents of app_root + directory  directory ({directory}): {os.listdir(directory)}")
 
+        logging.info(f"Content of JSONpath:  {json_path}" )
+
         # Check if the file exists
         if not os.path.exists(json_path):
             return jsonify({"error": "JSON file not found"}), 404
