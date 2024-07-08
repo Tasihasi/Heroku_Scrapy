@@ -562,7 +562,7 @@ def get_products_url():
         app_root = os.path.abspath(os.path.dirname(__file__))
         directory = "../app/app/heroku_scrapy"
         json_filename = "outputUrl.json"
-        json_path = os.path.join(app_root, directory, json_filename)
+        json_path = os.path.join( directory, json_filename)
 
         # Log the contents of the app_root directory
         logging.info(f"Contents of app_root directory ({app_root}): {os.listdir(app_root)}")
