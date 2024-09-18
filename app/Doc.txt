@@ -1,0 +1,185 @@
+Overview 
+----------------------------------------------------------
+
+This is a flask application.
+
+It runs autonomously the daily task and scrapes the Arukereso website.
+Link : https://www.arukereso.hu/
+
+The client can interact through APIs with the server.
+The end result is a json file containing : product names, prices, url , category.
+
+The server pushes to google drive automatically the resulting files, 
+using the google drive api.
+
+Documentation structure.
+-> Overview
+-> Usage (API description)
+-> Technical description
+
+Usage:
+--------------------------------------------------
+
+
+API Endpoints:
+    API  key must be provied in the header as a parameter. 
+    Named "shrek_key". (Shrek key is used for internal api calls.)
+
+    Return datatype is a json file.
+
+    API endpoints defined in api_manager/api_route.py:
+
+    -> /ping
+
+    -> /check_api_key
+
+    -> /get_raw_data
+
+    -> /get_data
+
+    -> /get_proxy
+
+    -> /get_final_data
+
+    -> /get_processed_data
+
+    -> /customer_data_process
+
+    -> /get_business_logic_data
+
+    -> /get_top_5_products
+
+    -> /get_products_url
+
+    -> /start_url_scrape
+
+    -> /get_url_scrape
+
+
+    API endpoints defined in api_manager/google_drive/google_drive_api_auth.py:
+    !Every google drive authentication data must be provided in the server environment variables.
+
+    -> /shrek_key_checker METHOD = GET
+        Checks if the clients key is correct.
+
+        Possible returns:
+            400 - No provided api key
+            200 - Correct api key
+            403 - Incorrect api key
+
+    -> /list_files METHOD = GET
+        Lists the available files in the google drive.
+
+        Possible returns:
+            200 :
+                {'message': 'No files found'}
+                or 
+                Json file structured : {name : str, id (google drive file id) : str}
+            403 - Incorrect api key
+            500 - {'error': 'Authentication failed or an error occurred'}
+
+    -> /get_file/<file_id> METHOD = GET
+        Parameter : file_id : str -> Google drive inner file id. Must provide!
+        Get the the wanted file id from the /list_files api endpoint.
+
+        When retrieving file even if the file is stored in gzip compression the server returns the uncompressed version.
+
+        Possible returns:
+            Directly returns the response from google drive api.
+            Uses data streaming. 
+
+            500 : "Error occurred while retrieving the file."
+
+    -> /create_file/<file_name>/<file_mimeType>/<force_update> METHOD = POST
+        Uploads a new file in the google drive.
+
+        Parameters:
+            - file_name : str - The intended file name - Must provide!
+            - file_mimeType : str - The intended file type. Must corresponding to the encoded mime types! - Must provide!
+                Possible mime types:
+                    - "text" -> plain text format.
+                    - "ipynb" -> executable python script.
+                    - "csv" -> csv file.
+                    - "gzip" -> a compressed gzip file for smaller data amount.
+            - force_update : 0/1 - If wanted to forcefully overwrite the file name even if the file is already exists. - Optional.
+                - base value = 0 => no overwrite
+
+        Possible returns:
+            - 200 {newly created file id.}
+            - 400 {'error': 'File name and MIME type are required.'} or {'error': 'File name already exists.'}
+            - 403 {'error': 'Invalid API key'}
+
+    -> /delete_file/<file_id> METHOD = GET
+        Deletes an uploaded file from google drive.
+
+        Parameters:
+            -file_name: str - The name of the file to delete. !Must provide!
+
+        Possible returns:
+            -403: { "error": "Invalid API key" }
+            -200: "File deleted successfully"
+            -404: "File not found"
+            -500: "An error occurred"
+
+    -> /run_script METHOD = GET
+        Runs a Python script from Google Drive.
+
+        Parameters:
+            - shrek_key: str - API key in request headers.
+            - file_id: str - The ID of the script file to run in request headers.
+
+        Possible returns:
+            -200: Script output.
+            -400: "Invalid Python code"
+            -403: { "error": "Invalid API key" }
+            -500: "An error occurred while running the script."
+
+    -> /upload   METHOD  = POST
+    -> /download_uploaded/<file_name>   METHOD = GET
+
+There are three big parts of my application.
+Components:
+-> Main flask server
+-> Scraper
+    -> Proxy scraper
+-> Google Drive communication
+    # lz coding implemented for shorted data amount.
+
+-------------------------------------------------------------
+                   The data flow:
+
+            +---------------------------------+
+            |       Flask Application         |
+            +---------------------------------+
+                            |
+                            v
+            +---------------------------------+
+            |  API Endpoint Triggered         |
+            +---------------------------------+
+                            |
+                            v
+            +---------------------------------+
+            |    Initiate Scrapy Spider       |
+            +---------------------------------+
+                            |
+                            v
+            +---------------------------------+
+            |      Scrapy Spider Runs         |
+            +---------------------------------+
+                            |
+                            v
+            +---------------------------------+
+            |  Save Data Locally (Filesystem) |
+            +---------------------------------+
+                            |
+                            v
+            +---------------------------------+
+            |  Push Data to Google Drive      |
+            +---------------------------------+
+
+------------------------------------------------------------
+Main Flask server
+--------------------------------------------------
+This is the central server that manages all the components.
+
+main.py

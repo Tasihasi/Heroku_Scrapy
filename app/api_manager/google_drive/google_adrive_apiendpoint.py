@@ -21,10 +21,11 @@ import os
 
 google_drive_api = Blueprint('google_drive_api', __name__)
 
-
+# Checking if the api key is correct
 def check_inner_api_key(api_key: str) -> bool:
     return api_key == os.getenv('shrek_api_key')
-        
+
+# Checks if the clients api key is correct
 google_drive_api.route('/shrek_key_checker', methods=['GET'])
 def shrek_key_checker():
     request_api_key = request.headers.get('shrek_key')
@@ -42,6 +43,8 @@ def generate_random_string(length):
     letters = string.ascii_letters + string.digits
     return ''.join(random.choice(letters) for i in range(length))
 
+
+# Lists the available files in the google drive
 @google_drive_api.route('/list_files', methods=['GET'])
 def list_files():
     logging.info("List files api endpoint triggered")
