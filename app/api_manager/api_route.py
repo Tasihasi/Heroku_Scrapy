@@ -15,6 +15,17 @@ from functools import partial
 
 #from .heroku_scrapy.spiders.url_crawl import UrlCrawlSpider
 
+# TODO Use Proper HTTP Methods: 
+# Ensure that each endpoint uses the appropriate HTTP method (GET, POST, PUT, DELETE) according to its purpose.
+# TODO Use Proper Status Codes: 
+# Return proper HTTP status codes to indicate the result of an API request (200, 201, 400, 401, 404, 500, etc.).
+# TODO Resource Naming:
+#  Use nouns for endpoint paths rather than verbs and keep them consistent and meaningful.
+# TODO Endpoint Structure: 
+# Ensure the endpoints are intuitive and hierarchical where necessary.
+# TODO  Avoid Actions in URL: 
+# Actions should be defined by HTTP methods, not by including verbs in the endpoint URL.
+
 
 def remove_incomplete_last_item(xml_string, required_attributes):
     # Parse the XML string into an ElementTree
@@ -82,8 +93,6 @@ def process_jsonl(input_path, output_filename="BigOutput.jsonl", required_keys=[
         # Handle exceptions (e.g., file not found, JSON decoding error)
         logging.error(f"------   Error processing JSONL file: {e} -----")
         return None
-    
-
 
 def strip_values_in_jsonl(jsonl_file):
     stripped_lines = []
@@ -110,8 +119,6 @@ def strip_values_in_jsonl(jsonl_file):
                 print(f"Error on line {line_number}: {e}")
 
     return stripped_lines
-
-
 
 def process_data(data_str):
     # Convert the string data to a list of dictionaries
@@ -152,7 +159,6 @@ def process_data(data_str):
 
     return new_data
 
-
 def generate(data):
         if data is None:
             raise ValueError("Data cannot be None")
@@ -166,7 +172,6 @@ def generate(data):
                     yield "  " + item_str[i:i + chunk_size] + (",\n" if index < len(data) - 1 else "")  # Add comma unless it's the last element
         yield "]"
 
-
 def log_folder_content(folder_path):
     logging.info(f"Listing contents of folder: {folder_path}")
     try:
@@ -179,12 +184,7 @@ def log_folder_content(folder_path):
     except OSError as e:
         logging.error(f"Error while listing folder contents: {e}")
 
-
-
-
 api = Blueprint('api', __name__)
-
-
 
 @api.route('/ping', methods=['GET'])
 def test_server():
@@ -194,7 +194,7 @@ def test_server():
     # Return a JSON response with the server status
     return jsonify({"server_running": server_running})
 
-@api.route('/check_api_key', methods=['GET'])
+@api.route('/keys', methods=['GET'])
 def check_api_key():
     # Get the API key from the request headers
     provided_api_key = request.headers.get('Authorization')
