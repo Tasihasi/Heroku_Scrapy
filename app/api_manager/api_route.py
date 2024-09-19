@@ -337,7 +337,7 @@ def Get_final_data():
 # TODO  have to differentiate between files and product categories !!!
 @api.route('/get_processed_data', methods=['GET'])
 def get_processed_data():
-    client_api_key = request.args.get('api_key')
+    client_api_key = request.headers.get('api_key')
     home_url =  os.getenv("home_url")
 
 
@@ -388,7 +388,7 @@ def get_processed_data():
     
 @api.route('/customer_data_process', methods=['GET']) 
 def get_customer_data():
-    client_api_key = request.args.get('shrek_key')
+    client_api_key = request.headers.get('shrek_key')
     home_url =  os.getenv("home_url")
 
     if client_api_key is None:

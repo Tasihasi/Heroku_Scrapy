@@ -12,6 +12,9 @@ The end result is a json file containing : product names, prices, url , category
 The server pushes to google drive automatically the resulting files, 
 using the google drive api.
 
+The server is designed that these api endpoint will not be open for public only for 
+other servers or front end servers.
+
 Documentation structure.
 -> Overview
 -> Usage (API description)
@@ -22,6 +25,14 @@ Usage:
 
 
 API Endpoints:
+    #TODO add appropriate status codes to all api endpoint
+    #TODO add api key checker every where!
+    # TODO  check that every where shrek key ust be at api keys place 
+    # TODO ?? what is the difference between get process data / get business logic data ?
+    #TODO ??? difference between aprox scrape and get data
+
+    #TODO what is rest api and refactor it to rest api!
+
     API  key must be provied in the header as a parameter. 
     Named "shrek_key". (Shrek key is used for internal api calls.)
 
@@ -29,35 +40,170 @@ API Endpoints:
 
     API endpoints defined in api_manager/api_route.py:
 
-    -> /ping
+    -> /ping Method: GET
+        Description: Checks if the server is running.
 
-    -> /check_api_key
+        Request Headers: None
+        Request Body: None
 
-    -> /get_raw_data
+        Response:
 
-    -> /get_data
+            -200 OK: Returns JSON with the server status
 
-    -> /get_proxy
+    -> /check_api_key Method: GET
 
-    -> /get_final_data
+        Description: Checks if the provided API key is correct.
 
-    -> /get_processed_data
+        Request Headers:
 
-    -> /customer_data_process
+            Authorization (string): The API key.
+            Request Body: None
 
-    -> /get_business_logic_data
+        Response:
+            -200 OK: Returns JSON if the API key is correct
 
-    -> /get_top_5_products
+    -> /get_raw_data    Method: GET
+        Description: Retrieves raw data if the API key is valid and customer status is active.
 
-    -> /get_products_url
+        Request Headers:
 
-    -> /start_url_scrape
+            Authorization (string): The API key.
+            Request Body: None
+        
+        Response:
+            200 OK: Returns the raw data.
+            200 OK: If customer status is inactive   #TODO Correcting the api endpoint status code 
 
-    -> /get_url_scrape
+            401 Unauthorized: If the API key is incorrect.
+
+    -> /get_data    Method: GET
+        Description: Starts the data scraping process asynchronously. Can run multiple scraping processes.
+
+        Request Headers: None   #TODO  no api key needed!
+        Request Body: None
+
+        Response:
+
+            200 OK: Returns a message indicating that the spider is running asynchronously.
+
+    -> /get_proxy   #TODO  bad function unnecessary!
+
+    -> /get_final_data  Method: GET
+        Description: Retrieves the final raw data from the whole website. Uses data streaming.
+
+        Request Headers:
+            API-Key (string): The API key.
+
+        Request Body: None
+
+        200 OK: Returns the final data as plain text.
+        401 Unauthorized: If the API key is invalid
+        404 Not Found: If the file is not found.
+
+    -> /get_processed_data  Method: GET
+        Description: Retrieves processed data based on the provided API key.
+                    The process is defined in the business logic folder.
+
+        Request Headers: 
+            API-Key (string): The API key.
+        Request Body: None
+
+        Response:
+            200 OK: Returns the processed data.
+            401 Unauthorized: If no API key is provided or the API key is incorrect.
+            500 Internal Server Error: If there is a problem with getting the files from Google Drive.
+
+    -> /customer_data_process Method: GET:
+        Description: Runs the data process in the business logic folder.
+
+        Request Headers: 
+            API-Key (string): The API key.
+
+        Request Body: None
+
+        200 OK: If the data processing was successful
+        401 Unauthorized: If no API key is provided or the API key is incorrect
+        500 Internal Server Error: If data processing failed
+
+    -> /get_business_logic_data     Method: GET:
+        Description: Retrieves business logic data by name.
+
+        Request Headers:
+            shrek_key (string): The client API key.
+
+        Request Body: None
+
+        Query Parameters:
+            file_name (string): The name of the file to retrieve. 
+            Default is "customer_min_prices.xml".
+        
+        Response:
+            200 OK: Returns the requested file.
+            401 Unauthorized: If no API key is provided or the API key is incorrect.
+            404 Not Found: If the file does not exist.
+
+
+    -> /get_top_5_products  Method: GET:
+        Description: Api endpoint for getting the top 5 products. (Used for testing)
+
+        Request Headers: None
+        Request Body: None
+
+        Response:
+
+            200 OK: Returns the top 5 products as a JSON file.
+            404 Not Found: If the file does not exist.
+            500 Internal Server Error: If data processing failed.
+
+
+    -> /start_aprox_scrape  Method: GET:
+        #TODO  what dose this realy do?
+        Description: Starts the approximate scrape process.
+
+        Request Headers: None
+        Request Body: None
+
+        Response:
+            200 OK: Returns a message indicating that the spider is running
+
+    -> /get_products_url    Method: GET:
+        Description: ??? Do not know what it dose! TODO 
+
+        Request Headers: None !!!! # TODO no api key needed
+        Request Body: None
+
+        Response:
+            200 OK: Returns the product URLs as a JSON file.
+            404 Not Found: If the JSON file is not found
+            500 Internal Server Error: If there is an error processing JSON data
+
+    -> /start_url_scrape    Method: POST, GET:
+        Description: Starts the URL scrape process with the provided URLs.
+
+        Request Headers: None # TODO  no api key needed !!
+
+        Request Body:
+            urls (array): List of URLs to scrape.
+
+        Response:
+            200 OK: Returns a message indicating that the spider is running.
+
+    -> /get_url_scrape      Method: GET:
+        Description: Retrieves the URL scrape results.
+
+        Request Headers: None   # TODO  no api key needed !!
+        Request Body: None
+
+        Response:
+            200 OK: Returns the URL scrape results as a JSON file.
+            404 Not Found: If the JSON file is not found
+            500 Internal Server Error: If there is an error processing JSON data.
 
 
     API endpoints defined in api_manager/google_drive/google_drive_api_auth.py:
     !Every google drive authentication data must be provided in the server environment variables.
+
+    #TODO !!there are duplicate api endpoint in the google endpoint!!
 
     -> /shrek_key_checker METHOD = GET
         Checks if the clients key is correct.
