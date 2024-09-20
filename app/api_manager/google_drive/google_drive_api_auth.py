@@ -7,9 +7,6 @@ import logging
 
 
 def Get_drive_service():
-
-    logging.info("---- Starting the auth procces in Get_drive_service")
-
     # Define the scopes required by your application
     SCOPES = [
         'https://www.googleapis.com/auth/drive',
@@ -31,13 +28,10 @@ def Get_drive_service():
         "scopes": SCOPES
     })
 
-    logging.info("Got the apropriet variables from the system enviroment!  ----- ")
-
     # Authenticate and create the Drive API service
     drive_service = build('drive', 'v3', credentials=credentials)
     logging.info("Succesfully retuned drive servive")
     if not drive_service:
+        #TODO handle the exception
         logging.error(" -----   COULD NOT AUTHENTICATE ----")
     return drive_service
-
-# Now you can use drive_service to interact with Google Drive API

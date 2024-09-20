@@ -22,8 +22,6 @@ Documentation structure.
 
 Usage:
 --------------------------------------------------
-
-
 API Endpoints:
     #TODO add appropriate status codes to all api endpoint
     #TODO add api key checker every where!
@@ -289,7 +287,7 @@ Components:
 -> Scraper
     -> Proxy scraper
 -> Google Drive communication
-    # lz coding implemented for shorted data amount.
+    # gzip coding implemented for shorted data amount.
 
 -------------------------------------------------------------
                    The data flow:
@@ -325,7 +323,33 @@ Components:
 
 ------------------------------------------------------------
 Main Flask server
---------------------------------------------------
+------------------------------------------------------------
 This is the central server that manages all the components.
 
 main.py
+
+
+------------------------------------------------------------
+Scrapy Spiders
+------------------------------------------------------------
+
+
+------------------------------------------------------------
+Google Drive API
+------------------------------------------------------------
+This part is responsible for reading, writing, deleting and creating files to Google Drive.
+Storing data on Google drive is easy and free for a set of data.up to 15 GB.
+->Thats why i choose to store data in gzip format.
+
+Google Documentation : https://developers.google.com/drive/api/quickstart/python
+
+Location : app/api_manager/google_drive
+
+-> google_drive_api_auth.py
+    This part is responsible for authentication for each api call to Google Drive.
+
+    It uses server environment variable.
+
+-> google_adrive_apiendpoint.py
+    Here is defined all the different operation that can be made to Google drive api.
+    

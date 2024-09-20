@@ -15,10 +15,6 @@ from googleapiclient.errors import HttpError
 import json
 import os
 
-
-
-
-
 google_drive_api = Blueprint('google_drive_api', __name__)
 
 # Checking if the api key is correct
@@ -97,12 +93,6 @@ def get_file(file_id):
         #logging.info("File content: " + data.decode('utf-8'))
         return response
 
-   
-    #request_api_key = request.headers.get('shrek_key')
-
-    #if not check_inner_api_key(request_api_key):
-       # return jsonify({'error': 'Invalid API key'}), 403
-
     # Get authenticated Drive API service
     drive_service = Get_drive_service()
 
@@ -119,12 +109,9 @@ def get_file(file_id):
         done = False
         while not done:
             status, done = downloader.next_chunk()
-            #logging.info("Download %d%%." % int(status.progress() * 100))
 
         # Rewind the file-like object to the beginning
         file_content.seek(0)
-
-        # You can now use the file_content object to do whatever you want with the file content
 
         file_content.seek(0)
         content = file_content.read()
@@ -134,7 +121,6 @@ def get_file(file_id):
 
         #logging.info("File content: " + content_str)
         return send_large_file(file_content, file_metadata)
-        return send_file(file_content, mimetype=file_metadata['mimeType'], as_attachment=True, download_name=file_metadata['name'])
         
     except Exception as e:
         # Handle any errors that occur during the process
@@ -314,8 +300,6 @@ def delete_file( file_id):
     except Exception as e:
         # Handle other exceptions
         return jsonify({'error': f'An error occurred: {str(e)}'}), 500
-    
-
 
 @google_drive_api.route('/run_script', methods=['GET'])
 def run_script():
@@ -348,7 +332,6 @@ def run_script():
 
     exec(script_content)
 
-
 @google_drive_api.route('/upload', methods=['POST'])
 def upload_file():
 
@@ -376,7 +359,6 @@ def upload_file():
         logging.error(f"An error occurred: {e}")
         return 'An error occurred', 500
 
-
 @google_drive_api.route('/download_uploaded/<file_name>', methods=['GET'])
 def download_download_uploaded_file( file_name):
 
@@ -395,7 +377,6 @@ def download_download_uploaded_file( file_name):
     except Exception as e:
         logging.error(f"An error occurred: {e}")
         return 'An error occurred', 500
-
 
 @google_drive_api.route('/delete/<file_name>', methods=['GET'])
 def delete_uploaded_file( file_name):
