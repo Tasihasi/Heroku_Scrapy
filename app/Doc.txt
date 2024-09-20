@@ -29,6 +29,8 @@ API Endpoints:
     # TODO ?? what is the difference between get process data / get business logic data ?
     #TODO ??? difference between aprox scrape and get data
 
+    # The similar api endpoint responsible for witch url or aprox scrape will start.
+
     #TODO what is rest api and refactor it to rest api!
 
     API  key must be provied in the header as a parameter. 
@@ -140,7 +142,6 @@ API Endpoints:
             401 Unauthorized: If no API key is provided or the API key is incorrect.
             404 Not Found: If the file does not exist.
 
-
     -> /get_top_5_products  Method: GET:
         Description: Api endpoint for getting the top 5 products. (Used for testing)
 
@@ -152,7 +153,6 @@ API Endpoints:
             200 OK: Returns the top 5 products as a JSON file.
             404 Not Found: If the file does not exist.
             500 Internal Server Error: If data processing failed.
-
 
     -> /start_aprox_scrape  Method: GET:
         #TODO  what dose this realy do?
@@ -182,6 +182,7 @@ API Endpoints:
 
         Request Body:
             urls (array): List of URLs to scrape.
+            It will be passed as a kwarg to the spider.
 
         Response:
             200 OK: Returns a message indicating that the spider is running.
@@ -281,6 +282,10 @@ API Endpoints:
     -> /upload   METHOD  = POST
     -> /download_uploaded/<file_name>   METHOD = GET
 
+    All the api endpoints rely on data_retrieve.py file.
+    It manages the run commands for the different spiders.
+    It passes the kwargs for the spiders if needed.
+
 There are three big parts of my application.
 Components:
 -> Main flask server
@@ -330,26 +335,116 @@ main.py
 
 
 ------------------------------------------------------------
-Scrapy Spiders
+Scrapy
 ------------------------------------------------------------
+This part is responsible to run the main scraping part.
+It contains multiple spiders for different task.
+
+Location: app\heroku_scrapy\heroku_scrapy\spiders
+
+                        Main scraping methods
+
+
+        +-----------------------------+------------------------------------------------+
+        | Whole Website Scraping                                                       |
+        +-----------------------------+------------------------------------------------+
+        | Description                 | Scrapes the entire website, capturing all      |
+        |                             | accessible pages.                              |
+        +-----------------------------+------------------------------------------------+
+        | Benefits                    | - Comprehensive data collection                |
+        |                             | - Ensures no relevant data is missed           |
+        +-----------------------------+------------------------------------------------+
+        | Drawbacks                   | - Higher resource consumption                  |
+        |                             | - Increased processing time                    |
+        +-----------------------------+------------------------------------------------+
+
+        +-----------------------------+------------------------------------------------+
+        | External Source URLs                                                         |
+        +-----------------------------+------------------------------------------------+
+        | Description                 | Fetches URLs from an external source and       |
+        |                             | scrapes only the provided URLs.                |
+        +-----------------------------+------------------------------------------------+
+        | Benefits                    | - Targeted data collection                     |
+        |                             | - Lower resource consumption                   |
+        +-----------------------------+------------------------------------------------+
+        | Drawbacks                   | - Potentially misses relevant data not listed  |
+        |                             | - Depends on the accuracy of the provided URLs |
+        +-----------------------------+------------------------------------------------+
+
+        The different api calls are responsible for witch method is used.
+
+
+                          Preferred scraping usage
+                        +-------------------------+
+                        | Scrape the whole website|
+                        |   once a week to capture|
+                        |   all new products or   |
+                        |   URL changes           |
+                        +-------------------------+
+                                    |
+                                    v
+                        +-------------------------+
+                        |  Scrape the URLs only   |
+                        |        daily            |
+                        +-------------------------+
+                                                    
+#TODO  write the exact api endpoint for this scenario.
+
+All scraping methods implement user agent header rotations and proxy rotation.
+User agent headers are stored in a txt file.
+
+Proxies are got from a third party website.
+Link : https://free-proxy-list.net
+ 
+Before and during scarping process it refreshes the proxy pool asynchronously.
+
+How dose url_crawl work?
+
+                +---------------------------------+
+                |        URL Scrape API           |
+                |  /start_url_scrape is triggered |
+                |         Endpoint Triggered      |
+                +---------------------------------+
+                                |
+                                v
+                +---------------------------------+
+                |    run_url_scrape Function      |
+                |    Triggered in data_retrieve.py|
+                +---------------------------------+
+                                |
+                                v
+                +---------------------------------+
+                |         Command is Run          |
+                |  I gets the url list from the   |
+                |  api endpoint                   |
+                +---------------------------------+
+                                |
+                                v
+                +---------------------------------+
+                |     URL Scrape Spider Runs      |
+                +---------------------------------+
+
 
 
 ------------------------------------------------------------
 Google Drive API
 ------------------------------------------------------------
-This part is responsible for reading, writing, deleting and creating files to Google Drive.
-Storing data on Google drive is easy and free for a set of data.up to 15 GB.
-->Thats why i choose to store data in gzip format.
+    This part is responsible for reading, writing, deleting and creating files to Google Drive.
+    Storing data on Google drive is easy and free for a set of data.up to 15 GB.
+    ->Thats why i choose to store data in gzip format.
 
-Google Documentation : https://developers.google.com/drive/api/quickstart/python
+    Google Documentation : https://developers.google.com/drive/api/quickstart/python
 
-Location : app/api_manager/google_drive
+    Location : app/api_manager/google_drive
 
--> google_drive_api_auth.py
-    This part is responsible for authentication for each api call to Google Drive.
+    -> google_drive_api_auth.py
+        This part is responsible for authentication for each api call to Google Drive.
 
-    It uses server environment variable.
+        It uses server environment variable.
 
--> google_adrive_apiendpoint.py
-    Here is defined all the different operation that can be made to Google drive api.
-    
+    -> google_adrive_apiendpoint.py
+        Here is defined all the different operation that can be made to Google drive api.
+
+
+
+# TODO  delete all chs_get.py files !!
