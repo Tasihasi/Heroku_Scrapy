@@ -42,9 +42,8 @@ class UrlCrawlSpider(CrawlSpider):
             yield scrapy.Request(url, 
                                 headers={'User-Agent': self.get_random_user_agent()}, 
                                 callback=self.parse_link)
-            
-            
     
+    # The data collecting from the html logic
     def parse_link(self, response):
         prices = ""
         competitors = ""

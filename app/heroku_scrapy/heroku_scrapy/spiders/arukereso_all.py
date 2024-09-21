@@ -20,13 +20,15 @@ import logging
 
 import socket
 
+
+
 #Returns user agent
 def get_user_agents() -> List[str]:
     with open('useragents.txt') as f:
         USER_AGENT_PARTS = f.readlines()
     return USER_AGENT_PARTS
 
-
+#Test if the port open
 def is_port_open(host: str, port: int) -> bool:
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     sock.settimeout(1)  # One second timeout
@@ -37,7 +39,7 @@ def is_port_open(host: str, port: int) -> bool:
     except socket.error:
         return False
     
-
+#Scans a range of ports if they are open
 def port_scan(host: str, start_port: int, end_port: int) -> List[int]:
     with ThreadPoolExecutor(max_workers=50) as executor:
         futures = {executor.submit(is_port_open, host, port): port for port in range(start_port, end_port + 1)}
@@ -45,8 +47,8 @@ def port_scan(host: str, start_port: int, end_port: int) -> List[int]:
     return open_ports
 
 
-
-def check_proxy_status(proxy : str ) -> int:
+# Checking if proxy working against the target website
+def check_proxy_status(proxy : str , test_url : str) -> int:
     """
     Check if a proxy is working by making a request to a test URL.
     """
@@ -95,11 +97,8 @@ def check_proxy_multi_threadedly(proxies : List[str] ) -> List[str]:
 
     return valid_proxies
 
-
+# Gets a new pool of proxies buy scraping a website than test them
 def Getting_new_proxies():  # Running the scrapy 
-
-
-
         # Define the command as a list of strings
         logging.info("--------------------   Getting new proxies ---------------------------")
         current_directory = os.getcwd()
@@ -130,37 +129,7 @@ def Getting_new_proxies():  # Running the scrapy
             pass
             #print(f"An error occurred: {e}")
 
-"""
-def Getting_new_proxies():  # owerwrite Running the scrapy
-    url = ["https://raw.githubusercontent.com/proxifly/free-proxy-list/main/proxies/protocols/http/data.txt"]
 
-    try:
-        response = requests.get(url)
-
-        if response.status_code == 200:
-            # Successful response
-
-            logging.info(f"Proxies retrieved and saved to {response.text.strip()}")
-
-
-            proxies = response.text.strip().split("\n")
-             #proxies = [f"http://{proxy.strip()}" for proxy in proxies]
-            #proxies += [f"https://{proxy.strip()}" for proxy in proxies]
-            #return retList
-            logging.info(f"Proxies retrieved and saved to {proxies}")
-
-
-            return check_proxy_multi_threadedly(proxies)
-        else:
-            # Handle other status codes if needed
-            pass
-            #print(f"Request failed with status code: {response.status_code}")
-
-    except requests.RequestException as e:
-        # Handle exceptions or errors
-        pass
-        #print(f"An error occurred: {e}")
-"""
 
 class ArukeresoSpider(scrapy.Spider):
     name = 'arukereso_all'
@@ -175,18 +144,14 @@ class ArukeresoSpider(scrapy.Spider):
         #   ------ closing spider aftre 50 items -------
         #'CLOSESPIDER_ITEMCOUNT': 100,
     }
+
+    # Creates a list of urls from the simple url 
     def predicting_url(self, url : str) -> List[str]:
-
         ret_list = [url]
-
         for i in range(1, 3250):
             ret_list.append(url + "?start=" + str(i*25))
         
         return ret_list
-    
-      
-
-    
 
     def __init__(self, *args, **kwargs):
         logging.info(f"current directore : {os.getcwd()}")
@@ -213,6 +178,7 @@ class ArukeresoSpider(scrapy.Spider):
     def get_random_user_agent(self) -> str:
         return random.choice(self.user_agents)
 
+    # Return random proxy 
     def select_proxy(self) -> str:
         time = datetime.now()
         if not self.raw_proxy_list:
@@ -220,13 +186,10 @@ class ArukeresoSpider(scrapy.Spider):
             return None
 
         # Filter out invalid proxies
-        
-
         if not self.valid_proxies:
             return None  # Return None if no valid proxies are available
 
         selected_proxy = random.choice(self.valid_proxies)
-
 
         logging.warning(f" -----    !!!! Time took to get a new poxy  time took :  { datetime.now() - time}   !!!!!  ----")
         self.proxy_time += (datetime.now() - time).total_seconds()

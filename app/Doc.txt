@@ -29,6 +29,8 @@ API Endpoints:
     # TODO ?? what is the difference between get process data / get business logic data ?
     #TODO ??? difference between aprox scrape and get data
 
+    # TODO  make a class that manages all scrapy management
+
     # The similar api endpoint responsible for witch url or aprox scrape will start.
 
     #TODO what is rest api and refactor it to rest api!
@@ -424,7 +426,14 @@ How dose url_crawl work?
                 |     URL Scrape Spider Runs      |
                 +---------------------------------+
 
+How dose arukereso_all works?
 
+    
+    # TODO multiple check proxy status functions 
+    #  -> There is a proxy check outside of the class and there is a inner check proxy 
+    # TODO  -> make an proxy manager class that strores and return only a proxy that is needed 
+    # TODO      -> Add the proxy checker to that class a function 
+    # TODO      -> Add select proxy 
 
 ------------------------------------------------------------
 Google Drive API
