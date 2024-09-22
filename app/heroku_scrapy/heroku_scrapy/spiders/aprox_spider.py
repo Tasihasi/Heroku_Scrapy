@@ -1,23 +1,11 @@
 import scrapy
-from scrapy.linkextractors import LinkExtractor
-from scrapy.spiders import CrawlSpider, Rule
-from scrapy.exceptions import CloseSpider
+from scrapy.spiders import CrawlSpider
 from typing import List
 import logging
 import random
-import os
-from concurrent.futures import ThreadPoolExecutor
-import requests
-
-
-
-
-
 
 class AproxSpiderSpider(CrawlSpider):
     name = "aprox-spider"
-    
-
     custom_settings = {
         'DOWNLOAD_DELAY': 0.01,  # add download delay of 1 second
         'CONCURRENT_REQUESTS': 20, # 128,  # Adjust the concurrency level as needed
@@ -28,9 +16,6 @@ class AproxSpiderSpider(CrawlSpider):
         #   ------ closing spider aftre 50 items -------
         #'CLOSESPIDER_ITEMCOUNT': 100,
     }
-
-
-    #allowed_domains = ["example.com"]
 
     # Predicts the url ending for the spider
     def predicting_url(self, url : str) -> List[str]:
@@ -54,9 +39,6 @@ class AproxSpiderSpider(CrawlSpider):
         initial_urls = [(category.split('-')[0], f"{base_url}{category}") for category in category_list]
 
         logging.info(f"Intial urls: {initial_urls}")
-
-        #category_names = [category.split('-')[0] for category in category_list]
-
 
         all_urls = []
         for category, url in initial_urls:

@@ -5,6 +5,35 @@ This is a flask application.
 
 It runs autonomously the daily task and scrapes the Arukereso website.
 Link : https://www.arukereso.hu/
+The daily task run can be configured on the server where the projects runs buy hitting
+the /get_data (whole category scrape) or /start_url_scrape (for the specific urls) api endpoint.
+
+                        +----------------------------------+
+                        |          Website Structure       |
+                        +----------------------------------+
+                                        |
+                                        v
+        +-------------------+-------------------+-------------------+
+        |   Big Category 1  |   Big Category 2  |   Big Category 3  |           Category URL
+        +-------------------+-------------------+-------------------+           ============
+                    |                   |                   |
+                    v                   v                   v
+        +----------------+     +----------------+     +----------------+
+        |  Product Group |     |  Product Group |     |  Product Group |
+        |                |     |                |     |                |          Group URL
+        | (Approx. Price)|     | (Approx. Price)|     | (Approx. Price)|        =============
+        +----------------+     +----------------+     +----------------+
+                    |                   |                   |
+                    v                   v                   v
+        +-------------------+ +-------------------+ +-------------------+
+        | Vendor 1 (Price)  | | Vendor 1 (Price)  | | Vendor 1 (Price)  |
+        +-------------------+ +-------------------+ +-------------------+
+        | Vendor 2 (Price)  | | Vendor 2 (Price)  | | Vendor 2 (Price)  |
+        +-------------------+ +-------------------+ +-------------------+
+        | Vendor 3 (Price)  | | Vendor 3 (Price)  | | Vendor 3 (Price)  |
+        +-------------------+ +-------------------+ +-------------------+
+        
+
 
 The client can interact through APIs with the server.
 The end result is a json file containing : product names, prices, url , category.
@@ -35,6 +64,9 @@ API Endpoints:
 
     #TODO what is rest api and refactor it to rest api!
 
+    # TODO start_aprox_scrape and url_crawl are the same  !!
+    # Find or make the difference !! 
+
     API  key must be provied in the header as a parameter. 
     Named "shrek_key". (Shrek key is used for internal api calls.)
 
@@ -58,30 +90,32 @@ API Endpoints:
 
         Request Headers:
 
-            Authorization (string): The API key.
+            Authorization (string): shrek_key : "key".
             Request Body: None
 
         Response:
             -200 OK: Returns JSON if the API key is correct
 
     -> /get_raw_data    Method: GET
-        Description: Retrieves raw data if the API key is valid and customer status is active.
+        Description: Retrieves raw data if the API key is valid.
 
         Request Headers:
 
-            Authorization (string): The API key.
+            Authorization (string): shrek_key : "key".
             Request Body: None
         
         Response:
             200 OK: Returns the raw data.
             200 OK: If customer status is inactive   #TODO Correcting the api endpoint status code 
 
-            401 Unauthorized: If the API key is incorrect.
+            401: Unauthorized: If the API key is incorrect.
+            403: Client status is inactive.
 
     -> /get_data    Method: GET
         Description: Starts the data scraping process asynchronously. Can run multiple scraping processes.
 
-        Request Headers: None   #TODO  no api key needed!
+        Request Headers: 
+            Authorization (string): shrek_key : "key".   #TODO  no api key needed!
         Request Body: None
 
         Response:
@@ -94,7 +128,7 @@ API Endpoints:
         Description: Retrieves the final raw data from the whole website. Uses data streaming.
 
         Request Headers:
-            API-Key (string): The API key.
+            Authorization (string): shrek_key : "key".
 
         Request Body: None
 
@@ -107,7 +141,7 @@ API Endpoints:
                     The process is defined in the business logic folder.
 
         Request Headers: 
-            API-Key (string): The API key.
+            Authorization (string): shrek_key : "key".
         Request Body: None
 
         Response:
@@ -117,9 +151,10 @@ API Endpoints:
 
     -> /customer_data_process Method: GET:
         Description: Runs the data process in the business logic folder.
+                    Cannot return partially processed data.
 
         Request Headers: 
-            API-Key (string): The API key.
+            Authorization (string): shrek_key : "key".
 
         Request Body: None
 
@@ -131,7 +166,7 @@ API Endpoints:
         Description: Retrieves business logic data by name.
 
         Request Headers:
-            shrek_key (string): The client API key.
+            Authorization (string): shrek_key : "key".
 
         Request Body: None
 
@@ -147,7 +182,8 @@ API Endpoints:
     -> /get_top_5_products  Method: GET:
         Description: Api endpoint for getting the top 5 products. (Used for testing)
 
-        Request Headers: None
+        Request Headers: 
+            Authorization (string): shrek_key : "key". # TODO  add shrek key checker
         Request Body: None
 
         Response:
@@ -157,19 +193,23 @@ API Endpoints:
             500 Internal Server Error: If data processing failed.
 
     -> /start_aprox_scrape  Method: GET:
-        #TODO  what dose this realy do?
-        Description: Starts the approximate scrape process.
+        #TODO !!! Implement that category can be specified outside the spider !!!
+        It scrapes the category that is specified outside, and returns all the set of group urls. 
+        Used in that case when do not want to get the whole category precise details.
+        OR when only want to get the urls for that category.
 
-        Request Headers: None
+        Request Headers: 
+            Authorization (string): shrek_key : "key". # TODO  add a shrek_key checker !! 
         Request Body: None
 
         Response:
-            200 OK: Returns a message indicating that the spider is running
+            200 OK: Returns a message indicating that the spider is running.
 
     -> /get_products_url    Method: GET:
-        Description: ??? Do not know what it dose! TODO 
+        Description: Returns a set of URLS that is scraped buy the /start_aprox_scrape. 
 
-        Request Headers: None !!!! # TODO no api key needed
+        Request Headers:
+            Authorization (string): shrek_key : "key". !!!! # TODO no api key needed
         Request Body: None
 
         Response:
@@ -180,7 +220,8 @@ API Endpoints:
     -> /start_url_scrape    Method: POST, GET:
         Description: Starts the URL scrape process with the provided URLs.
 
-        Request Headers: None # TODO  no api key needed !!
+        Request Headers: 
+            Authorization (string): shrek_key : "key". # TODO  no api key needed !!
 
         Request Body:
             urls (array): List of URLs to scrape.
@@ -192,7 +233,8 @@ API Endpoints:
     -> /get_url_scrape      Method: GET:
         Description: Retrieves the URL scrape results.
 
-        Request Headers: None   # TODO  no api key needed !!
+        Request Headers: 
+            Authorization (string): shrek_key : "key".   # TODO  no api key needed !!
         Request Body: None
 
         Response:
@@ -217,6 +259,10 @@ API Endpoints:
     -> /list_files METHOD = GET
         Lists the available files in the google drive.
 
+        Request Headers: 
+            Authorization (string): shrek_key : "key".   # TODO  no api key needed !!
+        Request Body: None
+
         Possible returns:
             200 :
                 {'message': 'No files found'}
@@ -226,6 +272,11 @@ API Endpoints:
             500 - {'error': 'Authentication failed or an error occurred'}
 
     -> /get_file/<file_id> METHOD = GET
+
+        Request Headers: 
+            Authorization (string): shrek_key : "key".   # TODO  no api key needed !!
+        Request Body: None
+
         Parameter : file_id : str -> Google drive inner file id. Must provide!
         Get the the wanted file id from the /list_files api endpoint.
 
@@ -240,14 +291,23 @@ API Endpoints:
     -> /create_file/<file_name>/<file_mimeType>/<force_update> METHOD = POST
         Uploads a new file in the google drive.
 
+        # TODO  handle cases where the mime type is not defined.
+
+        Request Headers: 
+            Authorization (string): shrek_key : "key".   # TODO  no api key needed !!
+        Request Body: None
+
         Parameters:
             - file_name : str - The intended file name - Must provide!
             - file_mimeType : str - The intended file type. Must corresponding to the encoded mime types! - Must provide!
                 Possible mime types:
-                    - "text" -> plain text format.
-                    - "ipynb" -> executable python script.
-                    - "csv" -> csv file.
-                    - "gzip" -> a compressed gzip file for smaller data amount.
+                    - "text"  ->  plain text format.
+                    - "ipynb" ->  executable python script.
+                    - "csv"   ->  csv file.
+                                  Suggestion : use more csv file than txt file for easier data handling.
+                    - "gzip"  ->  a compressed gzip file for smaller data amount. 
+                                  Suggestion: Use gzip for whole category data storing. 
+
             - force_update : 0/1 - If wanted to forcefully overwrite the file name even if the file is already exists. - Optional.
                 - base value = 0 => no overwrite
 
@@ -258,6 +318,11 @@ API Endpoints:
 
     -> /delete_file/<file_id> METHOD = GET
         Deletes an uploaded file from google drive.
+        WARNING : There is no confirmation step in deleting the file!
+
+        Request Headers: 
+            Authorization (string): shrek_key : "key".   # TODO  no api key needed !!
+        Request Body: None
 
         Parameters:
             -file_name: str - The name of the file to delete. !Must provide!
@@ -270,6 +335,10 @@ API Endpoints:
 
     -> /run_script METHOD = GET
         Runs a Python script from Google Drive.
+
+        Request Headers: 
+            Authorization (string): shrek_key : "key".   # TODO  no api key needed !!
+        Request Body: None
 
         Parameters:
             - shrek_key: str - API key in request headers.
@@ -398,7 +467,13 @@ User agent headers are stored in a txt file.
 Proxies are got from a third party website.
 Link : https://free-proxy-list.net
  
-Before and during scarping process it refreshes the proxy pool asynchronously.
+
+For every request a different proxy and user agent is used.
+If a proxy is still alive it may be used multiple times.
+
+If a proxy is not alive it is deleted from the proxy pool.
+Before and during scarping process the proxies are tested and refreshed asynchronously.
+
 
 How dose url_crawl work?
 
@@ -435,6 +510,60 @@ How dose arukereso_all works?
     # TODO      -> Add the proxy checker to that class a function 
     # TODO      -> Add select proxy 
 
+            +----------------------------+
+            |       Spider Starts        |
+            +----------------------------+
+                        |
+                        v
+            +----------------------------+
+            |    User Agent Reading      |
+            +----------------------------+
+                        |
+                        v
+            +----------------------------+
+            |     Proxy Gathering        |
+            +----------------------------+
+                        |
+                        v
+            +----------------------------+
+            |      Proxy Testing         |
+            +----------------------------+
+                        |
+                        v
+            +----------------------------+
+            |  Main Scraping Process     |
+            +----------------------------+
+                        |
+                        v
+            +----------------------------+
+            | Proxies Available?         |
+            |   Yes        |    No       |
+            +----------------------------+
+            |     |                      |
+            |     v                      |
+            | Continue                   |
+            |     |         |            |
+            |     |         v            |
+            |     |   +-----------------+|
+            |     |   | Proxy Gathering ||
+            |     |   +-----------------+|
+            |     |         |            |
+            |     |         v            |
+            |     |   +-----------------+|
+            |     |   |  Proxy Testing  ||
+            |     |   +-----------------+|
+            |     |         |            |
+            |     v         v            |
+            | +-------------------------+|
+            | Main Scraping Process      |
+            | +-------------------------+|
+            +----------------------------+
+
+    Proxy scraping is made from a third party free api.
+    URL : https://api.proxyscrape.com/v2/?request=displayproxies&protocol=http&timeout=10000&country=all&ssl=no&anonymity=elite
+
+    The gathering and testing process runs sumiltaniusly with the main scraping process.
+
 ------------------------------------------------------------
 Google Drive API
 ------------------------------------------------------------
@@ -457,3 +586,19 @@ Google Drive API
 
 
 # TODO  delete all chs_get.py files !!
+
+
+Security:
+    # TODO  store the shrek key in hashed format
+    # TODO should i implement api key rotation or renewal?
+
+    The api keys are stored on the server side as system variables.
+
+Logging:
+    # TODO  should i implement log files?
+
+
+Performance:
+    # TODO create benchmark files that showcase different scenarios.
+
+    Server is using asynchronously and multithreading for boosting performance.

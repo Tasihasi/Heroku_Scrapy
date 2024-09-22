@@ -214,7 +214,7 @@ def get_raw_data():
         return newest_raw_data(provided_api_key)
     
     elif valid_api_key(provided_api_key):
-        return jsonify({"message" : "The corresponding customer status is inactive"})
+        return jsonify({"message" : "The corresponding customer status is inactive"}, 403)
 
     else:
         return jsonify({"message" : "The api key provided is incorrect."})
