@@ -1,12 +1,18 @@
 Overview 
 ----------------------------------------------------------
 
+#  TODO  add the example for all the necesarry system envirable that has to be in place !! 
+
+GOAL : To get daily up-to-date data about products from the Arukereso website.
+
 This is a flask application.
 
 It runs autonomously the daily task and scrapes the Arukereso website.
 Link : https://www.arukereso.hu/
 The daily task run can be configured on the server where the projects runs buy hitting
 the /get_data (whole category scrape) or /start_url_scrape (for the specific urls) api endpoint.
+
+Or in the main.py file where it looks for the current time and hits itself.
 
                         +----------------------------------+
                         |          Website Structure       |
@@ -44,6 +50,56 @@ using the google drive api.
 The server is designed that these api endpoint will not be open for public only for 
 other servers or front end servers.
 
+Main structure:
+                                        +-----------------------+
+                                        |   Client Application  |
+                                        +----------+------------+
+                                                   |
+                                                   v
+                                        +----------+------------+
+                                        |     Flask Server      |
+                                        +----------+------------+
+                                                   |
+                       +---------------------------+---------------------------+
+                       |                           |                           |
+                       v                           v                           v
+            +----------+------------+   +----------+------------+   +----------+------------+
+            |  /get_data Endpoint   |   |/start_url_scrape      |   | /get_final_data       |
+            |  /start_aprox_scrape  |   | Endpoint              |   | Endpoint              |
+            +----------+------------+   +----------+------------+   +----------+------------+
+                       |                           |                           |
+                       v                           v                           v
+            +----------+------------+   +----------+------------+   +----------+------------+
+            |     Initiate Scrapy   |   |     Initiate Scrapy   |   |     Retrieve Data     |
+            |     Spider for        |   |     Spider for URLs   |   |     from Local        |
+            |     Whole Category    |   +-----------------------+   |     Filesystem        |
+            +----------+------------+                               +----------+------------+
+                       |
+                       v
+            +----------+------------+
+            |  Scrapy Spider Runs   |
+            +----------+------------+
+                       |
+                       v
+            +----------+------------+
+            | Save Data Locally     |
+            | (Filesystem)          |
+            +----------+------------+
+                       |
+                       v
+            +----------+------------+
+            | Push Data to Google   |
+            | Drive (Google Drive   |
+            | API)                  |
+            +-----------------------+
+                       |
+                       v
+            +----------+------------+
+            | Data Available for    |
+            | Client Access         |
+            +-----------------------+
+
+
 Documentation structure.
 -> Overview
 -> Usage (API description)
@@ -59,6 +115,8 @@ API Endpoints:
     #TODO ??? difference between aprox scrape and get data
 
     # TODO  make a class that manages all scrapy management
+
+    # TODO  !! add example usage for each api endpoint !!
 
     # The similar api endpoint responsible for witch url or aprox scrape will start.
 
@@ -357,6 +415,8 @@ API Endpoints:
     It manages the run commands for the different spiders.
     It passes the kwargs for the spiders if needed.
 
+
+
 There are three big parts of my application.
 Components:
 -> Main flask server
@@ -375,6 +435,11 @@ Components:
                             v
             +---------------------------------+
             |  API Endpoint Triggered         |
+            +---------------------------------+
+                            |
+                            v
+            +---------------------------------+
+            |    data_retrieve.py             |         Handles API requests and initiates the Scrapy spiders.
             +---------------------------------+
                             |
                             v
@@ -403,6 +468,28 @@ Main Flask server
 This is the central server that manages all the components.
 
 main.py
+    This is the main entry point for the Flask application.
+
+    Responsibilities:
+        API Endpoint Registration: This file is responsible for registering all API endpoints through blueprints, enabling modular and organized route management.
+
+    -> api: Handles core API functionality.
+    -> proxy_blueprint: Manages proxy-related requests and operations.
+    -> google_drive_api: Interacts with Google Drive for data storage and retrieval.
+    -> Daily Job Scheduling: Contains a function that triggers a daily job to scrape data at a specified time (9:00 AM).
+
+    send_request: Sends a GET request to the scraping endpoint to initiate data retrieval.
+    -> run_daily_job: Monitors the current time and executes the scraping job daily. It sleeps for a minute between checks to optimize performance.
+    How to Run:
+        -> The application can be executed by running this file directly, which starts the Flask development server in debug mode.
+    Example Usage:
+    -> To run the application, execute :  "python main.py" in the terminal. The server will start, and the daily job will be scheduled automatically.
+
+
+    WARNING : Before running add all the neccessary environment variables!
+        ->  Google drive credential 
+        -> Shrek key
+        -> home url
 
 
 ------------------------------------------------------------
@@ -474,8 +561,9 @@ If a proxy is still alive it may be used multiple times.
 If a proxy is not alive it is deleted from the proxy pool.
 Before and during scarping process the proxies are tested and refreshed asynchronously.
 
+Spider 
 
-How dose url_crawl work?
+url_crawl:
 
                 +---------------------------------+
                 |        URL Scrape API           |
@@ -501,7 +589,7 @@ How dose url_crawl work?
                 |     URL Scrape Spider Runs      |
                 +---------------------------------+
 
-How dose arukereso_all works?
+arukereso_all:
 
     
     # TODO multiple check proxy status functions 
@@ -510,54 +598,54 @@ How dose arukereso_all works?
     # TODO      -> Add the proxy checker to that class a function 
     # TODO      -> Add select proxy 
 
-            +----------------------------+
-            |       Spider Starts        |
-            +----------------------------+
-                        |
-                        v
-            +----------------------------+
-            |    User Agent Reading      |
-            +----------------------------+
-                        |
-                        v
-            +----------------------------+
-            |     Proxy Gathering        |
-            +----------------------------+
-                        |
-                        v
-            +----------------------------+
-            |      Proxy Testing         |
-            +----------------------------+
-                        |
-                        v
-            +----------------------------+
-            |  Main Scraping Process     |
-            +----------------------------+
-                        |
-                        v
-            +----------------------------+
-            | Proxies Available?         |
-            |   Yes        |    No       |
-            +----------------------------+
-            |     |                      |
-            |     v                      |
-            | Continue                   |
-            |     |         |            |
-            |     |         v            |
-            |     |   +-----------------+|
-            |     |   | Proxy Gathering ||
-            |     |   +-----------------+|
-            |     |         |            |
-            |     |         v            |
-            |     |   +-----------------+|
-            |     |   |  Proxy Testing  ||
-            |     |   +-----------------+|
-            |     |         |            |
-            |     v         v            |
-            | +-------------------------+|
-            | Main Scraping Process      |
-            | +-------------------------+|
-            +----------------------------+
+                +----------------------------+
+                |       Spider Starts        |
+                +----------------------------+
+                            |
+                            v
+                +----------------------------+
+                |    User Agent Reading      |
+                +----------------------------+
+                            |
+                            v
+                +----------------------------+
+                |     Proxy Gathering        |
+                +----------------------------+
+                            |
+                            v
+                +----------------------------+
+                |      Proxy Testing         |
+                +----------------------------+
+                            |
+                            v
+                +----------------------------+
+                |  Main Scraping Process     |
+                +----------------------------+
+                            |
+                            v
+                +----------------------------+
+                | Proxies Available?         |
+                |   Yes        |    No       |
+                +----------------------------+
+                |     |                      |
+                |     v                      |
+                | Continue                   |
+                |     |         |            |
+                |     |         v            |
+                |     |   +-----------------+|
+                |     |   | Proxy Gathering ||
+                |     |   +-----------------+|
+                |     |         |            |
+                |     |         v            |
+                |     |   +-----------------+|
+                |     |   |  Proxy Testing  ||
+                |     |   +-----------------+|
+                |     |         |            |
+                |     v         v            |
+                | +-------------------------+|
+                | Main Scraping Process      |
+                | +-------------------------+|
+                +----------------------------+
 
     Proxy scraping is made from a third party free api.
     URL : https://api.proxyscrape.com/v2/?request=displayproxies&protocol=http&timeout=10000&country=all&ssl=no&anonymity=elite
@@ -591,6 +679,8 @@ Google Drive API
 Security:
     # TODO  store the shrek key in hashed format
     # TODO should i implement api key rotation or renewal?
+    # TODO  rate limiting 
+    # TODO ip cheking and logging for api calls.
 
     The api keys are stored on the server side as system variables.
 
@@ -602,3 +692,7 @@ Performance:
     # TODO create benchmark files that showcase different scenarios.
 
     Server is using asynchronously and multithreading for boosting performance.
+
+
+Necessary environment variables:
+    # TODO add all the requirements
