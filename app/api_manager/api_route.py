@@ -4,7 +4,7 @@ import json
 import os
 import logging
 from .auth import is_valid_api_key
-from .data_retrieve import get_data_from_scrapy, run_aprox_spider, run_url_spider
+from .data_retrieve import get_data_from_scrapy, run_aprox_spider, run_url_spider, SpiderRunner
 from concurrent.futures import ThreadPoolExecutor  # For async execution
 import threading
 from functools import partial
@@ -215,22 +215,12 @@ def get_data():
         pass
         #return jsonify({"message" : "API key is incorrect"}), 401 
 
+    spider_runner = SpiderRunner(spider_name='arukereso_all', output_file='Result.json')
+    spider_runner.run()
 
-    def process():
-        # Assuming get_data_from_scrapy() returns the path to the XML file
-        xml_file_path = get_data_from_scrapy()
-
-        if xml_file_path:
-            # Specify the mimetype as 'application/xml'
-            return send_file(xml_file_path, mimetype='application/xml', as_attachment=True)
-        
-        return "Spider run failed."
-    
-     # Submit the 'process' function to the executor for asynchronous execution
-    future = executor.submit(process)
-
-    # Return a response immediately indicating that the spider is running asynchronously
     return "Spider is running asynchronously. The data will be avaiable at /get_final_data"
+    # Return a response immediately indicating that the spider is running asynchronously
+    
     
 @proxy_blueprint.route('/get_final_data', methods=['GET'])
 def Get_final_data():
