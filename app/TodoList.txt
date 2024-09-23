@@ -1,0 +1,2 @@
+#  TODO  add the example for all the necesarry system envirable that has to be in place !! 
+#TODO  implement if the client-api key was active once and sen active 
