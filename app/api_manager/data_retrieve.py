@@ -1,4 +1,6 @@
-import subprocess, logging, os
+import subprocess, logging, os, psutil
+
+# TODO  add that checks if a spider with the same is running currently 
 
 class SpiderRunner:
     def __init__(self, spider_name : str, output_file : str, *args, **kwargs):
@@ -9,14 +11,11 @@ class SpiderRunner:
 
     def _run_spider(self, command):
         try:
-            result = subprocess.run(command, stdout=subprocess.PIPE, text=True, check=True)
-            spider_log = result.stdout
-            print("Spider Log:")
-            logging.info("--------  Spider log : ")
-            logging.info(spider_log)
-            print(spider_log)
-            print("Spider Run in the api_proxy.py")
-            return True, spider_log
+            # Use subprocess.Popen to run the spider in the background
+            process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+            logging.info(f"Started spider {self.spider_name} with PID {process.pid}")
+            
+            return True, process
         except subprocess.CalledProcessError as e:
             print("Failed to run the spider:", e)
             return False, None
@@ -31,8 +30,30 @@ class SpiderRunner:
         except subprocess.CalledProcessError as e:
             print("Failed to list spiders:", e)
             return False
+        
+    def _correct_spider_arguments(self) -> bool:
+        if type(self.spider_name) != str or type(self.output_file) != str:
+            return False
+        elif "urls" not in self.kwargs and (self.spider_name == "aprox-spider" or self.spider_name == "imp-aprox-spider"):
+            return False
+        
+        elif "category" not in self.kwargs and self.spider_name == "url-crawl":
+            return False
+        
+        return True
+
+    def _is_spider_running(self) -> bool:
+        """Check if a spider with the same name is currently running."""
+        for proc in psutil.process_iter(['pid', 'name', 'cmdline']):
+            if 'scrapy' in proc.info['cmdline'] and self.spider_name in proc.info['cmdline']:
+                logging.info(f"Spider {self.spider_name} is already running with PID {proc.info['pid']}")
+                return True
+        return False
 
     def run(self) -> int:
+            if not self._correct_spider_arguments():
+                return 0
+
             script_dir = os.path.dirname(os.path.abspath(__file__))
             spider_dir = os.path.join(script_dir, '..', 'heroku_scrapy')
             os.chdir(spider_dir)

@@ -188,6 +188,7 @@ API Endpoints:
             404 Not Found: Spider dose not exists.
             500 Internal Server Error: If there is an error starting the spider.
 
+        Example Usage:
 
 
     -> /get_data    Method: GET
@@ -489,6 +490,8 @@ Scrapy
 ------------------------------------------------------------
 This part is responsible to run the main scraping part.
 It contains multiple spiders for different task.
+
+# TODO  !!! To setting.py i put close item count 10 for testing puroses!!! 
 
 Location: app\heroku_scrapy\heroku_scrapy\spiders
 

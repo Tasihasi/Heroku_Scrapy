@@ -203,11 +203,11 @@ def check_api_key():
 # TODO  if the spider that requesries additional settings dose not have the provided arguments?
 @api.route('/run_spider', methods = ["GET"])
 def run_spider():
+    logging.info("hii")
     provided_api_key = request.headers.get('shrek_key')
 
     if not is_valid_api_key(provided_api_key):
-        pass
-        #return jsonify({"message" : "API key is incorrect"}), 401 
+        return jsonify({"message" : "API key is incorrect"}), 401 
 
     provided_spider_name = request.json.get("spider_name")
     provided_output_name = request.json.get("output_name")
