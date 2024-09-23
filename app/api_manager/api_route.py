@@ -241,22 +241,7 @@ proxy_blueprint = Blueprint('proxy', __name__)
 
 executor = ThreadPoolExecutor()
 
-@proxy_blueprint.route('/get_data', methods=['GET'])
-def get_data():
-    provided_api_key = request.headers.get('shrek_key')
-
-    if not is_valid_api_key(provided_api_key):
-        pass
-        #return jsonify({"message" : "API key is incorrect"}), 401 
-
-    spider_runner = SpiderRunner(spider_name='arukereso_all', output_file='Result.json')
-    success = spider_runner.run()
-
-    if success == -1:
-        return jsonify({"message" : "Spider dose not exists"}), 401 
-
-    return "Spider is running asynchronously. The data will be avaiable at /get_final_data"
-    
+  
     
 @proxy_blueprint.route('/get_final_data', methods=['GET'])
 def Get_final_data():
