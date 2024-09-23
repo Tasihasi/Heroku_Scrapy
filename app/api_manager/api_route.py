@@ -4,7 +4,7 @@ import json
 import os
 import logging
 from .auth import is_valid_api_key
-from .data_retrieve import get_data_from_scrapy, run_aprox_spider, run_url_spider, SpiderRunner
+from .data_retrieve import   SpiderRunner
 from concurrent.futures import ThreadPoolExecutor  # For async execution
 import threading
 from functools import partial
@@ -373,7 +373,7 @@ def start_url_scrape():
 
     
     # Start the spider in a separate thread
-    spider_thread = threading.Thread(target=partial(run_url_spider, urls=urls))
+    spider_thread = threading.Thread(target=partial( urls=urls))
     spider_thread.start()
     return "Spider run correctly! The data will available at /get_products_url endpoint"
 
