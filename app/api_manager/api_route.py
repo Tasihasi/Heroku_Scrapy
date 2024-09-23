@@ -219,7 +219,6 @@ def get_data():
     spider_runner.run()
 
     return "Spider is running asynchronously. The data will be avaiable at /get_final_data"
-    # Return a response immediately indicating that the spider is running asynchronously
     
     
 @proxy_blueprint.route('/get_final_data', methods=['GET'])
@@ -253,12 +252,15 @@ def start_aprox_scrape():
     if not is_valid_api_key(provided_api_key):
         return jsonify({"message" : "API key is incorrect"}), 401 
     
-    # TODO implement the category adding
+    provided_category = request.json.get("category")
 
-    # Start the spider in a separate thread
-    spider_thread = threading.Thread(target=run_aprox_spider)
-    spider_thread.start()
+    if not provided_category:
+        return jsonify({"message": "Category is required"}), 400
 
+    
+    aprox_spider = SpiderRunner(spider_name='aprox-spider', output_file='outputUrl.json', category = provided_category)
+    aprox_spider.run()
+    
     return "Spider run correctly! The data will available at /get_products_url endpoint"
 
 # Getting only an prox price and url to a category 
