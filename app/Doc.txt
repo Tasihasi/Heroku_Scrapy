@@ -148,10 +148,47 @@ API Endpoints:
         Request Headers:
 
             Authorization (string): shrek_key : "key".
-            Request Body: None
+        Request Body: None
 
         Response:
             -200 OK: Returns JSON if the API key is correct
+
+    -> /run_spider   Method: GET
+         Description: Api endpoint to run the spiders.
+
+         Request Headers:
+
+            Authorization (string): shrek_key : "key".
+
+        Request Body: 
+            spider_name : str -> The name of the spider that you want to run.
+            output_name : str -> The name of the output file.
+
+          Optional
+            category : List[str] -> The list of categories that you want to scrape.
+                    -> Spider names : "aprox-spider" or "imp-aprox-srape"
+                        These are the only spider that can adjust their categories.
+
+            url : List[str] ->The list of url that you want the spider to scrape.
+                    -> Spider name: "url-crawl"
+                        This is the only spider that can take in url as a parameter.
+                        Scrapes only the provided urls.
+
+        If an optional argument was not given for aprox_spider, imp-aprox_spider or url_crawl
+        the spider will not run and 404 status code will be given.
+
+        For "arukereso_all" spider the additional arguments are not needed.
+
+        Detailed description about the different spiders are provided below.
+
+        Responses:
+            200 Ok : Spider run successfully.
+            401 Unauthorized: If the API key is invalid.
+            403 Bad request : If there is no spider_name or output_file name provided.
+            404 Not Found: Spider dose not exists.
+            500 Internal Server Error: If there is an error starting the spider.
+
+
 
     -> /get_data    Method: GET
         Description: Starts the data scraping process asynchronously. Can run multiple scraping processes.
@@ -422,18 +459,30 @@ main.py
         -> Shrek key
         -> home url
 
-data_retrieve file:
-        SpiderRunner
-        │
-        ├── GeneralSpider
-        │   └── run()
-        │
-        ├── AproxSpider
-        │   └── run(category)
-        │
-        └── UrlSpider
-            └── run(urls)
+data_retrieve : SpiderRunner class:
+    Overview
+    The SpiderRunner class is designed to facilitate the running of Scrapy spiders from a Python script.
+    It allows for dynamic configuration of the spider's parameters,
+    making it flexible and easy to use in various contexts, such as within an API endpoint.
+        
+    Example usage:
+        spider_runner = SpiderRunner(
+        spider_name='aprox-spider',
+        output_file='outputUrl.json',
+        category='electronics'
+                                    )
+        spider_runner.run()
+    Callable functions:
+        run() : runs the spider declared in the constructor.
+            return values:
+                0 - Run was successful
+                -1 - Spider dose not exists.
+                1 - Spider did not run successfully.
+    Only callable function is the run() it  above.
 
+    Additional functions:
+        _run_spider(): (private) : Task is to run the crawl spider command in the correct dictionary.
+        _spider_exists() : (private) : Task is to check if the spider that is constructed exists.
 
 ------------------------------------------------------------
 Scrapy

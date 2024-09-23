@@ -199,6 +199,40 @@ def check_api_key():
     else:
         return jsonify({"message": "API key is incorrect"}), 401  # Return a 401 Unauthorized status
 
+
+# TODO  if the spider that requesries additional settings dose not have the provided arguments?
+@api.route('/run_spider', methods = ["GET"])
+def run_spider():
+    provided_api_key = request.headers.get('shrek_key')
+
+    if not is_valid_api_key(provided_api_key):
+        pass
+        #return jsonify({"message" : "API key is incorrect"}), 401 
+
+    provided_spider_name = request.json.get("spider_name")
+    provided_output_name = request.json.get("output_name")
+
+    if not provided_spider_name:
+        return jsonify({"message" : "No provided spider name"}), 403
+    
+    if not provided_output_name:
+        return jsonify({"message" : "No provided output name"}), 403
+
+
+    provided_category = request.json.get("category")
+    provided_urls = request.json.get("urls")
+
+    spider_runner = SpiderRunner(spider_name=provided_spider_name, output_file=provided_output_name, category = provided_category, urls= provided_urls)
+
+    success = spider_runner.run()
+
+    if success == -1:
+        return jsonify({"message" : f"There is no such spider: spider name : {provided_spider_name}"}), 404    
+
+    if success == 0:
+        return jsonify({"message" : f"There was an error running this spider: {provided_spider_name}"}), 500
+    
+    return jsonify({"message" : f"Spider runs successfully spider name: {provided_spider_name}, output_name: {provided_output_name}"}), 200
     
 #The part where get proxy api route will return a json file
 
@@ -216,7 +250,10 @@ def get_data():
         #return jsonify({"message" : "API key is incorrect"}), 401 
 
     spider_runner = SpiderRunner(spider_name='arukereso_all', output_file='Result.json')
-    spider_runner.run()
+    success = spider_runner.run()
+
+    if success == -1:
+        return jsonify({"message" : "Spider dose not exists"}), 401 
 
     return "Spider is running asynchronously. The data will be avaiable at /get_final_data"
     
