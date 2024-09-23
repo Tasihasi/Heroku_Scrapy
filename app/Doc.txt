@@ -208,48 +208,6 @@ API Endpoints:
             403 Bad request : If there is no  file name provided.
             404 Not Found: File dose not exists.
             500 Internal Server Error: If there is an error starting the spider.
-        
-
-    -> /get_final_data  Method: GET
-        Description: Retrieves the final raw data from the whole website. Uses data streaming.
-
-        Request Headers:
-            Authorization (string): shrek_key : "key".
-
-        Request Body: None
-
-        200 OK: Returns the final data as plain text.
-        401 Unauthorized: If the API key is invalid
-        404 Not Found: If the file is not found.
-
-
-
-
-    -> /get_products_url    Method: GET:
-        Description: Returns a set of URLS that is scraped buy the /start_aprox_scrape. 
-
-        Request Headers:
-            Authorization (string): shrek_key : "key".
-        Request Body: None
-
-        Response:
-            200 OK: Returns the product URLs as a JSON file.
-            404 Not Found: If the JSON file is not found
-            500 Internal Server Error: If there is an error processing JSON data
-
-
-    -> /get_url_scrape      Method: GET:
-        Description: Retrieves the URL scrape results.
-
-        Request Headers: 
-            Authorization (string): shrek_key : "key". 
-        Request Body: None
-
-        Response:
-            200 OK: Returns the URL scrape results as a JSON file.
-            404 Not Found: If the JSON file is not found
-            500 Internal Server Error: If there is an error processing JSON data.
-
 
     API endpoints defined in api_manager/google_drive/google_drive_api_auth.py:
     !Every google drive authentication data must be provided in the server environment variables.
