@@ -20,23 +20,6 @@ def delete_existing_file(file_path):
         print("No existing JSON file to delete.")
         return True  # Consider this step successful even if there's no file to delete
 
-def run_spider(command):
-    try:
-        # Redirecting subprocess output to stdout explicitly
-        result = subprocess.run(command, stdout=subprocess.PIPE, text=True, check=True)
-        
-         # Capture the spider's log output
-        spider_log = result.stdout
-        print("Spider Log:")
-        logging.info("--------  Spider log : ")
-        logging.info(spider_log)
-        print(spider_log)
-
-        print("Spider Run in the api_proxy.py")
-        return True, spider_log
-    except subprocess.CalledProcessError as e:
-        print("Failed to run the spider:", e)
-        return False, None
 
 def gather_proxy_data():
     # Get the current directory where this script is located
@@ -91,5 +74,4 @@ def is_there_json(json_file_path):
         return True
     return False
 
-#gather_proxy_data()
 

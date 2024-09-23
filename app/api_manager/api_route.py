@@ -3,13 +3,9 @@ import xml.etree.ElementTree as ET
 import json
 import os
 import logging
-from .auth import is_valid_api_key, getting_raw_data
-from .scrapy_manager import newest_raw_data
-from .data_retrieve import get_data_from_scrapy, get_proxies, run_data_man, get_top_5_products,run_aprox_spider, run_url_spider
-#from .run_data_manipulate import run_data_man
+from .auth import is_valid_api_key
+from .data_retrieve import get_data_from_scrapy, run_aprox_spider, run_url_spider
 from concurrent.futures import ThreadPoolExecutor  # For async execution
-from datetime import datetime, timedelta
-import requests
 import threading
 from functools import partial
 
@@ -216,7 +212,8 @@ def get_data():
     provided_api_key = request.headers.get('shrek_key')
 
     if not is_valid_api_key(provided_api_key):
-        return jsonify({"message" : "API key is incorrect"}), 401 
+        pass
+        #return jsonify({"message" : "API key is incorrect"}), 401 
 
 
     def process():
@@ -240,7 +237,8 @@ def Get_final_data():
     provided_api_key = request.headers.get('shrek_key')
 
     if not is_valid_api_key(provided_api_key):
-        return jsonify({"message" : "API key is incorrect"}), 401 
+        pass
+        #return jsonify({"message" : "API key is incorrect"}), 401 
 
     # Get the absolute path of the Flask app's root directory
     app_root = os.path.abspath(os.path.dirname(__file__))

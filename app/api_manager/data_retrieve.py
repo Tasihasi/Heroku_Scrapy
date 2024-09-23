@@ -1,18 +1,26 @@
 import os
-import logging
-from .api_proxy import wait_for_file, delete_existing_file, run_spider
-
-# Import necessary components
-from nbconvert import NotebookExporter, PDFExporter
-from nbformat import read
+import subprocess, logging
 from nbconvert.preprocessors import ExecutePreprocessor
 import nbformat
 import logging
 
-import os
+def run_spider(command : str) -> bool:
+    try:
+        # Redirecting subprocess output to stdout explicitly
+        result = subprocess.run(command, stdout=subprocess.PIPE, text=True, check=True)
+        
+         # Capture the spider's log output
+        spider_log = result.stdout
+        print("Spider Log:")
+        logging.info("--------  Spider log : ")
+        logging.info(spider_log)
+        print(spider_log)
 
-
-# Define the path to your notebook file
+        print("Spider Run in the api_proxy.py")
+        return True, spider_log
+    except subprocess.CalledProcessError as e:
+        print("Failed to run the spider:", e)
+        return False, None
 
 
 
