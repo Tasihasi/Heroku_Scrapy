@@ -422,6 +422,18 @@ main.py
         -> Shrek key
         -> home url
 
+data_retrieve file:
+        SpiderRunner
+        │
+        ├── GeneralSpider
+        │   └── run()
+        │
+        ├── AproxSpider
+        │   └── run(category)
+        │
+        └── UrlSpider
+            └── run(urls)
+
 
 ------------------------------------------------------------
 Scrapy

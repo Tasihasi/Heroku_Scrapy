@@ -1,8 +1,4 @@
-import os
-import subprocess, logging
-from nbconvert.preprocessors import ExecutePreprocessor
-import nbformat
-import logging
+import subprocess, logging, os
 
 def run_spider(command : str) -> bool:
     try:
@@ -21,140 +17,6 @@ def run_spider(command : str) -> bool:
     except subprocess.CalledProcessError as e:
         print("Failed to run the spider:", e)
         return False, None
-
-
-
-def run_notebook(path : str, notebook_name : str) -> None:
-
-    logging.info(f"Running the notebook. Path : {path} Notebook name : {notebook_name}")
-        # Get the directory of the current script
-    #script_dir = os.path.dirname(os.path.abspath(__file__))
-
-    # Construct the path to the notebook
-    notebook_path = os.path.join(path, notebook_name)
-
-    logging.info(f"Notebook path: {notebook_path}")
-
-    # Load the notebook
-    with open(notebook_path) as f:
-        nb = nbformat.read(f, as_version=4)
-
-    # Create an instance of ExecutePreprocessor
-    execute_preprocessor = ExecutePreprocessor(timeout=600, kernel_name='python3')
-
-    # Execute the notebook
-    execute_preprocessor.preprocess(nb, {'metadata': {'path': path}})
-
-def check_dependencies(path : str, notebook_name : str) -> bool:
-
-    logging.info(f"Checking the dependencies. Path : {path} Notebook name : {notebook_name}")
-
-    # Check if the necessary components are installed
-    def check_file_exists(file_path: str) -> bool:
-        # Check if the file exists
-        if os.path.exists(file_path):
-            logging.info(f"The file {file_path} exists.")
-            return True
-        else:
-            logging.error(f"The file {file_path} does not exist.")
-            return False
-
-    file_paths = [
-        notebook_name,
-        "customer_request.json",
-        "output.jsonl",
-    ]
-
-    for file_path in file_paths:
-        full_path = os.path.join(path, file_path)
-        if not check_file_exists(full_path):
-            logging.error(f"The file {full_path} does not exist.")
-            return False
-        
-    return True
-
-# Input : path to the directory containing the necessary files
-def run_data_man(path : str) -> bool:
-    #print("Current working directory:", os.getcwd())
-
-    # Get the list of all files and directories in the current working directory
-    #file_list = os.listdir(os.getcwd())
-
-    #print("Files and directories in '", os.getcwd(), "':")
-    # Print the list
-    #for file in file_list:
-        #print(file)
-
-    # Check if the necessary files are present
-
-    notebook_filename = 'get_matching_data.ipynb'
-
-    try:
-        if check_dependencies(path, notebook_filename):
-            print("All necessary files are present.")
-            try :
-                print("Running the notebook.")
-                # Run the notebook
-                run_notebook(path, notebook_filename)
-                return True
-            except Exception as e:
-                print(f"An error in the run_notebook: {e}")
-                logging.error(f"An error in the run_notebook: {e}")
-                return False
-        else:
-            print("Necessary files are not present.  Please ensure that the necessary files are present.")
-            logging.error("Necessary files are not present.  Please ensure that the necessary files are present.")
-
-    except Exception as e:
-        print(f"An error occurred in the file checking: {e}")
-        logging.error(f"An error occurred in the file checking: {e}")
-        return False
-
-def get_top_5_products(path : str) -> bool:
-
-
-    notebook_name = 'get_top_5_products.ipynb'
-    try:
-        if check_dependencies(path, notebook_name):
-            print("All necessary files are present.")
-            try :
-                print("Running the notebook.")
-                # Run the notebook
-                run_notebook(path, notebook_name)
-                return True
-            except Exception as e:
-                print(f"An error in the run_notebook: {e}")
-                logging.error(f"An error in the run_notebook: {e}")
-                return False
-        else:
-            print("Necessary files are not present.  Please ensure that the necessary files are present.")
-            logging.error("Necessary files are not present.  Please ensure that the necessary files are present.")
-
-    except Exception as e:
-        print(f"An error occurred in the file checking: {e}")
-        logging.error(f"An error occurred in the file checking: {e}")
-        return False
-
-def parse_path(path : str) -> bool:
-    # Get the current directory where this script is located
-    script_dir_home = os.path.dirname(os.path.abspath(__file__))
-    logging.info(f"Script home Directory: {script_dir_home}")
-
-    # Set the relative path to the Scrapy spider directory
-    spider_dir = os.path.join(script_dir_home, path)
-
-    logging.info(f"Script Directory: {spider_dir}")
-
-    # Showing files in the directory
-    file_list = os.listdir(spider_dir)
-
-    logging.info("Files and directories in '", spider_dir, "':")
-    # Print the list
-    for file in file_list:
-        logging.info(file)
-
-
-
 
 
 logging.basicConfig(level=logging.DEBUG)
@@ -247,37 +109,51 @@ def run_url_spider(urls):
     
     logging.info("Theoreticly spider runs")
 
+class SpiderRunner:
+    def __init__(self, spider_name, output_file, urls=None, category = None):
+        self.spider_name = spider_name
+        self.output_file = output_file
+        self.urls = urls
+        self.category = category
 
-def get_proxies():
-    # Get the current directory where this script is located
-    script_dir = os.path.dirname(os.path.abspath(__file__))
+    def run_spider(self, command):
+        try:
+            result = subprocess.run(command, stdout=subprocess.PIPE, text=True, check=True)
+            spider_log = result.stdout
+            print("Spider Log:")
+            logging.info("--------  Spider log : ")
+            logging.info(spider_log)
+            print(spider_log)
+            print("Spider Run in the api_proxy.py")
+            return True, spider_log
+        except subprocess.CalledProcessError as e:
+            print("Failed to run the spider:", e)
+            return False, None
 
-    # Set the relative path to the Scrapy spider directory
-    spider_dir = os.path.join(script_dir, '..', 'heroku_scrapy')
-    print(f"Script Directory: {script_dir}")
+    def run(self):
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+        spider_dir = os.path.join(script_dir, '..', 'heroku_scrapy')
+        os.chdir(spider_dir)
+        print(f"Changed working directory to: {os.getcwd()}")
 
-    logging.info(f"Script Directory: {script_dir}")
+        if self.urls:
+            urls_arg = ','.join(self.urls)
+            command = ['scrapy', 'crawl', self.spider_name, '-a', f'start_urls={urls_arg}', '-O', self.output_file]
+        
+        elif self.category:
+            category_arg = ','.join(self.urls)
+            command = ['scrapy', 'crawl', self.spider_name, '-a', f'category={category_arg}', '-O', self.output_file]
 
-     # Change the working directory to the spider directory
-    os.chdir(spider_dir)
-    print(f"Changed working directory to: {os.getcwd()}")
+        else:
+            command = ['scrapy', 'crawl', self.spider_name, '-O', self.output_file]
 
-    script_directory = os.path.dirname(os.path.abspath(__file__))
+        logging.info(f"Running spider {self.spider_name} with output {self.output_file}")
+        if not self.run_spider(command):
+            logging.info("Spider did not run successfully")
+            return
+        logging.info("Theoretically, the spider runs")
 
-    # Define the Scrapy command
-    command = ['scrapy', 'crawl', 'free_proxy_list' , '-O', 'Result.xml']
-
-    logging.info("Running spiderin the data_retrive.py")
-
-    # Step 2: Run the spider
-    if not run_spider(command):
-        return
-
-
-
-def main():
-    run_data_man("")
 
 
 if __name__ == '__main__':
-    main()
+    pass
