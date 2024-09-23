@@ -4,7 +4,7 @@ import json
 import os
 import logging
 from .auth import is_valid_api_key
-from .data_retrieve import   SpiderRunner
+from .data_retrieve import   SpiderRunner, RetriveData
 from concurrent.futures import ThreadPoolExecutor  # For async execution
 import threading
 from functools import partial
@@ -203,7 +203,6 @@ def check_api_key():
 # TODO  if the spider that requesries additional settings dose not have the provided arguments?
 @api.route('/run_spider', methods = ["GET"])
 def run_spider():
-    logging.info("hii")
     provided_api_key = request.headers.get('shrek_key')
 
     if not is_valid_api_key(provided_api_key):
@@ -233,7 +232,23 @@ def run_spider():
         return jsonify({"message" : f"There was an error running this spider: {provided_spider_name}"}), 500
     
     return jsonify({"message" : f"Spider runs successfully spider name: {provided_spider_name}, output_name: {provided_output_name}"}), 200
+
+
+@api.route('/retrive_file', methods = ["GET"])
+def retrive_file():
+    provided_api_key = request.json.get('shrek_key')
+
+    if not is_valid_api_key(provided_api_key):
+        return jsonify({"message" : "API key is incorrect"}), 401 
     
+    if not provided_file_name:
+        return jsonify({"message" : "Missing file name"}), 403
+    
+    provided_file_name = request.headers.get("file_name")
+
+    retriever = RetriveData(provided_file_name)  # Replace with your actual file name
+    return retriever.get_file()
+
 #The part where get proxy api route will return a json file
 
 proxy_blueprint = Blueprint('proxy', __name__)
@@ -263,27 +278,6 @@ def Get_final_data():
     data = process_data(data)
 
     return Response(generate(data), content_type='text/plain')
-
-
-
-
-@api.route('/start_aprox_scrape', methods=['POST'])
-def start_aprox_scrape():
-    provided_api_key = request.headers.get('shrek_key')
-
-    if not is_valid_api_key(provided_api_key):
-        return jsonify({"message" : "API key is incorrect"}), 401 
-    
-    provided_category = request.json.get("category")
-
-    if not provided_category:
-        return jsonify({"message": "Category is required"}), 400
-
-    
-    aprox_spider = SpiderRunner(spider_name='aprox-spider', output_file='outputUrl.json', category = provided_category)
-    aprox_spider.run()
-    
-    return "Spider run correctly! The data will available at /get_products_url endpoint"
 
 # Getting only an prox price and url to a category 
 @api.route('/get_products_url', methods=['GET'])
@@ -335,33 +329,6 @@ def get_products_url():
         return jsonify({"error": "Error processing JSON data"}), 500
 
     
-@api.route('/start_url_scrape', methods=['POST'])
-def start_url_scrape():
-    provided_api_key = request.headers.get('shrek_key')
-
-    if not is_valid_api_key(provided_api_key):
-        return jsonify({"message" : "API key is incorrect"}), 401 
-    
-    data = request.get_json()
-    urls = data.get('urls', [])
-    
-
-    current_directory = os.getcwd()
-    logging.info(f"Current Working Directory: {current_directory}")
-
-    # Run inside the app 
-
-    # Only for testing purpses
-    if not urls:
-        urls = ["https://www.arukereso.hu/nyomtato-patron-toner-c3138/canon/pg-545xl-black-bs8286b001aa-p197948661/"]
-        #return jsonify({"error: " : "No URLS prvided "}), 423
-
-    
-    # Start the spider in a separate thread
-    spider_thread = threading.Thread(target=partial( urls=urls))
-    spider_thread.start()
-    return "Spider run correctly! The data will available at /get_products_url endpoint"
-
 
 @api.route('/get_url_scrape', methods=["GET"])
 def get_url_scrape():
@@ -398,3 +365,5 @@ def get_url_scrape():
     except Exception as e:
         logging.error(f"Error processing JSON data: {str(e)}")
         return jsonify({"error": "Error processing JSON data"}), 500
+
+

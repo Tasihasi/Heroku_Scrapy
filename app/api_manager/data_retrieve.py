@@ -1,6 +1,6 @@
 import subprocess, logging, os, psutil
+from flask import Response, jsonify, stream_with_context
 
-# TODO  add that checks if a spider with the same is running currently 
 
 class SpiderRunner:
     def __init__(self, spider_name : str, output_file : str, *args, **kwargs):
@@ -82,6 +82,44 @@ class SpiderRunner:
             logging.info("Theoretically, the spider runs")
 
             return 1
+    
+
+class RetriveData():
+    def __init__(self, output_file_name : str):
+        self.output_file_name = output_file_name
+
+    
+    def _generate_file_path(self) -> str:
+        app_root = os.path.abspath(os.path.dirname(__file__))
+        directory = "../heroku_scrapy"
+        folder_log = os.path.join(app_root, directory)
+
+        
+        json_path = os.path.join(folder_log, self.output_file_name)
+        return json_path
+
+    def _is_file_exists(self, path:str) -> bool:
+        if len(path) == 0 or not os.path.exists(path):
+            return False
+        
+        return True
+    
+    # Function to stream JSON data from file
+    def _generate(self, path : str):
+        with open(path, 'r', encoding='utf-8') as f:
+            for line in f:
+                yield line.rstrip() + '\n'
+
+    def get_file(self, path : str):
+        ful_path = self._generate_file_path(self.output_file_name)
+
+        if not self._is_file_exists(path):
+            logging.error(f"File not found: {path}")
+            return jsonify({"error": "File not found"}), 404
+
+        # Return the streamed response
+        return Response(stream_with_context(self._generate(path)), content_type='application/json')
+
 
 if __name__ == '__main__':
     pass

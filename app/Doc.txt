@@ -190,17 +190,25 @@ API Endpoints:
 
         Example Usage:
 
+            TODO  show example usage
 
-    -> /get_data    Method: GET
-        Description: Starts the data scraping process asynchronously. Can run multiple scraping processes.
+    -> /retrive_file Method : GET:
+        Description : Api endpoint to retrive files.
 
-        Request Headers: 
+        Request Headers:
             Authorization (string): shrek_key : "key".
-        Request Body: None
 
-        Response:
+        
+        Request Body:
+            file_name : str -> The output file name that was specified in the /run_spider api call.
 
-            200 OK: Returns a message indicating that the spider is running asynchronously.
+        Responses:
+            200 Ok : Body content is the data streamed.
+            401 Unauthorized: If the API key is invalid.
+            403 Bad request : If there is no  file name provided.
+            404 Not Found: File dose not exists.
+            500 Internal Server Error: If there is an error starting the spider.
+        
 
     -> /get_final_data  Method: GET
         Description: Retrieves the final raw data from the whole website. Uses data streaming.
@@ -216,21 +224,6 @@ API Endpoints:
 
 
 
-    -> /start_aprox_scrape  Method: POST:
-        #TODO !!! Implement that category can be specified outside the spider !!!
-        It scrapes the category that is specified outside, and returns all the set of group urls. 
-        Used in that case when do not want to get the whole category precise details.
-        OR when only want to get the urls for that category.
-
-        Request Headers: 
-            Authorization (string): shrek_key : "key". 
-        Request Body: 
-            Possible categories:
-                -> "nyomtato-patron-toner"
-                -> "szamitogep-periferia"
-
-        Response:
-            200 OK: Returns a message indicating that the spider is running.
 
     -> /get_products_url    Method: GET:
         Description: Returns a set of URLS that is scraped buy the /start_aprox_scrape. 
@@ -244,18 +237,6 @@ API Endpoints:
             404 Not Found: If the JSON file is not found
             500 Internal Server Error: If there is an error processing JSON data
 
-    -> /start_url_scrape    Method: POST:
-        Description: Starts the URL scrape process with the provided URLs.
-
-        Request Headers: 
-            Authorization (string): shrek_key : "key".
-
-        Request Body:
-            urls (array): List of URLs to scrape.
-            It will be passed as a kwarg to the spider.
-
-        Response:
-            200 OK: Returns a message indicating that the spider is running.
 
     -> /get_url_scrape      Method: GET:
         Description: Retrieves the URL scrape results.
