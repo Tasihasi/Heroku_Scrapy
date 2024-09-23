@@ -12,19 +12,19 @@ api_keys_to_customers ={
 }
 
 
-def valid_api_key(apiKey):
+def is_valid_api_key(apiKey : str) -> bool:
     if apiKey in valid_api_keys:
         return True
     return False
 
-def mach_apiKey_to_customer(apiKey):
-    if valid_api_key(apiKey):
+def mach_apiKey_to_customer(apiKey: str) -> str:
+    if is_valid_api_key(apiKey):
         return api_keys_to_customers[apiKey]
     else:
         return ""
     
 def getting_raw_data(apikey):
-    if valid_api_key(apikey) and valid_api_keys[apikey]:
+    if is_valid_api_key(apikey) and valid_api_keys[apikey]:
         return True
     return False
 

@@ -3,7 +3,7 @@ import xml.etree.ElementTree as ET
 import json
 import os
 import logging
-from .auth import valid_api_key, getting_raw_data
+from .auth import is_valid_api_key, getting_raw_data
 from .scrapy_manager import newest_raw_data
 from .data_retrieve import get_data_from_scrapy, get_proxies, run_data_man, get_top_5_products,run_aprox_spider, run_url_spider
 #from .run_data_manipulate import run_data_man
@@ -12,8 +12,6 @@ from datetime import datetime, timedelta
 import requests
 import threading
 from functools import partial
-
-#from .heroku_scrapy.spiders.url_crawl import UrlCrawlSpider
 
 # TODO Use Proper HTTP Methods: 
 # Ensure that each endpoint uses the appropriate HTTP method (GET, POST, PUT, DELETE) according to its purpose.
@@ -197,27 +195,13 @@ def test_server():
 @api.route('/keys', methods=['GET'])
 def check_api_key():
     # Get the API key from the request headers
-    provided_api_key = request.headers.get('Authorization')
+    provided_api_key = request.headers.get('shrek_key')
 
     # Check if the provided API key matches the expected API key
-    if valid_api_key(provided_api_key):
+    if is_valid_api_key(provided_api_key):
         return jsonify({"message": "API key is correct"})
     else:
         return jsonify({"message": "API key is incorrect"}), 401  # Return a 401 Unauthorized status
-
-
-@api.route('/get_raw_data', methods = ['GET'])
-def get_raw_data():
-    provided_api_key = request.headers.get('Authorization')
-
-    if getting_raw_data(provided_api_key):
-        return newest_raw_data(provided_api_key)
-    
-    elif valid_api_key(provided_api_key):
-        return jsonify({"message" : "The corresponding customer status is inactive"}, 403)
-
-    else:
-        return jsonify({"message" : "The api key provided is incorrect."})
 
     
 #The part where get proxy api route will return a json file
@@ -229,6 +213,12 @@ executor = ThreadPoolExecutor()
 
 @proxy_blueprint.route('/get_data', methods=['GET'])
 def get_data():
+    provided_api_key = request.headers.get('shrek_key')
+
+    if not is_valid_api_key(provided_api_key):
+        return jsonify({"message" : "API key is incorrect"}), 401 
+
+
     def process():
         # Assuming get_data_from_scrapy() returns the path to the XML file
         xml_file_path = get_data_from_scrapy()
@@ -245,116 +235,48 @@ def get_data():
     # Return a response immediately indicating that the spider is running asynchronously
     return "Spider is running asynchronously. The data will be avaiable at /get_final_data"
     
-
-
-@proxy_blueprint.route('/get_proxy', methods=['GET'])
-def get_proxies():
-    # Assuming get_data_from_scrapy() returns the path to the XML file
-    xml_file_path = get_proxies()
-
-    if xml_file_path:
-        # Specify the mimetype as 'application/xml'
-        return send_file(xml_file_path, mimetype='application/xml', as_attachment=True)
-    
-    return "Spider run failed."
-
-
 @proxy_blueprint.route('/get_final_data', methods=['GET'])
 def Get_final_data():
 
-    # Retrieve the API key from the request headers
-    api_key = request.headers.get('API-Key')
+    provided_api_key = request.headers.get('shrek_key')
 
-    # Retrieve the Clondike_Key from the environment variables
-    valid_api_key = os.environ.get('Clondike_Key')
-
-    if api_key != valid_api_key:
-        return "Api key is not valid ---- :("
-    
-    current_directory = os.getcwd()
-    #logging.info(f"Current Working Directory: {current_directory}")
-
-    
+    if not is_valid_api_key(provided_api_key):
+        return jsonify({"message" : "API key is incorrect"}), 401 
 
     # Get the absolute path of the Flask app's root directory
     app_root = os.path.abspath(os.path.dirname(__file__))
     directory = "../heroku_scrapy"
     folder_log = os.path.join(app_root, directory)
-    logging.info(f"---------- {folder_log}  -------------")
-    #log_folder_content(folder_log)
 
     result = "output.jsonl"
     json_path = os.path.join(folder_log, result)
     
-    #logging.critical("---------------------   The data being sent -----------")
     data = process_jsonl(json_path)
-    logging.info(f"here is the data:  {data}" )
     data = process_data(data)
 
-    logging.critical(data)
-
-    # Log the length of the data in bytes
-    #logging.info(f"Data length: {sys.getsizeof(data)} bytes")
-    #logging.info("---------------------------------------------")
-
-
-    # Function to stream data in chunks
-    
-    
-
     return Response(generate(data), content_type='text/plain')
-
-    
-
-        # Optionally, you can yield the whole JSON array by wrapping it in brackets
-        # yield "[" + ",".join(generate()) + "]"
-
-
-
-    json_path = os.path.join(folder_log, process_jsonl(json_path)) 
-    # if procces_jsonl return wit an exception than the code crashes
-    
-
-    try:
-
-        #json_file = strip_values_in_jsonl(json_path)
-        # Send the resulting XML file
-        return send_file(json_path, as_attachment=True)
-
-    except FileNotFoundError as e:
-        try:
-
-            directory = "."
-            log_folder_content(directory)
-            json_path = os.path.join(directory, result)
-            return send_file(result, as_attachment=True)
-        except FileNotFoundError as e:
-            logging.error(f"FileNotFoundError: {e}")
-            return "File not found", 404
-        
 
 
 # TODO  have to differentiate between files and product categories !!!
 @api.route('/get_processed_data', methods=['GET'])
 def get_processed_data():
-    client_api_key = request.headers.get('api_key')
-    home_url =  os.getenv("home_url")
+    provided_api_key = request.headers.get('shrek_key')
 
-
-    if client_api_key is None:
-        return jsonify({"message" : "No apikey provided."})
-    
+    if not is_valid_api_key(provided_api_key):
+        return jsonify({"message" : "API key is incorrect"}), 401 
 
     shrek_key = os.getenv("shrek_api_key")
 
     # Make an API call to the home URL's list files endpoint
     headers = {"shrek_key" : shrek_key}
+
+    home_url =  os.getenv("home_url")
     
     response = requests.get(f"{home_url}/list_files", headers=headers)
 
     if response.status_code != 200:
         logging.error(f"Problem happened getting files listed from Google Drive. Status code:   {response.status_code}")
-        return jsonify({"message" : "Problem happened!"})
+        return jsonify({"message" : "Problem happened!"}) , 500
     
      # Get the list of files
     files = response.json().get('files', [])
@@ -386,6 +308,7 @@ def get_processed_data():
     logging.info(f"Here is the data that being sent:  {processed_data}")
     return Response(generate(processed_data), content_type='text/plain')
     
+
 @api.route('/customer_data_process', methods=['GET']) 
 def get_customer_data():
     client_api_key = request.headers.get('shrek_key')

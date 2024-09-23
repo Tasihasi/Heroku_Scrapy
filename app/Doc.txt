@@ -1,7 +1,6 @@
 Overview 
 ----------------------------------------------------------
 
-#  TODO  add the example for all the necesarry system envirable that has to be in place !! 
 
 GOAL : To get daily up-to-date data about products from the Arukereso website.
 
@@ -154,33 +153,16 @@ API Endpoints:
         Response:
             -200 OK: Returns JSON if the API key is correct
 
-    -> /get_raw_data    Method: GET
-        Description: Retrieves raw data if the API key is valid.
-
-        Request Headers:
-
-            Authorization (string): shrek_key : "key".
-            Request Body: None
-        
-        Response:
-            200 OK: Returns the raw data.
-            200 OK: If customer status is inactive   #TODO Correcting the api endpoint status code 
-
-            401: Unauthorized: If the API key is incorrect.
-            403: Client status is inactive.
-
     -> /get_data    Method: GET
         Description: Starts the data scraping process asynchronously. Can run multiple scraping processes.
 
         Request Headers: 
-            Authorization (string): shrek_key : "key".   #TODO  no api key needed!
+            Authorization (string): shrek_key : "key".
         Request Body: None
 
         Response:
 
             200 OK: Returns a message indicating that the spider is running asynchronously.
-
-    -> /get_proxy   #TODO  bad function unnecessary!
 
     -> /get_final_data  Method: GET
         Description: Retrieves the final raw data from the whole website. Uses data streaming.
@@ -195,6 +177,7 @@ API Endpoints:
         404 Not Found: If the file is not found.
 
     -> /get_processed_data  Method: GET
+        # TODO do i need this endpoint?
         Description: Retrieves processed data based on the provided API key.
                     The process is defined in the business logic folder.
 
@@ -652,6 +635,24 @@ arukereso_all:
 
     The gathering and testing process runs sumiltaniusly with the main scraping process.
 
+    aprox_spider
+
+    Overview
+        The AproxSpiderSpider is a Scrapy spider designed to scrape product data from specific categories on the Arukereso website. 
+        It generates URLs dynamically based on a prediction model to collect comprehensive product information,
+        including names, prices, and comparison links.
+
+    Spider is written for testing purposes.
+
+    Item Limit
+        The spider is configured to stop scraping for a URL after collecting 25 "blue products."
+
+    There is an improved version of this spider the imp-aprox-srape. 
+    It dose not generates the urls but follows them it finds on the website.
+    Can handle if the url structure changes.
+
+    Use the imp-aprox-srape!! 
+
 ------------------------------------------------------------
 Google Drive API
 ------------------------------------------------------------
@@ -695,4 +696,22 @@ Performance:
 
 
 Necessary environment variables:
+     -> "home_url" : str 
+        The servers ip where the server is running.
+        Like : "home_url" : "htttp://something.com"
+        
+     -> "valid_api_keys" : dict
+        The dictionary of api_keys that can make http cal to this server.
+        Like: valid_api_keys = {
+            "12345" : True,
+            "1234567" : False,
+                                }
+
+     -> "shrek_api_key" : str
+        I used shrek key as the main key to communicate between my other servers.
+
+        Like : "shrek_api_key" : "qwertzuiop"
+
+
+
     # TODO add all the requirements
