@@ -9,7 +9,7 @@ class SpiderRunner:
         self.args = args
         self.kwargs = kwargs
 
-    def _run_spider(self, command):
+    def _run_spider(self, command : str):
         try:
             # Use subprocess.Popen to run the spider in the background
             process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
@@ -74,6 +74,8 @@ class SpiderRunner:
             # Add any keyword arguments to the command
             for key, value in self.kwargs.items():
                 command.extend([f'-a', f'{key}={value}'])
+
+            # TODO Check if there is a same named spider running in the background
 
             logging.info(f"Running spider {self.spider_name} with output {self.output_file}")
             if not self._run_spider(command):

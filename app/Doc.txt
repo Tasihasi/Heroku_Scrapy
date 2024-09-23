@@ -710,5 +710,16 @@ Necessary environment variables:
         Like : "shrek_api_key" : "qwertzuiop"
 
 
-
-    # TODO add all the requirements
+    Google Drive credetials needed: 
+        -> "google_drive_api_type"
+        -> "google_adrive_api_project_id"
+        -> "google_drive_api_private_key_id"
+        -> "google_drive_api_private_key"
+        -> "google_drive_api_client_email"
+        -> "google_drive_api_client_id"
+        -> "google_drive_api_auth_uri"
+        -> "google_drive_api_token_uri"
+        -> "auth_provider_x50 "google_drive_api_auth_provider_x509_cert_url"
+        -> "google_drive_api_client_x509_cert_url"
+        -> SCOPES
+    
