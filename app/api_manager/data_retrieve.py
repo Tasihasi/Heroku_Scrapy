@@ -110,11 +110,11 @@ def run_url_spider(urls):
     logging.info("Theoreticly spider runs")
 
 class SpiderRunner:
-    def __init__(self, spider_name, output_file, urls=None, category = None):
+    def __init__(self, spider_name, output_file, *args, **kwargs):
         self.spider_name = spider_name
         self.output_file = output_file
-        self.urls = urls
-        self.category = category
+        self.args = args
+        self.kwargs = kwargs
 
     def run_spider(self, command):
         try:
@@ -136,23 +136,21 @@ class SpiderRunner:
         os.chdir(spider_dir)
         print(f"Changed working directory to: {os.getcwd()}")
 
-        if self.urls:
-            urls_arg = ','.join(self.urls)
-            command = ['scrapy', 'crawl', self.spider_name, '-a', f'start_urls={urls_arg}', '-O', self.output_file]
-        
-        elif self.category:
-            category_arg = ','.join(self.urls)
-            command = ['scrapy', 'crawl', self.spider_name, '-a', f'category={category_arg}', '-O', self.output_file]
+        command = ['scrapy', 'crawl', self.spider_name, '-O', self.output_file]
 
-        else:
-            command = ['scrapy', 'crawl', self.spider_name, '-O', self.output_file]
+        # Add any positional arguments to the command
+        for arg in self.args:
+            command.append(arg)
+
+        # Add any keyword arguments to the command
+        for key, value in self.kwargs.items():
+            command.extend([f'-a', f'{key}={value}'])
 
         logging.info(f"Running spider {self.spider_name} with output {self.output_file}")
         if not self.run_spider(command):
             logging.info("Spider did not run successfully")
             return
         logging.info("Theoretically, the spider runs")
-
 
 
 if __name__ == '__main__':
