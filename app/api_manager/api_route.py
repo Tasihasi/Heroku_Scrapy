@@ -237,7 +237,6 @@ def get_data():
     
 @proxy_blueprint.route('/get_final_data', methods=['GET'])
 def Get_final_data():
-
     provided_api_key = request.headers.get('shrek_key')
 
     if not is_valid_api_key(provided_api_key):
@@ -257,200 +256,16 @@ def Get_final_data():
     return Response(generate(data), content_type='text/plain')
 
 
-# TODO  have to differentiate between files and product categories !!!
-@api.route('/get_processed_data', methods=['GET'])
-def get_processed_data():
+
+
+@api.route('/start_aprox_scrape', methods=['POST'])
+def start_aprox_scrape():
     provided_api_key = request.headers.get('shrek_key')
 
     if not is_valid_api_key(provided_api_key):
         return jsonify({"message" : "API key is incorrect"}), 401 
-
-    shrek_key = os.getenv("shrek_api_key")
-
-    # Make an API call to the home URL's list files endpoint
-    headers = {"shrek_key" : shrek_key}
-
-    home_url =  os.getenv("home_url")
     
-    response = requests.get(f"{home_url}/list_files", headers=headers)
-
-    if response.status_code != 200:
-        logging.error(f"Problem happened getting files listed from Google Drive. Status code:   {response.status_code}")
-        return jsonify({"message" : "Problem happened!"}) , 500
-    
-     # Get the list of files
-    files = response.json().get('files', [])
-
-    # Search for a file named with a date from the past week
-    for i in range(1, 8):
-        date_to_find = (datetime.now() - timedelta(days=i)).strftime('%Y-%m-%d')
-        for file in files:
-            if file['name'] == date_to_find:
-                print(f"Found file with name {date_to_find}")
-
-    logging.info(f"here is the file id:  {file['id']}")
-
-    response = requests.get(f"{home_url}/get_file/{file['id']}", headers=headers) 
-
-
-    if response.status_code != 200:
-        logging.error(f"Problem happened retrieving the  file  from Google Drive. Status code:   {response.status_code}")
-        return jsonify({"message" : "Problem happened!"})
-    
-
-    processed_data = (response.text)
-
-    if  not processed_data:
-        return jsonify({"message" : "The data processing failed!"})
-    
-    # TODO  make the response simple 
-    #return processed_data
-    logging.info(f"Here is the data that being sent:  {processed_data}")
-    return Response(generate(processed_data), content_type='text/plain')
-    
-
-@api.route('/customer_data_process', methods=['GET']) 
-def get_customer_data():
-    client_api_key = request.headers.get('shrek_key')
-    home_url =  os.getenv("home_url")
-
-    if client_api_key is None:
-        return jsonify({"message" : "No apikey provided."})
-    
-
-    shrek_key = os.getenv("shrek_api_key")
-
-    # Check if the provided API key matches the expected API key
-
-    if client_api_key != shrek_key:
-        return jsonify({"message" : "API key is incorrect"}), 401  # Return a 401 Unauthorized status
-    
-    success = run_data_man(".business_logic/")
-
-    if success:
-        return jsonify({"message" : "Data processing was successful!"})
-    
-    return jsonify({"message" : "Data processing failed!"})
-        
-@api.route('/get_business_logic_data', methods=['GET'])
-def get_business_logic_data(file_name : str = "customer_min_prices.xml"):
-
-    client_api_key = request.headers.get('shrek_key')
-    home_url =  os.getenv("home_url")
-
-
-    if client_api_key is None:
-        return jsonify({"message" : "No apikey provided."})
-    
-
-    shrek_key = os.getenv("shrek_api_key")
-
-    if client_api_key != shrek_key:
-        return jsonify({"message" : "API key is incorrect"}), 401  # Return a 401 Unauthorized status
-
-    # Make an API call to the home URL's list files endpoint
-
-    #requested_file = request.view_args['file_name']
-    requested_file = file_name
-
-    script_dir = os.path.dirname(os.path.abspath(__file__))
-
-    file_path = os.path.join(script_dir, "business_logic", requested_file)
-
-    if not os.path.exists(file_path):  
-        logging.error(f"The file {file_path} does not exist.")
-        return jsonify({"message" : "The file does not exist."})
-    
-    logging.info(f"Sending file from business logic: {file_path}")
-    return send_file(file_path, as_attachment=True)
-
-
-@api.route('/get_top_5_products', methods=['GET'])
-def get_top_5_products_api():
-
-    def xml_to_dict(elem):
-        """Recursively convert an XML element to a dictionary."""
-        # Base case: If the element has no children, return its text or an empty string
-        if not elem:
-            return elem.text if elem.text else ""
-        result = {}
-        for child in elem:
-            # Recursively process child elements
-            child_result = xml_to_dict(child)
-            # Handle multiple children with the same tag
-            if child.tag in result:
-                if type(result[child.tag]) is list:
-                    result[child.tag].append(child_result)
-                else:
-                    result[child.tag] = [result[child.tag], child_result]
-            else:
-                result[child.tag] = child_result
-        # Include element's attributes in the result
-        result.update(('@' + k, v) for k, v in elem.attrib.items())
-        return result
-
-    
-
-    """
-    client_api_key = request.headers.get('shrek_key')
-    home_url =  os.getenv("home_url")
-
-
-    if client_api_key is None:
-        return jsonify({"message" : "No apikey provided."})
-    
-
-    shrek_key = os.getenv("shrek_api_key")
-
-    if client_api_key != shrek_key:
-        return jsonify({"message" : "API key is incorrect"}), 401
-    """
-    script_dir = os.path.dirname(os.path.abspath(__file__))
-
-    file_path = os.path.join(script_dir, "business_logic")
-
-    logging.info(f"Sending file from business logic: {file_path}")
-
-    isData = get_top_5_products(file_path)
-
-    if isData is None:
-        return jsonify({"message" : "Data processing failed!"}, 500) 
-    
-    # Checking if path exists
-
-    script_dir = os.path.dirname(os.path.abspath(__file__))
-    file_path = os.path.join(script_dir, "business_logic", "top_5_products.xml")
-
-    if not os.path.exists(file_path):
-        logging.error(f"The file {file_path} does not exist.")
-        return jsonify({"message" : "The file does not exist."}, 404)
-
-    # Loading to memory the data
-
-    # Path to your XML file
-    xml_file_path = file_path
-
-    # Parse the XML file and get the root element
-    tree = ET.parse(xml_file_path)
-    root = tree.getroot()
-
-    # Convert the XML data to a JSON string
-    dict_data = xml_to_dict(root)
-    json_data = json.dumps(dict_data, indent=4)
-
-    # Create a custom response
-    response = Response(json_data, mimetype='application/json')
-
-    # Set headers to prompt for download
-    response.headers["Content-Disposition"] = "attachment; filename=top5_products.json"
-
-    # Return the JSON data  as attachment
-
-    return response
-
-
-@api.route('/start_aprox_scrape', methods=['GET'])
-def start_aprox_scrape():
+    # TODO implement the category adding
 
     # Start the spider in a separate thread
     spider_thread = threading.Thread(target=run_aprox_spider)
@@ -461,22 +276,11 @@ def start_aprox_scrape():
 # Getting only an prox price and url to a category 
 @api.route('/get_products_url', methods=['GET'])
 def get_products_url():
-    """
-    client_api_key = request.headers.get('shrek_key')
-    home_url =  os.getenv("home_url")
+    provided_api_key = request.headers.get('shrek_key')
 
-
-    if client_api_key is None:
-        return jsonify({"message" : "No apikey provided."})
+    if not is_valid_api_key(provided_api_key):
+        return jsonify({"message" : "API key is incorrect"}), 401 
     
-
-    shrek_key = os.getenv("shrek_api_key")
-
-    if client_api_key != shrek_key:
-        return jsonify({"message" : "API key is incorrect"}), 401  # Return a 401 Unauthorized status
-    
-        
-    """
     # Checking the category 
     # TODO implement a cetegory differentialization 
 
@@ -519,8 +323,12 @@ def get_products_url():
         return jsonify({"error": "Error processing JSON data"}), 500
 
     
-@api.route('/start_url_scrape', methods=['POST', "GET"])
+@api.route('/start_url_scrape', methods=['POST'])
 def start_url_scrape():
+    provided_api_key = request.headers.get('shrek_key')
+
+    if not is_valid_api_key(provided_api_key):
+        return jsonify({"message" : "API key is incorrect"}), 401 
     
     data = request.get_json()
     urls = data.get('urls', [])
@@ -540,14 +348,16 @@ def start_url_scrape():
     # Start the spider in a separate thread
     spider_thread = threading.Thread(target=partial(run_url_spider, urls=urls))
     spider_thread.start()
-    
-    
-
     return "Spider run correctly! The data will available at /get_products_url endpoint"
 
 
 @api.route('/get_url_scrape', methods=["GET"])
 def get_url_scrape():
+    provided_api_key = request.headers.get('shrek_key')
+
+    if not is_valid_api_key(provided_api_key):
+        return jsonify({"message" : "API key is incorrect"}), 401 
+    
     try:
         # Get the absolute path of the Flask app's root directory
         app_root = os.path.abspath(os.path.dirname(__file__))

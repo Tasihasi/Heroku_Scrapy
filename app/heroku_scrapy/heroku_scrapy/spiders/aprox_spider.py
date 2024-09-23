@@ -34,6 +34,9 @@ class AproxSpiderSpider(CrawlSpider):
         
         category_names = ["nyomtato-patron-toner",
                         "szamitogep-periferia"]
+        
+        category_dict = {"nyomtato-patron-toner" : "nyomtato-patron-toner-c3138/",
+                         "szamitogep-periferia" : "szamitogep-periferia-c3107/"}
 
         base_url = "https://www.arukereso.hu/"
         initial_urls = [(category.split('-')[0], f"{base_url}{category}") for category in category_list]
@@ -57,6 +60,7 @@ class AproxSpiderSpider(CrawlSpider):
 
     def __init__(self, *args, **kwargs):
         super(AproxSpiderSpider, self).__init__(*args, **kwargs)
+        self.category = kwargs.get('category', None)
         self.start_urls = self.start_url_generator()
         self.user_agents = self.get_user_agents()
         self.blue_product_limit = 25  # Define the limit for blue products

@@ -176,72 +176,20 @@ API Endpoints:
         401 Unauthorized: If the API key is invalid
         404 Not Found: If the file is not found.
 
-    -> /get_processed_data  Method: GET
-        # TODO do i need this endpoint?
-        Description: Retrieves processed data based on the provided API key.
-                    The process is defined in the business logic folder.
 
-        Request Headers: 
-            Authorization (string): shrek_key : "key".
-        Request Body: None
 
-        Response:
-            200 OK: Returns the processed data.
-            401 Unauthorized: If no API key is provided or the API key is incorrect.
-            500 Internal Server Error: If there is a problem with getting the files from Google Drive.
-
-    -> /customer_data_process Method: GET:
-        Description: Runs the data process in the business logic folder.
-                    Cannot return partially processed data.
-
-        Request Headers: 
-            Authorization (string): shrek_key : "key".
-
-        Request Body: None
-
-        200 OK: If the data processing was successful
-        401 Unauthorized: If no API key is provided or the API key is incorrect
-        500 Internal Server Error: If data processing failed
-
-    -> /get_business_logic_data     Method: GET:
-        Description: Retrieves business logic data by name.
-
-        Request Headers:
-            Authorization (string): shrek_key : "key".
-
-        Request Body: None
-
-        Query Parameters:
-            file_name (string): The name of the file to retrieve. 
-            Default is "customer_min_prices.xml".
-        
-        Response:
-            200 OK: Returns the requested file.
-            401 Unauthorized: If no API key is provided or the API key is incorrect.
-            404 Not Found: If the file does not exist.
-
-    -> /get_top_5_products  Method: GET:
-        Description: Api endpoint for getting the top 5 products. (Used for testing)
-
-        Request Headers: 
-            Authorization (string): shrek_key : "key". # TODO  add shrek key checker
-        Request Body: None
-
-        Response:
-
-            200 OK: Returns the top 5 products as a JSON file.
-            404 Not Found: If the file does not exist.
-            500 Internal Server Error: If data processing failed.
-
-    -> /start_aprox_scrape  Method: GET:
+    -> /start_aprox_scrape  Method: POST:
         #TODO !!! Implement that category can be specified outside the spider !!!
         It scrapes the category that is specified outside, and returns all the set of group urls. 
         Used in that case when do not want to get the whole category precise details.
         OR when only want to get the urls for that category.
 
         Request Headers: 
-            Authorization (string): shrek_key : "key". # TODO  add a shrek_key checker !! 
-        Request Body: None
+            Authorization (string): shrek_key : "key". 
+        Request Body: 
+            Possible categories:
+                -> "nyomtato-patron-toner"
+                -> "szamitogep-periferia"
 
         Response:
             200 OK: Returns a message indicating that the spider is running.
@@ -250,7 +198,7 @@ API Endpoints:
         Description: Returns a set of URLS that is scraped buy the /start_aprox_scrape. 
 
         Request Headers:
-            Authorization (string): shrek_key : "key". !!!! # TODO no api key needed
+            Authorization (string): shrek_key : "key".
         Request Body: None
 
         Response:
@@ -258,11 +206,11 @@ API Endpoints:
             404 Not Found: If the JSON file is not found
             500 Internal Server Error: If there is an error processing JSON data
 
-    -> /start_url_scrape    Method: POST, GET:
+    -> /start_url_scrape    Method: POST:
         Description: Starts the URL scrape process with the provided URLs.
 
         Request Headers: 
-            Authorization (string): shrek_key : "key". # TODO  no api key needed !!
+            Authorization (string): shrek_key : "key".
 
         Request Body:
             urls (array): List of URLs to scrape.
@@ -275,7 +223,7 @@ API Endpoints:
         Description: Retrieves the URL scrape results.
 
         Request Headers: 
-            Authorization (string): shrek_key : "key".   # TODO  no api key needed !!
+            Authorization (string): shrek_key : "key". 
         Request Body: None
 
         Response:
@@ -641,6 +589,10 @@ arukereso_all:
         The AproxSpiderSpider is a Scrapy spider designed to scrape product data from specific categories on the Arukereso website. 
         It generates URLs dynamically based on a prediction model to collect comprehensive product information,
         including names, prices, and comparison links.
+
+        The spevific category to crawl is added from the api call as POST method.
+
+        # TODO  finish the category slection in the spider!
 
     Spider is written for testing purposes.
 
