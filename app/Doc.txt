@@ -646,6 +646,7 @@ Security:
     # TODO should i implement api key rotation or renewal?
     # TODO  rate limiting 
     # TODO ip cheking and logging for api calls.
+    # TODO add api checking logic ! 
 
     The api keys are stored on the server side as system variables.
 

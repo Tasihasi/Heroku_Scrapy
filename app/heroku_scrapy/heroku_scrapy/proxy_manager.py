@@ -6,6 +6,7 @@ from typing import List
 class ProxyHandler:
     def __init__(self) -> None:
         self.proxy_list = self._get_new_proxy_list()
+        self.user_agenst = self._get_user_agents()
 
     # Returns with a list of proxies.
     def _get_new_proxy_list(self):
@@ -57,10 +58,13 @@ class ProxyHandler:
             self.proxy_list = self._get_new_proxy_list()
 
     #Returns user agent
-    def get_user_agents(self) -> List[str]:
+    def _get_user_agents(self) -> List[str]:
         with open('useragents.txt') as f:
             USER_AGENT_PARTS = f.readlines()
         return USER_AGENT_PARTS
+    
+    def get_random_user_agent(self) -> str:
+        return random.choice(self.user_agenst)
 
 
 

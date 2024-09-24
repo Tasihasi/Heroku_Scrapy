@@ -2,111 +2,7 @@ from datetime import datetime
 import random, logging, socket, os, gzip, requests, scrapy, time
 from typing import List
 from concurrent.futures import ThreadPoolExecutor
-from proxy_manager import ProxyHandler
-
-
-
-#Test if the port open
-def is_port_open(host: str, port: int) -> bool:
-    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    sock.settimeout(1)  # One second timeout
-    try:
-        sock.connect((host, port))
-        sock.close()
-        return True
-    except socket.error:
-        return False
-    
-#Scans a range of ports if they are open
-def port_scan(host: str, start_port: int, end_port: int) -> List[int]:
-    with ThreadPoolExecutor(max_workers=50) as executor:
-        futures = {executor.submit(is_port_open, host, port): port for port in range(start_port, end_port + 1)}
-        open_ports = [future.result() for future in futures if future.result() is not None]
-    return open_ports
-
-
-# Checking if proxy working against the target website
-def check_proxy_status(proxy : str , test_url : str) -> int:
-    """
-    Check if a proxy is working by making a request to a test URL.
-    """
-    test_url = "https://www.arukereso.hu/nyomtato-patron-toner-c3138/"
-
-    try:
-        if requests.get(proxy, timeout=5).status_code != 200:
-
-            # TODO implement port scan
-            # TODO REplace the port with the working port
-
-            logging.info(f"Proxy {proxy} is not working")
-            logging.info(f"Checking the port of the proxy {proxy.split(':')[0] }   {proxy.split(':')[1]}")
-            return -1
-
-
-        response = requests.get(test_url, proxies={"http": proxy, "https": proxy}, timeout=3)
-        if response.status_code == 200:
-            logging.info(f"Proxy {proxy} is working")
-            return int(proxy.split(":")[-1])
-        
-        
-        return -1
-
-    except requests.RequestException:
-        return False
-
-def check_proxy_multi_threadedly(proxies : List[str] ) -> List[str]:
-    """
-    Check if a proxy is working by making a request to a test URL.
-    """
-
-    def check_and_format_proxy(proxy):
-        if -1 < check_proxy_status(proxy):
-            return proxy
-        return None
-    
-
-    valid_proxies = List[str]
-
-    with ThreadPoolExecutor(max_workers=200) as executor:
-        results = executor.map(check_and_format_proxy, proxies)
-
-    # Filter out None values and return the list of valid proxies
-    valid_proxies = [proxy for proxy in results if proxy is not None]
-
-    return valid_proxies
-
-# Gets a new pool of proxies buy scraping a website than test them
-def Getting_new_proxies():  # Running the scrapy 
-        # Define the command as a list of strings
-        logging.info("--------------------   Getting new proxies ---------------------------")
-        current_directory = os.getcwd()
-        #print("Current Working Directory:", current_directory)
-
-        url = "https://api.proxyscrape.com/v2/?request=displayproxies&protocol=http&timeout=10000&country=all&ssl=no&anonymity=elite"
-
-        try:
-            response = requests.get(url)
-
-            if response.status_code == 200:
-                # Successful response
-                proxies = response.text.strip().split("\n")
-                proxies = [f"http://{proxy.strip()}" for proxy in proxies]
-                #proxies += [f"https://{proxy.strip()}" for proxy in proxies]
-                #return retList
-                logging.info(f"Proxies retrieved and saved to {proxies}")
-
-
-                return check_proxy_multi_threadedly(proxies)
-            else:
-                # Handle other status codes if needed
-                pass
-                #print(f"Request failed with status code: {response.status_code}")
-
-        except requests.RequestException as e:
-            # Handle exceptions or errors
-            pass
-            #print(f"An error occurred: {e}")
-
+from ..proxy_manager import ProxyHandler
 
 
 class ArukeresoSpider(scrapy.Spider):
@@ -148,80 +44,15 @@ class ArukeresoSpider(scrapy.Spider):
         self.start_urls = self.predicting_url(self.start_urls[0])
         self.error_urls = []  # List to store URLs that encountered errors
         self.visited_url = set()
-        self.user_agents = get_user_agents()
-
-        #logging.info("----------- Got valid Proxies. ------------------")
-
-    #returns a random user agent
-    def get_random_user_agent(self) -> str:
-        return random.choice(self.user_agents)
-
-    # Return random proxy 
-    def select_proxy(self) -> str:
-        time = datetime.now()
-        if not self.raw_proxy_list:
-            logging.error(f"No proxies available time took :  { datetime.now() - time}")
-            return None
-
-        # Filter out invalid proxies
-        if not self.valid_proxies:
-            return None  # Return None if no valid proxies are available
-
-        selected_proxy = random.choice(self.valid_proxies)
-
-        logging.warning(f" -----    !!!! Time took to get a new poxy  time took :  { datetime.now() - time}   !!!!!  ----")
-        self.proxy_time += (datetime.now() - time).total_seconds()
-        return selected_proxy
-
-    def check_proxy_status(self, proxy : str)-> bool:
-        time = datetime.now()
-        try:
-            response = requests.get("https://www.arukereso.hu/nyomtato-patron-toner-c3138/", proxies={"http": proxy, "https": proxy}, timeout=10)
-            if response.status_code == 200:
-                logging.info(f'-------------------  Proxy {proxy} is being used for the request.------------------------------')
-                self.proxy_time += (datetime.now() - time).total_seconds()
-                return True
-        except requests.exceptions.RequestException:
-            logging.info(f'------------------------- Proxy {proxy} is not being used for the request.--------------------')
-            pass
-        self.proxy_time += (datetime.now() - time).total_seconds()
-        return False
-
-    def remove_proxy(self, proxy : str) -> None:
-        if proxy in self.valid_proxies:
-            self.valid_proxies.remove(proxy)
-
-        return 
-            #raise CloseSpider("closed the spider manually at line 176")
-
-            # this function will remove the proxy from the list
-            #self.raw_proxy_list.remove(failure.request.meta['proxy'])
-        
+        self.Proxy_handler = ProxyHandler()
+   
     def start_requests(self):
-        logging.info("--------------   !!!!!   Spider started !!!!!!!!  ------------------")
-
-        # Get a proxy for this request
         proxy = self.select_proxy()
-
         proxy_time = datetime.now()
-        """
-        while not proxy and len(self.raw_proxy_list) <30:
-
-            self.raw_proxy_list = Getting_new_proxies()
-            self.proxies_retries+=1
-
-            logging.info("trying to get new  proxy list: " , self.proxies_retries)
-        
-        self.proxy_time += (datetime.now() - proxy_time).total_seconds()
-        """
-
-
         
         with ThreadPoolExecutor(max_workers=200) as executor:
             for url in self.start_urls:
-                yield scrapy.Request(url,  headers={'User-Agent': self.get_random_user_agent()}) #meta={'proxy': self.select_proxy()},
-
-        logging.info(f" ---- SPidre started IN THE START REQUESTS ----  {datetime.now() - self.crawling_time}  ----")
+                yield scrapy.Request(url,  headers={'User-Agent': self.Proxy_handler.get_random_user_agent()()}) #meta={'proxy': self.select_proxy()},
 
     def parse(self, response):
         start_time = datetime.now()
@@ -333,12 +164,7 @@ class ArukeresoSpider(scrapy.Spider):
 
         self.time_passing["end parsing link"].append((datetime.now() - self.crawling_time).total_seconds())
 
-    def restart_parsing(self):
-        return
-        # Function to replicate initial parsing behavior
-        for url in self.start_urls:
-            yield scrapy.Request(url=url, callback=self.parse)
-
+  
     # ----------------- Pushing to google drive ---------------------
 
     def push_to_google_drive(self, path : str):
@@ -394,21 +220,7 @@ class ArukeresoSpider(scrapy.Spider):
 
 
     # closing ----------------
-
     def closed(self, reason):
-        #if self.error_urls:
-            #self.start_urls = self.error_urls
-            #yield from self.restart_parsing()
-        
-        logging.critical(f"  ------  Time took to manage proxies : {self.proxy_time}  ------")
-        logging.critical(f" -------  Time took parsing the data : {self.parsing_time[0]}  -------")
-        logging.critical(f" -------  Time took parsing the link : {self.parsing_time[1]}  -------")
-        logging.critical(f" -------  Time took parsing SUM : {sum(self.parsing_time)}  -------")
-        logging.critical(f" -------  Time took run the spider : {(datetime.now() - self.crawling_time).total_seconds()}  -------")
-        logging.critical(f" -------  Times getting new proxies  : {self.proxies_retries}  -------")
-        logging.critical(f" -------  Times waiting for the request : {self.time_passing}  -------")
-        logging.critical(f"  -------  HERE IS THE FOLDER CONTENTS : {os.listdir()}  -------")   
-
         self.push_to_google_drive("output.jsonl")
         
 
