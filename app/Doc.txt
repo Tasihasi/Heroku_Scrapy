@@ -199,13 +199,6 @@ API Endpoints:
 
     #TODO !!there are duplicate api endpoint in the google endpoint!!
 
-    -> /shrek_key_checker METHOD = GET
-        Checks if the clients key is correct.
-
-        Possible returns:
-            400 - No provided api key
-            200 - Correct api key
-            403 - Incorrect api key
 
     -> /list_files METHOD = GET
         Lists the available files in the google drive.

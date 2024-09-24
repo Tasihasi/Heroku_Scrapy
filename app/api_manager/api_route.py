@@ -2,7 +2,6 @@ from flask import Blueprint, jsonify, request
 from .auth import is_valid_api_key
 from .data_retrieve import   SpiderRunner, RetriveData
 
-
 api = Blueprint('api', __name__)
 
 @api.route('/ping', methods=['GET'])

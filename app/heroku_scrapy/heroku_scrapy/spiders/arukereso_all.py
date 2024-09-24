@@ -10,7 +10,7 @@ from typing import List
 import xml.etree.ElementTree as ET
 from concurrent.futures import ThreadPoolExecutor
 import socket
-
+from proxy_manager import ProxyHandler
 
 import logging
 #from ..proxy_manager.proxy_verification import Get_valid_Proxy_list

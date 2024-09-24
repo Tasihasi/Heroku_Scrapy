@@ -12,9 +12,10 @@ from concurrent.futures import ThreadPoolExecutor
 
 
 class ProxyHandler:
-    
+    def __init__(self) -> None:
+        self.name = "bela"
+        pass
 
-    
 
     def get_new_proxy(self):
         # Implement logic to return a proxy
