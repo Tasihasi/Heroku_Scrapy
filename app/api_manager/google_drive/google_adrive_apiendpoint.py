@@ -10,35 +10,13 @@ import random
 import string
 from googleapiclient.http import MediaFileUpload
 from googleapiclient.errors import HttpError
+from ..auth import is_valid_api_key
 #from google.colab import auth
 
 import json
 import os
 
 google_drive_api = Blueprint('google_drive_api', __name__)
-
-# Checking if the api key is correct
-def check_inner_api_key(api_key: str) -> bool:
-    return api_key == os.getenv('shrek_api_key')
-
-# Checks if the clients api key is correct
-google_drive_api.route('/shrek_key_checker', methods=['GET'])
-def shrek_key_checker():
-    request_api_key = request.headers.get('shrek_key')
-
-    if not request_api_key:
-        return jsonify({'error': 'API key is required'}), 400
-    
-    if check_inner_api_key(request_api_key):
-        return jsonify({'message': 'API key is valid'}), 200
-    else:
-        return jsonify({'error': 'Invalid API key'}), 403
-
-# Function to generate a random string
-def generate_random_string(length):
-    letters = string.ascii_letters + string.digits
-    return ''.join(random.choice(letters) for i in range(length))
-
 
 # Lists the available files in the google drive
 @google_drive_api.route('/list_files', methods=['GET'])
@@ -76,6 +54,10 @@ def list_files():
 # TODO no api key checker here
 @google_drive_api.route('/get_file/<file_id>', methods=['GET'])
 def get_file(file_id):
+    provided_api_key = request.headers.get('shrek_key')
+
+    if not is_valid_api_key(provided_api_key):
+        return jsonify({"message" : "API key is incorrect"}), 401 
 
     def send_large_file(file_content : BytesIO, file_metadata ):
         file_content.seek(0)
@@ -140,7 +122,7 @@ def create_file( file_name, file_mimeType, force_update = 0):
     request_api_key = request.headers.get('shrek_key')
 
 
-    if not check_inner_api_key(request_api_key):
+    if not is_valid_api_key(request_api_key):
         return jsonify({'error': 'Invalid API key'}), 403
 
     if not file_name or not file_mimeType:
@@ -254,7 +236,7 @@ def delete_file( file_id):
      
     request_api_key = request.headers.get('shrek_key')
 
-    if not check_inner_api_key(request_api_key):
+    if not is_valid_api_key(request_api_key):
         return jsonify({'error': 'Invalid API key'}), 403
 
     if not file_id:
@@ -310,7 +292,7 @@ def run_script():
     request_api_key = request.headers.get('shrek_key')
     file_id = request.headers.get('file_id')
 
-    if not check_inner_api_key(request_api_key):
+    if not is_valid_api_key(request_api_key):
         return jsonify({'error': 'Invalid API key'}), 403
 
 
@@ -338,7 +320,7 @@ def upload_file():
 
     request_api_key = request.headers.get('shrek_key')
 
-    if not check_inner_api_key(request_api_key):
+    if not is_valid_api_key(request_api_key):
         return jsonify({'error': 'Invalid API key'}), 403
 
     logging.info("Api endpoint triggered")
@@ -364,7 +346,7 @@ def download_download_uploaded_file( file_name):
 
     request_api_key = request.headers.get('shrek_key')
 
-    if not check_inner_api_key(request_api_key):
+    if not is_valid_api_key(request_api_key):
         return jsonify({'error': 'Invalid API key'}), 403
 
     logging.info("Api endpoint triggered")
@@ -383,7 +365,7 @@ def delete_uploaded_file( file_name):
 
     request_api_key = request.headers.get('shrek_key')
 
-    if not check_inner_api_key(request_api_key):
+    if not is_valid_api_key(request_api_key):
         return jsonify({'error': 'Invalid API key'}), 403
 
     logging.info("Api endpoint triggered")

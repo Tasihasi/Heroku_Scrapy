@@ -107,22 +107,7 @@ Documentation structure.
 Usage:
 --------------------------------------------------
 API Endpoints:
-    #TODO add appropriate status codes to all api endpoint
-    #TODO add api key checker every where!
-    # TODO  check that every where shrek key ust be at api keys place 
-    # TODO ?? what is the difference between get process data / get business logic data ?
-    #TODO ??? difference between aprox scrape and get data
-
-    # TODO  make a class that manages all scrapy management
-
     # TODO  !! add example usage for each api endpoint !!
-
-    # The similar api endpoint responsible for witch url or aprox scrape will start.
-
-    #TODO what is rest api and refactor it to rest api!
-
-    # TODO start_aprox_scrape and url_crawl are the same  !!
-    # Find or make the difference !! 
 
     API  key must be provied in the header as a parameter. 
     Named "shrek_key". (Shrek key is used for internal api calls.)
