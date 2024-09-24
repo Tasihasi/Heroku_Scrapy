@@ -1,88 +1,66 @@
-# Returns user agent 
-#manages the proxy scraping proccess 
-# Tests the proxies 
-# function that retruns a random proxy 
-
-# TODO write test before developing
-
-import requests
+import requests, random
 from typing import List
-from concurrent.futures import ThreadPoolExecutor
 
 
 
 class ProxyHandler:
     def __init__(self) -> None:
-        self.name = "bela"
-        pass
+        self.proxy_list = self._get_new_proxy_list()
 
+    # Returns with a list of proxies.
+    def _get_new_proxy_list(self):
+        url = "https://api.proxyscrape.com/v2/?request=displayproxies&protocol=http&timeout=10000&country=all&ssl=no&anonymity=elite"
 
-    def get_new_proxy(self):
-        # Implement logic to return a proxy
-        raise NotImplementedError
-    
-
-    # Test if the proxy is alive 5 times
-    def check_proxy_status(self, proxy : str , test_url : str) -> int:
-        test_url = "https://www.arukereso.hu/nyomtato-patron-toner-c3138/"
-
-        try:
-            if requests.get(proxy, timeout=5).status_code != 200:
-
-                # TODO implement port scan
-                # TODO REplace the port with the working port
-
-                return -1
-
-
-            response = requests.get(test_url, proxies={"http": proxy, "https": proxy}, timeout=3)
-            if response.status_code == 200:
-                return int(proxy.split(":")[-1]) # ?? why ? why not 1?
-            
-            
-            return -1
-
-        except requests.RequestException:
-            raise requests.RequestException
-
-    
-    def get_new_raw_proxy(self) -> List[str]:
         try:
             response = requests.get(url)
 
             if response.status_code == 200:
-                # Successful response
                 proxies = response.text.strip().split("\n")
                 proxies = [f"http://{proxy.strip()}" for proxy in proxies]
-                return check_proxy_multi_threadedly(proxies)
+
+                return proxies
             else:
-                # Handle other status codes if needed
-                pass
-                #print(f"Request failed with status code: {response.status_code}")
+                return False
 
         except requests.RequestException as e:
-            # Handle exceptions or errors
-            pass
-            #print(f"An error occurred: {e}")
+            return False
 
+    # Test if the proxy is alive 5 times
+    def _check_proxy_status(self, proxy : str , test_url : str) -> bool:
+        try:
+            response = requests.get(test_url, proxies={"http://": proxy}, timeout=3)
 
-    def check_proxy_multi_threadedly(self, proxies : List[str], test_url : str) -> List[str]:
-        """
-        Check if a proxy is working by making a request to a test URL.
-        """
+            if response.status_code != 200:
+                return True
 
-        def check_and_format_proxy(proxy):
-            if -1 < check_proxy_status(proxy, test_url):
-                return proxy
-            return None
-        
+            return False
 
+        except requests.RequestException:
+            return False
+
+    # Returns a valid proxy list
+    def _check_proxy_list (self, test_url : str) -> List[str]:
         valid_proxies = List[str]
 
-        with ThreadPoolExecutor(max_workers=200) as executor:
-            results = executor.map(check_and_format_proxy, proxies)
-
-        # Filter out None values and return the list of valid proxies
-        valid_proxies = [proxy for proxy in results if proxy is not None]
-
+        raise NotImplementedError
         return valid_proxies
+
+    # The user can get a new proxy from this 
+    def get_proxy(self) -> str:
+        return random.choice(self.proxy_list)
+    
+    # Deletes the given proxy and if the length of the proxy list is 0 than gets a new proxy list
+    def delete_proxy(self, proxy : str) -> None:
+        self.proxy_list.remove(proxy)
+
+        if len(self.proxy_list) == 0:
+            self.proxy_list = self._get_new_proxy_list()
+
+    #Returns user agent
+    def get_user_agents(self) -> List[str]:
+        with open('useragents.txt') as f:
+            USER_AGENT_PARTS = f.readlines()
+        return USER_AGENT_PARTS
+
+
+

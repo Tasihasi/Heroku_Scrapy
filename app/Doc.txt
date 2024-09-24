@@ -586,6 +586,37 @@ arukereso_all:
 
     Use the imp-aprox-srape!! 
 
+    ProxyManager class:
+        Task : Manage and handle  proxies for use.
+            Gets proxies from and api. 
+            Link : https://api.proxyscrape.com
+
+        Returns with a proxy. If the proxy is not working delete it than ask for a new one.
+
+        Public functions:
+            get_proxy -> No param -> returns with a proxy(string) 
+
+            delete_proxy -> Param : proxy(string) -> Deletes the given proxy and if the length of the proxy list is 0 gets a nw list.
+
+            get_useragent -> No param ->Returns a list of string. User agents for requests.
+            I placed this function here so that the scrapie code can be clean.
+
+        Private Functions
+            _get_new_proxy_list -> No param -> returns with proxy list from the api.
+
+            _check_proxy_status -> Param : Proxy(string), test url(string) -> Bool True if the proxy is alive.
+            (Not used)
+
+            _check_proxy_list -> Param : test_url (string) -> Return with a valid proxy list.
+            (Not used)
+
+            I choose not use these function because they slow down the process of scraping substantially.
+            While waiting for each response to happen it can take over 300 seconds if you make the proxy checking multithreaded and asynchronously.
+            And 300 seconds adds up.
+        
+
+
+
 ------------------------------------------------------------
 Google Drive API
 ------------------------------------------------------------

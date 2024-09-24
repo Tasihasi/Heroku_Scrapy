@@ -1,32 +1,10 @@
-import scrapy
-from scrapy.exceptions import CloseSpider
 from datetime import datetime
-import requests
-import time
-import gzip
-import os
-import random
+import random, logging, socket, os, gzip, requests, scrapy, time
 from typing import List
-import xml.etree.ElementTree as ET
 from concurrent.futures import ThreadPoolExecutor
-import socket
 from proxy_manager import ProxyHandler
 
-import logging
-#from ..proxy_manager.proxy_verification import Get_valid_Proxy_list
 
-
-#logging.info("Spider started")
-
-import socket
-
-
-
-#Returns user agent
-def get_user_agents() -> List[str]:
-    with open('useragents.txt') as f:
-        USER_AGENT_PARTS = f.readlines()
-    return USER_AGENT_PARTS
 
 #Test if the port open
 def is_port_open(host: str, port: int) -> bool:
