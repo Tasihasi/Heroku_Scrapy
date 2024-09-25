@@ -1,0 +1,1 @@
+from .heroku_scrapy.proxy_manager import ProxyHandler
