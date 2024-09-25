@@ -123,4 +123,4 @@ LOG_LEVEL = 'DEBUG'
 
 
 # Add this line to set the item count limit
-CLOSESPIDER_ITEMCOUNT = 10
+#CLOSESPIDER_ITEMCOUNT = 10

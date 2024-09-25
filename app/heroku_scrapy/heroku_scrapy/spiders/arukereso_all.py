@@ -47,12 +47,15 @@ class ArukeresoSpider(scrapy.Spider):
         self.Proxy_handler = ProxyHandler()
    
     def start_requests(self):
-        proxy = self.select_proxy()
+
+        logging.info("------------------ python started -----------------------")
+
+        proxy = self.Proxy_handler.get_proxy()
         proxy_time = datetime.now()
         
         with ThreadPoolExecutor(max_workers=200) as executor:
             for url in self.start_urls:
-                yield scrapy.Request(url,  headers={'User-Agent': self.Proxy_handler.get_random_user_agent()()}) #meta={'proxy': self.select_proxy()},
+                yield scrapy.Request(url,  headers={'User-Agent': self.Proxy_handler.get_random_user_agent()}) #meta={'proxy': self.select_proxy()},
 
     def parse(self, response):
         start_time = datetime.now()
@@ -61,7 +64,7 @@ class ArukeresoSpider(scrapy.Spider):
 
         self.time_passing["start parsing start"].append((datetime.now() - self.crawling_time).total_seconds())
 
-        headers = {'User-Agent': self.get_random_user_agent()}
+        headers = {'User-Agent': self.Proxy_handler.get_random_user_agent()}
 
         all_products = response.css("div.name a ::text").getall()
         all_prices = response.css("div.price::text").getall()
@@ -91,7 +94,7 @@ class ArukeresoSpider(scrapy.Spider):
 
         with ThreadPoolExecutor(max_workers=25) as executor:
             for link in parse_links:
-                headers = {'User-Agent': self.get_random_user_agent()}
+                headers = {'User-Agent': self.Proxy_handler.get_random_user_agent()}
                 yield scrapy.Request(url=link, callback=self.parse_link,
                                       #meta={'proxy': self.select_proxy()},
                                         headers=headers)
@@ -221,6 +224,7 @@ class ArukeresoSpider(scrapy.Spider):
 
     # closing ----------------
     def closed(self, reason):
+        return
         self.push_to_google_drive("output.jsonl")
         
 

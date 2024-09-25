@@ -57,7 +57,7 @@ class SpiderRunner:
             script_dir = os.path.dirname(os.path.abspath(__file__))
             spider_dir = os.path.join(script_dir, '..', 'heroku_scrapy')
             os.chdir(spider_dir)
-            print(f"Changed working directory to: {os.getcwd()}")
+            logging.info(f"Changed working directory to: {os.getcwd()}")
 
             # Check if the specified spider exists
             if not self._spider_exists():
@@ -66,6 +66,8 @@ class SpiderRunner:
                 return -1
 
             command = ['scrapy', 'crawl', self.spider_name, '-O', self.output_file]
+
+            logging.info("command has run")
 
             # Add any positional arguments to the command
             for arg in self.args:

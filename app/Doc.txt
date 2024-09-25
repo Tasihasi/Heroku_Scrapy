@@ -378,6 +378,8 @@ main.py
         -> home url
 
 data_retrieve : SpiderRunner class:
+    #  TODO  if there is a spider running with the same name the server crashes!! 
+    # TODO spier dose not starts
     Overview
     The SpiderRunner class is designed to facilitate the running of Scrapy spiders from a Python script.
     It allows for dynamic configuration of the spider's parameters,

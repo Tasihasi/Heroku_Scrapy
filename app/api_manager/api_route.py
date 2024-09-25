@@ -1,6 +1,7 @@
 from flask import Blueprint, jsonify, request
 from .auth import is_valid_api_key
 from .data_retrieve import   SpiderRunner, RetriveData
+import logging, os
 
 api = Blueprint('api', __name__)
 
@@ -42,6 +43,10 @@ def run_spider():
 
     provided_category = request.json.get("category")
     provided_urls = request.json.get("urls")
+
+    logging.info("Running spider")
+    logging.info(f"Changed working directory to: {os.getcwd()} in api_route")
+
 
     spider_runner = SpiderRunner(spider_name=provided_spider_name, output_file=provided_output_name, category = provided_category, urls= provided_urls)
 

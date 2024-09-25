@@ -2,8 +2,15 @@ from flask import Flask
 from api_manager.api_route import api
 from api_manager.google_drive.google_adrive_apiendpoint import google_drive_api
 import requests
-import time
+import time, logging
 from datetime import datetime, timedelta
+
+# Disable Flask's default logging
+log = logging.getLogger('werkzeug')
+log.setLevel(logging.ERROR)
+
+# Now configure your own logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
 
 def send_request():
