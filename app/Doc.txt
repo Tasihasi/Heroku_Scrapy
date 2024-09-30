@@ -428,6 +428,7 @@ Location: app\heroku_scrapy\heroku_scrapy\spiders
         +-----------------------------+------------------------------------------------+
         | Drawbacks                   | - Higher resource consumption                  |
         |                             | - Increased processing time                    |
+        |                             | - Cannot retrieve the json while running        |
         +-----------------------------+------------------------------------------------+
 
         +-----------------------------+------------------------------------------------+

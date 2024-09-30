@@ -22,14 +22,14 @@ def check_api_key():
     if is_valid_api_key(provided_api_key):
         return jsonify({"message": "API key is correct"})
     else:
-        return jsonify({"message": "API key is incorrect"}), 401  # Return a 401 Unauthorized status
+        return jsonify({"message" : " Unauthorized : API key is incorrect"}), 401  # Return a 401 Unauthorized status
 
 @api.route('/run_spider', methods = ["GET"])
 def run_spider():
     provided_api_key = request.headers.get('shrek_key')
 
     if not is_valid_api_key(provided_api_key):
-        return jsonify({"message" : "API key is incorrect"}), 401 
+        return jsonify({"message" : " Unauthorized : API key is incorrect"}), 401 
 
     provided_spider_name = request.json.get("spider_name")
     provided_output_name = request.json.get("output_name")
@@ -65,7 +65,7 @@ def retrive_file():
     provided_api_key = request.json.get('shrek_key')
 
     if not is_valid_api_key(provided_api_key):
-        return jsonify({"message" : "API key is incorrect"}), 401 
+        return jsonify({"message" : " Unauthorized : API key is incorrect"}), 401 
     
     if not provided_file_name:
         return jsonify({"message" : "Missing file name"}), 403

@@ -57,7 +57,7 @@ def get_file(file_id):
     provided_api_key = request.headers.get('shrek_key')
 
     if not is_valid_api_key(provided_api_key):
-        return jsonify({"message" : "API key is incorrect"}), 401 
+        return jsonify({"message" : " Unauthorized : API key is incorrect"}), 401 
 
     def send_large_file(file_content : BytesIO, file_metadata ):
         file_content.seek(0)
@@ -123,7 +123,7 @@ def create_file( file_name, file_mimeType, force_update = 0):
 
 
     if not is_valid_api_key(request_api_key):
-        return jsonify({'error': 'Invalid API key'}), 403
+        return jsonify({"message" : " Unauthorized : API key is incorrect"}), 401
 
     if not file_name or not file_mimeType:
         return jsonify({'error': 'File name and MIME type are required.'}), 400
@@ -237,7 +237,7 @@ def delete_file( file_id):
     request_api_key = request.headers.get('shrek_key')
 
     if not is_valid_api_key(request_api_key):
-        return jsonify({'error': 'Invalid API key'}), 403
+        return jsonify({"message" : " Unauthorized : API key is incorrect"}), 401
 
     if not file_id:
         return jsonify({'error': 'File ID is required.'}), 400
@@ -293,7 +293,7 @@ def run_script():
     file_id = request.headers.get('file_id')
 
     if not is_valid_api_key(request_api_key):
-        return jsonify({'error': 'Invalid API key'}), 403
+        return jsonify({"message" : " Unauthorized : API key is incorrect"}), 401
 
 
     # Authenticate with Google Drive API using credentials JSON file
@@ -321,7 +321,7 @@ def upload_file():
     request_api_key = request.headers.get('shrek_key')
 
     if not is_valid_api_key(request_api_key):
-        return jsonify({'error': 'Invalid API key'}), 403
+        return jsonify({"message" : " Unauthorized : API key is incorrect"}), 401
 
     logging.info("Api endpoint triggered")
     try:
@@ -347,7 +347,7 @@ def download_download_uploaded_file( file_name):
     request_api_key = request.headers.get('shrek_key')
 
     if not is_valid_api_key(request_api_key):
-        return jsonify({'error': 'Invalid API key'}), 403
+        return jsonify({"message" : " Unauthorized : API key is incorrect"}), 401
 
     logging.info("Api endpoint triggered")
     try:
@@ -366,7 +366,7 @@ def delete_uploaded_file( file_name):
     request_api_key = request.headers.get('shrek_key')
 
     if not is_valid_api_key(request_api_key):
-        return jsonify({'error': 'Invalid API key'}), 403
+        return jsonify({"message" : " Unauthorized : API key is incorrect"}), 401
 
     logging.info("Api endpoint triggered")
     try:
