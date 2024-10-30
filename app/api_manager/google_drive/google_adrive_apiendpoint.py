@@ -1,18 +1,12 @@
 from flask import Blueprint, jsonify, send_file, send_from_directory, Response, stream_with_context, request
-#from flask import request
 import requests
 from googleapiclient.http import MediaIoBaseDownload, MediaIoBaseUpload
 from io import BytesIO
 import io
 from .google_drive_api_auth import Get_drive_service
 import logging
-import random
-import string
-from googleapiclient.http import MediaFileUpload
 from googleapiclient.errors import HttpError
 from ..auth import is_valid_api_key
-#from google.colab import auth
-
 import json
 import os
 
@@ -188,42 +182,6 @@ def create_file( file_name, file_mimeType, force_update = 0):
         logging.info(f"File created successfully: {file.get('id')}")
 
         return jsonify({'file_id': file.get('id')})
-
-
-        # Define the permissions to be granted
-        permissions = {
-            'role': 'reader',  # or 'writer'
-            'type': 'user',
-            'emailAddress': os.getenv('google_drive_owner_email')  # get email from config vars
-        }
-
-        try:
-
-            # Specify the file to be uploaded in chunks
-            #file_metadata = {'name': 'My Data', 'mimeType': file_mimeType}
-
-            #media = MediaFileUpload(file_name,
-                                    #mimetype=file_metadata['mimeType'],
-                                    #resumable=True)
-
-            # Upload the file in chunks
-            request = service.files().create(body=file_metadata,
-                                            media_body=media,
-                                            fields='id')
-            
-            response = None
-            while response is None:
-                status, response = request.next_chunk()
-                if status:
-                    print("Uploaded %d%%." % int(status.progress() * 100))
-
-            print("Upload Complete!")
-            # Grant the permissions
-            service.permissions().create(fileId=file['id'], body=permissions).execute()
-        except HttpError as error:
-            print(f'An error occurred while sharing the file: {error}')
-
-        print(f'File ID: {file.get("id")}')
 
     except HttpError as error:
         print(f"An error occurred: {error}")

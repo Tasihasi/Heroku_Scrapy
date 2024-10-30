@@ -1,6 +1,6 @@
 from flask import Flask
-from api_manager.api_route import api
-from api_manager.google_drive.google_adrive_apiendpoint import google_drive_api
+from .api_manager.api_route import api
+from .api_manager.google_drive.google_adrive_apiendpoint import google_drive_api
 import requests
 import time, logging
 from datetime import datetime, timedelta
