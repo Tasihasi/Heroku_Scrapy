@@ -2,7 +2,7 @@ Overview
 ----------------------------------------------------------
 
 
-GOAL : To get daily up-to-date data about products from the Arukereso website.
+GOAL : To get daily up-to-date data about products from the Arukereso website using a Flask application.
 
 This is a flask application.
 
@@ -50,6 +50,7 @@ The server is designed that these api endpoint will not be open for public only 
 other servers or front end servers.
 
 Main structure:
+
                                         +-----------------------+
                                         |   Client Application  |
                                         +----------+------------+
@@ -100,23 +101,24 @@ Main structure:
 
 
 Documentation structure.
--> Overview
--> Usage (API description)
--> Technical description
+
+    -> Overview
+    -> Usage (API description)
+    -> Technical description
 
 Usage:
 --------------------------------------------------
 API Endpoints:
     # TODO  !! add example usage for each api endpoint !!
 
-    API  key must be provied in the header as a parameter. 
+    Note: An API key must be provided in the header as a parameter named `shrek_key`. This key is used for internal API calls.
     Named "shrek_key". (Shrek key is used for internal api calls.)
 
     Return datatype is a json file.
 
     API endpoints defined in api_manager/api_route.py:
 
-    -> /ping Method: GET
+    -> /ping Method: GET**
         Description: Checks if the server is running.
 
         Request Headers: None
@@ -297,9 +299,9 @@ API Endpoints:
     -> /upload   METHOD  = POST
     -> /download_uploaded/<file_name>   METHOD = GET
 
-    All the api endpoints rely on data_retrieve.py file.
-    It manages the run commands for the different spiders.
-    It passes the kwargs for the spiders if needed.
+  All the api endpoints rely on data_retrieve.py file.
+  It manages the run commands for the different spiders.
+  It passes the kwargs for the spiders if needed.
 
 
 
@@ -407,10 +409,10 @@ data_retrieve : SpiderRunner class:
 ------------------------------------------------------------
 Scrapy
 ------------------------------------------------------------
-This part is responsible to run the main scraping part.
-It contains multiple spiders for different task.
+This part is responsible for running the main scraping part.
+It contains multiple spiders for different tasks.
 
-# TODO  !!! To setting.py i put close item count 10 for testing puroses!!! 
+! To setting.py I put close item count 10 for testing purposes ! 
 
 Location: app\heroku_scrapy\heroku_scrapy\spiders
 
@@ -638,11 +640,6 @@ Google Drive API
 
     -> google_adrive_apiendpoint.py
         Here is defined all the different operation that can be made to Google drive api.
-
-
-
-# TODO  delete all chs_get.py files !!
-
 
 Security:
     # TODO  store the shrek key in hashed format
